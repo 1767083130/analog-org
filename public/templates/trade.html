@@ -1,0 +1,283 @@
+﻿{% extends "layouts/master.html" %} 
+{% block body %}
+<div>
+    <h1>
+        {@pre type="content" key="greeting"/}
+    </h1>
+    <p>
+        hello.
+    </p>
+    <div>
+        <div>
+            状态：
+            <select id="stauts">
+                <option value="">全部</option>
+                <option value="wait">运行中</option>
+                <option value="sucess">已完成</option>
+                <option value="failed">已失败</option>
+            </select>
+             <input type="text" id="txtSite" />
+            <input type="button" id="btnSearch" value="查询" />
+            <a href="#" id="getNotAutoList">待人工处理</a>
+        </div>
+        <div id="FlexiGrid_ContentDiv">
+            <table id="FlexiGrid_ContentTable" style="display: none">
+            </table>
+        </div>
+        <div name="customPager" id="flexiGridPager" for="FlexiGrid_ContentTable" style="padding-top: 4px;
+            display: none">
+        </div>
+        <input type="hidden" name="_csrf" value="{{_csrf}}" />
+    </div>
+</div>
+{% endblock %} 
+{% block scripts %}
+<script src="../js/jquery-1.8.2.js" type="text/javascript"></script>
+<script src="../js/lib/jquery.flexigrid.js" type="text/javascript"></script>
+<script src="../js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+    var _currentOperateLog;
+    $(function () {
+        $('#btnSearch').click(function(){
+            var options = [{ name: "status",value: $('#stauts').val() },
+                           { name: "site",value: $('#txtSite').val() }];
+            $("#FlexiGrid_ContentTable").setNewExtParam(options);
+            $("#FlexiGrid_ContentTable").flexReload();
+        });
+
+
+        $('#btnOperate').click(function(){
+             
+        });
+
+        initFlexiGrid();
+    });
+
+
+    function initFlexiGrid() { 
+        var logs = {
+            "page": 1,
+            "total": {{ total }},
+            "userdata": { 
+            }
+        };
+
+        var option = {
+            data: logs,
+            autoPager: false,
+            autoToolBar: true,
+            colResizable: true,
+            mutilRowMessage: true,
+            showLoading: true,
+            showMessageOnRowClicked: true,
+            url: '/order/list',
+            colModel: [
+                { display: "名称",name: "site",type: 0,visible: true,width: "150",sortable: true,align: "left" },
+                { display: "状态", name: "autoRetry",type: 0,visible: true, width: "100", sortable: true,align: "left" },
+                { display: "创建日期",name: "startTime", type: 0,visible: true,width: "200",sortable: true,align: "left" },
+            ],
+            onInited: flexiGridInited,
+            onPreLoad: flexiGridPreLoad,
+            onLoaded: flexiGridLoaded,
+            onCommand: flexiGridCommand,
+            autoload: false,
+            columnsFixed: true,
+            checkCell: {
+                showCheckAll: true,
+                width: "25"
+            },
+            gridClass: "bbit-grid",
+            bootStrapSupported: false,
+            resizable: false,
+            showTableToggleBtn: false,
+            usepager: true,
+            useRp: true,
+            rp: 1,
+            singleselected: false,
+            nowrap: true,
+            showcheckbox: false,
+            rpOptions: [10,20,30],
+            newp: 1,
+            selectedonclick: false
+        };
+
+        $("#FlexiGrid_ContentTable").flexigrid(option);
+        var csrf = $('input[name="_csrf"]').val();
+        $("#FlexiGrid_ContentTable").setNewExtParam([{name: "_csrf",value: csrf }]);
+    }
+
+    onToggoleLeft = function () {
+        $('#FlexiGrid_ContentTable').fixGridWidth();
+    };
+
+    function flexiGridInited(options) {
+        debugger
+        var option = { 
+            pagerContainer: $("#flexiGridPager"),
+            numDisplayEntries: 2, 
+            numEdgeEntries: 2
+        };
+        $("#FlexiGrid_ContentTable").flexiGridPager(option);
+        return options;
+    }
+
+    function flexiGridLoaded(options){
+        $('a[name="manualOperate"]').click(function(){
+            var logId = $(this).attr("data-logId");
+            var operateLog;
+            for(var i = 0; i < options.logs.length;i++){
+                if(options.logs[i]._id == logId){
+                    operateLog = options.logs[i];
+                    break;
+                }
+            }
+
+            if(operateLog){
+                _currentOperateLog = operateLog;
+                $('#txtOperateAmount').val(operateLog.orgOperate.orderAmount)
+            }
+        });
+    }
+
+    function flexiGridPreLoad(options){
+        debugger
+        var  data = {
+            "page": options.page,
+            "total": options.total,
+            "dataType": "json",
+            "rows": [],
+             //emptyHtml: "一代风流",
+            "userdata": {}
+        };
+
+        var getLogOperateDesc = function(logOperate,isCurrent){
+            var desc, operate = logOperate.orgOperate;
+            if(operate.action == "transfer"){
+                desc = w.format("从{0}网站转出{1}个{2}至{3}网站",operate.transferSource,operate.orderAmount,operate.symbol,operate.transferTarget);
+            } else { //order 
+                desc = w.format("从{0}网站{1}个{2}",operate.site,operate.side == 'sell' ? '卖出' : '买入',operate.symbol);
+            }
+
+            if(isCurrent && !operate.auto){
+                desc += '<br/>';
+                desc += w.format('<a href="#" name="manualOperate" data-logId="{0}">手动操作</a>',logOperate._id);
+            }
+
+            return desc;
+        }
+
+        var orders = options.orders || [];
+        //logs.push({});logs.push({});logs.push({});data.total = 3;
+        for(var i = 0; i < orders.length; i++){
+            var item = orders[i];
+            var row = {
+                "id": log._id,
+                "itemMessage": "",
+                "cell": [
+                    {
+                        "cellHtml": '<a href="' + log.strategy._id + '">' + log.strategy.name + '</a>',
+                        "isReadOnly": true,
+                        "attrs": []
+                    },
+                    {
+                        "cellHtml": log.status,
+                        "isReadOnly": true,
+                        "attrs": []
+                    },
+                    {
+                        "cellHtml": w.format("已处理{0}项",log.currentStep),
+                        "isReadOnly": true,
+                        "attrs": []
+                    },
+                    {
+                        "cellHtml": currentStepDesc,
+                        "isReadOnly": true,
+                        "attrs": []
+                    },
+                    {
+                        "cellHtml": w.dateformat(log.startTime,"yyyy-MM-dd hh:mm:ss"),
+                        "isReadOnly": true,
+                        "attrs": []
+                    },
+                    {
+                        "cellHtml": w.dateformat(log.endTime,"yyyy-MM-dd hh:mm:ss"),
+                        "isReadOnly": true,
+                        "attrs": []
+                    }
+                ],
+                "attrs": []
+            };
+            data.rows.push(row);
+        }
+
+        return data;
+    }
+
+    function flexiGridCommand(sender, e) {
+        var operateBtn = sender;
+        var btnValue = $(operateBtn).attr("dataValue");
+        var commandName = $(operateBtn).attr("commandName");
+    }
+
+    onToggoleLeft = function () {
+        $('#refundRecordFlexiGrid_ContentTable').fixGridWidth();
+    };
+
+    function runTransferStep(){
+        var sAmount = $('#txtOperateAmount').val();
+        var amount = new Number(sAmount);
+        if(isNaN(amount) || !isFinite(amount)){
+            alert('请输入正确的金额');
+            return;
+        }
+
+        var options = {
+            logId: _currentOperateLog._id,
+            amount
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/transferStrategysLog/runTransferStep",
+            data: options,
+            dataType: 'json'
+        }).done(function (e) {
+
+            if (e.isSuccess) {
+                alert("成功！");
+            }
+            else {
+                alert("系统错误，请稍后重试！");
+            }
+        }).fail(function (e) {
+            alert("系统错误，请稍后重试！");
+        });
+    }
+
+    function updateStepStatus() {
+        var options = {
+            transferId: 0,
+            status: "wait"
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/personal/transferStrategysLog/updateStepStatus",
+            data: options,
+            dataType: 'json'
+        }).done(function (e) {
+
+            if (e.isSuccess) {
+                alert("成功！");
+            }
+            else {
+                alert("系统错误，请稍后重试！");
+            }
+        }).fail(function (e) {
+            alert("系统错误，请稍后重试！");
+        });
+    }
+
+</script>
+{% endblock %}
+

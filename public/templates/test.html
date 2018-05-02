@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        .clients, .account_strategys
+        {
+            border: 1px solid #ccc;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        .client_item, .account_strategy
+        {
+            padding: 10px;
+            height: 60px;
+        }
+        .client_item_line, .account_strategy_line
+        {
+            border-bottom: 1px dotted #ccc;
+        }
+        .client_item_site, .account_strategy_symbol
+        {
+            float: left;
+            width: 150px;
+        }
+        .client_item_app, .account_strategy_info
+        {
+            float: left;
+            padding-left: 20px;
+        }
+        
+        .clear
+        {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <div id="pnlMoreStrategy">
+        Site:
+        <input type="text" id="address_site" />
+        <br />
+        symbol:
+        <input type="text" id="address_symbol" />
+        <br />
+        Address:<input type="text" id="coin_address" />
+        <br />
+        Fee:
+        <input type="text" id="trade_fee" />
+        <div>
+            <input type="button" id="add_address" value="保存" />
+        </div>
+        <div id="pnlMoreStrategys">
+            <ul class="account_strategys" id="coin_addresses">
+            </ul>
+            <script id="tmplAddress" type="text/template">
+                <li class="account_strategy account_strategy_line" data-itemId="<%= strategy.itemId%>" >
+                    <div class="account_strategy_site">
+                        <span style="display: inline-block;">
+                        </span> <span> <a href="http://www.huobi.com"><%= strategy.name %></a> </span> 
+                        
+                    </div>
+                    <div class="account_strategy_app">
+                        <div class="account_strategy_appInfo">
+                            <div data-site="huobi"  name="appKey">
+                                <%= strategy.desc %>
+                            </div>
+                        </div>
+                        <div>
+                             <%= strategy.isValid ? '' : '已被停用' %>
+                            <a name="setAdvanceStrategy" href="#">设置</a>
+                            <a name="stopAdvanceStrategy" href="#">停用</a> 
+                            <a name="delAdvanceStrategy" href="#">删除</a>
+                        </div>
+                    </div>
+                    <div class="clear" />
+                </li>
+            </script>
+        </div>
+    </div>
+    <script src="../js/jquery-1.8.2.js" type="text/javascript"></script>
+    <script src="../js/common.js" type="text/javascript"></script>
+    <!--    <script src="http://tkell.cn/WebNuke/metronic/theme/assets/global/plugins/bootstrap/js/bootstrap.min.js?cdv=40"
+        type="text/javascript"></script>-->
+    <script type="text/javascript">
+        
+        var _addresses = [
+           { site: "huobi", addresses: [{ symbol: "btc", address: "354", fee: 1}] },
+           { site: "okcoin", addresses: [{ symbol: "btc", address: "32434", fee: 1 }] }
+        ];
+
+        var _business = { sites: ['huobi','okcoin'] };
+
+        $(function () {
+            showAddresses();                                                                
+            $('#add_address').click(function () {
+                saveCoinAddress();                              
+            });
+        });
+
+
+        function showAddresses() {
+            var tempSource = $('#tmplAddress').html();
+            debugger
+            var table = $('<table/>');
+            for (var i = 0; i < _business.sites.length; i++) {
+                var site = _business.sites[i];
+                var tr = $('<tr/>').appendTo(table).attr('data-site', site).css('padding-bottom', '10px');
+
+                var $tdSymbol = $('<td/>').appendTo(tr).attr('valign', 'top')
+                            .css('min-width', '80px').css('padding', '5px 0 5px 0');
+                var $tdSteps = $('<td/>').appendTo(tr).attr('valign', 'top').css('padding', '5px 0 5px 0');
+
+                $tdSymbol.html(site);
+                if (i != _business.sites.length - 1) {
+                    $tdSymbol.css('border-bottom', '1px solid #ccc');
+                    $tdSteps.css('border-bottom', '1px solid #ccc');
+                }
+
+                var source = [];
+                var lastItem = { siteA: '', siteB: '' };
+                var addresses = getSiteAddresses(site);
+
+                for (var j = 0; j < addresses.length; j++) {
+                    var item = addresses[j];
+                    source.push(w.format('<div data-site="{0}" data-symbol="{1}">', site, item.symbol));
+                    source.push(w.format(' {0} : {1} <br/>',item.symbol, item.address));
+                    source.push('<a href="#" name="setAddress">update</a>  ');
+                    source.push('<a href="#" name="deleteAddress">delete</a>');
+                    source.push('</div>');
+
+                    if (j != addresses.length - 1) {
+                        source.push('<hr style=" border:1px dashed #ccc; border-style:dashed;" />');
+                    }
+                }
+
+                $tdSteps.html(source.join(''));
+            }
+
+            $('#coin_addresses').html('');
+            $('#coin_addresses').append(table);
+
+            $('a[name="setAddress"]').click(function () {
+                var site = $(this).closest('div').attr('data-site');
+                var symbol = $(this).closest('div').attr('data-symbol');
+                var address = getAddress(site, symbol);
+
+                _editAddress = address;
+                $('#address_site').val(address.site);
+                $('#address_symbol').val(address.symbol);
+                $('#coin_address').val(address.address);
+                $('#trade_fee').val(address.fee);
+
+            });
+
+            $('a[name="deleteAddress"]').click(function () {
+                var site = $(this).closest('div').attr('data-site');
+                var symbol = $(this).closest('div').attr('data-symbol');
+
+                var address = getAddress(site, symbol);
+                deleteCoinAddress(address);
+            });
+        }
+
+        function getSiteAddresses(site) {
+            for (var i = 0; i < _addresses.length; i++) {
+                if (_addresses[i].site == site) {
+                    return _addresses[i].addresses;
+                }
+            }
+        }
+
+        function getAddress(site,symbol,addresses) {
+            addresses = addresses || getSiteAddresses(site);
+
+            for (var i = 0; i < addresses.length; i++) {
+                if (addresses[i].symbol == symbol) {
+                    addresses[i].site = site;
+                    return addresses[i];
+                }
+            }
+        }
+
+        function deleteCoinAddress(address) {
+            $.ajax({
+                type: "POST",
+                url: "/personal/account/deleteCoinAddress",
+                data: { address: address, "_csrf": $('input[name="_csrf"]').val() },
+                dataType: 'json'
+            }).done(function (e) {
+                if (e.isSuccess) {
+                    var index = _addresses.indexOf(address);
+                    if (index >= 0) {
+                        _addresses.splice(index, 1);
+                        showAddresses();
+                    }
+
+                    alert("成功！");
+                }
+                else {
+                    alert("系统错误，请稍后重试！");
+                }
+            }).fail(function (e) {
+                alert("系统错误，请稍后重试！");
+            });
+        }
+
+        function saveCoinAddress() {
+            var address_site = $('#address_site').val();
+            var address_symbol = $('#address_symbol').val();
+            var coin_address = $('#coin_address').val();
+            var trade_fee = $('#trade_fee').val();
+
+            var address;
+            for (var i = 0; i < _addresses.length; i++) {
+                if (_addresses[i].site == address_site && _addresses[i].symbol == address_symbol) {
+                    address = _addresses[i];
+                }
+            }
+            if (!address) {
+                address = address || {};
+                _addresses.push(address);
+            }
+
+            address.site = address_site;
+            address.symbol = address_symbol;
+            address.address = coin_address;
+            address.fee = trade_fee;
+
+            $.ajax({
+                type: "POST",
+                url: "/account/saveCoinAddress",
+                data: { address: address, "_csrf": $('input[name="_csrf"]').val() },
+                dataType: 'json'
+            }).done(function (e) {
+                if (e.isSuccess) {
+                    showAddresses();
+                    alert("成功！");
+                }
+                else {
+                    alert("系统错误，请稍后重试！");
+                }
+            }).fail(function (e) {
+                alert("系统错误，请稍后重试！");
+            });
+        }
+
+    </script>
+</body>
+</html>

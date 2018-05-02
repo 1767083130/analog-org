@@ -1,0 +1,30 @@
+{% extends "layouts/master.html" %}
+
+{% block body %}
+    <div>
+        <form id="loginForm" method="post">
+            <fieldset>
+                <h2>Login</h2>
+
+                <table>
+                    <tr>
+                        <td><label for="username">Login: </label></td>
+                        <td><input id="username" name="username" value="lcm" type="text"/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="password">Password: </label></td>
+                        <td><input id="password" name="password" value="lcm" type="password"/></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="submit" value="Login"/>
+                            <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}
