@@ -1,0 +1,104 @@
+﻿{% extends "layouts/master.html" %} {% block header %}
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Bootstrap - 简洁、直观、强悍、移动设备优先的前端开发框架，让web开发更迅速、简单。">
+<meta name="keywords" content="HTML, CSS, JS, JavaScript, framework, bootstrap, front-end, frontend, web development">
+<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+<meta name="author" content="译者：王赛 <wangsai@bootcss.com>">
+<title>Bootstrap 中文文档 </title>
+<!-- Bootstrap core CSS -->
+<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<link href="http://v3.bootcss.com/assets/css/patch.css" rel="stylesheet">
+<!-- Documentation extras -->
+<link href="http://v3.bootcss.com/assets/css/docs.min.css" rel="stylesheet">
+<!--[if lt IE 9]><script src="../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+<script src="http://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script>
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<!-- Favicons -->
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico">
+<script>
+    var _hmt = _hmt || [];
+</script>
+{% endblock %} {% block body %}
+<main style="display: none;" tabindex="-1" class="bs-docs-masthead" id="content"
+    role="main">
+  <div class="container">
+    <span class="bs-docs-booticon bs-docs-booticon-lg bs-docs-booticon-outline">B</span>
+    <p class="lead">Bootstrap 是最受欢迎的 HTML、CSS 和 JS 框架，用于开发响应式布局、移动设备优先的 WEB 项目。</p>
+    <p class="lead">
+      <a class="btn btn-outline-inverse btn-lg" onclick="_hmt.push(['_trackEvent', 'docv3-navbar', 'click', 'V3首页大图-下载Bootstrap按钮'])" href="/CreateDeck">创建幻灯片</a>
+    </p>
+    <p class="version">当前版本： v3.3.5 | 文档更新于：2015-06-22</p>
+  </div>
+</main>
+<div>
+    <a href="/Pay/PayTry">如何集成到网站?</a> 应用Key:{{ client.clientIdentifier }} <a id="lnkViewApp"
+        href="#">查看应用 </a>
+    <div>
+        应用Key：{{ client.clientIdentifier }} 应用校验码 ：<span id="clientSecret">{{ client.clientSecret
+            }}</span><a id="lnkCreateSecret" href="#">重新生成</a>
+    </div>
+</div>
+<div>
+    总额：{{ account.total }} 正在提现：{{ account.frozenAmount }} <a id="A1" href="#">我的提现记录
+    </a>
+</div>
+<div class="bs-docs-featurette">
+    <div class="container">
+    </div>
+</div>
+{% endblock %} {% block scripts %}
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="http://tkell.cn/WebNuke/plugins/jquery/1.11.1/jquery.js?cdv=40" type="text/javascript"></script>
+<script src="http://tkell.cn/WebNuke/metronic/theme/assets/global/plugins/bootstrap/js/bootstrap.min.js?cdv=40"
+    type="text/javascript"></script>
+<script src="../assets/js/docs.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../assets/js/ie10-viewport-bug-workaround.js"></script>
+<script type="text/javascript">
+//        account: account, 
+//        accountDetails: values[0],
+    //        client: values[1]
+    {% for item in accountDetails %}
+
+    {% else %}
+        This would display if the 'item' collection were empty
+    {% endfor %} 
+
+    $(function () {
+        //重新生成应用的Secret
+        $("#lnkCreateSecret").click(function () {
+            var params = {};
+            // Request the remote document
+	        jQuery.ajax({
+		        url: "/account/resetClient",
+		        type: "GET",
+		        dataType: "json",
+		        data: params
+	        }).done(function( responseText ) {
+
+	        });
+        });
+    });
+</script>
+<!-- Analytics
+================================================== -->
+<script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fbdb993b828cbe079a7fbc1a951f44726' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<!-- 全局统计代码 -->
+<script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F079fac161efc4b2a6f31e80064f14e82' type='text/javascript'%3E%3C/script%3E"));
+</script>
+{% endblock %}

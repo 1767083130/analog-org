@@ -1,0 +1,29 @@
+.clients, .account_strategys {
+    border: 1px solid #ccc;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.client_item, .account_strategy {
+    padding: 10px;
+    height: 100px;
+}
+
+.client_item_line, .account_strategy_line {
+    border-bottom: 1px dotted #ccc;
+}
+
+.client_item_site, .account_strategy_symbol {
+    float: left;
+    width: 150px;
+}
+
+.client_item_app, .account_strategy_info {
+    float: left;
+    padding-left: 20px;
+}
+
+.clear {
+    clear: both;
+}

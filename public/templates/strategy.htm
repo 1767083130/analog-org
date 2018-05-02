@@ -1,0 +1,1551 @@
+﻿{% extends "layouts/master.html" %} 
+{% block body %}
+<h1>
+    {@pre type="content" key="greeting"/}
+</h1>
+<p>
+    hello.
+</p>
+<style type="text/css">
+    .clients, .account_strategys {
+        border: 1px solid #ccc;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .client_item, .account_strategy {
+        padding: 10px;
+        height: 60px;
+    }
+
+    .client_item_line, .account_strategy_line {
+        border-bottom: 1px dotted #ccc;
+    }
+
+    .client_item_site, .account_strategy_symbol {
+        float: left;
+        width: 150px;
+    }
+
+    .client_item_app, .account_strategy_info {
+        float: left;
+        padding-left: 20px;
+    }
+
+    .clear {
+        clear: both;
+    }
+</style>
+<div>
+    <input type="button" id="btnAccount" data-panel="pnlAccount" value="accounts" />
+    <input type="button" id="btnClient" data-panel="pnlClient" value="client identifier" />
+    <input type="button" id="btnStrategy" data-panel="pnlStrategy" value="strategy" />
+    <input type="button" id="btnAccountStrategy" data-panel="pnlAccountStrategys" value="Account Strategy" />
+    <input type="button" id="btnOrders" data-panel="pnlOrders" value="Orders" />
+    
+</div>
+<div id="pnlAccount" name="panel">
+    <div class="account_sites" name="check_sites">
+    </div>
+    <div>
+        <input type="button" id="btnSyncAccounts" value="sync" />
+        <input type="hidden" name="_csrf" value="{{_csrf}}" />
+    </div>
+    <div id="accounts">
+    </div>
+
+    <script id="siteItems" type="text/template">
+        <table>
+            <% for ( var i = 0; i < siteItems.length; i++ ) { %>
+            <tr>
+                <td><%= siteItems[i].site %></td>
+                <td>
+                    此账户总共有<%= siteItems[i].symbols.length %>种币，其中：
+                    <% for ( var j = 0; j < siteItems[i].symbols.length; j++ ) { %>
+                    <%= siteItems[i].symbols[j].symbol %>
+                    总共有<%= siteItems[i].symbols[j].total %>,
+                    冻结<%= siteItems[i].symbols[j].frozen %>，
+                    可用<%= siteItems[i].symbols[j].available %>
+                    <% } %>
+                </td>
+            </tr>
+            <% } %>
+        </table>
+    </script>
+</div>
+<div id="pnlClient" name="panel" style="display: none;">
+    <div style="padding:5px;">
+        <a href="#" data-childpanel="pnlClientApp">clients</a>
+        <a href="#" data-childpanel="pnlCoinAddress">address</a>
+    </div>
+
+    <div id="pnlClientApp" name="childpanel">
+        <div class="clientEditor" style="display: none;">
+            <div style="display:none;">
+                site:
+                <select id="dropSites" name="sites"></select>
+            </div>
+            <div>
+                appkey:
+                <input type="text" id="txtAppKey" style="width: 40px;" />
+            </div>
+            <div>
+                appSecret:
+                <input type="text" id="txtAppSecret" style="width: 40px;" />
+            </div>
+            <div>
+                <input type="button" id="btnUpdateClient" value="保存" />
+                <input type="button" id="btnClientCancel" value="取消" />
+            </div>
+        </div>
+        <ul class="clients">
+            <li class="client_item client_item_line" style="display:none;">
+                <div class="client_item_site">
+                    <span style="display: inline-block;">
+                    </span> <span> <a href="http://www.huobi.com">huobi</a> </span>
+                </div>
+                <div class="client_item_app">
+                    <div class="client_item_appInfo">
+                        <div data-site="huobi" name="appKey">
+                            AppKey:XXXXXXXXXX
+                        </div>
+                    </div>
+                    <div>
+                        <a data-site="huobi" data-site="huobi" name="lnkSetClient" href="#">设置</a>
+                        <a data-site="huobi" data-site="huobi" name="lnkStopClient" href="#">停用</a>
+                    </div>
+                </div>
+                <div class="clear" />
+            </li>
+
+        </ul>
+        <script id="tmplClientItem" type="text/template">
+            <li class="client_item client_item_line">
+                <div class="client_item_site">
+                    <span style="display: inline-block;">
+                    </span> <span> <a href="http://www.huobi.com"><%= client.site %></a> </span>
+                </div>
+                <div class="client_item_app">
+                    <div class="client_item_appInfo">
+                        <div data-site="<%=  client.site  %>" name="appKey">
+                            AppKey:XXXXXXXXXX
+                        </div>
+                    </div>
+                    <div>
+                        <a data-site="<%= client.site  %>" name="lnkSetClient" href="#">设置</a>
+                        <a data-site="<%= client.site  %>" name="lnkStopClient" href="#"> <%= client.isValid ? "停用" : "启用" %></a>
+                    </div>
+                </div>
+                <div class="clear" />
+            </li>
+        </script>
+    </div>
+    <div id="pnlCoinAddress" name="childpanel" style="display:none;">
+        Site:
+        <input type="text" id="address_site" />
+        <br />
+        symbol:
+        <input type="text" id="address_symbol" />
+        <br />
+        Address:<input type="text" id="coin_address" />
+        <br />
+        Fee:
+        <input type="text" id="trade_fee" />
+        <div>
+            <input type="button" id="add_address" value="保存" />
+        </div>
+        <div id="pnlMoreStrategys0">
+            <ul class="account_strategys" id="coin_addresses"></ul>
+            <script id="tmplAddress" type="text/template">
+                <li class="account_strategy account_strategy_line" data-itemId="<%= strategy.itemId%>">
+                    <div class="account_strategy_site">
+                        <span style="display: inline-block;">
+                        </span> <span> <a href="http://www.huobi.com"><%= strategy.name %></a> </span>
+
+                    </div>
+                    <div class="account_strategy_app">
+                        <div class="account_strategy_appInfo">
+                            <div data-site="huobi" name="appKey">
+                                <%= strategy.desc %>
+                            </div>
+                        </div>
+                        <div>
+                            <%= strategy.isValid ? '' : '已被停用' %>
+                            <a name="setAdvanceStrategy" href="#">设置</a>
+                            <a name="stopAdvanceStrategy" href="#">停用</a>
+                            <a name="delAdvanceStrategy" href="#">删除</a>
+                        </div>
+                    </div>
+                    <div class="clear" />
+                </li>
+            </script>
+        </div>
+
+    </div>
+</div>
+<div id="pnlAccountStrategys" name="panel" style="display:none;">
+    <div>
+        整体仓位：<input type="text" id="totalPosition" />
+    </div>
+    <div class="accountStrategyEditor">
+        <div>
+            Symbol:
+            <select id="dropSymbols" name="symbols"></select>
+        </div>
+        <div>
+            position:
+            <input type="text" id="position" />
+        </div>
+        <div>
+            priority:
+            <select id="priority">
+                <option value="sell">sell</option>
+                <option value="buy">buy</option>
+                <option value="none">none</option>
+                <option value="custom">custom</option>
+            </select>
+        </div>
+        <div id="panelPriorityPosition" style="display:none;">
+            priorityPosition:
+            <input type="text" id="priorityPosition" />
+        </div>
+        <div>
+            <input type="button" id="addAccountStrategy" value="添加" />
+        </div>
+    </div>
+    <div class="account_strategys"></div>
+
+    <input type="button" id="saveAccountStrategys" value="保存" />
+</div>
+<div id="pnlStrategy" name="panel" style="display: none;">
+    <div>
+        profile：<input type="text" style="width: 40px;" id="txtProfile" value="0.2" />
+        %
+        <div>
+            <a href="#" id="lnkAdvance">advance</a>
+            <a href="#" id="lnkMoreAdvance">more advance</a>
+        </div>
+    </div>
+    <div id="pnlStrategyAdvance">
+        <div id="pnlStrategyStep">
+            <div>
+                <select id="step_symbol" name="symbols"></select>
+                :
+                <select id="step_siteA" name="sites"></select>
+                >
+                <select id="step_siteB" name="sites"></select>超过<input type="text" id="step_range" style="width: 40px;" />
+                %时,<input type="text" maxlength="4" style="width: 40px;" id="step_amount" />% <a href="#"
+                                                                                                 id="step_add">add</a>
+            </div>
+        </div>
+        <div id="pnlStrategyList">
+            <table id="steps"></table>
+        </div>
+        <div>
+            <input type="button" id="btnSaveStrategy" value="保存" />
+        </div>
+    </div>
+
+    <div id="pnlMoreStrategy" style="display:none;">
+        Name: <input type="text" id="txtStrategyName" />
+        <br />
+        Desc:<input type="text" id="txtStrategyDesc" />
+        <br />
+        Priority: <input type="text" id="txtPriority" />
+        <br />
+        Conditions:<textarea rows="5" cols="60" id="txtStrategyCondition"></textarea>
+        <br />
+        Operates:<textarea rows="5" cols="60" id="txtStrategyOperates"></textarea>
+        <div>
+            <input type="button" id="btnSaveAdvanceStrategy" value="保存" />
+        </div>
+        <div id="pnlMoreStrategys">
+            <input type="button" id="btnNewAdvanceStrategy" value="新建" /> <br />
+            <ul class="account_strategys" id="moreStrategys"></ul>
+
+            <script id="tmplStrategyItem" type="text/template">
+                <li class="account_strategy account_strategy_line" data-itemId="<%= strategy.itemId%>">
+                    <div class="account_strategy_site">
+                        <span style="display: inline-block;">
+                        </span> <span> <a href="http://www.huobi.com"><%= strategy.name %></a> </span>
+
+                    </div>
+                    <div class="account_strategy_app">
+                        <div class="account_strategy_appInfo">
+                            <div data-site="huobi" name="appKey">
+                                <%= strategy.desc %>
+                            </div>
+                        </div>
+                        <div>
+                            <%= strategy.isValid ? '' : '已被停用' %>
+                            <a name="setAdvanceStrategy" href="#">设置</a>
+                            <a name="stopAdvanceStrategy" href="#">停用</a>
+                            <a name="delAdvanceStrategy" href="#">删除</a>
+                        </div>
+                    </div>
+                    <div class="clear" />
+                </li>
+            </script>
+        </div>
+    </div>
+</div>
+
+<div id="pnlOrders" name="panel" style="display:none">
+    <!--<div class="account_sites" name="check_sites">
+    </div>-->
+    <div>
+        <select id="dropOrderSites" name="sites"></select>
+        <input type="button" id="btnSyncRecentOrders" value="sync recent orders" />
+    </div>
+</div>
+{% endblock %} 
+{% block scripts %}
+<script src="../js/jquery-1.8.2.js" type="text/javascript"></script>
+<script src="../js/common.js" type="text/javascript"></script>
+<!--<script src="http://tkell.cn/WebNuke/metronic/theme/assets/global/plugins/bootstrap/js/bootstrap.min.js?cdv=40"
+    type="text/javascript"></script>-->
+<!- account & common ->
+<script type="text/javascript">
+    var _showAccounts = true;
+    var _userName = '{{ userName }}';
+    var _accounts = {{ accounts | safe }};
+    var _business = {{ business | safe }} ;
+
+    $(function () {
+        //common
+        $(':button[data-panel]').click(function () {
+            $('div[name="panel"]').hide();
+            $('#' + $(this).attr('data-panel')).show();
+
+            if ($(this).attr("data-panel") != "pnlAccount") {
+                _showAccounts = false;
+            }
+        });
+
+        $('a[data-childpanel]').click(function(){
+            $('div[name="childpanel"]').hide();
+            $('#' + $(this).attr('data-childpanel')).show();
+        });
+
+        $('select[name="symbols"]').each(function(){
+            for(var i = 0; i < _business.symbols.length;i++){
+                var symbol = _business.symbols[i];
+                $('<option/>').appendTo(this).val(symbol).html(symbol);
+            }
+        });
+
+        $('select[name="sites"]').each(function(){
+            for(var i = 0; i < _business.sites.length;i++){
+                var site = _business.sites[i];
+                $('<option/>').appendTo(this).val(site).html(site);
+            }
+        });
+
+        initAccount();
+    });
+
+    function initAccount() {
+        for(var i = 0; i < _business.sites.length;i++){
+            var site = _business.sites[i];
+            $(w.format('<input type="checkbox" name="site" value="{0}" id="chk{0}" />',site)).appendTo('div[name="check_sites"');
+            $(w.format('<label for="chk{0}">{0}</label>',site)).appendTo('div[name="check_sites"');
+            //$('<option/>').appendTo(this).val(site).html(site);
+        }
+
+        $('#btnSyncAccounts').click(function () {
+            var sites = [];
+            $('input[name="site"]:checked','.account_sites').each(function () {
+                sites.push($(this).val());
+            });
+
+            if (sites.length == 0) {
+                alert("请选择网站");
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/personal/account/syncAccounts",
+                data: { sites: sites.join(','), "_csrf": $('input[name="_csrf"]').val() },
+                dataType: 'json'
+            }).done(function (e) {
+                if (e.isSuccess) {
+                    alert("成功！");
+                }
+                else {
+                    alert("系统错误，请稍后重试！");
+                }
+            }).fail(function (e) {
+                alert("系统错误，请稍后重试！");
+            });
+        });
+
+        setInterval(getAccounts, 1000);
+    }
+
+    function getAccounts() {
+        if (!_showAccounts) {
+            return;
+        }
+
+        var url = "/account/getAccounts";
+        $.getJSON(url, { isTest: false }, function (res) {
+            if (!res.isSuccess) {
+                return;
+            }
+
+            var getSymbolItem = function (symbol, items) {
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].symbol == symbol) {
+                        return items[i];
+                    }
+                }
+            };
+
+            var siteItems = [];
+            var accounts = res.accounts;
+            for (var i = 0; i < accounts.length; i++) {
+                var account = accounts[i];
+                var symbols = [];
+                for (var j = 0; j < account.totals.length; j++) {
+                    var item = account.totals[j];
+                    var frozenItem = getSymbolItem(item.symbol, account.frozens);
+                    var loanItem = getSymbolItem(item.symbol, account.loans);
+
+                    var frozenAmount = frozenItem ? frozenItem.amount : 0;
+                    var loanAmount = loanItem ? loanItem.amount : 0;
+                    var available = item.amount - frozenAmount - loanAmount;
+
+                    var symbol = { symbol: item.symbol, total: item.amount, frozen: frozenAmount, available: available };
+                    symbols.push(symbol);
+                }
+
+                var siteItem = { site: account.site, symbols: symbols };
+                siteItems.push(siteItem);
+            }
+
+            var tempSource = $('#siteItems').html();
+            var tempData = { "siteItems": siteItems };
+            var html = w.template(tempSource, tempData,1);
+            $("#accounts").html(html);
+        });
+    }
+</script>
+
+<!- client identity ->
+<script type="text/javascript">
+    var _clients = {{ clients | safe }};
+    var _clientSite; //当前编辑哪个网站的app授权
+    var _business = {{ business | safe }} ;
+
+    $(function () {
+        showClients();
+
+        $('#btnUpdateClient').click(function () {
+            addClient();
+        });
+
+        $('#btnClientCancel').click(function () {
+            //stopClient();
+            $('#txtAppKey').val('');
+            $('#txtAppSecret').val('');
+            $('.clientEditor').hide();
+        });
+    });
+
+    function showClients() {
+        var itemsSource = [];
+        var tempSource = $('#tmplClientItem').html();
+
+        for(var i = 0; i < _business.sites.length;i++){
+            var site = _business.sites[i];
+            var client = getClient(site);
+            var tempData = client ? { "client": client } : { "client": { site: site } };
+            var itemSource = w.template(tempSource, tempData, 1);
+
+            itemsSource.push(itemSource);
+        }
+
+        var source = itemsSource.join('');
+        $(".clients").html(source);
+
+        for (var i = 0; i < _clients.length; i++) {
+            var client = _clients[i];
+            $('div[name="appKey"][data-site="'+ client.site +'"]').html(client.appKey);
+        }
+
+        $('a[name="lnkSetClient"]').click(function () {
+            _clientSite = $(this).attr('data-site');
+            var client = getClient(_clientSite);
+            if(client){
+                $('#txtAppKey').val(client.appKey);
+                $('#txtAppSecret').val(client.appSecret);
+            }
+            else{
+                $('#txtAppKey').val('');
+                $('#txtAppSecret').val('');
+            }
+            $('.clientEditor').show();
+        });
+
+        $('a[name="lnkStopClient"]').click(function () {
+            var site = $(this).attr('data-site');
+            toggleClientValid(site);
+        });
+    }
+
+    function getClient(site){
+        for (var i = 0; i < _clients.length; i++) {
+            var client = _clients[i];
+            if(client.site == site){
+                return client;
+            }
+        }
+    }
+
+    function addClient() {
+        var site = _clientSite;
+        var appKey = $('#txtAppKey').val();
+        var appSecret = $('#txtAppSecret').val();
+
+        if (!appKey) { //todo
+            alert('appKey不能为空！');
+        }
+
+        if (!appSecret) {
+            alert('appSecret不能为空！');
+        }
+
+        var body = {
+            site: site,
+            appKey: appKey,
+            appSecret: appSecret,
+            _csrf: $('input[name="_csrf"]').val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/personal/account/updateClient",
+            data: body,
+            dataType: 'json'
+        }).done(function (e) {
+            if (e.isSuccess) {
+                _clients.push(e.client);
+                showClients();
+                alert("成功！");
+            }
+            else {
+                alert("系统错误，请稍后重试！");
+            }
+        }).fail(function (e) {
+            alert("系统错误，请稍后重试！");
+        });
+    }
+
+    function toggleClientValid(site) {
+        $.ajax({
+            type: "POST",
+            url: "/personal/account/toggleClientValid",
+            data: { site: site, "_csrf": $('input[name="_csrf"]').val() },
+            dataType: 'json'
+        }).done(function (e) {
+            if (e.isSuccess) {
+                var client = getClient(site);
+                if(client){
+                    client.isValid = !client.isValid;
+                }
+                showClients();
+                alert("成功！");
+            }
+            else {
+                alert("系统错误，请稍后重试！");
+            }
+        }).fail(function (e) {
+            alert("系统错误，请稍后重试！");
+        });
+    }
+</script>
+
+<!- account strategy ->
+<script type="text/javascript">
+    var _strategy = {{ strategy | safe }};
+
+    $(function () {
+        showAccountStrategy();
+
+        $('#addAccountStrategy').click(function () {
+            var position = $('#position').val();
+            var priority = $('#priority').val();
+            var symbol = $('#dropSymbols').val();
+
+            var priorityPosition;
+            if (priority == "custom") {
+                priorityPosition = $('#priorityPosition').val();
+                $('#panelPriorityPosition').show();
+            }
+            else{
+                $('#panelPriorityPosition').hide();
+            }
+
+            var editItem = {
+                symbol: symbol,
+                position: position, //所占仓位
+
+                priority: priority, //sell,buy,none,custom
+                priorityPosition: priorityPosition
+            };
+
+            var existItem = getSymbolItem(editItem.symbol);
+            if (existItem) {
+                var index = _strategy.account.strategys.indexOf(existItem);
+                _strategy.account.strategys[index] = editItem;
+            }
+            else {
+                _strategy.account.strategys.push(editItem);
+            }
+
+            showAccountStrategy();
+        });
+
+        $('#priority').change(function(){
+            var priority = $(this).val();
+            if(priority == "custom"){
+                $('#panelPriorityPosition').show();
+            }
+            else{
+                $('#panelPriorityPosition').hide();
+            }
+        });
+
+        $('#saveAccountStrategys').click(function () {
+            saveAccountStrategy();
+            //showAccountStrategy();
+        });
+    });
+
+    function editAccountStrategy(symbol) {
+        var symbolItem = getSymbolItem(symbol);
+
+        if(symbolItem.priority == 'custom'){
+            $('#panelPriorityPosition').show();
+        }
+        else{
+            $('#panelPriorityPosition').hide();
+        }
+
+        $('#dropSymbols').val(symbolItem.symbol);
+        $('#position').val(symbolItem.position);
+        $('#priority').val(symbolItem.priority);
+        $('#priorityPosition').val(symbolItem.priorityPosition);
+    }
+
+    function getSymbolItem(symbol) {
+        var existItem, symbols = _strategy.account.strategys;
+        for (var i = 0; i < symbols.length; i++) {
+            if (symbols[i].symbol == symbol) {
+                existItem = symbols[i];
+                break;
+            }
+        }
+
+        return existItem;
+    }
+
+    function showAccountStrategy() {
+        _strategy.account = _strategy.account || {};
+        _strategy.account.strategys = _strategy.account.strategys || [];
+
+        var totalPosition = _strategy.account.totalPosition || -1;
+        if(totalPosition != -1){
+            $('#totalPosition').val(totalPosition);
+        }
+
+        var table = $('<table/>');
+        var symbols = _strategy.account.strategys;
+        for (var i = 0; i < symbols.length; i++) {
+            var symbolItem = symbols[i];
+            var tr = $('<tr/>').appendTo(table).attr('data-symbol', symbolItem.symbol).css('padding-bottom', '10px');
+
+            var $tdSymbol = $('<td/>').appendTo(tr).attr('valign', 'top')
+                        .css('min-width', '80px').css('padding', '5px 0 5px 0');
+            var $tdStrategy = $('<td/>').appendTo(tr).attr('valign', 'top').css('padding', '5px 0 5px 0');
+            $tdSymbol.html(symbolItem.symbol);
+            if (i != symbols.length - 1) {
+                $tdSymbol.css('border-bottom', '1px solid #ccc');
+                $tdStrategy.css('border-bottom', '1px solid #ccc');
+            }
+
+            var source = [];
+            var $item = $('<div/>').appendTo($tdStrategy);
+            source.push(w.format('position: {0}  priority: {1}', symbolItem.position, symbolItem.priority));
+            if (symbolItem.priority == 'custom') {
+                source.push(w.format('priorityPosition: {0}',symbolItem.priorityPosition));
+            }
+
+            source.push(w.format('  <a href="#" data-symbol="{0}" name="editAccountStrategy">edit</a>', symbolItem.symbol));
+            source.push(w.format('  <a href="#" data-symbol="{0}"  name="removeAccountStrategy">remove</a>', symbolItem.symbol));
+
+            $item.html(source.join(''));
+        }
+
+        $('.account_strategys').html('');
+        $('.account_strategys').append(table);
+
+        $('a[name="editAccountStrategy"]').click(function () {
+            var symbol = $(this).attr('data-symbol');
+            editAccountStrategy(symbol);
+        });
+
+        $('a[name="removeAccountStrategy"]').click(function () {
+            var tr = $(this).closest('tr');
+            var symbol = $(tr).attr('data-symbol');
+
+            var symbolItem = getSymbolItem(symbol);
+            var index = _strategy.account.strategys.indexOf(symbolItem);
+            if (index != -1) {
+                _strategy.account.strategys.splice(index, 1);
+            }
+
+            $(tr).remove();
+        });
+    }
+
+    function saveAccountStrategy(){
+        var sTotalPosition = $.trim($('#totalPosition').val());
+        if(totalPosition){
+            if (!$.isNumeric(sTotalPosition)) {
+                return alert('请输入数字！');
+            }
+            var totalPosition = parseFloat(sTotalPosition);
+            _strategy.account.totalPosition = totalPosition;
+        }
+        else{
+            _strategy.account.totalPosition = -1;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/personal/account/saveAccountStrategy",
+            data: { accountStrategy:_strategy.account, "_csrf": $('input[name="_csrf"]').val() },
+            dataType: 'json'
+        }).done(function (e) {
+            if (e.isSuccess) {
+                alert("成功！");
+            }
+            else {
+                alert("系统错误，请稍后重试！");
+            }
+        }).fail(function (e) {
+            alert("系统错误，请稍后重试！");
+        });
+    }
+</script>
+
+<!- order strategy ->
+<script type="text/javascript">
+
+    var operates = ['+','-','*','/','\\','[',']', '(',')','?',':','&&', '||'];;
+    var conditionOperates = ['>=','<=','==','!=','>','<','='];
+    var symbols = operates.concat(conditionOperates);
+
+    var _strategy = {{ strategys | safe }};
+    var _isMoreAdvance = false;
+    var _symbolItems = []; //[{symbol: matches[2],steps: [{siteA: matches[1],siteB: matches[3],priceRange: stepRange,orderAmount: 1 }]}];
+    var _editStrategyId = 0;
+
+    _strategy.order = _strategy.order || {};
+    _strategy.order.strategys = _strategy.order.strategys || [];
+
+    $(function() {
+        var simpleIndexs = [];
+        for(var i = 0; i < _strategy.order.strategys.length; i++){
+            var strategy = _strategy.order.strategys[i];
+            if(strategy.isSimple){
+                var symbolItem = getSimpleStrategy(strategy);
+                if(symbolItem){
+                    var symbolSteps = getSymbolSteps(symbolItem.symbol);
+                    if(symbolSteps){
+                        symbolSteps.steps = symbolSteps.steps.concat(symbolItem.steps);
+                        //symbolSteps.steps.push(symbolItem.steps);
+                    } else {
+                        _symbolItems.push(symbolItem);
+                    }
+                }
+
+                simpleIndexs.push(i);
+            }
+        }
+        for(var i = simpleIndexs.length - 1; i >= 0; i--){
+            _strategy.order.strategys.splice(simpleIndexs[i],1);
+        }
+
+        showStrategySteps();
+        showAdvanceStrategys();
+
+        $('#lnkAdvance').click(function () {
+            $('#pnlStrategyAdvance').toggle();
+        });
+
+        $('#step_remove').click(function () {
+            $(this).parent('tr').remove();
+        });
+
+        $('#step_add').click(function () {
+            var step_symbol = $('#step_symbol').val();
+            var step_siteA = $('#step_siteA').val();
+            var step_siteB = $('#step_siteB').val();
+            var sStep_range = $('#step_range').val();
+            var sStep_amount = $('#step_amount').val();
+
+            if (!$.isNumeric(sStep_range)) {
+                return alert('请输入数字！');
+            }
+            var step_range = parseFloat(sStep_range);
+
+            if (!$.isNumeric(sStep_amount)) {
+                return alert('请输入数字！');
+            }
+            var step_amount = parseFloat(sStep_amount);
+
+            var step = {
+                siteA: step_siteA,
+                siteB: step_siteB,
+                priceRange: step_range,
+                orderAmount: step_amount
+            };
+
+            var res = checkStepValue(step_symbol, step);
+            if (!res.isSuccess) {
+                return alert(res.message);
+            }
+
+            addStrategyStep(step_symbol, step);
+        });
+
+
+        $('#lnkAdvance').click(function(){
+            $('#pnlStrategyAdvance').show();
+            $('#pnlMoreStrategy').hide();
+            isMoreAdvance = false;
+        });
+
+        $('#lnkMoreAdvance').click(function(){
+            $('#pnlStrategyAdvance').hide();
+            $('#pnlMoreStrategy').show();
+            isMoreAdvance = true;
+        });
+
+        $('#btnSaveStrategy').click(function(){
+            saveTransferStrategy();
+        });
+
+        $('#btnNewAdvanceStrategy').click(function(){
+            _editStrategyId = 0;
+
+            $('#txtStrategyName').val('');
+            $('#txtStrategyDesc').val('');
+            $('#txtPriority').val('0');
+            $('#txtStrategyCondition').val('');
+            $('#txtStrategyOperates').val('');
+        });
+
+        $('#btnSaveAdvanceStrategy').click(function(){
+            var strategyName = $('#txtStrategyName').val();
+            var strategyDesc = $('#txtStrategyDesc').val();
+            var priority = $('#txtPriority').val();
+            var strategyCondition = $('#txtStrategyCondition').val();
+            var strategyOperates = $('#txtStrategyOperates').val();
+
+
+            var orgConditions,orgOperates;
+            try{
+                orgConditions  = eval(strategyCondition);
+                orgOperates = eval(strategyOperates);
+            } catch (e) {
+                alert('条件表达式或操作步奏设置有误');
+                return;
+            }
+
+            var conditions = [],
+                operates = [];
+            if($.isArray(orgConditions)){
+                conditions = orgConditions;
+            } else if(typeof orgConditions == 'string'){
+                conditions = [];
+                conditions.push(orgConditions);
+            };
+
+            if($.isArray(orgOperates)){
+                operates = orgOperates;
+            } else if(typeof orgOperates == 'object'){
+                operates = [];
+                operates.push(orgOperates);
+            }
+
+            var newStrategy = {
+                name: strategyName,
+                //itemId: minStrategyId,
+                minAmount: 0, //todo 最低额度
+                isSimple: false,
+                isValid: true,
+                conditions: conditions || [],
+                operates: operates || [],
+                desc: strategyDesc,
+                priority: priority || 0
+            };
+
+            if(_editStrategyId){
+                var strategy = getStrategyByItemId(_editStrategyId);
+                var index = _strategy.order.strategys.indexOf(strategy);
+
+                newStrategy.itemId = _editStrategyId;
+                _strategy.order.strategys[index] = newStrategy;
+            }
+            else{
+                var minStrategyId = getMinStrategyId() - 1;
+                newStrategy.itemId = minStrategyId;
+                _strategy.order.strategys.push(newStrategy);
+            }
+
+            showAdvanceStrategys();
+            saveTransferStrategy();
+        });
+
+    });
+
+    function getStrategyByItemId(itemId){
+        var strategys = _strategy.order.strategys;
+        for(var i = 0; i < strategys.length; i++){
+            var strategy = strategys[i];
+            if(strategys[i].itemId == itemId){
+                return strategys[i];
+            }
+        }
+    }
+
+    function getMinStrategyId(){
+        var strategys = _strategy.order.strategys;
+        var minStrategyId = 0;
+        for(var i = 0; i < strategys.length; i++){
+            var strategy = strategys[i];
+            if($.isNumeric(strategys.itemId)){
+                itemId = parseInt(strategys.itemId);
+                if(minStrategyId > itemId){
+                    minStrategyId = itemId;
+                }
+            }
+        }
+
+        return minStrategyId;
+    }
+
+    /**
+     * @param {String} symbol,货币类型
+     * @step {Object} 简单的交易策略，格式为：{siteA: String,siteB: String,priceRange: Number,orderAmount: Number }
+     * @returns {Strategy.Order.strategys[i]} strategy,服务器端的交易策略
+     */
+    function getAdvanceStrategy(symbol,step){
+        var condition = _getSymbolStepsCondition(symbol,step);
+        var conditions = [];
+        conditions.push(condition);
+
+        var operates = [];
+        operates.push({
+            id : 1,
+            site: step.siteA, //平台名称
+            side: 'sell', //buy或sell
+            symbol: symbol, //cny、btc、ltc、usd
+            previousOrder: 0,
+            nextOrder: 0,
+            orderAmount: step.orderAmount
+        });
+
+        operates.push({
+            id : 2,
+            site: step.siteB, //平台名称
+            side: 'buy', //buy或sell
+            symbol: symbol, //cny、btc、ltc、usd
+            previousOrder: 0,
+            nextOrder: 0,
+            orderAmount: step.orderAmount
+        });
+
+        return {
+            //itemId: { type: Schema.ObjectId },
+            minAmount: 0, //最低额度 //todo
+            isSimple: true,
+            isValid: true,
+            conditions:conditions,
+            operates: operates
+        };
+    }
+
+    /**
+     * @param {Strategy.Order.strategys[i]} strategy,服务器端的交易策略
+     * 根据服务器端的交易策略，获取简单的交易策略
+     * @returns {symbol: String, steps: [{siteA: String,siteB: String,priceRange: Number, orderAmount: Number}]}
+     */
+    function getSimpleStrategy(strategy){
+        if(!strategy.isSimple
+        || (!strategy.conditions ||  strategy.conditions.length != 1)
+        || (!strategy.operates ||  strategy.operates.length != 2)){
+            return;
+        }
+
+        var condition = strategy.conditions[0];
+        var step = _getSimpleStrategySteps(condition);
+        if(!step){
+            return;
+        }
+
+        var getOpertate = function(side){
+            for(var i = 0; i < strategy.operates.length; i++){
+                if(strategy.operates[i].side == side){
+                    return step;
+                }
+            }
+        };
+
+        var orderAmount;
+        var buyOperate = getOpertate('buy');
+        var sellOperate = getOpertate('sell');
+        if(sellOperate){
+            orderAmount = sellOperate.orderAmount;
+        }
+        if(!orderAmount && buyOperate){
+            orderAmount = buyOperate.orderAmount;
+        }
+        step.orderAmount = orderAmount ? orderAmount : 100;
+
+        return step;
+    }
+
+    function _getSimpleStrategySteps(condition){
+        var express = '(' + conditionOperates.join('|') + ')(.*)$';
+        var reg = new RegExp(express,'ig');
+        var matches = reg.exec(condition);
+        if(matches && matches.index > -1){
+            var conditionOperate = matches[1];
+            var conditionValue =  matches[2];
+
+            var conditionItem = condition.substring(0,matches.index);
+            var stepRange = getConditionAmount(conditionValue);
+            if(!stepRange){
+                return;
+            }
+
+            matches = /\s*(\w+)\.(\w+)\s*-\s*(\w+)\.(\w+)\s*/ig.exec(condition);
+            if(matches && matches.index > -1){
+                var symbolItem = {
+                    symbol: matches[2],
+                    steps: [{
+                        siteA: matches[1],
+                        siteB: matches[3],
+                        priceRange: stepRange,
+                        orderAmount: 1
+                    }]
+                };
+
+                return symbolItem;
+            }
+        }
+
+        return false;
+    }
+
+    function _getSymbolStepsCondition(symbol,step){
+        //'(huobi.btc - okcoin.btc) / okcoin.btc > 0.1%'
+        return w.format('({0}.{1} - {2}.{1}) / {0}.{1} > {3}%',step.siteA, symbol ,step.siteB,step.priceRange);
+    }
+
+    function getConditionAmount(express){
+        var expressVal = express;
+        if(express.indexOf('%') != -1){
+            expressVal =  express.replace('%','');
+        }
+
+        var n = new Number(expressVal);
+        if(!isNaN(n) && isFinite(n)){
+            return parseFloat(expressVal);
+        }
+    }
+
+    function showAdvanceStrategys(){
+        var tempSource = $('#tmplStrategyItem').html();
+
+        var sources = [];
+        var strategys = _strategy.order.strategys;
+        for(var i = 0; i < strategys.length; i++){
+            if(!strategys[i].isSimple){
+                var tempData = { "strategy":  strategys[i]};
+                var source = w.template(tempSource, tempData,1);
+                sources.push(source);
+            }
+        }
+
+        var html = sources.join('');
+        $('#moreStrategys').html(html);
+
+        $('a[name="setAdvanceStrategy"]').click(function(){
+            var itemId = $(this).closest('li').attr('data-itemId');
+            var strategy = getStrategyByItemId(itemId);
+
+            _editStrategyId = strategy.itemId;
+
+            $('#txtStrategyName').val(strategy.name);
+            $('#txtStrategyDesc').val(strategy.desc);
+            $('#txtPriority').val(strategy.priority)
+            $('#txtStrategyCondition').val($.toJSON(strategy.conditions));
+            $('#txtStrategyOperates').val($.toJSON(strategy.operates));
+
+        });
+        $('a[name="stopAdvanceStrategy"]').click(function(){
+            var itemId = $(this).closest('li').attr('data-itemId');
+            var strategy = getStrategyByItemId(itemId);
+            if(strategy){
+                strategy.isValid = !strategy.isValid;
+                showAdvanceStrategys();
+                saveTransferStrategy();
+            }
+        });
+
+        $('a[name="delAdvanceStrategy"]').click(function(){
+            if(!confirm('Are you sure?')){
+                return;
+            }
+            var itemId = $(this).closest('li').attr('data-itemId');
+            var strategy = getStrategyByItemId(itemId);
+
+            var index =  _strategy.order.strategys.indexOf(strategy);
+            if(index >= 0){
+                _strategy.order.strategys.splice(index, 1);
+
+                showAdvanceStrategys();
+                saveTransferStrategy();
+            }
+        });
+    }
+
+    //***********  STEPS s *******
+    function showStrategySteps() {
+        var priceRange = _strategy.order.priceRange || 0.2;
+        $('#txtProfile').val(priceRange);
+
+        var table = $('<table/>');
+        var symbols = _symbolItems;//_strategy.order.strategys;
+        for (var i = 0; i < symbols.length; i++) {
+            var symbolItem = symbols[i];
+            var tr = $('<tr/>').appendTo(table).attr('data-symbol', symbolItem.symbol).css('padding-bottom', '10px');
+
+            var $tdSymbol = $('<td/>').appendTo(tr).attr('valign', 'top')
+                            .css('min-width', '80px').css('padding','5px 0 5px 0');
+            var $tdSteps = $('<td/>').appendTo(tr).attr('valign', 'top').css('padding', '5px 0 5px 0');
+
+            $tdSymbol.html(symbolItem.symbol);
+            if( i != symbols.length - 1){
+                $tdSymbol.css('border-bottom', '1px solid #ccc');
+                $tdSteps.css('border-bottom', '1px solid #ccc');
+            }
+
+            var source = [];
+            var lastItem = { siteA: '', siteB: '' };
+
+            for (var j = 0; j < symbolItem.steps.length; j++) {
+                var stepsLen = symbolItem.steps.length;
+                for (var j = 0; j < stepsLen; j++) {
+                    var step = symbolItem.steps[j];
+                    isChange = j != 0 && (step.siteA != lastItem.siteA || step.siteB != lastItem.siteB);
+
+                    if (isChange) {
+                        source.push('<a href="#" name="removeSteps">remove</a>');
+                        source.push('<hr style=" border:1px dashed #ccc; border-style:dashed;" />');
+                    }
+
+                    source.push(step.siteA + '转至' + step.siteB + '，当盈利点超过'
+                              + step.priceRange + '%时，额度为' + step.orderAmount);
+                    source.push('<br/>');
+
+                    if (j == stepsLen - 1) {
+                        source.push('<a href="#" name="removeSteps">remove</a>');
+                    }
+
+                    lastItem = step;
+                }
+            }
+
+            $tdSteps.html(source.join(''));
+        }
+
+        $('#steps').html('');
+        $('#steps').append(table);
+
+        $('a[name="removeSteps"]').click(function(){
+            var tr = $(this).closest('tr');
+            var symbol = $(tr).attr('data-symbol');
+
+            var index = -1;
+            for(var i = 0; i < _symbolItems.length; i++){
+                if(_symbolItems[i].symbol == symbol){
+                    index = i;
+                    break;
+                }
+            }
+            if(index != -1){
+                _symbolItems.splice(index,1);
+            }
+
+            $(tr).remove();
+        });
+    }
+
+    function addStrategyStep(symbol, step) {
+        var symbolItem = getSymbolSteps(symbol);
+
+        if (!symbolItem) {
+            symbolItem = { symbol: symbol, steps: [] };
+            _symbolItems.push(symbolItem);
+        }
+
+        sortSteps(symbolItem.steps);
+        symbolItem.steps.push(step);
+
+        showStrategySteps();
+    }
+
+    function getSymbolSteps(symbol) {
+        var symbolItem;
+        for (var i = 0; i < _symbolItems.length; i++) {
+            if (_symbolItems[i].symbol == symbol) {
+                symbolItem = _symbolItems[i];
+                break;
+            }
+        }
+
+        return symbolItem;
+    }
+
+    function sortSteps(steps) {
+        steps.sort(function (a, b) {
+            if (a.siteA != b.siteA) {
+                return a.siteA > b.siteA;
+            }
+            else if (a.siteB != b.siteB) {
+                return a.siteB > b.siteB;
+            }
+            return a.priceRange > b.priceRange;
+        });
+    }
+
+    function getSteps(symbol, siteA, siteB) {
+        var steps = [];
+        var symbolItem = getSymbolSteps(symbol);
+        if(!symbolItem){
+            return steps;
+        }
+
+        for (var i = 0; i < symbolItem.steps.length; i++) {
+            var step = symbolItem.steps[i];
+            if (step.siteA == siteA && step.siteB == siteB) {
+                steps.push(step);
+            }
+        }
+
+        return steps;
+    }
+
+    function checkStepValue(symbol, step) {
+        //symbol, siteA, siteB
+        var maxPriceRange = 0;
+        var totalAmount = 0;
+
+        var steps = getSteps(symbol,step.siteA, step.siteB);
+        for (var i = 0; i < steps.length; i++) {
+            var stepItem = steps[i];
+
+            if (stepItem.priceRange > maxPriceRange) {
+                maxPriceRange = stepItem.priceRange;
+            }
+
+            totalAmount += stepItem.orderAmount;
+        }
+
+        var res = {
+            isSuccess: true,
+            message: "",
+            totalAmount: totalAmount,
+            maxPriceRange: maxPriceRange
+        };
+
+        if (step.orderAmount + totalAmount > 100) {
+            res.isSuccess = false;
+            res.message = "设置的各项之和不能大于100%";
+
+        }
+        else if (step.priceRange <= maxPriceRange) {
+            res.isSuccess = false;
+            res.message = '当前项设置的盈利点必须高于之前的' + maxPriceRange + '%';
+        }
+
+        return res;
+    }
+
+    //*********** STEPS e *******
+
+    function saveTransferStrategy() {
+        var priceRange = $('#txtProfile').val();
+        if(!$.isNumeric(priceRange)){
+            return alert('盈利点只能为数字！');
+        }
+        _strategy.order.priceRange = priceRange;
+
+        //重新获取简单的策略 （先删除原有的，再重新从_symbolItems获取）
+        var strategys = _strategy.order.strategys;
+        for(var i = strategys.length - 1; i >=0; i--){
+            if(strategys[i].isSimple){
+                strategys.splice(i,1);
+            }
+        }
+
+        for(var i = 0; i < _symbolItems.length; i++){
+            var symbolItem = _symbolItems[i];
+            for(var j = 0; j < symbolItem.steps.length; j++){
+                var strategy =  getAdvanceStrategy(symbolItem.symbol,symbolItem.steps[j])
+                strategys.push(strategy);
+            }
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/personal/account/saveTransferStrategy",
+            data: { transferStrategy: _strategy.order,"_csrf": $('input[name="_csrf"]').val()  },
+            dataType: 'json'
+        }).done(function (e) {
+            if (e.isSuccess) {
+                alert("成功！");
+            }
+            else {
+                alert("系统错误，请稍后重试！");
+            }
+        }).fail(function (e) {
+            alert("系统错误，请稍后重试！");
+        });
+    }
+
+</script>
+
+<!- coin address ->
+<script type="text/javascript">
+    var _addresses = [];
+    for (var i = 0; i < _clients.length; i++) {
+        _addresses.push({ site: _clients[i].site, coinAddresses: _clients[i].coinAddresses || [] });
+    }
+
+    $(function () {
+        var items = [];
+        var item = { symbol: 'btc' };
+        items.push(item);
+
+        item.symbol = 'ltc';
+
+        showAddresses();
+        $('#add_address').click(function () {
+            saveCoinAddress();
+        });
+    });
+
+    function showAddresses() {
+        var tempSource = $('#tmplAddress').html();
+        var table = $('<table/>');
+        for (var i = 0; i < _business.sites.length; i++) {
+            var site = _business.sites[i];
+            var addresses = getSiteAddresses(site) || [];
+            if (addresses.length == 0) {
+                continue;
+            }
+
+            var tr = $('<tr/>').appendTo(table).attr('data-site', site).css('padding-bottom', '10px');
+            var $tdSymbol = $('<td/>').appendTo(tr).attr('valign', 'top')
+                        .css('min-width', '80px').css('padding', '5px 0 5px 0');
+            var $tdSteps = $('<td/>').appendTo(tr).attr('valign', 'top').css('padding', '5px 0 5px 0');
+
+            $tdSymbol.html(site);
+            if (i != _business.sites.length - 1) {
+                $tdSymbol.css('border-bottom', '1px solid #ccc');
+                $tdSteps.css('border-bottom', '1px solid #ccc');
+            }
+
+            var source = [];
+            for (var j = 0; j < addresses.length; j++) {
+                var item = addresses[j];
+                source.push(w.format('<div data-site="{0}" data-symbol="{1}">', site, item.symbol));
+                source.push(w.format(' {0} : {1}   Fee:{2} <br/>', item.symbol, item.address, item.fee));
+                source.push('<a href="#" name="setAddress">update</a>  ');
+                source.push('<a href="#" name="deleteAddress">delete</a>');
+                source.push('</div>');
+
+                if (j != addresses.length - 1) {
+                    source.push('<hr style=" border:1px dashed #ccc; border-style:dashed;" />');
+                }
+            }
+
+            $tdSteps.html(source.join(''));
+        }
+
+        $('#coin_addresses').html('');
+        $('#coin_addresses').append(table);
+
+        $('a[name="setAddress"]').click(function () {
+            var site = $(this).closest('div').attr('data-site');
+            var symbol = $(this).closest('div').attr('data-symbol');
+            var address = getAddress(site, symbol);
+
+            _editAddress = address;
+            $('#address_site').val(site);
+            $('#address_symbol').val(address.symbol);
+            $('#coin_address').val(address.address);
+            $('#trade_fee').val(address.fee);
+
+        });
+
+        $('a[name="deleteAddress"]').click(function () {
+            if (!confirm('Are you sure?')) {
+                return;
+            }
+
+            var site = $(this).closest('div').attr('data-site');
+            var symbol = $(this).closest('div').attr('data-symbol');
+
+            var address = getAddress(site, symbol);
+            if (address) {
+                address.site = site;
+                deleteCoinAddress(address);
+            }
+        });
+    }
+
+    function getSiteAddresses(site) {
+        var siteAddresses;
+        for (var i = 0; i < _addresses.length; i++) {
+            if (_addresses[i].site == site) {
+                siteAddresses = _addresses[i].coinAddresses;
+                if (!siteAddresses) {
+                    siteAddresses = _addresses[i].coinAddresses = [];
+                }
+                break;
+            }
+        }
+
+        if (!siteAddresses) {
+            siteAddresses = [];
+            _addresses.push({ site: site, coinAddresses: siteAddresses });
+        }
+        return siteAddresses;
+    }
+
+    function getAddress(site, symbol) {
+        var addresses = getSiteAddresses(site) || [];
+        for (var i = 0; i < addresses.length; i++) {
+            if (addresses[i].symbol == symbol) {
+                return addresses[i];
+            }
+        }
+    }
+
+    function deleteCoinAddress(address) {
+        $.ajax({
+            type: "POST",
+            url: "/personal/account/deleteCoinAddress",
+            data: { address: address, "_csrf": $('input[name="_csrf"]').val() },
+            dataType: 'json'
+        }).done(function (e) {
+            if (e.isSuccess) {
+                var siteAddresses = getSiteAddresses(address.site);
+                var index = siteAddresses.indexOf(address);
+                if (index >= 0) {
+                    _addresses.splice(index, 1);
+                    showAddresses();
+                }
+
+                alert("成功！");
+            }
+            else {
+                alert("系统错误，请稍后重试！");
+            }
+        }).fail(function (e) {
+            alert("系统错误，请稍后重试！");
+        });
+    }
+
+    function saveCoinAddress() {
+        var address_site = $('#address_site').val();
+        var address_symbol = $('#address_symbol').val();
+        var coin_address = $('#coin_address').val();
+        var trade_fee = $('#trade_fee').val();
+
+        var address = {};
+        address.site = address_site;
+        address.symbol = address_symbol;
+        address.address = coin_address;
+        address.fee = trade_fee;
+
+        $.ajax({
+            type: "POST",
+            url: "/personal/account/saveCoinAddress",
+            data: { address: address, "_csrf": $('input[name="_csrf"]').val() },
+            dataType: 'json'
+        }).done(function (e) {
+            if (e.isSuccess) {
+                var siteAddresses = getSiteAddresses(address_site);
+                var oldAddress = getAddress(address_site, address_symbol);
+                if (oldAddress) {
+                    $.extend(oldAddress, oldAddress, address);
+                } else {
+                    siteAddresses.push(address);
+                }
+
+                showAddresses();
+                alert("成功！");
+            }
+            else {
+                alert("系统错误，请稍后重试！");
+            }
+        }).fail(function (e) {
+            alert("系统错误，请稍后重试！");
+        });
+    }
+
+</script>
+
+<!-- Orders -->
+<script type="text/javascript">
+    $(function () {
+        $('#btnSyncRecentOrders').click(function () {
+            syncRecentOrders();
+        });
+    });
+
+    function syncOrders() {
+        var site = $('#dropOrderSites').val();
+        $.ajax({
+            type: "POST",
+            url: "/personal/order/syncRecentOrders",
+            data: { site: site, "_csrf": $('input[name="_csrf"]').val() },
+            dataType: 'json'
+        }).done(function (e) {
+
+            if (e.isSuccess) {
+                alert("成功！");
+            }
+            else {
+                alert("系统错误，请稍后重试！");
+            }
+        }).fail(function (e) {
+            alert("系统错误，请稍后重试！");
+        });
+
+    }
+</script>
+
+{% endblock %}
+

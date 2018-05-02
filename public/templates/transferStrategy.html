@@ -1,0 +1,827 @@
+﻿{% extends "layouts/master.html" %} 
+{% block header%}
+<title>Bootstrap 中文文档 </title>
+<link href="/css/admin.css" rel="stylesheet">
+{%endblock%}
+{% block body %}
+<div>
+    <h1>
+        {@pre type="content" key="greeting"/}
+    </h1>
+    <p>
+        hello.
+    </p>
+    <div id="pnlStrategy" name="panel">
+        <div>
+            profile：<input type="text" style="width: 40px;" id="txtProfile" value="0.2" />
+            %
+            <div>
+                <a href="#" id="lnkAdvance">advance</a> <a href="#" id="lnkMoreAdvance">more advance</a>
+            </div>
+        </div>
+        <div id="pnlStrategyAdvance">
+            <div id="pnlStrategyStep">
+                <div>
+                    <select id="step_symbol" name="symbols">
+                    </select>
+                    :
+                    <select id="step_siteA" name="sites">
+                    </select>
+                    >
+                    <select id="step_siteB" name="sites">
+                    </select>超过<input type="text" id="step_range" style="width: 40px;" />
+                    %时,<input type="text" maxlength="4" style="width: 40px;" id="step_amount" />% <a
+                        href="#" id="step_add">add</a>
+                </div>
+            </div>
+            <div id="pnlStrategyList">
+                <table id="steps">
+                </table>
+            </div>
+            <div>
+                <input type="button" id="btnSaveStrategy" value="保存" />
+            </div>
+        </div>
+        <div id="pnlMoreStrategy" style="display: none;">
+            <div id="pnlMoreStrategyEdit" style="display:none;">
+                Name:
+                <input type="text" id="txtStrategyName" />
+                <br />
+                Desc:<input type="text" id="txtStrategyDesc" />
+                <br />
+                Priority:
+                <input type="text" id="txtPriority" />
+                <br />
+                Conditions:<textarea rows="5" cols="60" id="txtStrategyCondition"></textarea>
+                <br />
+                Operates:<textarea rows="5" cols="60" id="txtStrategyOperates"></textarea>
+                <br/>
+                  自动执行: 
+                  <input type="checkbox" id="chkAuto" />
+                  <label for="chkAuto">开启</label>
+                <div>
+                    <input type="button" id="btnSaveAdvanceStrategy" value="保存" />
+                    <input type="button" id="btnCancelAdvanceStrategy" value="取消" />
+                </div>
+            </div>
+            <div id="pnlMoreStrategys">
+                <input type="button" id="btnNewAdvanceStrategy" value="新建" />
+                <br />
+                <ul class="account_strategys" id="moreStrategys">
+                </ul>
+                <script id="tmplStrategyItem" type="text/template">
+                <li class="account_strategy account_strategy_line" data-itemId="<%= strategy.itemId %>">
+                    <div class="account_strategy_site">
+                        <span style="display: inline-block;">
+                        </span> <span> <a href="#"><%= strategy.name %></a> </span>
+
+                    </div>
+                    <div class="account_strategy_app">
+                        <div class="account_strategy_appInfo">
+                            <div data-site="huobi" name="appKey">
+                                <%= strategy.desc %>
+                            </div>
+                        </div>
+                        <div>
+                        <%  var conditionRes = strategy.conditionRes; %>
+                        <% if(conditionRes && conditionRes.fixed){ %>
+                        
+                        <% for(var i = 0; i < conditionRes.orders.length; i++){ %>
+                            <%  var order = conditionRes.orders[i]; %>
+                            <%= order.amount > 0 ? '满足条件' : '不满足条件' %>：
+                            需进行的操作：在网站 <%= order.site %> 以价格 <%= order.price %>
+                            <%= order.side == 'buy' ? '买入':'卖出' %><%= order.amount %>个<%= order.symbol %>
+                            </br>
+                        <% } %>
+                        <% } else { %>
+                            <div>不满足条件23232<%= order.site %></div>
+                        <% } %>
+                        </div>
+                        <div>
+                            <%= strategy.isValid ? '' : '已被停用' %>
+                             <%= strategy.auto ? '系统自动运行' : '不自动运行' %>
+                            <a name="setAdvanceStrategy" data-id="<%= strategy._id %>" href="#">设置</a>
+                             <a name="runAdvanceStrategy" data-id="<%= strategy._id %>" href="#">运行</a>
+                            <a name="stopAdvanceStrategy" data-id="<%= strategy._id %>"  href="#">停用</a>
+                            <a name="delAdvanceStrategy" data-id="<%= strategy._id %>"  href="#">删除</a>
+                        </div>
+                    </div>
+                    <div class="clear" />
+                </li>
+                </script>
+            </div>
+        </div>
+    </div>
+    <div id="pnlOrders" name="panel" style="display: none">
+        <div>
+            <select id="dropOrderSites" name="sites">
+            </select>
+            <input type="button" id="btnSyncRecentOrders" value="sync orders" />
+        </div>
+    </div>
+    <div id="pnlGetConditionResult" name="panel" style="display: none">
+        <input type="text" id="txtCondition" />
+        <br />
+        <input type="button" id="btnGetConditionResult" value="GetConditionResult" />
+        <br />
+        <textarea rows="10" cols="100" id="txtConditionResult"></textarea>
+    </div>
+</div>
+ <input type="hidden" name="_csrf" value="{{_csrf}}" />
+{% endblock %} {% block scripts %}
+<script src="../js/jquery-1.8.2.js" type="text/javascript"></script>
+<script src="../js/lib/jquery.flexigrid.js" type="text/javascript"></script>
+<script src="../js/common.js" type="text/javascript"></script>
+
+<!- order strategy ->
+<script type="text/javascript">
+    var operates = ['+','-','*','/','\\','[',']', '(',')','?',':','&&', '||'];;
+    var conditionOperates = ['>=','<=','==','!=','>','<','='];
+    var symbols = operates.concat(conditionOperates);
+
+    var _strategys = {{ transferStrategys | safe }} || [];
+    var _business = {{ business | safe }} ;
+    var _isMoreAdvance = false;
+    var _symbolItems = []; //[{symbol: matches[2],steps: [{siteA: matches[1],siteB: matches[3],priceRange: stepRange,orderAmount: 1 }]}];
+    var _editStrategyId = 0;
+
+    for(var k=0; k < _strategys.length;k++){
+        _strategys[k].itemId = k + 1;
+    }
+
+    $(function() {
+        $('select[name="symbols"]').each(function(){
+            for(var i = 0; i < _business.symbols.length;i++){
+                var symbol = _business.symbols[i];
+                $('<option/>').appendTo(this).val(symbol).html(symbol);
+            }
+        });
+
+        $('select[name="sites"]').each(function(){
+            for(var i = 0; i < _business.sites.length;i++){
+                var site = _business.sites[i];
+                $('<option/>').appendTo(this).val(site).html(site);
+            }
+        });
+
+
+        var simpleIndexs = [];
+        for(var i = 0; i < _strategys.length; i++){
+            var strategy = _strategys[i];
+            if(strategy.isSimple){
+                var symbolItem = getSimpleStrategy(strategy);
+                if(symbolItem){
+                    var symbolSteps = getSymbolSteps(symbolItem.symbol);
+                    if(symbolSteps){
+                        symbolSteps.steps = symbolSteps.steps.concat(symbolItem.steps);
+                        //symbolSteps.steps.push(symbolItem.steps);
+                    } else {
+                        _symbolItems.push(symbolItem);
+                    }
+                }
+
+                simpleIndexs.push(i);
+            }
+        }
+        for(var i = simpleIndexs.length - 1; i >= 0; i--){
+            _strategys.splice(simpleIndexs[i],1);
+        }
+
+        showStrategySteps();
+        showAdvanceStrategys();
+
+        $('#lnkAdvance').click(function () {
+            $('#pnlStrategyAdvance').toggle();
+        });
+
+        $('#step_remove').click(function () {
+            $(this).parent('tr').remove();
+        });
+
+        $('#step_add').click(function () {
+            var step_symbol = $('#step_symbol').val();
+            var step_siteA = $('#step_siteA').val();
+            var step_siteB = $('#step_siteB').val();
+            var sStep_range = $('#step_range').val();
+            var sStep_amount = $('#step_amount').val();
+
+            if (!$.isNumeric(sStep_range)) {
+                return alert('请输入数字！');
+            }
+            var step_range = parseFloat(sStep_range);
+
+            if (!$.isNumeric(sStep_amount)) {
+                return alert('请输入数字！');
+            }
+            var step_amount = parseFloat(sStep_amount);
+
+            var step = {
+                siteA: step_siteA,
+                siteB: step_siteB,
+                priceRange: step_range,
+                orderAmount: step_amount
+            };
+
+            var res = checkStepValue(step_symbol, step);
+            if (!res.isSuccess) {
+                return alert(res.message);
+            }
+
+            var transferStrategy = getAdvanceStrategy(step_symbol,step);
+            saveTransferStrategy(transferStrategy,function(strategy){
+                addStrategyStep(step_symbol, step);
+            });
+        });
+
+
+        $('#lnkAdvance').click(function(){
+            $('#pnlStrategyAdvance').show();
+            $('#pnlMoreStrategy').hide();
+            isMoreAdvance = false;
+        });
+
+        $('#lnkMoreAdvance').click(function(){
+            $('#pnlStrategyAdvance').hide();
+            $('#pnlMoreStrategy').show();
+            isMoreAdvance = true;
+        });
+
+        // $('#btnSaveStrategy').click(function(){
+        //     saveTransferStrategy(); //todo
+        // });
+
+        $('#btnNewAdvanceStrategy').click(function(){
+            _editStrategyId = 0;
+
+            $('#txtStrategyName').val('');
+            $('#txtStrategyDesc').val('');
+            $('#txtPriority').val('0');
+            $('#txtStrategyCondition').val('');
+            $('#txtStrategyOperates').val('');
+            $('#pnlMoreStrategyEdit').show();
+        });
+
+        $('#btnSaveAdvanceStrategy').click(function(){
+            var strategyName = $('#txtStrategyName').val();
+            var strategyDesc = $('#txtStrategyDesc').val();
+            var priority = $('#txtPriority').val();
+            var strategyCondition = $('#txtStrategyCondition').val();
+            var strategyOperates = $('#txtStrategyOperates').val();
+            var auto = $('#chkAuto').prop('checked');
+
+            var orgConditions,orgOperates;
+            try{
+                orgConditions  = eval(strategyCondition);
+                orgOperates = eval(strategyOperates);
+            } catch (e) {
+                alert('条件表达式或操作步奏设置有误');
+                return;
+            }
+
+            var conditions = [],
+                operates = [];
+            if($.isArray(orgConditions)){
+                conditions = orgConditions;
+            } else { //if(typeof orgConditions == 'string'){
+                conditions = [];
+                conditions.push(strategyCondition);
+            };
+
+            if($.isArray(orgOperates)){
+                operates = orgOperates;
+            } else if(typeof orgOperates == 'object'){
+                operates = [];
+                operates.push(orgOperates);
+            }
+
+            var newStrategy = {
+                name: strategyName,
+                //itemId: minStrategyId,
+                minAmount: 0, //todo 最低额度
+                isSimple: false,
+                isValid: true,
+                conditions: conditions || [],
+                operates: operates || [],
+                desc: strategyDesc,
+                priority: priority || 0,
+                auto: auto
+            };
+
+            if(_editStrategyId){
+                var strategy = getStrategyByItemId(_editStrategyId);
+                var index = _strategys.indexOf(strategy);
+               
+                newStrategy._id = strategy._id;
+                newStrategy.itemId = _editStrategyId;
+                _strategys[index] = newStrategy;
+            }
+            else{
+                var minStrategyId = getMinStrategyId() - 1;
+                newStrategy.itemId = minStrategyId;
+                
+                _strategys.unshift(newStrategy);
+            }
+
+            showAdvanceStrategys();
+            saveTransferStrategy(newStrategy);
+        });
+
+        $('#btnCancelAdvanceStrategy').click(function(){
+            $('#pnlMoreStrategyEdit').hide();
+        });
+
+    });
+
+    function getStrategyByItemId(itemId){
+        for(var i = 0; i < _strategys.length; i++){
+            if(_strategys[i].itemId == itemId){
+                return _strategys[i];
+            }
+        }
+    }
+
+    function getMinStrategyId(){
+        var minStrategyId = 0;
+        for(var i = 0; i < _strategys.length; i++){
+            var strategy = _strategys[i];
+            if($.isNumeric(strategy.itemId)){
+                itemId = parseInt(strategy.itemId);
+                if(minStrategyId > itemId){
+                    minStrategyId = itemId;
+                }
+            }
+        }
+
+        return minStrategyId;
+    }
+
+    /**
+     * @param {String} symbol,货币类型
+     * @step {Object} 简单的交易策略，格式为：{siteA: String,siteB: String,priceRange: Number,orderAmount: Number }
+     * @returns {Strategy.Order.strategys[i]} strategy,服务器端的交易策略
+     */
+    function getAdvanceStrategy(symbol,step){
+        var condition = _getSymbolStepsCondition(symbol,step);
+        var conditions = [];
+        conditions.push(condition);
+
+        var operates = [];
+        operates.push({
+            id : 1,
+            site: step.siteA, //平台名称
+            side: 'sell', //buy或sell
+            symbol: symbol, //cny、btc、ltc、usd
+            previousOrder: 0,
+            nextOrder: 0,
+            orderAmount: step.orderAmount
+        });
+
+        operates.push({
+            id : 2,
+            site: step.siteB, //平台名称
+            side: 'buy', //buy或sell
+            symbol: symbol, //cny、btc、ltc、usd
+            previousOrder: 0,
+            nextOrder: 0,
+            orderAmount: step.orderAmount
+        });
+
+        return {
+            //itemId: { type: Schema.ObjectId },
+            minAmount: 0, //最低额度 //todo
+            isSimple: true,
+            isValid: true,
+            conditions:conditions,
+            operates: operates
+        };
+    }
+
+    /**
+     * @param {Strategy.Order.strategys[i]} strategy,服务器端的交易策略
+     * 根据服务器端的交易策略，获取简单的交易策略
+     * @returns {symbol: String, steps: [{siteA: String,siteB: String,priceRange: Number, orderAmount: Number}]}
+     */
+    function getSimpleStrategy(strategy){
+        if(!strategy.isSimple
+        || (!strategy.conditions ||  strategy.conditions.length != 1)
+        || (!strategy.operates ||  strategy.operates.length != 2)){
+            return;
+        }
+
+        var condition = strategy.conditions[0];
+        var step = _getSimpleStrategySteps(condition);
+        if(!step){
+            return;
+        }
+
+        var getOpertate = function(side){
+            for(var i = 0; i < strategy.operates.length; i++){
+                if(strategy.operates[i].side == side){
+                    return step;
+                }
+            }
+        };
+
+        var orderAmount;
+        var buyOperate = getOpertate('buy');
+        var sellOperate = getOpertate('sell');
+        if(sellOperate){
+            orderAmount = sellOperate.orderAmount;
+        }
+        if(!orderAmount && buyOperate){
+            orderAmount = buyOperate.orderAmount;
+        }
+        step.orderAmount = orderAmount ? orderAmount : 100;
+
+        return step;
+    }
+
+    function _getSimpleStrategySteps(condition){
+        var express = '(' + conditionOperates.join('|') + ')(.*)$';
+        var reg = new RegExp(express,'ig');
+        var matches = reg.exec(condition);
+        if(matches && matches.index > -1){
+            var conditionOperate = matches[1];
+            var conditionValue = $.trim(matches[2]);
+
+            var conditionItem = condition.substring(0,matches.index);
+            var stepRange = getConditionAmount(conditionValue);
+            if(!stepRange){
+                return;
+            }
+
+            //matches = /\s*(\w+)\.(\w+)\s*-\s*(\w+)\.(\w+)\s*/ig.exec(condition);
+            matches = /\s*\((\w+)\.(.+)\s*-\s*(\w+)\.(.+)\)\s*/ig.exec(condition);
+            if(matches && matches.index > -1){
+                var symbolItem = {
+                    symbol: matches[2],
+                    steps: [{
+                        siteA: matches[1],
+                        siteB: matches[3],
+                        priceRange: stepRange,
+                        orderAmount: conditionValue
+                    }]
+                };
+
+                return symbolItem;
+            }
+        }
+
+        return false;
+    }
+
+    function _getSymbolStepsCondition(symbol,step){
+        //'(huobi.btc - okcoin.btc) / okcoin.btc > 0.1%'
+        return w.format('({0}.{1} - {2}.{1}) / {0}.{1} > {3}%',step.siteA, symbol ,step.siteB,step.priceRange);
+    }
+
+    function getConditionAmount(express){
+        var expressVal = express;
+        if(express.indexOf('%') != -1){
+            expressVal =  express.replace('%','');
+        }
+
+        var n = new Number(expressVal);
+        if(!isNaN(n) && isFinite(n)){
+            return parseFloat(expressVal);
+        }
+    }
+
+    function showAdvanceStrategys(){
+        var tempSource = $('#tmplStrategyItem').html();
+
+        var sources = [];
+        for(var i = 0; i < _strategys.length; i++){
+            if(!_strategys[i].isSimple){
+                var tempData = { "strategy":  _strategys[i]};
+                var source = w.template(tempSource, tempData,1);
+                sources.push(source);
+            }
+        }
+
+        var html = sources.join('');
+        $('#moreStrategys').html(html);
+
+        $('a[name="setAdvanceStrategy"]').click(function(){
+            var itemId = $(this).closest('li').attr('data-itemId');
+            var strategy = getStrategyByItemId(itemId);
+
+            _editStrategyId = strategy.itemId;
+
+            $('#txtStrategyName').val(strategy.name);
+            $('#txtStrategyDesc').val(strategy.desc);
+            $('#txtPriority').val(strategy.priority)
+            $('#txtStrategyCondition').val($.toJSON(strategy.conditions));
+            $('#txtStrategyOperates').val($.toJSON(strategy.operates));
+            $('#chkAuto').prop("checked",strategy.auto);
+            $('#pnlMoreStrategyEdit').show();
+        });
+        
+        $('a[name="runAdvanceStrategy"]').click(function(){
+            var itemId = $(this).attr('data-id');
+            $.ajax({
+                type: "POST",
+                url: "/personal/transferStrategy/run",
+                data: { strategyId: itemId,"_csrf": $('input[name="_csrf"]').val()  },
+                dataType: 'json'
+            }).done(function (e) {
+                if (e.isSuccess) {
+                    alert("成功！");
+                }
+                else {
+                    alert(e.message || "系统错误，请稍后重试！");
+                }
+            }).fail(function (e) {
+                alert("系统错误，请稍后重试！");
+            });
+
+        });
+
+        $('a[name="stopAdvanceStrategy"]').click(function(){
+            var itemId = $(this).closest('li').attr('data-itemId');
+            var strategy = getStrategyByItemId(itemId);
+            if(strategy){
+                strategy.isValid = !strategy.isValid;
+                showAdvanceStrategys();
+                saveTransferStrategy(strategy);
+            }
+        });
+
+        $('a[name="delAdvanceStrategy"]').click(function(){
+            if(!confirm('确定要删除吗?')){
+                return;
+            }
+
+            var itemId = $(this).closest('li').attr('data-itemId');
+            var strategy = getStrategyByItemId(itemId);
+
+            var refresh = function(){               
+                var index =  _strategys.indexOf(strategy);
+                if(index >= 0){
+                    _strategys.splice(index, 1);
+                    showAdvanceStrategys();
+                }
+            }
+            
+            if(!strategy._id){
+                refresh();
+            } else {
+                deleteTransferStrategy(strategy._id,function(res){
+                    if(res.isSuccess){
+                        refresh();
+                    }
+                });
+            }
+        });
+    }
+
+    //***********  STEPS s *******
+    function showStrategySteps() {
+        // var priceRange = _strategy.order.priceRange || 0.2;
+        // $('#txtProfile').val(priceRange);
+
+        var table = $('<table/>');
+        var symbols = _symbolItems;//_strategy.order.strategys;
+        for (var i = 0; i < symbols.length; i++) {
+            var symbolItem = symbols[i];
+            var tr = $('<tr/>').appendTo(table).attr('data-symbol', symbolItem.symbol).css('padding-bottom', '10px');
+
+            var $tdSymbol = $('<td/>').appendTo(tr).attr('valign', 'top')
+                            .css('min-width', '80px').css('padding','5px 0 5px 0');
+            var $tdSteps = $('<td/>').appendTo(tr).attr('valign', 'top').css('padding', '5px 0 5px 0');
+
+            $tdSymbol.html(symbolItem.symbol);
+            if( i != symbols.length - 1){
+                $tdSymbol.css('border-bottom', '1px solid #ccc');
+                $tdSteps.css('border-bottom', '1px solid #ccc');
+            }
+
+            var source = [];
+            var lastItem = { siteA: '', siteB: '' };
+
+            for (var j = 0; j < symbolItem.steps.length; j++) {
+                var stepsLen = symbolItem.steps.length;
+                for (var j = 0; j < stepsLen; j++) {
+                    var step = symbolItem.steps[j];
+                    isChange = j != 0 && (step.siteA != lastItem.siteA || step.siteB != lastItem.siteB);
+
+                    if (isChange) {
+                        source.push('<a href="#" name="removeSteps">remove</a>');
+                        source.push('&nbsp;<a href="#" name="editSteps">edit</a>');
+                        source.push('<hr style=" border:1px dashed #ccc; border-style:dashed;" />');
+                    }
+
+                    source.push(step.siteA + '转至' + step.siteB + '，当盈利点超过'
+                              + step.priceRange + '%时，额度为' + step.orderAmount);
+                    source.push('<br/>');
+
+                    if (j == stepsLen - 1) {
+                        source.push('<a href="#" name="removeSteps">remove</a>');
+                        source.push('&nbsp;<a href="#" name="editSteps">edit</a>');
+                    }
+
+                    lastItem = step;
+                }
+            }
+
+            $tdSteps.html(source.join(''));
+        }
+
+        $('#steps').html('');
+        $('#steps').append(table);
+
+        $('a[name="removeSteps"]').click(function(){
+            var tr = $(this).closest('tr');
+            var symbol = $(tr).attr('data-symbol');
+
+            var index = -1;
+            for(var i = 0; i < _symbolItems.length; i++){
+                if(_symbolItems[i].symbol == symbol){
+                    index = i;
+                    break;
+                }
+            }
+            if(index != -1){
+                _symbolItems.splice(index,1);
+            }
+
+            $(tr).remove();
+        });
+
+        $('a[name="editSteps"]').click(function(){
+
+        });
+    }
+
+    function addStrategyStep(symbol, step) {
+        var symbolItem = getSymbolSteps(symbol);
+
+        if (!symbolItem) {
+            symbolItem = { symbol: symbol, steps: [] };
+            _symbolItems.push(symbolItem);
+        }
+
+        sortSteps(symbolItem.steps);
+        symbolItem.steps.push(step);
+
+        showStrategySteps();
+    }
+
+    function getSymbolSteps(symbol) {
+        var symbolItem;
+        for (var i = 0; i < _symbolItems.length; i++) {
+            if (_symbolItems[i].symbol == symbol) {
+                symbolItem = _symbolItems[i];
+                break;
+            }
+        }
+
+        return symbolItem;
+    }
+
+    function sortSteps(steps) {
+        steps.sort(function (a, b) {
+            if (a.siteA != b.siteA) {
+                return a.siteA > b.siteA;
+            }
+            else if (a.siteB != b.siteB) {
+                return a.siteB > b.siteB;
+            }
+            return a.priceRange > b.priceRange;
+        });
+    }
+
+    function getSteps(symbol, siteA, siteB) {
+        var steps = [];
+        var symbolItem = getSymbolSteps(symbol);
+        if(!symbolItem){
+            return steps;
+        }
+
+        for (var i = 0; i < symbolItem.steps.length; i++) {
+            var step = symbolItem.steps[i];
+            if (step.siteA == siteA && step.siteB == siteB) {
+                steps.push(step);
+            }
+        }
+
+        return steps;
+    }
+
+    function checkStepValue(symbol, step) {
+        //symbol, siteA, siteB
+        var maxPriceRange = 0;
+        var totalAmount = 0;
+
+        var steps = getSteps(symbol,step.siteA, step.siteB);
+        for (var i = 0; i < steps.length; i++) {
+            var stepItem = steps[i];
+
+            if (stepItem.priceRange > maxPriceRange) {
+                maxPriceRange = stepItem.priceRange;
+            }
+
+            totalAmount += stepItem.orderAmount;
+        }
+
+        var res = {
+            isSuccess: true,
+            message: "",
+            totalAmount: totalAmount,
+            maxPriceRange: maxPriceRange
+        };
+
+        if (step.orderAmount + totalAmount > 100) {
+            res.isSuccess = false;
+            res.message = "设置的各项之和不能大于100%";
+
+        }
+        else if (step.priceRange <= maxPriceRange) {
+            res.isSuccess = false;
+            res.message = '当前项设置的盈利点必须高于之前的' + maxPriceRange + '%';
+        }
+
+        return res;
+    }
+
+    //*********** STEPS e *******
+
+    function deleteTransferStrategy(strategyId,callback){
+         $.ajax({
+            type: "POST",
+            url: "/personal/transferStrategy/delete",
+            data: { id: strategyId,"_csrf": $('input[name="_csrf"]').val()  },
+            dataType: 'json'
+        }).done(function (e) {
+            if (!e.isSuccess) {
+                alert("系统错误，请稍后重试！");
+            }
+
+            callback(e);
+        }).fail(function (e) {
+            alert("系统错误，请稍后重试！");
+        });
+    }
+
+     function saveTransferStrategy(strategy,successFun,failFun) {
+         $.ajax({
+            type: "POST",
+            url: "/personal/transferStrategy/save",
+            data: { transferStrategy: strategy,"_csrf": $('input[name="_csrf"]').val()  },
+            dataType: 'json'
+        }).done(function (e) {
+            if (e.isSuccess) {
+                strategy._id = e._id;
+                _editStrategyId = e._id;
+                successFun && successFun(strategy);
+            }
+            else {
+                failFun ? failFun() : alert("系统错误，请稍后重试！");
+            }
+        }).fail(function (e) {
+            failFun ? failFun() : alert("系统错误，请稍后重试！");
+        });
+     }
+
+    // function saveTransferStrategy(strategy) {
+    //     debugger
+    //     // var priceRange = $('#txtProfile').val();
+    //     // if(!$.isNumeric(priceRange)){
+    //     //     return alert('盈利点只能为数字！');
+    //     // }
+    //     // _strategy.order.priceRange = priceRange;
+
+    //     //重新获取简单的策略 （先删除原有的，再重新从_symbolItems获取）
+    //     for(var i = _strategys.length - 1; i >=0; i--){
+    //         if(_strategys[i].isSimple){
+    //             _strategys.splice(i,1);
+    //         }
+    //     }
+
+    //     for(var i = 0; i < _symbolItems.length; i++){
+    //         var symbolItem = _symbolItems[i];
+    //         for(var j = 0; j < symbolItem.steps.length; j++){
+    //             var strategy =  getAdvanceStrategy(symbolItem.symbol,symbolItem.steps[j])
+    //             _strategys.push(strategy);
+    //         }
+    //     }
+
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "/transferStrategy/save",
+    //         data: { transferStrategy: _strategys,"_csrf": $('input[name="_csrf"]').val()  },
+    //         dataType: 'json'
+    //     }).done(function (e) {
+    //         if (e.isSuccess) {
+    //             alert("成功！");
+    //         }
+    //         else {
+    //             alert("系统错误，请稍后重试！");
+    //         }
+    //     }).fail(function (e) {
+    //         alert("系统错误，请稍后重试！");
+    //     });
+    // }
+
+</script>
+{% endblock %} 
