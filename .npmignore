@@ -1,0 +1,6 @@
+.DS_Store
+.idea/
+.build/
+.ws-server/
+node_modules/
+*.iml
