@@ -1,4 +1,4 @@
 （0）系统部署  npm install
 （1）如何启动网站 npm start 或 node server.js
-（2）如何启动单元测试  mocha --recursive  
-  
+（2）如何启动单元测试  mocha --recursive    
+    
