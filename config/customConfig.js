@@ -20,5 +20,15 @@ module.exports = {
             serverUrl: "http://localhost:8001/DesktopModules/Services/API"
         }
     },
-    platforms: []
+    platforms: [],
+    bcrypt: {
+        difficulty: 8
+    },
+    business: {
+        natural: "cny",
+        transfer: {
+            minOrderWait: 50 * 60 * 1000, //50分钟
+            maxOrderWait: 5 * 60 * 60 * 1000  //5个小时
+        }
+    }
 }
