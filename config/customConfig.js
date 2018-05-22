@@ -11,6 +11,7 @@ module.exports = {
             appSecret: "0123456789abcdef"
         }
     },
+    serverUrl: "ws://119.28.204.125:8080/ws",  
     security: {
         secret: "abdssdhfhde23239jhgdffdhhfhdvvxcm.dfhdjh?fdfhjdfhjhbgb", //加密密码 
         tkellApp: {

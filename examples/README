@@ -1,0 +1,2 @@
+(1) 客户端连接实例 
+  包含了两个不同使用场景的实例。用浏览器打开 client.html 或者 node examples/client

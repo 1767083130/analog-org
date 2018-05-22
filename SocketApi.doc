@@ -1,0 +1,89 @@
+1.1 发送请求
+    请求数据格式为：{'event':'addChannel','channel':'channelValue','parameters':{'api_key':'value1','sign':'value2'}} 
+    其中event: addChannel(注册请求数据)/removeChannel(注销请求数据)/push(提交数据) 
+    channel：提供请求数据类型 
+    data 参数为选填参数，
+    binary 参数为选填参数，压缩数据: 1 压缩数据 ,0 原始数据 默认 0 
+    其中api_key 为用户申请apiKey,sign 为签名字符串，签名规则参照请求说明
+    例如：websocket.send("{'event':'addChannel','channel':'ok_sub_spot_usd_btc_ticker','binary','1'}")
+    websocket.send("[{'event':'addChannel','channel':'ok_sub_spot_usd_btc_ticker'},{'event':'addChannel','channel':'ok_sub_spot_usd_btc_depth'},{'event':'addChannel','channel':'ok_sub_spot_usd_btc_trades'}]");支持批量注册。
+
+    其中签名和数据压缩功能暂时不实现
+
+1.2 服务器响应
+    返回数据格式为： [{"channel":"channel","success":"","errorcode":"","parameters":{}}, {"channel":"channel","success":"","errorcode":1,"data":{}}] 
+    channel:请求的数据类型
+    success:true成功,false失败(用于WebSocket 交易API)
+    data：返回结果数据
+    errorcode:错误码(用于WebSocket 交易API)
+    
+    错误代码	详细描述
+    10000	必填参数为空
+    10001	参数错误
+    10002	验证失败
+    10003	该连接已经请求了其他用户的实时交易数据
+    10004	该连接没有请求此用户的实时交易数据
+    10005	api_key或者sign不合法
+    10008	非法参数
+
+
+
+WebSocket API
+
+（1）获取市场深度
+    客户端订阅数据：websocket.send(" {'event':'addChannel','channel':'market','parameters': { symbol: 'btc#usd' } } ");
+    客户端发送数据：websocket.send(" {'event':'push','channel':'market','parameters': { depths: [{ site:"qq", symbol: 'btc#usd',bids: [[19000,1.02],[19899,0.95],[19888.5,0.87]] }]} } "); 
+
+    示例
+    # Request 
+    {'event':'addChannel','channel':'market','parameters': { symbol: 'btc#usd' } }
+    其中， symbol为交易品种，如果为"*",表示全部交易品种
+     
+    # Response
+    {
+        site: "baidu",  //网站名称
+        symbol: "btc#usd", //交易品种，如果为"*",则表示订阅如 "btc#usd"表示使用美元兑换比特币的交易品种
+        bids: [[19000,1.02],[19899,0.95],[19888.5,0.87]],   //array, 买单深度,已按照价格降序排列 数组索引(string) 0 价格, 1 量(张)
+        asks: [[19100,1.03],[19105,0.98]]   //array,卖单深度,已按照价格升序排列 数组索引(string) 0 价格, 1 量(张)
+        timestamp: res.realPrice.time //long, 服务器时间戳
+    }
+
+
+(2) 获取持仓信息
+
+    客户端订阅数据：websocket.send(" {'event':'addChannel','channel':'market','parameters': { symbol: 'btc#usd' } } ");
+    客户端发送数据：websocket.send(" {'event':'push','channel':'market','parameters': { depths: [{ site:"qq", symbol: 'btc#usd',bids: [[19000,1.02],[19899,0.95],[19888.5,0.87]] }]} } "); 
+
+    示例
+    # Request 
+    {'event':'addChannel','channel':'market','parameters': { symbol: 'btc#usd' } }
+    其中， symbol为交易品种，如果为"*",表示全部交易品种
+     
+    # Response
+    {
+        site: "baidu",  //网站名称
+        symbol: "btc#usd", //交易品种，如果为"*",则表示订阅如 "btc#usd"表示使用美元兑换比特币的交易品种
+        bids: [[19000,1.02],[19899,0.95],[19888.5,0.87]],   //array, 买单深度,已按照价格降序排列 数组索引(string) 0 价格, 1 量(张)
+        asks: [[19100,1.03],[19105,0.98]]   //array,卖单深度,已按照价格升序排列 数组索引(string) 0 价格, 1 量(张)
+        timestamp: res.realPrice.time //long, 服务器时间戳
+    }
+
+(3) 获取账户资产情况
+
+    客户端订阅数据：websocket.send(" {'event':'addChannel','channel':'market','parameters': { symbol: 'btc#usd' } } ");
+    客户端发送数据：websocket.send(" {'event':'push','channel':'market','parameters': { depths: [{ site:"qq", symbol: 'btc#usd',bids: [[19000,1.02],[19899,0.95],[19888.5,0.87]] }]} } "); 
+
+    示例
+    # Request 
+    {'event':'addChannel','channel':'market','parameters': { symbol: 'btc#usd' } }
+    其中， symbol为交易品种，如果为"*",表示全部交易品种
+     
+    # Response
+    {
+        site: "baidu",  //网站名称
+        symbol: "btc#usd", //交易品种，如果为"*",则表示订阅如 "btc#usd"表示使用美元兑换比特币的交易品种
+        bids: [[19000,1.02],[19899,0.95],[19888.5,0.87]],   //array, 买单深度,已按照价格降序排列 数组索引(string) 0 价格, 1 量(张)
+        asks: [[19100,1.03],[19105,0.98]]   //array,卖单深度,已按照价格升序排列 数组索引(string) 0 价格, 1 量(张)
+        timestamp: res.realPrice.time //long, 服务器时间戳
+    }
+   

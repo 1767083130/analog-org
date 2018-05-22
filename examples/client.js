@@ -1,7 +1,7 @@
 'use strict';
-const Client = require('../Client');
+const Client = require('../lib/Client');
 const debug = require('debug')('ws-server:clientDemo');
-const Server_Url = 'ws://119.28.204.125/ws'; //require('../config').ServerUrl;  
+const Server_Url = 'ws://119.28.204.125:8080/ws' //'ws://47.254.16.104:8080/ws'; //require('../config').ServerUrl;  
 
 let client = new Client({
     appKey: 'a',
@@ -35,7 +35,7 @@ client.connect(function(e){
 
     //处理返回的数据
     client.on('message', function(res){ 
-        //console.log(JSON.stringify(res));
+        console.log(JSON.stringify(res));
         switch(res.channel){
         case 'order':
             //console.log(JSON.stringify(res));
