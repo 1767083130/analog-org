@@ -41,11 +41,15 @@ WebSocket API
      
     # Response
     {
-        site: "baidu",  //网站名称
-        symbol: "btc#usd", //交易品种，如果为"*",则表示订阅如 "btc#usd"表示使用美元兑换比特币的交易品种
-        bids: [[19000,1.02],[19899,0.95],[19888.5,0.87]],   //array, 买单深度,已按照价格降序排列 数组索引(string) 0 价格, 1 量(张)
-        asks: [[19100,1.03],[19105,0.98]]   //array,卖单深度,已按照价格升序排列 数组索引(string) 0 价格, 1 量(张)
-        timestamp: res.realPrice.time //long, 服务器时间戳
+        channel: "market",
+        isSuccess: true,
+        data: [
+            site: "baidu",  //网站名称
+            symbol: "btc#usd", //交易品种，如果为"*",则表示订阅如 "btc#usd"表示使用美元兑换比特币的交易品种
+            bids: [[19000,1.02],[19899,0.95],[19888.5,0.87]],   //array, 买单深度,已按照价格降序排列 数组索引(string) 0 价格, 1 量(张)
+            asks: [[19100,1.03],[19105,0.98]]   //array,卖单深度,已按照价格升序排列 数组索引(string) 0 价格, 1 量(张)
+            timestamp: res.realPrice.time //long, 服务器时间戳
+        ]
     }
 
 
@@ -86,4 +90,34 @@ WebSocket API
         asks: [[19100,1.03],[19105,0.98]]   //array,卖单深度,已按照价格升序排列 数组索引(string) 0 价格, 1 量(张)
         timestamp: res.realPrice.time //long, 服务器时间戳
     }
+
+
+(4) 即时委托信息
+    # Response
+
+    {
+        site: site, //交易网站名称
+        "channel": "order", //数据类型。包括market、order、position、wallet等 
+        "isSuccess": true,
+        //"errorcode":"",
+        "data": [{
+            outerId: apiOrder.id, //对应的第三方交易网站委托id
+            symbol: common.getApiSymbol(apiOrder.symbol,true), //交易品种
+            type: type, //委托类型。如按市场价委托，移动止损委托等  “LIMIT”, “MARKET”, “STOP”, “TRAILING_STOP”, “EXCHANGE_MARKET”, “EXCHANGE_LIMIT”, “EXCHANGE_STOP”, “EXCHANGE_TRAILING_STOP”, “FOK”, “EXCHANGE_FOK”
+            status: status,//status可能的值:wait,准备开始；consign: 已委托,但未成交；success,已完成; 
+                            //part_success,部分成功;will_cancel,已标记为取消,但是尚未完成;canceled: 已取消；
+                            //auto_retry: 委托超过一定时间未成交，已由系统自动以不同价格发起新的委托; failed,失败
+            dealAmount: 1, //已成交数量。>0时，为多仓； < 0时，为空仓
+            amount: 2, //数量。>0时，为多仓； < 0时，为空仓
+            side: "buy",  //交易类型。可能的值：buy(买入或者期货中的开仓)或sell(卖出或者期货中的平仓)
+            created: +apiOrder.mtsCreate, //时间戳
+            price: apiOrder.price, //委托价格
+            avgPrice: apiOrder.priceAvg, //平均成交价格
+            hidden: apiOrder.hidden, //是否为隐藏单 
+            maker: apiOrder.maker
+        }]
+    }
+
+
+
    
