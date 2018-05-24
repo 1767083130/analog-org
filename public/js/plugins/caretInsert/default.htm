@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" 
+   src="http://code.jquery.com/jquery-latest.pack.js"></script>
+<script type="text/javascript" 
+   src="jquery.caretInsert.js"></script>
+</head>
+<body>
+<div><span id="item">TestText</span></div>
+<div><input id="hello" type="text" style="width: 200px;" /></div>
+<div><input type="button" value="Inert on input" id="insertA" /></div>
+<div><textarea id="world" style="width: 200px;height:50px;"></textarea>
+<div><input type="button" value="Inert on Textarea" id="insertT" /></div>
+<script language="JavaScript" type="text/javascript">
+(function($){
+    $('#hello').setCaret();
+    $('#insertA').click(function(){
+        $('#hello').insertAtCaret($('#item').text());
+    });
+    
+    $('#world').setCaret();
+    $('#insertT').click(function(){
+        $('#world').insertAtCaret($('#item').text());
+    });
+
+    $('#item').hover(
+    function(){
+        $(this).selectContents();
+    },
+    function(){
+        $.unselectContents();
+    });
+})($);
+
+</script>
+</body></html>

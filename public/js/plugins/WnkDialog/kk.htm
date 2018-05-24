@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--
+ * FCKeditor - The text editor for Internet - http://www.fckeditor.net
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
+ *
+ * == BEGIN LICENSE ==
+ *
+ * Licensed under the terms of any of the following licenses at your
+ * choice:
+ *
+ *  - GNU General Public License Version 2 or later (the "GPL")
+ *    http://www.gnu.org/licenses/gpl.html
+ *
+ *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
+ *    http://www.gnu.org/licenses/lgpl.html
+ *
+ *  - Mozilla Public License Version 1.1 or later (the "MPL")
+ *    http://www.mozilla.org/MPL/MPL-1.1.html
+ *
+ * == END LICENSE ==
+ *
+ * Template selection dialog window.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="robots" content="noindex, nofollow" />
+	<style type="text/css">
+			.TplList
+			{
+				border: #dcdcdc 2px solid;
+				background-color: #ffffff;
+				overflow: auto;
+				width: 90%;
+			}
+
+			.TplItem
+			{
+				margin: 5px;
+				padding: 7px;
+				border: #eeeeee 1px solid;
+			}
+
+			.TplItem TABLE
+			{
+				display: inline;
+			}
+
+			.TplTitle
+			{
+				font-weight: bold;
+			}
+		</style>
+	<script type="text/javascript">
+
+var oEditor = window.parent.InnerDialogLoaded() ;
+
+
+	</script>
+</head>
+<body >
+	<table width="100%" style="height: 100%">
+		<tr>
+			<td align="center">
+				<span fcklang="DlgTemplatesSelMsg">Please select the template to open in the editor<br />
+				Please select the template to open in the editor<br />
+				
+				Please select the template to open in the editor<br />
+				Please select the template to open in the editor<br />
+				Please select the template to open in the editor<br />
+				Please select the template to open in the editor<br />
+				Please select the template to open in the editor<br />
+				Please select the template to open in the editor<br />
+				Please select the template to open in the editor<br />
+				Please select the template to open in the editor<br />
+				Please select the template to open in the editor<br />
+				
+				Please select the template to open in the editor<br />
+				Please select the template to open in the editor<br />
+				Please select the template to open in the editor<br />
+				Please select the template to open in the editor<br />
+				Please select the template to open in the editor<br />
+				Please select the template to open in the editor<br />
+				Please select the template to open in the editor<br />
+				Please select the template to open in the editor<br />
+					(the actual contents will be lost):</span>
+			</td>
+		</tr>
+		<tr>
+			<td height="100%" align="center">
+				<div id="eList" align="left" class="TplList">
+					<div id="eLoading" align="center" style="display: none">
+						<br />
+						<span fcklang="DlgTemplatesLoading">Loading templates list. Please wait...</span>
+					</div>
+					<div id="eEmpty" align="center" style="display: none">
+						<br />
+						<span fcklang="DlgTemplatesNoTpl">(No templates defined)</span>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr id="xReplaceBlock" style="display: none">
+			<td>
+				<table cellpadding="0" cellspacing="0">
+					<tr>
+						<td>
+							<input id="xChkReplaceAll" type="checkbox" /></td>
+						<td>
+							&nbsp;</td>
+						<td>
+							<label for="xChkReplaceAll" fcklang="DlgTemplatesReplace">
+								Replace actual contents</label></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

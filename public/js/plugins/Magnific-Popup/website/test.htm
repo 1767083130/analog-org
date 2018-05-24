@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <!--   <link href="http://dimsemenov.com/plugins/magnific-popup/site-assets/all.min.css" rel="stylesheet" />-->
+    <link href="../dist/magnific-popup.css" rel="stylesheet" type="text/css" />
+    <script src="../libs/jquery/jquery.js" type="text/javascript"></script>
+    <script src="../dist/jquery.magnific-popup.js" type="text/javascript"></script>
+    <style>
+        
+    </style>
+</head>
+<body>
+    更多实例请<a href="http://dimsemenov.com/plugins/magnific-popup/" target="_blank">查看</a>
+    <br />
+    <a class="popup-with-form" href="#test-form">Open form</a>
+    <!-- form itself -->
+    <div id="test-form" class="mfp-hide white-popup-block">
+        <h1>
+            Form</h1>
+        <fieldset style="border: 0;">
+            <p>
+                Lightbox has an option to automatically focus on the first input. It's strongly
+                recommended to use <code>inline</code> popup type for lightboxes with form instead
+                of <code>ajax</code> (to keep entered data if the user accidentally refreshed the
+                page).</p>
+            <ol>
+                <li>
+                    <label for="name">
+                        Name</label>
+                    <input id="name" name="name" type="text" placeholder="Name" required>
+                </li>
+                <li>
+                    <label for="email">
+                        Email</label>
+                    <input id="email" name="email" type="email" placeholder="example@domain.com" required>
+                </li>
+                <li>
+                    <label for="phone">
+                        Phone</label>
+                    <input id="phone" name="phone" type="tel" placeholder="Eg. +447500000000" required>
+                </li>
+                <li>
+                    <label for="textarea">
+                        Textarea</label><br />
+                    <textarea id="textarea">Try to resize me to see how popup CSS-based resizing works.</textarea>
+                </li>
+            </ol>
+        </fieldset>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.popup-with-form').magnificPopup({
+                type: 'inline',
+                preloader: true,
+                focus: '#name',
+
+
+                // When elemened is focused, some mobile browsers in some cases zoom in
+                // It looks not nice, so we disable it:
+                callbacks: {
+                    beforeOpen: function () {
+                        if ($(window).width() < 700) {
+                            this.st.focus = false;
+                        } else {
+                            this.st.focus = '#name';
+                        }
+                    }
+                }
+            });
+
+            $(".popup-with-form").click();
+        });
+    </script>
+</body>
+</html>

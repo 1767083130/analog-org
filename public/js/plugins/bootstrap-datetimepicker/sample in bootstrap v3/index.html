@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="../css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://server:8089/WebNuke/js/jQuery.UI/css\webnukeDialog\Simple.css">
+</head>
+
+<body>
+<div class="container" id="theme">
+    <div action="" class="form-horizontal" role="form">
+        <fieldset>
+            <legend>Test</legend>
+            <div class="form-group">
+                <label for="dtp_input1" class="col-md-2 control-label">DateTime Picking</label>
+                <div class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy:MM:dd HH:mm:ss" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+				<input type="hidden" id="dtp_input1" value="" /><br/>
+            </div>
+			<div class="form-group">
+                <label for="dtp_input2" class="col-md-2 control-label">Date Picking</label>
+                <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                    <input class="form-control" size="16" type="text" value="">
+                   <!-- <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>-->
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+				<input type="hidden" id="dtp_input2" value="" /><br/>
+            </div>
+			<div class="form-group">
+                <label for="dtp_input3" class="col-md-2 control-label">Time Picking</label>
+                <div class="input-group date form_time col-md-5" data-date="" data-date-format="hh:ii" data-link-field="dtp_input3" data-link-format="hh:ii">
+                    <input class="form-control" size="16" type="text" value="">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					<span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                </div>
+				<input type="hidden" id="dtp_input3" value="" /><br/>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<div>
+<input type=button  value="sdfsf" id="btnSet"/>
+</div>
+
+<script type="text/javascript" src="./jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="./bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+
+    <script type="text/javascript" src="http://server:8089/WebNuke/js/jQuery.UI/jquery-ui-1.10.3.custom.js"></script>
+    <script type="text/javascript" src="http://server:8089/WebNuke/js/jQuery.UI/webnuke.jquery.ui.dialog.DEBUG.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSet").click(function () {
+            showSimple('simple no-border-radius title');
+        });
+
+    });
+
+    $('.form_datetime').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+        showMeridian: 1
+    });
+	$('.form_date').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+    });
+	$('.form_time').datetimepicker({
+	    language: 'zh-CN',
+        weekStart: 0,
+        todayBtn:  0,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 0,
+		minView: 0,
+		maxView: 0,
+		forceParse: 0
+});
+
+function showSimple(theme) {
+    var dlg = new popDialog($("#theme"), { "close": function () { dlg.closeDialog(); } }, { width: 1024, height: 768 });
+    //dlg.theme(theme);
+    dlg.showDialog();
+    dlg.title("开发模式");
+}
+</script>
+
+</body>
+</html>

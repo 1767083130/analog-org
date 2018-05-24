@@ -1,0 +1,31 @@
+.fg-pagination {
+           /* font-size: 80%; */
+        }
+        
+.fg-pagination a {
+    text-decoration: none;
+	border: solid 1px #AAE;
+	color: #15B;
+}
+
+.fg-pagination a, .fg-pagination span {
+    display: block;
+    float: left;
+    padding: 0.3em 0.5em;
+    margin-right: 5px;
+	margin-bottom: 5px;
+	min-width:1em;
+	text-align:center;
+}
+
+.fg-pagination .current {
+    background: #26B;
+    color: #fff;
+	border: solid 1px #AAE;
+}
+
+.fg-pagination .current.prev, .fg-pagination .current.next{
+	color:#999;
+	border-color:#999;
+	background:#fff;
+}

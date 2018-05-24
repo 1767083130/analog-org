@@ -1,0 +1,135 @@
+﻿<div class="null" id="NAV1_ctlNAV1">
+    <li class="row" id="NAV1_ctlNAV1row39" ns="NAV1_ctlNAV1"><a class="bar head" id="NAV1_ctlNAV1bar39"
+        style="cursor: pointer; height: 0px" ns="NAV1_ctlNAV1">Home</a></li>
+    <li class="row" id="NAV1_ctlNAV1row60" ns="NAV1_ctlNAV1"><a class="bar head" id="NAV1_ctlNAV1bar60"
+        style="cursor: pointer; height: 0px" ns="NAV1_ctlNAV1">商品管理</a>
+        <ul class="subMenu" id="NAV1_ctlNAV1sub60" style="display: none" ns="NAV1_ctlNAV1">
+            <li class="row" id="NAV1_ctlNAV1row61" ns="NAV1_ctlNAV1"><span class="iconSpan"></span>
+                <a class="bar" id="NAV1_ctlNAV1bar61" style="cursor: pointer; height: 0px" ns="NAV1_ctlNAV1">
+                    添加商品</a></li></ul>
+    </li>
+    <li class="row" id="NAV1_ctlNAV1row41" ns="NAV1_ctlNAV1"><a class="bar head" id="NAV1_ctlNAV1bar41"
+        style="cursor: pointer; height: 0px" ns="NAV1_ctlNAV1">站点管理</a>
+        <ul class="subMenu" id="NAV1_ctlNAV1sub41" style="display: none" ns="NAV1_ctlNAV1">
+            <li class="row" id="NAV1_ctlNAV1row42" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn42" height="16" src="/DotNetNuke/images/icon_sitesettings_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar42" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">站点设置</a></li>
+            <li class="row" id="NAV1_ctlNAV1row43" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn43" height="16" src="/DotNetNuke/images/icon_tabs_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar43" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">Pages</a></li>
+            <li class="row" id="NAV1_ctlNAV1row44" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn44" height="16" src="/DotNetNuke/images/icon_extensions_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar44" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">功能扩展</a></li>
+            <li class="row" id="NAV1_ctlNAV1row45" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn45" height="16" src="/DotNetNuke/images/icon_language_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar45" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">语言设置</a></li>
+            <li class="row" id="NAV1_ctlNAV1row46" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn46" height="16" src="/DotNetNuke/images/icon_skins_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar46" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">皮肤设置</a></li>
+            <li class="row" id="NAV1_ctlNAV1row47" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn47" height="16" src="/DotNetNuke/images/icon_securityroles_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar47" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">安全角色</a></li>
+            <li class="row" id="NAV1_ctlNAV1row48" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn48" height="16" src="/DotNetNuke/images/icon_users_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar48" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">用户管理</a></li>
+            <li class="row" id="NAV1_ctlNAV1row49" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn49" height="16" src="/DotNetNuke/images/icon_vendors_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar49" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">广告管理</a></li>
+            <li class="row" id="NAV1_ctlNAV1row50" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn50" height="16" src="/DotNetNuke/images/icon_sitelog_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar50" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">站点日志</a></li>
+            <li class="row" id="NAV1_ctlNAV1row51" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn51" src="/DotNetNuke/images/icon_bulkmail_16px.gif"
+                    ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar51" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">邮件群发</a></li>
+            <li class="row" id="NAV1_ctlNAV1row52" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn52" height="16" src="/DotNetNuke/images/icon_filemanager_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar52" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">文件管理</a></li>
+            <li class="row" id="NAV1_ctlNAV1row53" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn53" height="16" src="/DotNetNuke/images/icon_recyclebin_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar53" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">垃圾回收</a></li>
+            <li class="row" id="NAV1_ctlNAV1row54" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn54" height="16" src="/DotNetNuke/images/icon_viewstats_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar54" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">事件记录</a></li>
+            <li class="row" id="NAV1_ctlNAV1row55" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn55" height="16" src="/DotNetNuke/images/icon_wizard_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar55" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">站点配置向导</a></li>
+            <li class="row" id="NAV1_ctlNAV1row56" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn56" height="16" src="/DotNetNuke/images/icon_analytics_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar56" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">Google Analytics</a></li>
+            <li class="row" id="NAV1_ctlNAV1row57" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn57" height="16" src="/DotNetNuke/images/icon_solutions_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar57" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">解决方案</a></li></ul>
+    </li>
+    <li class="row" id="NAV1_ctlNAV1row7" ns="NAV1_ctlNAV1"><a class="bar head" id="NAV1_ctlNAV1bar7"
+        style="cursor: pointer; height: 0px" ns="NAV1_ctlNAV1">主机管理</a>
+        <ul class="subMenu" id="NAV1_ctlNAV1sub7" style="display: none" ns="NAV1_ctlNAV1">
+            <li class="row" id="NAV1_ctlNAV1row16" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn16" height="16" src="/DotNetNuke/images/icon_hostsettings_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar16" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">主机设置</a></li>
+            <li class="row" id="NAV1_ctlNAV1row17" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn17" height="16" src="/DotNetNuke/images/icon_sitesettings_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar17" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">多站点管理</a></li>
+            <li class="row" id="NAV1_ctlNAV1row18" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn18" height="16" src="/DotNetNuke/images/icon_moduledefinitions_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar18" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">模块定义</a></li>
+            <li class="row" id="NAV1_ctlNAV1row19" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn19" height="16" src="/DotNetNuke/images/icon_filemanager_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar19" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">文件管理</a></li>
+            <li class="row" id="NAV1_ctlNAV1row20" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn20" height="16" src="/DotNetNuke/images/icon_vendors_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar20" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">广告管理</a></li>
+            <li class="row" id="NAV1_ctlNAV1row21" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn21" height="16" src="/DotNetNuke/images/icon_sql_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar21" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">SQL查询</a></li>
+            <li class="row" id="NAV1_ctlNAV1row25" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn25" height="16" src="/DotNetNuke/images/icon_scheduler_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar25" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">调度管理</a></li>
+            <li class="row" id="NAV1_ctlNAV1row29" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn29" height="16" src="/DotNetNuke/images/icon_search_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar29" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">搜索管理</a></li>
+            <li class="row" id="NAV1_ctlNAV1row33" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn33" height="16" src="/DotNetNuke/images/icon_lists_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar33" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">列表管理</a></li>
+            <li class="row" id="NAV1_ctlNAV1row34" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn34" height="16" src="/DotNetNuke/images/icon_hostusers_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar34" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">主机管理员</a></li>
+            <li class="row" id="NAV1_ctlNAV1row36" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn36" height="16" src="/DotNetNuke/images/icon_extensions_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar36" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">功能扩展</a></li>
+            <li class="row" id="NAV1_ctlNAV1row37" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn37" height="16" src="/DotNetNuke/images/icon_dashboard_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar37" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">系统信息</a></li>
+            <li class="row" id="NAV1_ctlNAV1row38" ns="NAV1_ctlNAV1"><span class="iconSpan">
+                <img class="span" id="NAV1_ctlNAV1icn38" height="16" src="/DotNetNuke/images/icon_whatsnew_16px.gif"
+                    width="16" ns="NAV1_ctlNAV1"></span><a class="bar" id="NAV1_ctlNAV1bar38" style="cursor: pointer;
+                        height: 0px" ns="NAV1_ctlNAV1">What's New</a></li></ul>
+    </li>
+</div>

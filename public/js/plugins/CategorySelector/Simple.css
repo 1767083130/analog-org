@@ -1,0 +1,139 @@
+﻿li
+{
+    list-style: none none outside;
+}
+*
+{
+    padding:0;
+    margin:0;
+}
+a:link, a:visited
+{
+    text-decoration: none;
+    color: #666;
+}
+.categorySelector
+{
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 13px;
+    zoom: 1;
+    *display: inline;
+    width:200px;
+}
+.categorySelector .valueContent
+{
+    cursor:pointer;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding: 0 0 0 8px;
+    height: 23px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    background-color: #fff;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #ffffff), color-stop(50%, #f6f6f6), color-stop(52%, #eeeeee), color-stop(100%, #f4f4f4));
+    background: -webkit-linear-gradient(top, #ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
+    background: -moz-linear-gradient(top, #ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
+    background: -o-linear-gradient(top, #ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
+    background: linear-gradient(top, #ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%);
+    background-clip: padding-box;
+    box-shadow: 0 0 3px white inset, 0 1px 1px rgba(0, 0, 0, 0.1);
+    color: #444;
+    text-decoration: none;
+    white-space: nowrap;
+    line-height: 24px;
+}
+.categorySelector.open .valueContent
+{
+    border: 1px solid #aaa;
+    -moz-border-radius-bottomright: 0;
+    border-bottom-right-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    border-bottom-left-radius: 0;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(20%, #eeeeee), color-stop(80%, #ffffff));
+    background-image: -webkit-linear-gradient(#eeeeee 20%, #ffffff 80%);
+    background-image: -moz-linear-gradient(#eeeeee 20%, #ffffff 80%);
+    background-image: -o-linear-gradient(#eeeeee 20%, #ffffff 80%);
+    background-image: linear-gradient(#eeeeee 20%, #ffffff 80%);
+    box-shadow: 0 1px 0 #fff inset;
+}
+.categorySelector .valueContent .text
+{
+    display: block;
+    overflow: hidden;
+    margin-right: 26px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border:0;
+}
+.categorySelector .valueContent i
+{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: block;
+    width: 15px;
+    height: 100%;
+    background: url('../Styles/sprite/uiIcons_gray.png') no-repeat -136px -10px;
+}
+.categorySelector.open .valueContent i
+{
+    background-position: -6px -10px;
+}
+.categorySelector .dropMenu
+{
+    position: absolute;
+    top: 100%;
+    z-index: 1010;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid #aaa;
+    border-top: 0;
+    background: #fff;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+    margin-top: -1px;
+    border-radius: 0 0 4px 4px;
+    background-clip: padding-box;
+     display:none;
+}
+.categorySelector.open .dropMenu
+{
+    display:block;
+}
+.categorySelector .text
+{
+    font-size:14px;    
+    color:#000;
+    text-align:center;
+}
+.categorySelector .menu .item
+{
+    font-size: 14px;
+    padding-left: 2em;
+}
+       
+.categorySelector .menu .text
+{
+    cursor: pointer;
+    line-height: 18px;
+    cursor: pointer;
+    display: block;
+    height: 18px;
+    border: 1px solid #fff;
+    text-align:left;
+}
+.categorySelector .menu .item.current > .context .text
+{
+    color: #fff;
+    background-color: #acf;
+}
+.categorySelector .menu .text:hover
+{
+    background-color: #3875d7;
+    color: #fff;
+    border: 1px solid #789;
+}

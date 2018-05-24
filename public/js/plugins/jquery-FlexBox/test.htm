@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>必优博客 syntaxhighlighter语法高亮——PHP实例</title>
+
+    <script type="text/javascript"  src="../jquery.js"></script>
+
+    <script type="text/javascript" src="js/jquery.flexbox.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="css/jquery.flexbox.css" />
+
+    <script type="text/javascript">
+$(document).ready(function() {
+//var test = $('#test').flexbox('json.txt',{
+//    watermark: 'Enter account number',    
+//     paging: {   
+//        pageSize: 1  
+//    }, 
+//    maxVisibleRows: 8,   
+//    method: 'POST'  
+//    });   
+//});
+
+//test.setValue('abjure');
+
+//$('#test').flexbox('json.txt', {   
+//    autoCompleteFirstMatch: false,   
+//    noResultsText: '',   
+//    onSelect: function() {   
+//        $('#test')   
+//            .html('You selected "' + this.value + '", ' +   
+//                  'which has a hidden value of ' +   
+//                  this.getAttribute('hiddenValue'));   
+//    }   
+//});   
+//$('#test').blur(function() {   
+//    $('#test')   
+//        .html('The value passed when the form is ' +   
+//              'submitted is "' + this.value + '"');   
+//});
+
+
+$('#test').flexbox({
+    "results": [
+        { "id": "1", "name": "Ant" },
+        { "id": "2", "name": "Bear" },
+        { "id": "3", "name": "Cat" },
+        { "id": "4", "name": "Dog" },
+        { "id": "5", "name": "Elephant" },
+        { "id": "6", "name": "Fox" },
+        { "id": "7", "name": "Guinea Pig" },
+        { "id": "8", "name": "Horse" },
+        { "id": "9", "name": "Iguana" },
+        { "id": "10", "name": "Jaguar" }
+    ]
+}, {
+    allowInput: false,
+    paging: false,
+    initialValue: 'Ant',   
+    maxVisibleRows: 8
+});   
+
+//var data = {"results":[   
+//    {"id":"1","name":"lcm"},
+//     {"id":"2","name":"lcm999"} 
+//]};
+//$('#test').flexbox(data , {   
+//    initialValue: 'lcm',   
+//    width: 350
+//});    
+
+//$('#test').flexbox('json.txt', {   
+//    resultTemplate: '<div class="col1">{id}</div><div class="col2">{name}</div>',  
+//    watermark: 'Enter account number or name',   
+//    width: 300,   
+//    onSelect: function() {   
+//        $('#test')   
+//            .html('You selected "' + this.value + '", ' +   
+//                  'which has a hidden value of ' +   
+//                  this.getAttribute('hiddenValue'));   
+//    }   
+//});   
+
+ 
+ 
+ });  
+    </script>
+
+</head>
+<body>
+    <div id="test">
+    </div>
+</body>
+</html>

@@ -1,0 +1,3 @@
+﻿Google Powered Site Search 教你如何创建一个自定义的搜索引擎，只需要使用Google AJAX Search API，
+    你可以搜索到您网站上的图片，视频和新闻等……
+	http://demo.tutorialzine.com/2010/09/google-powered-site-search-ajax-jquery/search.html

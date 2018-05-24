@@ -1,0 +1,3930 @@
+.yui-skin-sam .yui-ac {
+	POSITION: relative; FONT-FAMILY: arial; FONT-SIZE: 100%
+}
+.yui-skin-sam .yui-ac-input {
+	POSITION: absolute; WIDTH: 100%
+}
+.yui-skin-sam .yui-ac-container {
+	POSITION: absolute; WIDTH: 100%; TOP: 1.6em
+}
+.yui-skin-sam .yui-ac-content {
+	Z-INDEX: 9050; BORDER-BOTTOM: #808080 1px solid; POSITION: absolute; BORDER-LEFT: #808080 1px solid; WIDTH: 100%; BACKGROUND: #fff; OVERFLOW: hidden; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-ac-shadow {
+	Z-INDEX: 9049; POSITION: absolute; FILTER: alpha(opacity=10); MARGIN: 0.3em; WIDTH: 100%; BACKGROUND: #000; -moz-opacity: .10; opacity: .10
+}
+.yui-skin-sam .yui-ac IFRAME {
+	FILTER: alpha(opacity=0); PADDING-BOTTOM: 0.3em; PADDING-RIGHT: 0.3em; opacity: 0
+}
+.yui-skin-sam .yui-ac-content UL {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-ac-content LI {
+	PADDING-BOTTOM: 2px; LIST-STYLE-TYPE: none; MARGIN: 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; ZOOM: 1; WHITE-SPACE: nowrap; CURSOR: default; PADDING-TOP: 2px
+}
+.yui-skin-sam .yui-ac-content LI.yui-ac-prehighlight {
+	BACKGROUND: #b3d4ff
+}
+.yui-skin-sam .yui-ac-content LI.yui-ac-highlight {
+	BACKGROUND: #426fd9; COLOR: #fff
+}
+.yui-button {
+	DISPLAY: inline-block; VERTICAL-ALIGN: text-bottom
+}
+.yui-button .first-child {
+	DISPLAY: inline-block
+}
+.yui-button BUTTON {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; MARGIN: 0px; DISPLAY: inline-block; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none
+}
+.yui-button A {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; MARGIN: 0px; DISPLAY: inline-block; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none
+}
+.yui-button BUTTON {
+	BACKGROUND-COLOR: transparent; OVERFLOW: visible; CURSOR: pointer
+}
+.yui-button A {
+	TEXT-DECORATION: none
+}
+.yui-skin-sam .yui-button {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 0px solid; MARGIN: auto 0.25em; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px 0px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 0px solid
+}
+.yui-skin-sam .yui-button .first-child {
+	BORDER-BOTTOM: #808080 0px solid; BORDER-LEFT: #808080 1px solid; MARGIN: 0px -1px; BORDER-TOP: #808080 0px solid; BORDER-RIGHT: #808080 1px solid; _margin: 0
+}
+.yui-skin-sam .yui-button BUTTON {
+	PADDING-BOTTOM: 0px; LINE-HEIGHT: 1.7; MIN-HEIGHT: auto; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; COLOR: #000; FONT-SIZE: 93%; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-button A {
+	PADDING-BOTTOM: 0px; LINE-HEIGHT: 1.7; MIN-HEIGHT: auto; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; COLOR: #000; FONT-SIZE: 93%; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-button A {
+	PADDING-BOTTOM: 1px; LINE-HEIGHT: 1.875
+}
+.yui-skin-sam .yui-split-button BUTTON {
+	PADDING-RIGHT: 20px; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: right center
+}
+.yui-skin-sam .yui-menu-button BUTTON {
+	PADDING-RIGHT: 20px; BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: right center
+}
+.yui-skin-sam .yui-menu-button BUTTON {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/menu-button-arrow.png)
+}
+.yui-skin-sam .yui-split-button BUTTON {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/split-button-arrow.png)
+}
+.yui-skin-sam .yui-button-focus {
+	BORDER-BOTTOM-COLOR: #7d98b8; BORDER-TOP-COLOR: #7d98b8; BACKGROUND-POSITION: 0px -1300px; BORDER-RIGHT-COLOR: #7d98b8; BORDER-LEFT-COLOR: #7d98b8
+}
+.yui-skin-sam .yui-button-focus .first-child {
+	BORDER-BOTTOM-COLOR: #7d98b8; BORDER-TOP-COLOR: #7d98b8; BORDER-RIGHT-COLOR: #7d98b8; BORDER-LEFT-COLOR: #7d98b8
+}
+.yui-skin-sam .yui-button-focus BUTTON {
+	COLOR: #000
+}
+.yui-skin-sam .yui-button-focus A {
+	COLOR: #000
+}
+.yui-skin-sam .yui-split-button-focus BUTTON {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/split-button-arrow-focus.png)
+}
+.yui-skin-sam .yui-button-hover {
+	BORDER-BOTTOM-COLOR: #7d98b8; BORDER-TOP-COLOR: #7d98b8; BACKGROUND-POSITION: 0px -1300px; BORDER-RIGHT-COLOR: #7d98b8; BORDER-LEFT-COLOR: #7d98b8
+}
+.yui-skin-sam .yui-button-hover .first-child {
+	BORDER-BOTTOM-COLOR: #7d98b8; BORDER-TOP-COLOR: #7d98b8; BORDER-RIGHT-COLOR: #7d98b8; BORDER-LEFT-COLOR: #7d98b8
+}
+.yui-skin-sam .yui-button-hover BUTTON {
+	COLOR: #000
+}
+.yui-skin-sam .yui-button-hover A {
+	COLOR: #000
+}
+.yui-skin-sam .yui-split-button-hover BUTTON {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/split-button-arrow-hover.png)
+}
+.yui-skin-sam .yui-button-active {
+	BORDER-BOTTOM-COLOR: #7d98b8; BORDER-TOP-COLOR: #7d98b8; BACKGROUND-POSITION: 0px -1700px; BORDER-RIGHT-COLOR: #7d98b8; BORDER-LEFT-COLOR: #7d98b8
+}
+.yui-skin-sam .yui-button-active .first-child {
+	BORDER-BOTTOM-COLOR: #7d98b8; BORDER-TOP-COLOR: #7d98b8; BORDER-RIGHT-COLOR: #7d98b8; BORDER-LEFT-COLOR: #7d98b8
+}
+.yui-skin-sam .yui-button-active BUTTON {
+	COLOR: #000
+}
+.yui-skin-sam .yui-button-active A {
+	COLOR: #000
+}
+.yui-skin-sam .yui-split-button-activeoption {
+	BORDER-BOTTOM-COLOR: #808080; BORDER-TOP-COLOR: #808080; BACKGROUND-POSITION: 0px 0px; BORDER-RIGHT-COLOR: #808080; BORDER-LEFT-COLOR: #808080
+}
+.yui-skin-sam .yui-split-button-activeoption .first-child {
+	BORDER-BOTTOM-COLOR: #808080; BORDER-TOP-COLOR: #808080; BORDER-RIGHT-COLOR: #808080; BORDER-LEFT-COLOR: #808080
+}
+.yui-skin-sam .yui-split-button-activeoption BUTTON {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/split-button-arrow-active.png)
+}
+.yui-skin-sam .yui-radio-button-checked {
+	BORDER-BOTTOM-COLOR: #304369; BORDER-TOP-COLOR: #304369; BACKGROUND-POSITION: 0px -1400px; BORDER-RIGHT-COLOR: #304369; BORDER-LEFT-COLOR: #304369
+}
+.yui-skin-sam .yui-checkbox-button-checked {
+	BORDER-BOTTOM-COLOR: #304369; BORDER-TOP-COLOR: #304369; BACKGROUND-POSITION: 0px -1400px; BORDER-RIGHT-COLOR: #304369; BORDER-LEFT-COLOR: #304369
+}
+.yui-skin-sam .yui-radio-button-checked .first-child {
+	BORDER-BOTTOM-COLOR: #304369; BORDER-TOP-COLOR: #304369; BORDER-RIGHT-COLOR: #304369; BORDER-LEFT-COLOR: #304369
+}
+.yui-skin-sam .yui-checkbox-button-checked .first-child {
+	BORDER-BOTTOM-COLOR: #304369; BORDER-TOP-COLOR: #304369; BORDER-RIGHT-COLOR: #304369; BORDER-LEFT-COLOR: #304369
+}
+.yui-skin-sam .yui-radio-button-checked BUTTON {
+	COLOR: #fff
+}
+.yui-skin-sam .yui-checkbox-button-checked BUTTON {
+	COLOR: #fff
+}
+.yui-skin-sam .yui-button-disabled {
+	BORDER-BOTTOM-COLOR: #ccc; BORDER-TOP-COLOR: #ccc; BACKGROUND-POSITION: 0px -1500px; BORDER-RIGHT-COLOR: #ccc; BORDER-LEFT-COLOR: #ccc
+}
+.yui-skin-sam .yui-button-disabled .first-child {
+	BORDER-BOTTOM-COLOR: #ccc; BORDER-TOP-COLOR: #ccc; BORDER-RIGHT-COLOR: #ccc; BORDER-LEFT-COLOR: #ccc
+}
+.yui-skin-sam .yui-button-disabled BUTTON {
+	COLOR: #a6a6a6; CURSOR: default
+}
+.yui-skin-sam .yui-button-disabled A {
+	COLOR: #a6a6a6; CURSOR: default
+}
+.yui-skin-sam .yui-menu-button-disabled BUTTON {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/menu-button-arrow-disabled.png)
+}
+.yui-skin-sam .yui-split-button-disabled BUTTON {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/split-button-arrow-disabled.png)
+}
+.yui-calcontainer {
+	POSITION: relative; FLOAT: left; _overflow: hidden
+}
+.yui-calcontainer IFRAME {
+	Z-INDEX: 0; POSITION: absolute; BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 0px; BORDER-RIGHT-STYLE: none; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; PADDING-RIGHT: 0px; BORDER-TOP-STYLE: none; HEIGHT: 100%; BORDER-LEFT-STYLE: none; TOP: 0px; PADDING-TOP: 0px; LEFT: 0px
+}
+.yui-calcontainer IFRAME.fixedsize {
+	WIDTH: 50em; HEIGHT: 50em; TOP: -1px; LEFT: -1px
+}
+.multi.yui-calcontainer .groupcal {
+	Z-INDEX: 1; POSITION: relative; FLOAT: left
+}
+.yui-calcontainer .title {
+	Z-INDEX: 1; POSITION: relative
+}
+.yui-calcontainer .close-icon {
+	Z-INDEX: 1; POSITION: absolute; TEXT-INDENT: -10000em; OVERFLOW: hidden
+}
+.yui-calendar {
+	POSITION: relative
+}
+.yui-calendar .calnavleft {
+	Z-INDEX: 1; POSITION: absolute; TEXT-INDENT: -10000em; OVERFLOW: hidden
+}
+.yui-calendar .calnavright {
+	Z-INDEX: 1; POSITION: absolute; TEXT-INDENT: -10000em; OVERFLOW: hidden
+}
+.yui-calendar .calheader {
+	POSITION: relative; TEXT-ALIGN: center; WIDTH: 100%
+}
+.yui-calcontainer .yui-cal-nav-mask {
+	Z-INDEX: 2; POSITION: absolute; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; PADDING-RIGHT: 0px; DISPLAY: none; HEIGHT: 100%; TOP: 0px; PADDING-TOP: 0px; LEFT: 0px; _width: 0; _height: 0
+}
+.yui-calcontainer .yui-cal-nav {
+	Z-INDEX: 3; POSITION: absolute; DISPLAY: none; TOP: 0px
+}
+.yui-calcontainer .yui-cal-nav .yui-cal-nav-btn {
+	DISPLAY: inline-block
+}
+.yui-calcontainer .yui-cal-nav .yui-cal-nav-btn BUTTON {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; BACKGROUND-COLOR: transparent; DISPLAY: inline-block; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; OVERFLOW: visible; CURSOR: pointer
+}
+.yui-calendar .calbody A:hover {
+	
+}
+P#clear {
+	CLEAR: left; PADDING-TOP: 10px
+}
+.yui-skin-sam .yui-calcontainer {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; PADDING-BOTTOM: 10px; BACKGROUND-COLOR: #f2f2f2; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid; PADDING-TOP: 10px
+}
+.yui-skin-sam .multi.yui-calcontainer {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; PADDING-TOP: 0px
+}
+.yui-skin-sam .multi.yui-calcontainer .groupcal {
+	BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 10px; BORDER-RIGHT-STYLE: none; BACKGROUND-COLOR: transparent; MARGIN: 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; PADDING-TOP: 10px
+}
+.yui-skin-sam .yui-calcontainer .title {
+	BORDER-BOTTOM: #ccc 1px solid; TEXT-ALIGN: left; PADDING-BOTTOM: 0.4em; MARGIN: 0px -10px 10px; PADDING-LEFT: 0.4em; PADDING-RIGHT: 0.4em; FONT: bold 100% sans-serif; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px 0px; HEIGHT: auto; COLOR: #000; TOP: 0px; PADDING-TOP: 0.4em; LEFT: 0px
+}
+.yui-skin-sam .multi.yui-calcontainer .title {
+	MARGIN: 0px -5px
+}
+.yui-skin-sam .withtitle.yui-calcontainer {
+	PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-calcontainer .calclose {
+	WIDTH: 25px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) no-repeat 0px -300px; HEIGHT: 15px; TOP: 0.4em; CURSOR: pointer; RIGHT: 0.4em
+}
+.yui-skin-sam .yui-calendar {
+	TEXT-ALIGN: center; MARGIN: 0px; BORDER-SPACING: 0; BORDER-COLLAPSE: collapse; FONT: 100% sans-serif
+}
+.yui-skin-sam .yui-calendar .calhead {
+	BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 0px; BORDER-RIGHT-STYLE: none; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP-STYLE: none; BACKGROUND: none transparent scroll repeat 0% 0%; VERTICAL-ALIGN: middle; BORDER-LEFT-STYLE: none; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-calendar .calheader {
+	TEXT-ALIGN: center; PADDING-BOTTOM: 0.6em; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: none transparent scroll repeat 0% 0%; FONT-WEIGHT: bold; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-calendar .calheader IMG {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none
+}
+.yui-skin-sam .yui-calendar .calnavleft {
+	WIDTH: 25px; BOTTOM: 0px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) no-repeat 0px -450px; HEIGHT: 15px; MARGIN-LEFT: 0.4em; TOP: 0px; CURSOR: pointer; LEFT: -10px
+}
+.yui-skin-sam .yui-calendar .calnavright {
+	WIDTH: 25px; BOTTOM: 0px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) no-repeat 0px -500px; HEIGHT: 15px; TOP: 0px; CURSOR: pointer; RIGHT: -10px; MARGIN-RIGHT: 0.4em
+}
+.yui-skin-sam .yui-calendar .calweekdayrow {
+	HEIGHT: 2em
+}
+.yui-skin-sam .yui-calendar .calweekdayrow TH {
+	BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 0px; BORDER-RIGHT-STYLE: none; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-calendar .calweekdaycell {
+	TEXT-ALIGN: center; WIDTH: 2em; COLOR: #000; FONT-WEIGHT: bold
+}
+.yui-skin-sam .yui-calendar .calfoot {
+	BACKGROUND-COLOR: #f2f2f2
+}
+.yui-skin-sam .yui-calendar .calrowhead {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; FONT-STYLE: normal; BORDER-TOP-STYLE: none; COLOR: #a6a6a6; FONT-SIZE: 85%; BORDER-LEFT-STYLE: none; FONT-WEIGHT: normal
+}
+.yui-skin-sam .yui-calendar .calrowfoot {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; FONT-STYLE: normal; BORDER-TOP-STYLE: none; COLOR: #a6a6a6; FONT-SIZE: 85%; BORDER-LEFT-STYLE: none; FONT-WEIGHT: normal
+}
+.yui-skin-sam .yui-calendar .calrowhead {
+	TEXT-ALIGN: right; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 2px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-calendar .calrowfoot {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 0px; PADDING-LEFT: 2px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-calendar TD.calcell {
+	BORDER-BOTTOM: #ccc 1px solid; TEXT-ALIGN: center; BORDER-LEFT: #ccc 1px solid; PADDING-BOTTOM: 1px; LINE-HEIGHT: 1.6em; PADDING-LEFT: 1px; PADDING-RIGHT: 1px; WHITE-SPACE: nowrap; BACKGROUND: #fff; HEIGHT: 1.6em; BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #ccc 1px solid; PADDING-TOP: 1px
+}
+.yui-skin-sam .yui-calendar TD.calcell A {
+	DISPLAY: block; HEIGHT: 100%; COLOR: #06c; TEXT-DECORATION: none
+}
+.yui-skin-sam .yui-calendar TD.today.calcell {
+	BACKGROUND-COLOR: #000
+}
+.yui-skin-sam .yui-calendar TD.today.calcell A {
+	BACKGROUND-COLOR: #fff
+}
+.yui-skin-sam .yui-calendar TD.oom.calcell {
+	BACKGROUND-COLOR: #ccc; COLOR: #a6a6a6; CURSOR: default
+}
+.yui-skin-sam .yui-calendar TD.selected.calcell {
+	BACKGROUND-COLOR: #fff; COLOR: #000
+}
+.yui-skin-sam .yui-calendar TD.selected.calcell A {
+	BACKGROUND-COLOR: #b3d4ff; COLOR: #000
+}
+.yui-skin-sam .yui-calendar TD.calcellhover.calcell {
+	BACKGROUND-COLOR: #426fd9; COLOR: #fff; CURSOR: pointer
+}
+.yui-skin-sam .yui-calendar TD.calcellhover.calcell A {
+	BACKGROUND-COLOR: #426fd9; COLOR: #fff
+}
+.yui-skin-sam .yui-calendar TD.previous.calcell {
+	COLOR: #e0e0e0
+}
+.yui-skin-sam .yui-calendar TD.restricted.calcell {
+	TEXT-DECORATION: line-through
+}
+.yui-skin-sam .yui-calendar TD.highlight1.calcell {
+	BACKGROUND-COLOR: #cf9
+}
+.yui-skin-sam .yui-calendar TD.highlight2.calcell {
+	BACKGROUND-COLOR: #9cf
+}
+.yui-skin-sam .yui-calendar TD.highlight3.calcell {
+	BACKGROUND-COLOR: #fcc
+}
+.yui-skin-sam .yui-calendar TD.highlight4.calcell {
+	BACKGROUND-COLOR: #cf9
+}
+.yui-skin-sam .yui-calendar A.calnav {
+	BORDER-BOTTOM: #f2f2f2 1px solid; BORDER-LEFT: #f2f2f2 1px solid; PADDING-BOTTOM: 0px; PADDING-LEFT: 4px; PADDING-RIGHT: 4px; ZOOM: 1; COLOR: #000; BORDER-TOP: #f2f2f2 1px solid; BORDER-RIGHT: #f2f2f2 1px solid; TEXT-DECORATION: none; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-calendar A.calnav:hover {
+	BORDER-BOTTOM-COLOR: #a0a0a0; BORDER-TOP-COLOR: #a0a0a0; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px 0px; BORDER-RIGHT-COLOR: #a0a0a0; BORDER-LEFT-COLOR: #a0a0a0; CURSOR: pointer
+}
+.yui-skin-sam .yui-calcontainer .yui-cal-nav-mask {
+	FILTER: alpha(opacity=25); BACKGROUND-COLOR: #000; opacity: .25
+}
+.yui-skin-sam .yui-calcontainer .yui-cal-nav {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; PADDING-BOTTOM: 0px; BACKGROUND-COLOR: #f2f2f2; PADDING-LEFT: 0px; WIDTH: 14em; PADDING-RIGHT: 0px; FONT-FAMILY: arial,helvetica,clean,sans-serif; MARGIN-LEFT: -7em; FONT-SIZE: 93%; BORDER-TOP: #808080 1px solid; TOP: 2.5em; BORDER-RIGHT: #808080 1px solid; PADDING-TOP: 0px; LEFT: 50%
+}
+.yui-skin-sam .withtitle.yui-calcontainer .yui-cal-nav {
+	TOP: 4.5em
+}
+.yui-skin-sam .multi.yui-calcontainer .yui-cal-nav {
+	WIDTH: 16em; MARGIN-LEFT: -8em
+}
+.yui-skin-sam .yui-calcontainer .yui-cal-nav-y {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 5px
+}
+.yui-skin-sam .yui-calcontainer .yui-cal-nav-m {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 5px
+}
+.yui-skin-sam .yui-calcontainer .yui-cal-nav-b {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 5px
+}
+.yui-skin-sam .yui-calcontainer .yui-cal-nav-b {
+	TEXT-ALIGN: center
+}
+.yui-skin-sam .yui-calcontainer .yui-cal-nav-e {
+	PADDING-BOTTOM: 5px; BACKGROUND-COLOR: #edf5ff; MARGIN-TOP: 5px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; DISPLAY: none; BORDER-TOP: black 1px solid; PADDING-TOP: 5px
+}
+.yui-skin-sam .yui-calcontainer .yui-cal-nav LABEL {
+	DISPLAY: block; FONT-WEIGHT: bold
+}
+.yui-skin-sam .yui-calcontainer .yui-cal-nav-mc {
+	WIDTH: 100%; _width: auto
+}
+.yui-skin-sam .yui-calcontainer .yui-cal-nav-y INPUT.yui-invalid {
+	BORDER-BOTTOM: #000 1px solid; BORDER-LEFT: #000 1px solid; BACKGROUND-COLOR: #ffee69; BORDER-TOP: #000 1px solid; BORDER-RIGHT: #000 1px solid
+}
+.yui-skin-sam .yui-calcontainer .yui-cal-nav-yc {
+	WIDTH: 4em
+}
+.yui-skin-sam .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; MARGIN: auto 0.15em; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) #ccc repeat-x 0px 0px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn BUTTON {
+	PADDING-BOTTOM: 0px; LINE-HEIGHT: 1.7; MIN-HEIGHT: auto; PADDING-LEFT: 8px; PADDING-RIGHT: 8px; COLOR: #000; FONT-SIZE: 93%; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-calcontainer .yui-cal-nav .yui-default.yui-cal-nav-btn {
+	BORDER-BOTTOM: #304369 1px solid; BORDER-LEFT: #304369 1px solid; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px -1400px; BORDER-TOP: #304369 1px solid; BORDER-RIGHT: #304369 1px solid
+}
+.yui-skin-sam .yui-calcontainer .yui-cal-nav .yui-default.yui-cal-nav-btn BUTTON {
+	COLOR: #fff
+}
+.yui-carousel {
+	POSITION: relative; TEXT-ALIGN: left; ZOOM: 1; VISIBILITY: hidden; OVERFLOW: hidden
+}
+.yui-carousel-visible.yui-carousel {
+	VISIBILITY: visible
+}
+.yui-carousel-content {
+	POSITION: relative; OVERFLOW: hidden
+}
+.yui-carousel-element {
+	Z-INDEX: 1; POSITION: relative; PADDING-BOTTOM: 0px; MARGIN: 5px 0px; PADDING-LEFT: 0px; WIDTH: 32000px; PADDING-RIGHT: 0px; OVERFLOW: hidden; PADDING-TOP: 0px
+}
+.yui-carousel-vertical .yui-carousel-element {
+	MARGIN: 0px 5px
+}
+.yui-carousel-element LI {
+	BORDER-BOTTOM: #ccc 1px solid; TEXT-ALIGN: center; BORDER-LEFT: #ccc 1px solid; PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: none; MARGIN: 1px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; ZOOM: 1; DISPLAY: inline; FLOAT: none; OVERFLOW: hidden; BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #ccc 1px solid; PADDING-TOP: 0px
+}
+.yui-carousel .yui-carousel-item-selected {
+	BORDER-BOTTOM: #000 1px dashed; BORDER-LEFT: #000 1px dashed; MARGIN: 1px; BORDER-TOP: #000 1px dashed; BORDER-RIGHT: #000 1px dashed
+}
+.yui-carousel-vertical {
+	MARGIN: 0px 5px; WIDTH: auto; HEIGHT: 32000px
+}
+.yui-carousel-vertical .yui-carousel-element LI {
+	DISPLAY: block; FLOAT: none
+}
+.yui-log .carousel {
+	BACKGROUND: #f2e886
+}
+.yui-carousel-nav {
+	ZOOM: 1
+}
+.yui-carousel-nav:after {
+	DISPLAY: block; CLEAR: both; CONTENT: ""
+}
+.yui-carousel-button-focus {
+	OUTLINE-STYLE: dotted; OUTLINE-COLOR: #000; OUTLINE-WIDTH: 1px
+}
+.yui-carousel-min-width .yui-carousel-content {
+	MARGIN: 0px auto
+}
+.yui-skin-sam .yui-carousel {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-carousel-vertical {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-carousel-nav {
+	TEXT-ALIGN: right; PADDING-BOTTOM: 3px; PADDING-LEFT: 3px; PADDING-RIGHT: 3px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px 0px; PADDING-TOP: 3px
+}
+.yui-skin-sam .yui-carousel-button {
+	MARGIN: 5px; WIDTH: 40px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) no-repeat 0px -600px; FLOAT: right; HEIGHT: 19px; OVERFLOW: hidden
+}
+.yui-skin-sam .yui-carousel-vertical .yui-carousel-button {
+	BACKGROUND-POSITION: 0px -800px
+}
+.yui-skin-sam .yui-carousel-button-disabled {
+	BACKGROUND-POSITION: 0px -2000px
+}
+.yui-skin-sam .yui-carousel-vertical .yui-carousel-button-disabled {
+	BACKGROUND-POSITION: 0px -2100px
+}
+.yui-skin-sam .yui-carousel-button INPUT {
+	PADDING-BOTTOM: 0px; BORDER-RIGHT-WIDTH: 0px; BACKGROUND-COLOR: transparent; MARGIN: -2px 0px 0px -2px; PADDING-LEFT: 50px; PADDING-RIGHT: 0px; DISPLAY: block; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; HEIGHT: 44px; BORDER-LEFT-WIDTH: 0px; CURSOR: pointer; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-carousel-button BUTTON {
+	PADDING-BOTTOM: 0px; BORDER-RIGHT-WIDTH: 0px; BACKGROUND-COLOR: transparent; MARGIN: -2px 0px 0px -2px; PADDING-LEFT: 50px; PADDING-RIGHT: 0px; DISPLAY: block; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; HEIGHT: 44px; BORDER-LEFT-WIDTH: 0px; CURSOR: pointer; PADDING-TOP: 0px
+}
+.yui-skin-sam SPAN.yui-carousel-first-button {
+	MARGIN: 5px 5px 5px -90px; BACKGROUND-POSITION: 0px -550px
+}
+.yui-skin-sam .yui-carousel-vertical SPAN.yui-carousel-first-button {
+	BACKGROUND-POSITION: 0px -750px
+}
+.yui-skin-sam SPAN.yui-carousel-first-button-disabled {
+	BACKGROUND-POSITION: 0px -1950px
+}
+.yui-skin-sam .yui-carousel-vertical SPAN.yui-carousel-first-button-disabled {
+	BACKGROUND-POSITION: 0px -2050px
+}
+.yui-skin-sam .yui-carousel-nav UL {
+	PADDING-BOTTOM: 0px; MARGIN: 0px 0px 0px -160px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FLOAT: right; HEIGHT: 19px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-carousel-min-width .yui-carousel-nav UL {
+	MARGIN-LEFT: -170px
+}
+.yui-skin-sam .yui-carousel-nav SELECT {
+	POSITION: relative; TOP: 4px; RIGHT: 50px
+}
+.yui-skin-sam .yui-carousel-vertical .yui-carousel-nav UL {
+	MARGIN: 0px; ZOOM: 1; FLOAT: none
+}
+.yui-skin-sam .yui-carousel-vertical .yui-carousel-nav SELECT {
+	MARGIN: 0px; ZOOM: 1; FLOAT: none
+}
+.yui-skin-sam .yui-carousel-nav UL LI {
+	PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: none; MARGIN: 10px 0px 0px 5px; PADDING-LEFT: 0px; WIDTH: 9px; PADDING-RIGHT: 0px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) no-repeat 0px -650px; FLOAT: left; HEIGHT: 9px; OVERFLOW: hidden; CURSOR: pointer; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-carousel-nav UL:after {
+	DISPLAY: block; CLEAR: both; CONTENT: ""
+}
+.yui-skin-sam .yui-carousel-nav UL LI A {
+	POSITION: absolute; LEFT: -10000px
+}
+.yui-skin-sam .yui-carousel-nav UL LI.yui-carousel-nav-page-focus {
+	OUTLINE-STYLE: dotted; OUTLINE-COLOR: #000; OUTLINE-WIDTH: 1px
+}
+.yui-skin-sam .yui-carousel-nav UL LI.yui-carousel-nav-page-selected {
+	BACKGROUND-POSITION: 0px -700px
+}
+.yui-skin-sam .yui-carousel-item-loading {
+	POSITION: relative; TEXT-INDENT: -150px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/ajax-loader.gif) no-repeat 50% 50%
+}
+.yui-picker-panel {
+	BORDER-BOTTOM-COLOR: #888; BORDER-TOP-COLOR: #888; BACKGROUND: #e3e3e3; BORDER-RIGHT-COLOR: #888; BORDER-LEFT-COLOR: #888
+}
+.yui-picker-panel .hd {
+	BORDER-BOTTOM: #e3e3e3 1px solid; BORDER-LEFT: #e3e3e3 1px solid; PADDING-BOTTOM: 6px; LINE-HEIGHT: 100%; BACKGROUND-COLOR: #ccc; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; COLOR: #000; FONT-SIZE: 100%; OVERFLOW: hidden; BORDER-TOP: #e3e3e3 1px solid; FONT-WEIGHT: bold; BORDER-RIGHT: #e3e3e3 1px solid; PADDING-TOP: 6px
+}
+.yui-picker-panel .bd {
+	MARGIN: 1px; BACKGROUND: #e8e8e8; HEIGHT: 200px
+}
+.yui-picker-panel .ft {
+	PADDING-BOTTOM: 1px; MARGIN: 1px; PADDING-LEFT: 1px; PADDING-RIGHT: 1px; BACKGROUND: #e8e8e8; PADDING-TOP: 1px
+}
+.yui-picker {
+	POSITION: relative
+}
+.yui-picker-hue-thumb {
+	Z-INDEX: 9; POSITION: absolute; WIDTH: 18px; HEIGHT: 18px; TOP: -8px; CURSOR: default; LEFT: -2px
+}
+.yui-picker-hue-bg {
+	POSITION: absolute; OUTLINE-STYLE: none; OUTLINE-WIDTH: 0px; WIDTH: 14px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/hue_bg.png) no-repeat; HEIGHT: 183px; TOP: 4px; LEFT: 200px; -moz-outline: none
+}
+.yui-picker-bg {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/picker_mask.png); POSITION: absolute; BACKGROUND-COLOR: #f00; OUTLINE-STYLE: none; OUTLINE-WIDTH: 0px; WIDTH: 182px; HEIGHT: 182px; TOP: 4px; LEFT: 4px; -moz-outline: none
+}
+* HTML .yui-picker-bg {
+	BACKGROUND-IMAGE: none; FILTER: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../build/colorpicker/assets/picker_mask.png',sizingMethod='scale')
+}
+.yui-picker-mask {
+	Z-INDEX: 1; POSITION: absolute; TOP: 0px; LEFT: 0px
+}
+.yui-picker-thumb {
+	Z-INDEX: 9; POSITION: absolute; WIDTH: 11px; HEIGHT: 11px; TOP: -4px; CURSOR: default; LEFT: -4px
+}
+.yui-picker-swatch {
+	BORDER-BOTTOM: #888 1px solid; POSITION: absolute; BORDER-LEFT: #888 1px solid; WIDTH: 55px; HEIGHT: 60px; BORDER-TOP: #888 1px solid; TOP: 4px; BORDER-RIGHT: #888 1px solid; LEFT: 240px
+}
+.yui-picker-websafe-swatch {
+	BORDER-BOTTOM: #888 1px solid; POSITION: absolute; BORDER-LEFT: #888 1px solid; WIDTH: 24px; HEIGHT: 24px; BORDER-TOP: #888 1px solid; TOP: 4px; BORDER-RIGHT: #888 1px solid; LEFT: 304px
+}
+.yui-picker-controls {
+	POSITION: absolute; FONT: 1em monospace; TOP: 72px; LEFT: 226px
+}
+.yui-picker-controls .hd {
+	BORDER-RIGHT-WIDTH: 0px !important; BACKGROUND: none transparent scroll repeat 0% 0%; BORDER-TOP-WIDTH: 0px !important; BORDER-BOTTOM-WIDTH: 0px !important; BORDER-LEFT-WIDTH: 0px !important
+}
+.yui-picker-controls .bd {
+	BORDER-RIGHT-WIDTH: 0px !important; BORDER-TOP-WIDTH: 0px !important; BORDER-BOTTOM-WIDTH: 0px !important; HEIGHT: 100px; BORDER-LEFT-WIDTH: 0px !important
+}
+.yui-picker-controls UL {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 2px; FLOAT: left; PADDING-TOP: 0px
+}
+.yui-picker-controls LI {
+	PADDING-BOTTOM: 2px; LIST-STYLE-TYPE: none; MARGIN: 0px; PADDING-LEFT: 2px; PADDING-RIGHT: 2px; PADDING-TOP: 2px
+}
+.yui-picker-controls INPUT {
+	WIDTH: 2.4em; FONT-SIZE: 0.85em
+}
+.yui-picker-hex-controls {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 2px; PADDING-RIGHT: 2px; CLEAR: both; PADDING-TOP: 2px
+}
+.yui-picker-hex-controls INPUT {
+	WIDTH: 4.6em
+}
+.yui-picker-controls A {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; DISPLAY: inline-block; FONT: 1em arial,helvetica,clean,sans-serif; COLOR: #000; PADDING-TOP: 0px
+}
+.yui-overlay {
+	Z-INDEX: 2; POSITION: absolute; VISIBILITY: hidden
+}
+.yui-panel-container {
+	Z-INDEX: 2; POSITION: absolute; VISIBILITY: hidden
+}
+.yui-panel {
+	POSITION: relative
+}
+.yui-panel-container FORM {
+	MARGIN: 0px
+}
+.mask {
+	Z-INDEX: 1; POSITION: absolute; BOTTOM: 0px; DISPLAY: none; TOP: 0px; RIGHT: 0px; LEFT: 0px
+}
+.block-scrollbars.mask {
+	OVERFLOW: auto
+}
+.masked SELECT {
+	_visibility: hidden
+}
+.drag SELECT {
+	_visibility: hidden
+}
+.hide-select SELECT {
+	_visibility: hidden
+}
+.yui-panel-container SELECT {
+	_visibility: inherit
+}
+.hide-scrollbars {
+	OVERFLOW: hidden
+}
+.hide-scrollbars * {
+	OVERFLOW: hidden
+}
+.hide-scrollbars SELECT {
+	DISPLAY: none
+}
+.show-scrollbars {
+	OVERFLOW: auto
+}
+.show-scrollbars.yui-panel-container {
+	OVERFLOW: visible
+}
+.show-scrollbars.yui-tt {
+	OVERFLOW: visible
+}
+.show-scrollbars.yui-panel-container .underlay {
+	OVERFLOW: auto
+}
+.show-scrollbars.yui-tt .yui-tt-shadow {
+	OVERFLOW: auto
+}
+.shadow.yui-panel-container .yui-force-redraw.underlay {
+	PADDING-BOTTOM: 1px
+}
+.yui-effect-fade .underlay {
+	DISPLAY: none
+}
+.yui-effect-fade .yui-tt-shadow {
+	DISPLAY: none
+}
+.yui-tt-shadow {
+	POSITION: absolute
+}
+.yui-override-padding {
+	PADDING-BOTTOM: 0px !important; PADDING-LEFT: 0px !important; PADDING-RIGHT: 0px !important; PADDING-TOP: 0px !important
+}
+.yui-panel-container .container-close {
+	TEXT-INDENT: -10000em; OVERFLOW: hidden; TEXT-DECORATION: none
+}
+.yui-force-redraw.yui-overlay {
+	MARGIN-BOTTOM: 1px
+}
+.yui-force-redraw.yui-panel-container {
+	MARGIN-BOTTOM: 1px
+}
+.yui-skin-sam .mask {
+	FILTER: alpha(opacity=25); BACKGROUND-COLOR: #000; opacity: .25
+}
+.yui-skin-sam .yui-panel-container {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 2px; PADDING-RIGHT: 2px; PADDING-TOP: 2px
+}
+.yui-skin-sam .yui-panel {
+	Z-INDEX: 1; BORDER-BOTTOM: #808080 1px solid; POSITION: relative; BORDER-LEFT: #808080 1px solid; ZOOM: 1; BORDER-TOP: #808080 1px solid; TOP: 0px; BORDER-RIGHT: #808080 1px solid; LEFT: 0px; _zoom: normal
+}
+.yui-skin-sam .yui-panel .hd {
+	BORDER-BOTTOM: #808080 0px solid; BORDER-LEFT: #808080 0px solid; MARGIN: 0px; BORDER-TOP: #808080 0px solid; BORDER-RIGHT: #808080 0px solid
+}
+.yui-skin-sam .yui-panel .bd {
+	BORDER-BOTTOM: #808080 0px solid; BORDER-LEFT: #808080 0px solid; MARGIN: 0px; BORDER-TOP: #808080 0px solid; BORDER-RIGHT: #808080 0px solid
+}
+.yui-skin-sam .yui-panel .ft {
+	BORDER-BOTTOM: #808080 0px solid; BORDER-LEFT: #808080 0px solid; MARGIN: 0px; BORDER-TOP: #808080 0px solid; BORDER-RIGHT: #808080 0px solid
+}
+.yui-skin-sam .yui-panel .hd {
+	BORDER-BOTTOM: #ccc 1px solid
+}
+.yui-skin-sam .yui-panel .bd {
+	BACKGROUND-COLOR: #f2f2f2
+}
+.yui-skin-sam .yui-panel .ft {
+	BACKGROUND-COLOR: #f2f2f2
+}
+.yui-skin-sam .yui-panel .hd {
+	PADDING-BOTTOM: 0px; LINE-HEIGHT: 1.9; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px -200px; COLOR: #000; FONT-SIZE: 93%; FONT-WEIGHT: bold; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-panel .bd {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 10px
+}
+.yui-skin-sam .yui-panel .ft {
+	PADDING-BOTTOM: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; FONT-SIZE: 77%; BORDER-TOP: #808080 1px solid; PADDING-TOP: 5px
+}
+.yui-skin-sam .container-close {
+	POSITION: absolute; WIDTH: 25px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) no-repeat 0px -300px; HEIGHT: 15px; TOP: 5px; CURSOR: pointer; RIGHT: 6px
+}
+.yui-skin-sam .yui-panel-container .underlay {
+	RIGHT: -1px; LEFT: -1px
+}
+.yui-skin-sam .matte.yui-panel-container {
+	PADDING-BOTTOM: 9px; BACKGROUND-COLOR: #fff; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 9px
+}
+.yui-skin-sam .shadow.yui-panel-container {
+	_padding: 2px 4px 0 2px
+}
+.yui-skin-sam .shadow.yui-panel-container .underlay {
+	POSITION: absolute; FILTER: alpha(opacity=12); BACKGROUND-COLOR: #000; BOTTOM: -1px; TOP: 4px; RIGHT: -1px; LEFT: -1px; _margin-left: -1px; opacity: .12; _top: 0; _left: 0; _right: 0; _bottom: 0; _margin-top: 3px
+}
+.yui-skin-sam .yui-dialog .ft {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; BORDER-TOP-STYLE: none; FONT-SIZE: 100%; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-dialog .ft .button-group {
+	TEXT-ALIGN: right; DISPLAY: block
+}
+.yui-skin-sam .yui-dialog .ft BUTTON.default {
+	FONT-WEIGHT: bold
+}
+.yui-skin-sam .yui-dialog .ft SPAN.default {
+	BORDER-BOTTOM-COLOR: #304369; BORDER-TOP-COLOR: #304369; BACKGROUND-POSITION: 0px -1400px; BORDER-RIGHT-COLOR: #304369; BORDER-LEFT-COLOR: #304369
+}
+.yui-skin-sam .yui-dialog .ft SPAN.default .first-child {
+	BORDER-BOTTOM-COLOR: #304369; BORDER-TOP-COLOR: #304369; BORDER-RIGHT-COLOR: #304369; BORDER-LEFT-COLOR: #304369
+}
+.yui-skin-sam .yui-dialog .ft SPAN.default BUTTON {
+	COLOR: #fff
+}
+.yui-skin-sam .yui-dialog .ft SPAN.yui-button-disabled {
+	BORDER-BOTTOM-COLOR: #ccc; BORDER-TOP-COLOR: #ccc; BACKGROUND-POSITION: 0px -1500px; BORDER-RIGHT-COLOR: #ccc; BORDER-LEFT-COLOR: #ccc
+}
+.yui-skin-sam .yui-dialog .ft SPAN.yui-button-disabled .first-child {
+	BORDER-BOTTOM-COLOR: #ccc; BORDER-TOP-COLOR: #ccc; BORDER-RIGHT-COLOR: #ccc; BORDER-LEFT-COLOR: #ccc
+}
+.yui-skin-sam .yui-dialog .ft SPAN.yui-button-disabled BUTTON {
+	COLOR: #a6a6a6
+}
+.yui-skin-sam .yui-simple-dialog .bd .yui-icon {
+	WIDTH: 16px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) no-repeat 0px 0px; FLOAT: left; HEIGHT: 16px; MARGIN-RIGHT: 10px
+}
+.yui-skin-sam .yui-simple-dialog .bd SPAN.blckicon {
+	BACKGROUND-POSITION: 0px -1100px
+}
+.yui-skin-sam .yui-simple-dialog .bd SPAN.alrticon {
+	BACKGROUND-POSITION: 0px -1050px
+}
+.yui-skin-sam .yui-simple-dialog .bd SPAN.hlpicon {
+	BACKGROUND-POSITION: 0px -1150px
+}
+.yui-skin-sam .yui-simple-dialog .bd SPAN.infoicon {
+	BACKGROUND-POSITION: 0px -1200px
+}
+.yui-skin-sam .yui-simple-dialog .bd SPAN.warnicon {
+	BACKGROUND-POSITION: 0px -1900px
+}
+.yui-skin-sam .yui-simple-dialog .bd SPAN.tipicon {
+	BACKGROUND-POSITION: 0px -1250px
+}
+.yui-skin-sam .yui-tt .bd {
+	Z-INDEX: 1; BORDER-BOTTOM: #a6982b 1px solid; POSITION: relative; BORDER-LEFT: #a6982b 1px solid; PADDING-BOTTOM: 2px; BACKGROUND-COLOR: #ffee69; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; COLOR: #000; BORDER-TOP: #d4c237 1px solid; TOP: 0px; BORDER-RIGHT: #a6982b 1px solid; PADDING-TOP: 2px; LEFT: 0px
+}
+.yui-skin-sam .show-scrollbars.yui-tt .bd {
+	OVERFLOW: auto
+}
+.yui-skin-sam .yui-tt-shadow {
+	BACKGROUND-COLOR: #000; BOTTOM: -3px; TOP: 2px; RIGHT: -3px; LEFT: -3px
+}
+.yui-skin-sam .yui-tt-shadow-visible {
+	FILTER: alpha(opacity=12); opacity: .12
+}
+.yui-skin-sam .yui-dt-mask {
+	Z-INDEX: 9500; POSITION: absolute
+}
+.yui-dt-tmp {
+	POSITION: absolute; LEFT: -9000px
+}
+.yui-dt-scrollable .yui-dt-bd {
+	OVERFLOW: auto
+}
+.yui-dt-scrollable .yui-dt-hd {
+	POSITION: relative; OVERFLOW: hidden
+}
+.yui-dt-scrollable .yui-dt-bd THEAD TR {
+	POSITION: absolute; LEFT: -1500px
+}
+.yui-dt-scrollable .yui-dt-bd THEAD TH {
+	POSITION: absolute; LEFT: -1500px
+}
+.yui-dt-scrollable TBODY {
+	-moz-outline: none
+}
+.yui-skin-sam THEAD .yui-dt-sortable {
+	CURSOR: pointer
+}
+.yui-skin-sam THEAD .yui-dt-draggable {
+	CURSOR: move
+}
+.yui-dt-coltarget {
+	Z-INDEX: 999; POSITION: absolute
+}
+.yui-dt-hd {
+	ZOOM: 1
+}
+TH.yui-dt-resizeable .yui-dt-resizerliner {
+	POSITION: relative
+}
+.yui-dt-resizer {
+	POSITION: absolute; FILTER: alpha(opacity=0); BACKGROUND-COLOR: #ccc; BOTTOM: 0px; HEIGHT: 100%; CURSOR: col-resize; RIGHT: 0px; opacity: 0
+}
+.yui-dt-resizerproxy {
+	Z-INDEX: 9000; POSITION: absolute; FILTER: alpha(opacity=0); BACKGROUND-COLOR: #ccc; VISIBILITY: hidden; opacity: 0
+}
+TH.yui-dt-hidden .yui-dt-liner {
+	DISPLAY: none
+}
+TD.yui-dt-hidden .yui-dt-liner {
+	DISPLAY: none
+}
+TH.yui-dt-hidden .yui-dt-resizer {
+	DISPLAY: none
+}
+.yui-dt-editor {
+	Z-INDEX: 9000; POSITION: absolute
+}
+.yui-skin-sam .yui-dt TABLE {
+	BORDER-BOTTOM: #7f7f7f 1px solid; BORDER-LEFT: #7f7f7f 1px solid; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; BORDER-SPACING: 0; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; FONT-FAMILY: arial; BORDER-TOP: #7f7f7f 1px solid; BORDER-RIGHT: #7f7f7f 1px solid; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-dt THEAD {
+	BORDER-SPACING: 0
+}
+.yui-skin-sam .yui-dt CAPTION {
+	TEXT-ALIGN: center; PADDING-BOTTOM: 1em; LINE-HEIGHT: 1; FONT-STYLE: italic; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; COLOR: #000; FONT-SIZE: 85%; FONT-WEIGHT: normal; PADDING-TOP: 1em
+}
+.yui-skin-sam .yui-dt TH {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) #d8d8da repeat-x 0px 0px
+}
+.yui-skin-sam .yui-dt TH {
+	COLOR: #000; VERTICAL-ALIGN: bottom; FONT-WEIGHT: normal; TEXT-DECORATION: none
+}
+.yui-skin-sam .yui-dt TH A {
+	COLOR: #000; VERTICAL-ALIGN: bottom; FONT-WEIGHT: normal; TEXT-DECORATION: none
+}
+.yui-skin-sam .yui-dt TH {
+	BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-RIGHT: #cbcbcb 1px solid; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-dt TR.yui-dt-first TD {
+	BORDER-TOP: #7f7f7f 1px solid
+}
+.yui-skin-sam .yui-dt TH .yui-dt-liner {
+	WHITE-SPACE: nowrap
+}
+.yui-skin-sam .yui-dt-liner {
+	PADDING-BOTTOM: 4px; MARGIN: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 4px
+}
+.yui-skin-sam .yui-dt-coltarget {
+	BACKGROUND-COLOR: red; WIDTH: 5px
+}
+.yui-skin-sam .yui-dt TD {
+	BORDER-BOTTOM-STYLE: none; TEXT-ALIGN: left; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-RIGHT: #cbcbcb 1px solid; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-dt-list TD {
+	BORDER-RIGHT-STYLE: none
+}
+.yui-skin-sam .yui-dt-resizer {
+	WIDTH: 6px
+}
+.yui-skin-sam .yui-dt-mask {
+	FILTER: alpha(opacity=25); BACKGROUND-COLOR: #000; opacity: .25
+}
+.yui-skin-sam .yui-dt-message {
+	BACKGROUND-COLOR: #fff
+}
+.yui-skin-sam .yui-dt-scrollable TABLE {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none
+}
+.yui-skin-sam .yui-dt-scrollable .yui-dt-hd {
+	BORDER-LEFT: #7f7f7f 1px solid; BORDER-TOP: #7f7f7f 1px solid; BORDER-RIGHT: #7f7f7f 1px solid
+}
+.yui-skin-sam .yui-dt-scrollable .yui-dt-bd {
+	BORDER-BOTTOM: #7f7f7f 1px solid; BORDER-LEFT: #7f7f7f 1px solid; BACKGROUND-COLOR: #fff; BORDER-RIGHT: #7f7f7f 1px solid
+}
+.yui-skin-sam .yui-dt-scrollable .yui-dt-data TR.yui-dt-last TD {
+	BORDER-BOTTOM: #7f7f7f 1px solid
+}
+.yui-skin-sam TH.yui-dt-asc {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px -100px
+}
+.yui-skin-sam TH.yui-dt-desc {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px -100px
+}
+.yui-skin-sam TH.yui-dt-sortable .yui-dt-label {
+	MARGIN-RIGHT: 10px
+}
+.yui-skin-sam TH.yui-dt-asc .yui-dt-liner {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/dt-arrow-up.png) no-repeat right 50%
+}
+.yui-skin-sam TH.yui-dt-desc .yui-dt-liner {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/dt-arrow-dn.png) no-repeat right 50%
+}
+TBODY .yui-dt-editable {
+	CURSOR: pointer
+}
+.yui-dt-editor {
+	BORDER-BOTTOM: #808080 1px solid; TEXT-ALIGN: left; BORDER-LEFT: #808080 1px solid; PADDING-BOTTOM: 6px; BACKGROUND-COLOR: #f2f2f2; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid; PADDING-TOP: 6px
+}
+.yui-dt-editor LABEL {
+	PADDING-LEFT: 4px; PADDING-RIGHT: 6px
+}
+.yui-dt-editor .yui-dt-button {
+	TEXT-ALIGN: right; PADDING-TOP: 6px
+}
+.yui-dt-editor .yui-dt-button BUTTON {
+	BORDER-BOTTOM: #999 1px solid; BORDER-LEFT: #999 1px solid; WIDTH: 4em; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px 0px; HEIGHT: 1.8em; MARGIN-LEFT: 6px; BORDER-TOP: #999 1px solid; BORDER-RIGHT: #999 1px solid
+}
+.yui-dt-editor .yui-dt-button BUTTON.yui-dt-default {
+	BORDER-BOTTOM: #304369 1px solid; BORDER-LEFT: #304369 1px solid; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) #5584e0 repeat-x 0px -1400px; COLOR: #fff; BORDER-TOP: #304369 1px solid; BORDER-RIGHT: #304369 1px solid
+}
+.yui-dt-editor .yui-dt-button BUTTON:hover {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px -1300px; COLOR: #000
+}
+.yui-dt-editor .yui-dt-button BUTTON:active {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px -1700px; COLOR: #000
+}
+.yui-skin-sam TR.yui-dt-even {
+	BACKGROUND-COLOR: #fff
+}
+.yui-skin-sam TR.yui-dt-odd {
+	BACKGROUND-COLOR: #edf5ff
+}
+.yui-skin-sam TR.yui-dt-even TD.yui-dt-asc {
+	BACKGROUND-COLOR: #edf5ff
+}
+.yui-skin-sam TR.yui-dt-even TD.yui-dt-desc {
+	BACKGROUND-COLOR: #edf5ff
+}
+.yui-skin-sam TR.yui-dt-odd TD.yui-dt-asc {
+	BACKGROUND-COLOR: #dbeaff
+}
+.yui-skin-sam TR.yui-dt-odd TD.yui-dt-desc {
+	BACKGROUND-COLOR: #dbeaff
+}
+.yui-skin-sam .yui-dt-list TR.yui-dt-even {
+	BACKGROUND-COLOR: #fff
+}
+.yui-skin-sam .yui-dt-list TR.yui-dt-odd {
+	BACKGROUND-COLOR: #fff
+}
+.yui-skin-sam .yui-dt-list TR.yui-dt-even TD.yui-dt-asc {
+	BACKGROUND-COLOR: #edf5ff
+}
+.yui-skin-sam .yui-dt-list TR.yui-dt-even TD.yui-dt-desc {
+	BACKGROUND-COLOR: #edf5ff
+}
+.yui-skin-sam .yui-dt-list TR.yui-dt-odd TD.yui-dt-asc {
+	BACKGROUND-COLOR: #edf5ff
+}
+.yui-skin-sam .yui-dt-list TR.yui-dt-odd TD.yui-dt-desc {
+	BACKGROUND-COLOR: #edf5ff
+}
+.yui-skin-sam TH.yui-dt-highlighted {
+	BACKGROUND-COLOR: #b2d2ff
+}
+.yui-skin-sam TH.yui-dt-highlighted A {
+	BACKGROUND-COLOR: #b2d2ff
+}
+.yui-skin-sam TR.yui-dt-highlighted {
+	BACKGROUND-COLOR: #b2d2ff; CURSOR: pointer
+}
+.yui-skin-sam TR.yui-dt-highlighted TD.yui-dt-asc {
+	BACKGROUND-COLOR: #b2d2ff; CURSOR: pointer
+}
+.yui-skin-sam TR.yui-dt-highlighted TD.yui-dt-desc {
+	BACKGROUND-COLOR: #b2d2ff; CURSOR: pointer
+}
+.yui-skin-sam TR.yui-dt-even TD.yui-dt-highlighted {
+	BACKGROUND-COLOR: #b2d2ff; CURSOR: pointer
+}
+.yui-skin-sam TR.yui-dt-odd TD.yui-dt-highlighted {
+	BACKGROUND-COLOR: #b2d2ff; CURSOR: pointer
+}
+.yui-skin-sam .yui-dt-list TH.yui-dt-highlighted {
+	BACKGROUND-COLOR: #b2d2ff
+}
+.yui-skin-sam .yui-dt-list TH.yui-dt-highlighted A {
+	BACKGROUND-COLOR: #b2d2ff
+}
+.yui-skin-sam .yui-dt-list TR.yui-dt-highlighted {
+	BACKGROUND-COLOR: #b2d2ff; CURSOR: pointer
+}
+.yui-skin-sam .yui-dt-list TR.yui-dt-highlighted TD.yui-dt-asc {
+	BACKGROUND-COLOR: #b2d2ff; CURSOR: pointer
+}
+.yui-skin-sam .yui-dt-list TR.yui-dt-highlighted TD.yui-dt-desc {
+	BACKGROUND-COLOR: #b2d2ff; CURSOR: pointer
+}
+.yui-skin-sam .yui-dt-list TR.yui-dt-even TD.yui-dt-highlighted {
+	BACKGROUND-COLOR: #b2d2ff; CURSOR: pointer
+}
+.yui-skin-sam .yui-dt-list TR.yui-dt-odd TD.yui-dt-highlighted {
+	BACKGROUND-COLOR: #b2d2ff; CURSOR: pointer
+}
+.yui-skin-sam TH.yui-dt-selected {
+	BACKGROUND-COLOR: #446cd7
+}
+.yui-skin-sam TH.yui-dt-selected A {
+	BACKGROUND-COLOR: #446cd7
+}
+.yui-skin-sam TR.yui-dt-selected TD {
+	BACKGROUND-COLOR: #426fd9; COLOR: #fff
+}
+.yui-skin-sam TR.yui-dt-selected TD.yui-dt-asc {
+	BACKGROUND-COLOR: #426fd9; COLOR: #fff
+}
+.yui-skin-sam TR.yui-dt-selected TD.yui-dt-desc {
+	BACKGROUND-COLOR: #426fd9; COLOR: #fff
+}
+.yui-skin-sam TR.yui-dt-even TD.yui-dt-selected {
+	BACKGROUND-COLOR: #446cd7; COLOR: #fff
+}
+.yui-skin-sam TR.yui-dt-odd TD.yui-dt-selected {
+	BACKGROUND-COLOR: #446cd7; COLOR: #fff
+}
+.yui-skin-sam .yui-dt-list TH.yui-dt-selected {
+	BACKGROUND-COLOR: #446cd7
+}
+.yui-skin-sam .yui-dt-list TH.yui-dt-selected A {
+	BACKGROUND-COLOR: #446cd7
+}
+.yui-skin-sam .yui-dt-list TR.yui-dt-selected TD {
+	BACKGROUND-COLOR: #426fd9; COLOR: #fff
+}
+.yui-skin-sam .yui-dt-list TR.yui-dt-selected TD.yui-dt-asc {
+	BACKGROUND-COLOR: #426fd9; COLOR: #fff
+}
+.yui-skin-sam .yui-dt-list TR.yui-dt-selected TD.yui-dt-desc {
+	BACKGROUND-COLOR: #426fd9; COLOR: #fff
+}
+.yui-skin-sam .yui-dt-list TR.yui-dt-even TD.yui-dt-selected {
+	BACKGROUND-COLOR: #446cd7; COLOR: #fff
+}
+.yui-skin-sam .yui-dt-list TR.yui-dt-odd TD.yui-dt-selected {
+	BACKGROUND-COLOR: #446cd7; COLOR: #fff
+}
+.yui-skin-sam .yui-dt-paginator {
+	MARGIN: 6px 0px; DISPLAY: block; WHITE-SPACE: nowrap
+}
+.yui-skin-sam .yui-dt-paginator .yui-dt-first {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; PADDING-TOP: 2px
+}
+.yui-skin-sam .yui-dt-paginator .yui-dt-last {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; PADDING-TOP: 2px
+}
+.yui-skin-sam .yui-dt-paginator .yui-dt-selected {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; PADDING-TOP: 2px
+}
+.yui-skin-sam .yui-dt-paginator A.yui-dt-first {
+	TEXT-DECORATION: none
+}
+.yui-skin-sam .yui-dt-paginator A.yui-dt-last {
+	TEXT-DECORATION: none
+}
+.yui-skin-sam .yui-dt-paginator .yui-dt-previous {
+	DISPLAY: none
+}
+.yui-skin-sam .yui-dt-paginator .yui-dt-next {
+	DISPLAY: none
+}
+.yui-skin-sam A.yui-dt-page {
+	BORDER-BOTTOM: #cbcbcb 1px solid; BORDER-LEFT: #cbcbcb 1px solid; PADDING-BOTTOM: 2px; BACKGROUND-COLOR: #fff; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; BORDER-TOP: #cbcbcb 1px solid; BORDER-RIGHT: #cbcbcb 1px solid; TEXT-DECORATION: none; PADDING-TOP: 2px
+}
+.yui-skin-sam .yui-dt-selected {
+	BORDER-BOTTOM: #fff 1px solid; BORDER-LEFT: #fff 1px solid; BACKGROUND-COLOR: #fff; BORDER-TOP: #fff 1px solid; BORDER-RIGHT: #fff 1px solid
+}
+.yui-busy {
+	CURSOR: wait !important
+}
+.yui-toolbar-container FIELDSET {
+	PADDING-BOTTOM: 0px; BORDER-RIGHT-WIDTH: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; PADDING-TOP: 0px
+}
+.yui-editor-container FIELDSET {
+	PADDING-BOTTOM: 0px; BORDER-RIGHT-WIDTH: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; PADDING-TOP: 0px
+}
+.yui-toolbar-container LEGEND {
+	DISPLAY: none
+}
+.yui-toolbar-container .yui-toolbar-subcont {
+	PADDING-BOTTOM: 0.25em; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; ZOOM: 1; PADDING-TOP: 0.25em
+}
+.yui-toolbar-container-collapsed .yui-toolbar-subcont {
+	DISPLAY: none
+}
+.yui-toolbar-container .yui-toolbar-subcont:after {
+	DISPLAY: block; HEIGHT: 0px; VISIBILITY: hidden; CLEAR: both; CONTENT: '.'
+}
+.yui-toolbar-container SPAN.yui-toolbar-draghandle {
+	BORDER-LEFT: #999 1px solid; TEXT-INDENT: 77777px; MARGIN: 0px 0px 0px 0.2em; WIDTH: 2px; DISPLAY: block; FLOAT: left; HEIGHT: 20px; CLEAR: none; OVERFLOW: hidden; CURSOR: move; BORDER-RIGHT: #999 1px solid
+}
+.yui-toolbar-container .draggable.yui-toolbar-titlebar {
+	CURSOR: move
+}
+.yui-toolbar-container .yui-toolbar-titlebar {
+	POSITION: relative
+}
+.yui-toolbar-container .yui-toolbar-titlebar H2 {
+	BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 0.2em; BORDER-RIGHT-STYLE: none; MARGIN: 0px; PADDING-LEFT: 0.2em; PADDING-RIGHT: 0.2em; BORDER-TOP-STYLE: none; LETTER-SPACING: 0px; COLOR: #000; BORDER-LEFT-STYLE: none; FONT-WEIGHT: bold; PADDING-TOP: 0.2em
+}
+.yui-toolbar-container .yui-toolbar-titlebar H2 A {
+	COLOR: #000; CURSOR: default; TEXT-DECORATION: none
+}
+.yui-toolbar-grouped.yui-toolbar-container SPAN.yui-toolbar-draghandle {
+	HEIGHT: 40px
+}
+.yui-toolbar-container .yui-toolbar-group {
+	ZOOM: 1; FLOAT: left; MARGIN-RIGHT: 0.5em
+}
+.yui-toolbar-container .yui-toolbar-group:after {
+	DISPLAY: block; HEIGHT: 0px; VISIBILITY: hidden; CLEAR: both; CONTENT: '.'
+}
+.yui-toolbar-container .yui-toolbar-group H3 {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0.25em; PADDING-RIGHT: 0px; FONT-SIZE: 75%; PADDING-TOP: 0px
+}
+.yui-toolbar-container SPAN.yui-toolbar-separator {
+	PADDING-BOTTOM: 0px; MARGIN: 0.2em 0px 0.2em 0.1em; PADDING-LEFT: 0px; WIDTH: 2px; PADDING-RIGHT: 0px; DISPLAY: none; FLOAT: left; HEIGHT: 18px; PADDING-TOP: 0px
+}
+.yui-toolbar-grouped.yui-toolbar-container SPAN.yui-toolbar-separator {
+	HEIGHT: 50px
+}
+.yui-toolbar-grouped.yui-toolbar-container .yui-toolbar-group SPAN.yui-toolbar-separator {
+	DISPLAY: block; HEIGHT: 18px
+}
+.yui-toolbar-container UL LI {
+	PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: none; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-toolbar-container .yui-toolbar-nogrouplabels H3 {
+	DISPLAY: none
+}
+.yui-toolbar-container .yui-push-button {
+	POSITION: relative; CURSOR: pointer
+}
+.yui-toolbar-container .yui-color-button {
+	POSITION: relative; CURSOR: pointer
+}
+.yui-toolbar-container .yui-menu-button {
+	POSITION: relative; CURSOR: pointer
+}
+.yui-toolbar-container .yui-button .first-child {
+	WIDTH: 100%; HEIGHT: 100%; FONT-SIZE: 0px; OVERFLOW: hidden
+}
+.yui-toolbar-container .yui-button .first-child A {
+	WIDTH: 100%; HEIGHT: 100%; FONT-SIZE: 0px; OVERFLOW: hidden
+}
+.yui-toolbar-container .yui-button-disabled {
+	CURSOR: default
+}
+.yui-toolbar-container .yui-button-disabled .yui-toolbar-icon {
+	FILTER: alpha(opacity=50); opacity: .5
+}
+.yui-toolbar-container .yui-button-disabled .up {
+	FILTER: alpha(opacity=50); opacity: .5
+}
+.yui-toolbar-container .yui-button-disabled .down {
+	FILTER: alpha(opacity=50); opacity: .5
+}
+.yui-toolbar-container .yui-button A {
+	OVERFLOW: hidden
+}
+.yui-toolbar-container .yui-toolbar-select .first-child A {
+	CURSOR: pointer
+}
+.yui-toolbar-fontname-arial {
+	FONT-FAMILY: Arial
+}
+.yui-toolbar-fontname-arial-black {
+	FONT-FAMILY: Arial Black
+}
+.yui-toolbar-fontname-comic-sans-ms {
+	FONT-FAMILY: Comic Sans MS
+}
+.yui-toolbar-fontname-courier-new {
+	FONT-FAMILY: Courier New
+}
+.yui-toolbar-fontname-times-new-roman {
+	FONT-FAMILY: Times New Roman
+}
+.yui-toolbar-fontname-verdana {
+	FONT-FAMILY: Verdana
+}
+.yui-toolbar-fontname-impact {
+	FONT-FAMILY: Impact
+}
+.yui-toolbar-fontname-lucida-console {
+	FONT-FAMILY: Lucida Console
+}
+.yui-toolbar-fontname-tahoma {
+	FONT-FAMILY: Tahoma
+}
+.yui-toolbar-fontname-trebuchet-ms {
+	FONT-FAMILY: Trebuchet MS
+}
+.yui-toolbar-container .yui-toolbar-spinbutton {
+	POSITION: relative
+}
+.yui-toolbar-container .yui-toolbar-spinbutton .first-child A {
+	Z-INDEX: 0; opacity: 1
+}
+.yui-toolbar-container .yui-toolbar-spinbutton A.up {
+	Z-INDEX: 1; POSITION: absolute; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; CURSOR: pointer; PADDING-TOP: 0px
+}
+.yui-toolbar-container .yui-toolbar-spinbutton A.down {
+	Z-INDEX: 1; POSITION: absolute; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; CURSOR: pointer; PADDING-TOP: 0px
+}
+.yui-toolbar-container .yui-overlay {
+	POSITION: absolute
+}
+.yui-toolbar-container .yui-overlay UL LI {
+	LIST-STYLE-TYPE: none; MARGIN: 0px
+}
+.yui-toolbar-container {
+	Z-INDEX: 1
+}
+.yui-editor-container .yui-editor-editable-container {
+	Z-INDEX: 0; POSITION: relative; WIDTH: 100%
+}
+.yui-editor-container .yui-editor-masked {
+	POSITION: absolute; FILTER: alpha(opacity=50); BACKGROUND-COLOR: #ccc; WIDTH: 100%; HEIGHT: 100%; TOP: 0px; LEFT: 0px; opacity: .5
+}
+.yui-editor-container IFRAME {
+	PADDING-BOTTOM: 0px; BORDER-RIGHT-WIDTH: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; ZOOM: 1; DISPLAY: block; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; PADDING-TOP: 0px
+}
+.yui-editor-container .yui-editor-editable {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-editor-container .dompath {
+	FONT-SIZE: 85%
+}
+.yui-editor-panel .hd {
+	POSITION: relative; TEXT-ALIGN: left
+}
+.yui-editor-panel .hd H3 {
+	PADDING-BOTTOM: 0.25em; MARGIN: 0px; PADDING-LEFT: 0.25em; PADDING-RIGHT: 0px; FONT-WEIGHT: bold; PADDING-TOP: 0.25em
+}
+.yui-editor-panel .bd {
+	POSITION: relative; WIDTH: 100%; ZOOM: 1
+}
+.yui-editor-panel .bd DIV.yui-editor-body-cont {
+	PADDING-BOTTOM: 0.25em; PADDING-LEFT: 0.1em; PADDING-RIGHT: 0.1em; ZOOM: 1; PADDING-TOP: 0.25em
+}
+.yui-editor-panel .bd .gecko FORM {
+	OVERFLOW: auto
+}
+.yui-editor-panel .bd DIV.yui-editor-body-cont:after {
+	DISPLAY: block; HEIGHT: 0px; VISIBILITY: hidden; CLEAR: both; CONTENT: '.'
+}
+.yui-editor-panel .ft {
+	TEXT-ALIGN: right; WIDTH: 99%; FLOAT: left; CLEAR: both
+}
+.yui-editor-panel .ft SPAN.tip {
+	POSITION: relative; TEXT-ALIGN: left; PADDING-BOTTOM: 0.5em; PADDING-LEFT: 23px; PADDING-RIGHT: 0.5em; ZOOM: 1; DISPLAY: block; PADDING-TOP: 0.5em
+}
+.yui-editor-panel LABEL {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; WIDTH: 100%; PADDING-RIGHT: 0px; ZOOM: 1; FLOAT: left; CLEAR: both; PADDING-TOP: 0px
+}
+.yui-editor-panel .gecko LABEL {
+	OVERFLOW: auto
+}
+.yui-editor-panel LABEL STRONG {
+	WIDTH: 6em; FLOAT: left
+}
+.yui-editor-panel .removeLink {
+	TEXT-ALIGN: right; WIDTH: 80%
+}
+.yui-editor-panel LABEL INPUT {
+	FLOAT: left; MARGIN-LEFT: 0.25em
+}
+.yui-editor-panel .yui-toolbar-group {
+	MARGIN-BOTTOM: 0.75em
+}
+.yui-editor-panel .height-width {
+	FLOAT: left
+}
+.yui-editor-panel .height-width SPAN {
+	FONT-STYLE: italic; DISPLAY: block; FLOAT: left; OVERFLOW: visible
+}
+.yui-editor-panel .height-width SPAN.info {
+	MARGIN-TOP: 3px; FONT-SIZE: 70%
+}
+.yui-editor-panel .yui-toolbar-bordersize {
+	FONT-SIZE: 75%
+}
+.yui-editor-panel .yui-toolbar-bordertype {
+	FONT-SIZE: 75%
+}
+.yui-editor-panel .yui-toolbar-container SPAN.yui-toolbar-separator {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none
+}
+.yui-editor-panel .yui-toolbar-bordersize SPAN A SPAN {
+	POSITION: absolute; TEXT-INDENT: 52px; WIDTH: 24px; DISPLAY: block; HEIGHT: 8px; FONT-SIZE: 0px; TOP: 3px; LEFT: 4px; _top: -5px
+}
+.yui-editor-panel .yui-toolbar-bordertype SPAN A SPAN {
+	POSITION: absolute; TEXT-INDENT: 52px; WIDTH: 24px; DISPLAY: block; HEIGHT: 8px; FONT-SIZE: 0px; TOP: 3px; LEFT: 4px; _top: -5px
+}
+.yui-editor-panel .yui-toolbar-bordertype SPAN A SPAN.yui-toolbar-bordertype-solid {
+	BORDER-BOTTOM: black 1px solid
+}
+.yui-editor-panel .yui-toolbar-bordertype SPAN A SPAN.yui-toolbar-bordertype-dotted {
+	BORDER-BOTTOM: black 1px dotted
+}
+.yui-editor-panel .yui-toolbar-bordertype SPAN A SPAN.yui-toolbar-bordertype-dashed {
+	BORDER-BOTTOM: black 1px dashed
+}
+.yui-editor-panel .yui-toolbar-bordersize SPAN A SPAN.yui-toolbar-bordersize-0 {
+	TEXT-INDENT: 0px; FONT-SIZE: 75%; TOP: 0px
+}
+.yui-editor-panel .yui-toolbar-bordersize SPAN A SPAN.yui-toolbar-bordersize-1 {
+	BORDER-BOTTOM: black 1px solid
+}
+.yui-editor-panel .yui-toolbar-bordersize SPAN A SPAN.yui-toolbar-bordersize-2 {
+	BORDER-BOTTOM: black 2px solid
+}
+.yui-editor-panel .yui-toolbar-bordersize SPAN A SPAN.yui-toolbar-bordersize-3 {
+	BORDER-BOTTOM: black 3px solid; TOP: -5px
+}
+.yui-editor-panel .yui-toolbar-bordersize SPAN A SPAN.yui-toolbar-bordersize-4 {
+	BORDER-BOTTOM: black 4px solid; TOP: -5px
+}
+.yui-editor-panel .yui-toolbar-bordersize SPAN A SPAN.yui-toolbar-bordersize-5 {
+	BORDER-BOTTOM: black 5px solid; TOP: -5px
+}
+.yui-toolbar-container .yui-toolbar-bordersize-menu {
+	WIDTH: 95px !important
+}
+.yui-toolbar-container .yui-toolbar-bordertype-menu {
+	WIDTH: 95px !important
+}
+.yui-toolbar-bordersize-menu .yuimenuitemlabel {
+	MARGIN: 0px 3px 7px 17px
+}
+.yui-toolbar-bordertype-menu .yuimenuitemlabel {
+	MARGIN: 0px 3px 7px 17px
+}
+.yui-toolbar-bordersize-menu .yuimenuitemlabel {
+	MARGIN: 0px 3px 7px 17px
+}
+.yui-toolbar-bordertype-menu .yuimenuitemlabel:hover {
+	MARGIN: 0px 3px 7px 17px
+}
+.yui-toolbar-bordersize-menu .yuimenuitemlabel .checkedindicator {
+	POSITION: absolute; TOP: 14px; LEFT: 0px
+}
+.yui-toolbar-bordertype-menu .yuimenuitemlabel .checkedindicator {
+	POSITION: absolute; TOP: 14px; LEFT: 0px
+}
+.yui-toolbar-bordersize-menu LI.yui-toolbar-bordersize-1 A {
+	BORDER-BOTTOM: black 1px solid; HEIGHT: 14px
+}
+.yui-toolbar-bordersize-menu LI.yui-toolbar-bordersize-2 A {
+	BORDER-BOTTOM: black 2px solid; HEIGHT: 14px
+}
+.yui-toolbar-bordersize-menu LI.yui-toolbar-bordersize-3 A {
+	BORDER-BOTTOM: black 3px solid; HEIGHT: 14px
+}
+.yui-toolbar-bordersize-menu LI.yui-toolbar-bordersize-4 A {
+	BORDER-BOTTOM: black 4px solid; HEIGHT: 14px
+}
+.yui-toolbar-bordersize-menu LI.yui-toolbar-bordersize-5 A {
+	BORDER-BOTTOM: black 5px solid; HEIGHT: 14px
+}
+.yui-toolbar-bordertype-menu LI.yui-toolbar-bordertype-solid A {
+	BORDER-BOTTOM: black 1px solid; HEIGHT: 14px
+}
+.yui-toolbar-bordertype-menu LI.yui-toolbar-bordertype-dashed A {
+	BORDER-BOTTOM: black 1px dashed; HEIGHT: 14px
+}
+.yui-toolbar-bordertype-menu LI.yui-toolbar-bordertype-dotted A {
+	BORDER-BOTTOM: black 1px dotted; HEIGHT: 14px
+}
+H2.yui-editor-skipheader {
+	POSITION: absolute; BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 0px; BORDER-RIGHT-STYLE: none; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 0px; PADDING-RIGHT: 0px; BORDER-TOP-STYLE: none; HEIGHT: 0px; BORDER-LEFT-STYLE: none; OVERFLOW: hidden; PADDING-TOP: 0px
+}
+H3.yui-editor-skipheader {
+	POSITION: absolute; BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 0px; BORDER-RIGHT-STYLE: none; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 0px; PADDING-RIGHT: 0px; BORDER-TOP-STYLE: none; HEIGHT: 0px; BORDER-LEFT-STYLE: none; OVERFLOW: hidden; PADDING-TOP: 0px
+}
+.yui-toolbar-colors {
+	Z-INDEX: 100; WIDTH: 133px; ZOOM: 1; DISPLAY: none; OVERFLOW: hidden
+}
+.yui-toolbar-colors:after {
+	DISPLAY: block; HEIGHT: 0px; VISIBILITY: hidden; CLEAR: both; CONTENT: '.'
+}
+.yui-toolbar-colors A {
+	BORDER-BOTTOM: #f6f7ee 1px solid; BORDER-LEFT: #f6f7ee 1px solid; TEXT-INDENT: 999px; MARGIN: 0px; WIDTH: 9px; DISPLAY: block; FLOAT: left; HEIGHT: 9px; OVERFLOW: hidden; BORDER-TOP: #f6f7ee 1px solid; CURSOR: pointer; BORDER-RIGHT: #f6f7ee 1px solid
+}
+.yui-toolbar-colors A:hover {
+	BORDER-BOTTOM: black 1px solid; BORDER-LEFT: black 1px solid; BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid
+}
+.yui-color-button-menu {
+	BACKGROUND-COLOR: transparent; OVERFLOW: visible
+}
+.yui-toolbar-colors SPAN {
+	POSITION: relative; PADDING-BOTTOM: 3px; PADDING-LEFT: 3px; WIDTH: 100%; PADDING-RIGHT: 3px; ZOOM: 1; DISPLAY: block; FLOAT: left; OVERFLOW: hidden; PADDING-TOP: 3px
+}
+.yui-toolbar-colors SPAN:after {
+	DISPLAY: block; HEIGHT: 0px; VISIBILITY: hidden; CLEAR: both; CONTENT: '.'
+}
+.yui-toolbar-colors SPAN EM {
+	BORDER-BOTTOM: black 1px solid; BORDER-LEFT: black 1px solid; TEXT-INDENT: 999px; MARGIN: 0px; WIDTH: 30px; DISPLAY: block; FLOAT: left; HEIGHT: 35px; OVERFLOW: hidden; BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid
+}
+.yui-toolbar-colors SPAN STRONG {
+	PADDING-LEFT: 3px; WIDTH: 65%; DISPLAY: block; FLOAT: left; FONT-SIZE: 85%; FONT-WEIGHT: normal
+}
+.yui-toolbar-group-undoredo H3 {
+	WIDTH: 68px
+}
+.yui-toolbar-group-insertitem H3 {
+	WIDTH: 68px
+}
+.yui-toolbar-group-indentlist H3 {
+	WIDTH: 68px
+}
+.yui-toolbar-group-indentlist2 H3 {
+	WIDTH: 122px
+}
+.yui-toolbar-group-alignment H3 {
+	WIDTH: 130px
+}
+.yui-skin-sam .yui-editor-container {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-toolbar-container {
+	ZOOM: 1
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-titlebar {
+	POSITION: relative; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px -200px
+}
+.yui-skin-sam .yui-editor-container .draggable .yui-toolbar-titlebar {
+	CURSOR: move
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-titlebar H2 {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 0.3em; MARGIN: 0px; PADDING-LEFT: 1em; PADDING-RIGHT: 1em; COLOR: #000; FONT-SIZE: 100%; FONT-WEIGHT: bold; PADDING-TOP: 0.3em
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-group H3 {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 0px; MARGIN: 1em 0px 0px; PADDING-LEFT: 0.25em; COLOR: #808080; FONT-SIZE: 75%
+}
+.yui-toolbar-container SPAN.yui-toolbar-separator {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; TEXT-INDENT: 33px; MARGIN: 0px 0.25em; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; OVERFLOW: hidden
+}
+.yui-skin-sam .yui-toolbar-container {
+	BACKGROUND-COLOR: #f2f2f2
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-subcont {
+	BORDER-BOTTOM: #808080 1px solid; PADDING-BOTTOM: 0.35em; PADDING-LEFT: 1em; PADDING-RIGHT: 1em; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-toolbar-container-collapsed .yui-toolbar-titlebar {
+	BORDER-BOTTOM: #808080 1px solid
+}
+.yui-skin-sam .yui-editor-container .visible .yui-menu-shadow {
+	DISPLAY: none
+}
+.yui-skin-sam .yui-editor-panel .visible .yui-menu-shadow {
+	DISPLAY: none
+}
+.yui-skin-sam .yui-editor-container UL {
+	PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: none; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-editor-container UL LI {
+	PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: none; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-toolbar-group UL LI.yui-toolbar-groupitem {
+	FLOAT: left
+}
+.yui-skin-sam .yui-editor-container .dompath {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 0.25em; BACKGROUND-COLOR: #f2f2f2; PADDING-LEFT: 0.25em; PADDING-RIGHT: 0.25em; COLOR: #999; BORDER-TOP: #808080 1px solid; PADDING-TOP: 0.25em
+}
+.yui-skin-sam .yui-toolbar-container .collapse {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) no-repeat 0px -400px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-titlebar SPAN.collapse {
+	POSITION: absolute; TEXT-INDENT: 9999px; WIDTH: 15px; DISPLAY: block; HEIGHT: 15px; OVERFLOW: hidden; TOP: 4px; CURSOR: pointer; RIGHT: 2px
+}
+.yui-skin-sam .yui-toolbar-container .yui-push-button {
+	BORDER-BOTTOM: #808080 1px solid; POSITION: relative; BORDER-LEFT: #808080 0px solid; MARGIN: 0px; WIDTH: 30px; ZOOM: 1; DISPLAY: block; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px 0px; HEIGHT: 22px; COLOR: #f2f2f2; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 0px solid; _font-size: 0
+}
+.yui-skin-sam .yui-toolbar-container .yui-color-button {
+	BORDER-BOTTOM: #808080 1px solid; POSITION: relative; BORDER-LEFT: #808080 0px solid; MARGIN: 0px; WIDTH: 30px; ZOOM: 1; DISPLAY: block; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px 0px; HEIGHT: 22px; COLOR: #f2f2f2; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 0px solid; _font-size: 0
+}
+.yui-skin-sam .yui-toolbar-container .yui-menu-button {
+	BORDER-BOTTOM: #808080 1px solid; POSITION: relative; BORDER-LEFT: #808080 0px solid; MARGIN: 0px; WIDTH: 30px; ZOOM: 1; DISPLAY: block; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px 0px; HEIGHT: 22px; COLOR: #f2f2f2; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 0px solid; _font-size: 0
+}
+.yui-skin-sam .yui-toolbar-container .yui-push-button A {
+	LINE-HEIGHT: 2; PADDING-LEFT: 35px; DISPLAY: block; WHITE-SPACE: nowrap; HEIGHT: 20px; COLOR: #000; FONT-SIZE: 0px; OVERFLOW: hidden; TEXT-DECORATION: none
+}
+.yui-skin-sam .yui-toolbar-container .yui-color-button A {
+	LINE-HEIGHT: 2; PADDING-LEFT: 35px; DISPLAY: block; WHITE-SPACE: nowrap; HEIGHT: 20px; COLOR: #000; FONT-SIZE: 0px; OVERFLOW: hidden; TEXT-DECORATION: none
+}
+.yui-skin-sam .yui-toolbar-container .yui-menu-button A {
+	LINE-HEIGHT: 2; PADDING-LEFT: 35px; DISPLAY: block; WHITE-SPACE: nowrap; HEIGHT: 20px; COLOR: #000; FONT-SIZE: 0px; OVERFLOW: hidden; TEXT-DECORATION: none
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton A {
+	FONT-SIZE: 12px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-select A {
+	FONT-SIZE: 12px
+}
+.yui-skin-sam .yui-toolbar-container .yui-push-button .first-child {
+	BORDER-BOTTOM: #808080 0px solid; POSITION: relative; BORDER-LEFT: #808080 1px solid; MARGIN: 0px -1px; DISPLAY: block; BORDER-TOP: #808080 0px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-toolbar-container .yui-color-button .first-child {
+	BORDER-BOTTOM: #808080 0px solid; POSITION: relative; BORDER-LEFT: #808080 1px solid; MARGIN: 0px -1px; DISPLAY: block; BORDER-TOP: #808080 0px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-toolbar-container .yui-menu-button .first-child {
+	BORDER-BOTTOM: #808080 0px solid; POSITION: relative; BORDER-LEFT: #808080 1px solid; MARGIN: 0px -1px; DISPLAY: block; BORDER-TOP: #808080 0px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-toolbar-container .yui-push-button-disabled .first-child {
+	BORDER-BOTTOM-COLOR: #ccc; BORDER-TOP-COLOR: #ccc; BORDER-RIGHT-COLOR: #ccc; BORDER-LEFT-COLOR: #ccc
+}
+.yui-skin-sam .yui-toolbar-container .yui-color-button-disabled .first-child {
+	BORDER-BOTTOM-COLOR: #ccc; BORDER-TOP-COLOR: #ccc; BORDER-RIGHT-COLOR: #ccc; BORDER-LEFT-COLOR: #ccc
+}
+.yui-skin-sam .yui-toolbar-container .yui-menu-button-disabled .first-child {
+	BORDER-BOTTOM-COLOR: #ccc; BORDER-TOP-COLOR: #ccc; BORDER-RIGHT-COLOR: #ccc; BORDER-LEFT-COLOR: #ccc
+}
+.yui-skin-sam .yui-toolbar-container .yui-push-button-disabled A {
+	COLOR: #a6a6a6; CURSOR: default
+}
+.yui-skin-sam .yui-toolbar-container .yui-color-button-disabled A {
+	COLOR: #a6a6a6; CURSOR: default
+}
+.yui-skin-sam .yui-toolbar-container .yui-menu-button-disabled A {
+	COLOR: #a6a6a6; CURSOR: default
+}
+.yui-skin-sam .yui-toolbar-container .yui-push-button-disabled {
+	BORDER-BOTTOM-COLOR: #ccc; BORDER-TOP-COLOR: #ccc; BORDER-RIGHT-COLOR: #ccc; BORDER-LEFT-COLOR: #ccc
+}
+.yui-skin-sam .yui-toolbar-container .yui-color-button-disabled {
+	BORDER-BOTTOM-COLOR: #ccc; BORDER-TOP-COLOR: #ccc; BORDER-RIGHT-COLOR: #ccc; BORDER-LEFT-COLOR: #ccc
+}
+.yui-skin-sam .yui-toolbar-container .yui-menu-button-disabled {
+	BORDER-BOTTOM-COLOR: #ccc; BORDER-TOP-COLOR: #ccc; BORDER-RIGHT-COLOR: #ccc; BORDER-LEFT-COLOR: #ccc
+}
+.yui-skin-sam .yui-toolbar-container .yui-button .first-child {
+	LEFT: 0px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-fontname {
+	WIDTH: 135px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-heading {
+	WIDTH: 92px
+}
+.yui-skin-sam .yui-toolbar-container .yui-button-hover {
+	BORDER-BOTTOM-COLOR: #808080; BORDER-TOP-COLOR: #808080; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px -1300px; BORDER-RIGHT-COLOR: #808080; BORDER-LEFT-COLOR: #808080
+}
+.yui-skin-sam .yui-toolbar-container .yui-button-selected {
+	BORDER-BOTTOM-COLOR: #808080; BORDER-TOP-COLOR: #808080; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px -1700px; BORDER-RIGHT-COLOR: #808080; BORDER-LEFT-COLOR: #808080
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-nogrouplabels H3 {
+	DISPLAY: none
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-nogrouplabels .yui-toolbar-group {
+	MARGIN-TOP: 0.75em
+}
+.yui-skin-sam .yui-toolbar-container .yui-push-button SPAN.yui-toolbar-icon {
+	POSITION: absolute; WIDTH: 18px; DISPLAY: block; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-sprite.gif) no-repeat 30px 30px; HEIGHT: 18px; OVERFLOW: hidden; TOP: 2px
+}
+.yui-skin-sam .yui-toolbar-container .yui-color-button SPAN.yui-toolbar-icon {
+	POSITION: absolute; WIDTH: 18px; DISPLAY: block; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-sprite.gif) no-repeat 30px 30px; HEIGHT: 18px; OVERFLOW: hidden; TOP: 2px
+}
+.yui-skin-sam .yui-toolbar-container .yui-menu-button SPAN.yui-toolbar-icon {
+	POSITION: absolute; WIDTH: 18px; DISPLAY: block; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-sprite.gif) no-repeat 30px 30px; HEIGHT: 18px; OVERFLOW: hidden; TOP: 2px
+}
+.yui-skin-sam .yui-toolbar-container .yui-button-selected SPAN.yui-toolbar-icon {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-sprite-active.gif)
+}
+.yui-skin-sam .yui-toolbar-container .yui-button-hover SPAN.yui-toolbar-icon {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-sprite-active.gif)
+}
+.yui-skin-sam .yui-toolbar-container .visible .yuimenuitemlabel {
+	POSITION: relative; COLOR: #000; CURSOR: pointer
+}
+.yui-skin-sam .yui-toolbar-container .yui-button-menu {
+	BACKGROUND-COLOR: #fff
+}
+.yui-skin-sam .yui-toolbar-container .yui-button-menu .yui-menu-body-scrolled {
+	POSITION: relative
+}
+.yui-skin-sam DIV.yuimenu LI.selected {
+	BACKGROUND-COLOR: #b3d4ff
+}
+.yui-skin-sam DIV.yuimenu LI.selected A.selected {
+	COLOR: #000
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-bold SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px 0px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-strikethrough SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -108px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-italic SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -36px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-undo SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -1326px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-redo SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -1355px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-underline SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -72px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-subscript SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -180px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-superscript SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -144px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-forecolor SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -216px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-backcolor SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -288px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-justifyleft SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -324px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-justifycenter SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -360px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-justifyright SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -396px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-justifyfull SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -432px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-indent SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -720px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-outdent SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -684px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-createlink SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -792px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-insertimage SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 1px -756px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-left SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -972px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-right SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -936px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-inline SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -900px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-block SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -864px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-bordercolor SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -252px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-removeformat SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -1080px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-hiddenelements SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -1044px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-insertunorderedlist SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -468px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-insertorderedlist SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -504px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton {
+	WIDTH: 35px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton .first-child {
+	WIDTH: 35px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton .first-child A {
+	TEXT-ALIGN: left; PADDING-LEFT: 2px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton SPAN.yui-toolbar-icon {
+	DISPLAY: none
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton A.up {
+	PADDING-BOTTOM: 0px; MIN-HEIGHT: 0px; PADDING-LEFT: 0px; WIDTH: 7px; PADDING-RIGHT: 0px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-sprite.gif) no-repeat 0px -1222px; HEIGHT: 6px; OVERFLOW: hidden; RIGHT: 2px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton A.down {
+	PADDING-BOTTOM: 0px; MIN-HEIGHT: 0px; PADDING-LEFT: 0px; WIDTH: 7px; PADDING-RIGHT: 0px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-sprite.gif) no-repeat 0px -1222px; HEIGHT: 6px; OVERFLOW: hidden; RIGHT: 2px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton A.up {
+	BACKGROUND-POSITION: 0px -1222px; TOP: 2px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton A.down {
+	BOTTOM: 2px; BACKGROUND-POSITION: 0px -1187px
+}
+.yui-skin-sam .yui-toolbar-container SELECT {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; HEIGHT: 22px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-select .first-child A {
+	TEXT-ALIGN: left; PADDING-LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-select SPAN.yui-toolbar-icon {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-sprite.gif) no-repeat 0px -1144px; HEIGHT: 20px; OVERFLOW: hidden; TOP: 0px; RIGHT: -2px
+}
+.yui-skin-sam .yui-editor-panel .yui-color-button-menu .bd {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; BACKGROUND-COLOR: transparent; WIDTH: 135px; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none
+}
+.yui-skin-sam .yui-color-button-menu .yui-toolbar-colors {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-editor-panel {
+	POSITION: absolute; BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 0px; BORDER-RIGHT-STYLE: none; BACKGROUND-COLOR: transparent; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; OVERFLOW: visible; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-editor-panel .hd {
+	BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 0px; BORDER-RIGHT-STYLE: none; MARGIN: 10px 0px 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-editor-panel .hd H3 {
+	BORDER-BOTTOM: #808080 1px solid; POSITION: relative; BORDER-LEFT: #808080 1px solid; PADDING-BOTTOM: 0px; TEXT-INDENT: 5px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 99%; PADDING-RIGHT: 0px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px -200px; HEIGHT: 20px; COLOR: #000; FONT-SIZE: 93%; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid; PADDING-TOP: 3px
+}
+.yui-skin-sam .yui-editor-panel .bd {
+	BORDER-LEFT: #808080 1px solid; PADDING-BOTTOM: 0px; BACKGROUND-COLOR: #f2f2f2; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 99%; PADDING-RIGHT: 0px; OVERFLOW: visible; BORDER-RIGHT: #808080 1px solid; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-editor-panel UL {
+	PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: none; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-editor-panel UL LI {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-container .yui-toolbar-subcont {
+	BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 0px; BORDER-RIGHT-STYLE: none; MARGIN-TOP: 0.35em; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-bordersize {
+	WIDTH: 50px
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-bordertype {
+	WIDTH: 50px
+}
+.yui-skin-sam .yui-editor-panel LABEL {
+	PADDING-BOTTOM: 4px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; DISPLAY: block; MARGIN-BOTTOM: 7px; FLOAT: none; PADDING-TOP: 4px
+}
+.yui-skin-sam .yui-editor-panel LABEL STRONG {
+	TEXT-ALIGN: right; FONT-SIZE: 93%; FONT-WEIGHT: normal; PADDING-TOP: 2px
+}
+.yui-skin-sam .yui-editor-panel LABEL INPUT {
+	WIDTH: 75%
+}
+.yui-skin-sam .yui-editor-panel .createlink_target {
+	WIDTH: auto; MARGIN-RIGHT: 5px
+}
+.yui-skin-sam .yui-editor-panel .insertimage_target {
+	WIDTH: auto; MARGIN-RIGHT: 5px
+}
+.yui-skin-sam .yui-editor-panel .removeLink {
+	WIDTH: 98%
+}
+.yui-skin-sam .yui-editor-panel LABEL INPUT.warning {
+	BACKGROUND-COLOR: #ffee69
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-group H3 {
+	TEXT-ALIGN: right; PADDING-BOTTOM: 0px; MARGIN: 5px 0px 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 3px; FLOAT: left; COLOR: #000; FONT-SIZE: 93%; FONT-WEIGHT: normal; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-editor-panel .height-width H3 {
+	MARGIN: 3px 0px 0px 10px
+}
+.yui-skin-sam .yui-editor-panel .height-width {
+	MARGIN: 3px 0px 0px 14px; WIDTH: 44%
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-group-border {
+	WIDTH: 190px
+}
+.yui-skin-sam .yui-editor-panel .no-button .yui-toolbar-group-border {
+	WIDTH: 210px
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-group-padding {
+	WIDTH: 203px; _width: 198px
+}
+.yui-skin-sam .yui-editor-panel .no-button .yui-toolbar-group-padding {
+	WIDTH: 172px
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-group-padding H3 {
+	MARGIN-LEFT: 12px
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-group-textflow {
+	WIDTH: 182px
+}
+.yui-skin-sam .yui-editor-panel .hd {
+	BACKGROUND: none transparent scroll repeat 0% 0%
+}
+.yui-skin-sam .yui-editor-panel .ft {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; PADDING-BOTTOM: 0px; BACKGROUND-COLOR: #f2f2f2; MARGIN: 0px 0px 2px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP: #808080 1px; BORDER-RIGHT: #808080 1px solid; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-editor-panel .hd SPAN.close {
+	POSITION: absolute; TEXT-INDENT: 500px; WIDTH: 26px; DISPLAY: block; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) no-repeat 0px -300px; HEIGHT: 16px; OVERFLOW: hidden; TOP: 2px; CURSOR: pointer; RIGHT: 5px
+}
+.yui-skin-sam .yui-editor-panel .ft SPAN.tip {
+	BACKGROUND-COLOR: #edf5ff; FONT-SIZE: 85%; BORDER-TOP: #808080 1px solid
+}
+.yui-skin-sam .yui-editor-panel .ft SPAN.tip STRONG {
+	MARGIN: 0px 2px 8px 0px; DISPLAY: block; FLOAT: left
+}
+.yui-skin-sam .yui-editor-panel .ft SPAN.tip SPAN.icon {
+	POSITION: absolute; WIDTH: 20px; DISPLAY: block; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-sprite.gif) no-repeat 0px -1260px; HEIGHT: 20px; TOP: 8px; LEFT: 2px
+}
+.yui-skin-sam .yui-editor-panel .ft SPAN.tip SPAN.icon-info {
+	BACKGROUND-POSITION: 2px -1260px
+}
+.yui-skin-sam .yui-editor-panel .ft SPAN.tip SPAN.icon-warn {
+	BACKGROUND-POSITION: 2px -1296px
+}
+.yui-skin-sam .yui-editor-panel .hd SPAN.knob {
+	POSITION: absolute; TEXT-INDENT: 9999px; WIDTH: 28px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-knob.gif) no-repeat 0px 0px; HEIGHT: 10px; OVERFLOW: hidden; TOP: -10px; LEFT: 25px
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-container {
+	BACKGROUND-IMAGE: none; BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; WIDTH: 100%; BORDER-TOP-STYLE: none; FLOAT: left; BORDER-LEFT-STYLE: none
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-container .bd {
+	BACKGROUND-COLOR: #fff
+}
+.yui-editor-blankimage {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/blankimage.png)
+}
+.yui-skin-sam .yui-editor-container .yui-resize-handle-br {
+	BACKGROUND-COLOR: transparent; WIDTH: 11px; BACKGROUND-POSITION: -20px -60px; HEIGHT: 11px
+}
+.yui-crop {
+	POSITION: relative
+}
+.yui-crop .yui-crop-mask {
+	POSITION: absolute; WIDTH: 100%; HEIGHT: 100%; TOP: 0px; LEFT: 0px
+}
+.yui-crop .yui-resize {
+	POSITION: absolute; BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; TOP: 10px; LEFT: 10px
+}
+.yui-crop .yui-crop-resize-mask {
+	POSITION: absolute; WIDTH: 100%; BACKGROUND-POSITION: -10px -10px; HEIGHT: 100%; OVERFLOW: hidden; TOP: 0px; LEFT: 0px
+}
+.yui-skin-sam .yui-crop .yui-crop-mask {
+	FILTER: alpha(opacity=50); BACKGROUND-COLOR: #000; opacity: .5
+}
+.yui-skin-sam .yui-crop .yui-resize {
+	BORDER-BOTTOM: #fff 1px dashed; BORDER-LEFT: #fff 1px dashed; BORDER-TOP: #fff 1px dashed; BORDER-RIGHT: #fff 1px dashed
+}
+.yui-layout-loading {
+	VISIBILITY: hidden
+}
+BODY.yui-layout {
+	POSITION: relative; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; OVERFLOW: hidden; PADDING-TOP: 0px
+}
+.yui-layout-doc {
+	POSITION: relative; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; OVERFLOW: hidden; PADDING-TOP: 0px
+}
+.yui-layout-unit {
+	Z-INDEX: 0; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 50px; PADDING-RIGHT: 0px; FLOAT: none; HEIGHT: 50px; PADDING-TOP: 0px
+}
+.yui-layout-unit-top {
+	POSITION: absolute; WIDTH: 100%; TOP: 0px; LEFT: 0px
+}
+.yui-layout-unit-left {
+	POSITION: absolute; TOP: 0px; LEFT: 0px
+}
+.yui-layout-unit-right {
+	POSITION: absolute; TOP: 0px; RIGHT: 0px
+}
+.yui-layout-unit-bottom {
+	POSITION: absolute; WIDTH: 100%; BOTTOM: 0px; LEFT: 0px
+}
+.yui-layout-unit-center {
+	POSITION: absolute; WIDTH: 100%; TOP: 0px; LEFT: 0px
+}
+.yui-layout DIV.yui-layout-hd {
+	POSITION: absolute; WIDTH: 100%; ZOOM: 1; TOP: 0px; LEFT: 0px
+}
+.yui-layout DIV.yui-layout-bd {
+	POSITION: absolute; WIDTH: 100%; ZOOM: 1; TOP: 0px; LEFT: 0px
+}
+.yui-layout .yui-layout-noscroll DIV.yui-layout-bd {
+	OVERFLOW: hidden
+}
+.yui-layout .yui-layout-scroll DIV.yui-layout-bd {
+	OVERFLOW: auto
+}
+.yui-layout DIV.yui-layout-ft {
+	POSITION: absolute; WIDTH: 100%; BOTTOM: 0px; ZOOM: 1; LEFT: 0px
+}
+.yui-layout .yui-layout-unit DIV.yui-layout-hd H2 {
+	TEXT-ALIGN: left
+}
+.yui-layout .yui-layout-unit DIV.yui-layout-hd .collapse {
+	POSITION: absolute; WIDTH: 17px; HEIGHT: 13px; FONT-SIZE: 0px; TOP: 2px; CURSOR: pointer; RIGHT: 2px
+}
+.yui-layout .yui-layout-unit DIV.yui-layout-hd .close {
+	POSITION: absolute; WIDTH: 17px; HEIGHT: 13px; FONT-SIZE: 0px; TOP: 2px; CURSOR: pointer; RIGHT: 2px
+}
+.yui-layout .yui-layout-unit DIV.yui-layout-hd .collapse-close {
+	RIGHT: 25px
+}
+.yui-layout .yui-layout-clip {
+	POSITION: absolute; BACKGROUND-COLOR: #c0c0c0; DISPLAY: none; HEIGHT: 20px
+}
+.yui-layout .yui-layout-clip .collapse {
+	POSITION: absolute; WIDTH: 17px; HEIGHT: 13px; FONT-SIZE: 0px; TOP: 2px; CURSOR: pointer; RIGHT: 2px
+}
+.yui-layout .yui-layout-wrap {
+	POSITION: absolute; WIDTH: 100%; HEIGHT: 100%; LEFT: 0px
+}
+.yui-skin-sam .yui-layout .yui-resize-proxy {
+	BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 0px; BORDER-RIGHT-STYLE: none; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP-STYLE: none; FONT-SIZE: 0px; BORDER-LEFT-STYLE: none; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-layout .yui-resize-resizing .yui-resize-handle {
+	VISIBILITY: hidden
+}
+.yui-skin-sam .yui-layout .yui-resize-proxy DIV {
+	BORDER-BOTTOM: #808080 1px solid; POSITION: absolute; BORDER-LEFT: #808080 1px solid; BACKGROUND-COLOR: #edf5ff; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-layout .yui-resize .yui-resize-handle-active {
+	
+}
+.yui-skin-sam .yui-layout .yui-resize-proxy .yui-layout-handle-l {
+	WIDTH: 5px; HEIGHT: 100%; TOP: 0px; LEFT: 0px
+}
+.yui-skin-sam .yui-layout .yui-resize-proxy .yui-layout-handle-r {
+	POSITION: absolute; WIDTH: 5px; ZOOM: 1; HEIGHT: 100%; TOP: 0px; RIGHT: 0px
+}
+.yui-skin-sam .yui-layout .yui-resize-proxy .yui-layout-handle-b {
+	WIDTH: 100%; BOTTOM: 0px; HEIGHT: 5px; LEFT: 0px
+}
+.yui-skin-sam .yui-layout .yui-resize-proxy .yui-layout-handle-t {
+	WIDTH: 100%; HEIGHT: 5px; TOP: 0px; LEFT: 0px
+}
+.yui-skin-sam .yui-layout .yui-layout-unit-left DIV.yui-layout-hd .collapse {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png) no-repeat -20px -160px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-layout .yui-layout-clip-left .collapse {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png) no-repeat -20px -140px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-layout .yui-layout-unit-right DIV.yui-layout-hd .collapse {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png) no-repeat -20px -200px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-layout .yui-layout-clip-right .collapse {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png) no-repeat -20px -120px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-layout .yui-layout-unit-top DIV.yui-layout-hd .collapse {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png) no-repeat -20px -220px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-layout .yui-layout-clip-top .collapse {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png) no-repeat -20px -240px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-layout .yui-layout-unit-bottom DIV.yui-layout-hd .collapse {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png) no-repeat -20px -260px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-layout .yui-layout-clip-bottom .collapse {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png) no-repeat -20px -180px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-layout .yui-layout-unit DIV.yui-layout-hd .close {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png) no-repeat -20px -100px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-layout .yui-layout-hd {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px -1400px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-layout {
+	BACKGROUND-COLOR: #edf5ff
+}
+.yui-skin-sam .yui-layout .yui-layout-unit DIV.yui-layout-hd H2 {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 3px; PADDING-RIGHT: 3px; COLOR: #fff; FONT-WEIGHT: bold; PADDING-TOP: 3px
+}
+.yui-skin-sam .yui-layout .yui-layout-unit DIV.yui-layout-bd {
+	BORDER-BOTTOM: #808080 0px; TEXT-ALIGN: left; BORDER-LEFT: #808080 1px solid; BACKGROUND-COLOR: #f2f2f2; BORDER-TOP: #808080 0px; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-layout .yui-layout-unit DIV.yui-layout-bd-noft {
+	BORDER-BOTTOM: #808080 1px solid
+}
+.yui-skin-sam .yui-layout .yui-layout-unit DIV.yui-layout-bd-nohd {
+	BORDER-TOP: #808080 1px solid
+}
+.yui-skin-sam .yui-layout .yui-layout-clip {
+	BORDER-BOTTOM: #808080 1px solid; POSITION: absolute; BORDER-LEFT: #808080 1px solid; BACKGROUND-COLOR: #edf5ff; DISPLAY: none; HEIGHT: 20px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-layout DIV.yui-layout-ft {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BACKGROUND-COLOR: #f2f2f2; BORDER-TOP: #808080 0px; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-layout-unit .yui-resize-handle {
+	BACKGROUND-COLOR: transparent
+}
+.yui-skin-sam .yui-layout-unit .yui-resize-handle-r {
+	BACKGROUND-IMAGE: none; TOP: 0px; RIGHT: 0px
+}
+.yui-skin-sam .yui-layout-unit .yui-resize-handle-l {
+	BACKGROUND-IMAGE: none; TOP: 0px; LEFT: 0px
+}
+.yui-skin-sam .yui-layout-unit .yui-resize-handle-b {
+	BACKGROUND-IMAGE: none; BOTTOM: 0px; RIGHT: 0px
+}
+.yui-skin-sam .yui-layout-unit .yui-resize-handle-t {
+	BACKGROUND-IMAGE: none; TOP: 0px; RIGHT: 0px
+}
+.yui-skin-sam .yui-layout-unit .yui-resize-handle-r .yui-layout-resize-knob {
+	POSITION: absolute; WIDTH: 6px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png) no-repeat 0px -5px; HEIGHT: 16px; TOP: 45%; LEFT: 0px
+}
+.yui-skin-sam .yui-layout-unit .yui-resize-handle-l .yui-layout-resize-knob {
+	POSITION: absolute; WIDTH: 6px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png) no-repeat 0px -5px; HEIGHT: 16px; TOP: 45%; LEFT: 0px
+}
+.yui-skin-sam .yui-layout-unit .yui-resize-handle-t .yui-layout-resize-knob {
+	POSITION: absolute; WIDTH: 16px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png) no-repeat -20px 0px; HEIGHT: 6px; LEFT: 45%
+}
+.yui-skin-sam .yui-layout-unit .yui-resize-handle-b .yui-layout-resize-knob {
+	POSITION: absolute; WIDTH: 16px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png) no-repeat -20px 0px; HEIGHT: 6px; LEFT: 45%
+}
+.yui-skin-sam .yui-log {
+	Z-INDEX: 9000; BORDER-BOTTOM: black 1px solid; TEXT-ALIGN: left; BORDER-LEFT: black 1px solid; PADDING-BOTTOM: 1em; BACKGROUND-COLOR: #aaa; PADDING-LEFT: 1em; WIDTH: 31em; PADDING-RIGHT: 1em; FONT-FAMILY: monospace; COLOR: #000; FONT-SIZE: 77%; BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid; PADDING-TOP: 1em
+}
+.yui-skin-sam .yui-log-container {
+	POSITION: absolute; TOP: 1em; RIGHT: 1em
+}
+.yui-skin-sam .yui-log INPUT {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: arial; FONT-SIZE: 100%; FONT-WEIGHT: normal; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-log .yui-log-btns {
+	POSITION: relative; BOTTOM: 0.25em; FLOAT: right
+}
+.yui-skin-sam .yui-log .yui-log-hd {
+	PADDING-BOTTOM: 0.5em; BACKGROUND-COLOR: #575757; MARGIN-TOP: 1em; PADDING-LEFT: 0.5em; PADDING-RIGHT: 0.5em; PADDING-TOP: 0.5em
+}
+.yui-skin-sam .yui-log .yui-log-hd H4 {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; COLOR: #fff; FONT-SIZE: 108%; FONT-WEIGHT: bold; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-log .yui-log-bd {
+	BORDER-BOTTOM: gray 1px solid; BORDER-LEFT: gray 1px solid; BACKGROUND-COLOR: #fff; WIDTH: 100%; HEIGHT: 20em; OVERFLOW: auto; BORDER-TOP: gray 1px solid; BORDER-RIGHT: gray 1px solid
+}
+.yui-skin-sam .yui-log P {
+	PADDING-BOTTOM: 0.1em; MARGIN: 1px; PADDING-LEFT: 0.1em; PADDING-RIGHT: 0.1em; PADDING-TOP: 0.1em
+}
+.yui-skin-sam .yui-log PRE {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-log PRE.yui-log-verbose {
+	WORD-WRAP: break-word
+}
+.yui-skin-sam .yui-log .yui-log-ft {
+	MARGIN-TOP: 0.5em
+}
+.yui-skin-sam .yui-log .yui-log-ft .yui-log-categoryfilters {
+	
+}
+.yui-skin-sam .yui-log .yui-log-ft .yui-log-sourcefilters {
+	MARGIN-TOP: 0.75em; WIDTH: 100%; BORDER-TOP: #575757 1px solid; PADDING-TOP: 0.75em
+}
+.yui-skin-sam .yui-log .yui-log-filtergrp {
+	MARGIN-RIGHT: 0.5em
+}
+.yui-skin-sam .yui-log .info {
+	BACKGROUND-COLOR: #a7cc25
+}
+.yui-skin-sam .yui-log .warn {
+	BACKGROUND-COLOR: #f58516
+}
+.yui-skin-sam .yui-log .error {
+	BACKGROUND-COLOR: #e32f0b
+}
+.yui-skin-sam .yui-log .time {
+	BACKGROUND-COLOR: #a6c9d7
+}
+.yui-skin-sam .yui-log .window {
+	BACKGROUND-COLOR: #f2e886
+}
+.yuimenu {
+	TOP: -999em; LEFT: -999em
+}
+.yuimenubar {
+	POSITION: static
+}
+.yuimenu .yuimenu {
+	POSITION: absolute
+}
+.yuimenubar .yuimenu {
+	POSITION: absolute
+}
+.yuimenubar LI {
+	LIST-STYLE-TYPE: none
+}
+.yuimenu LI {
+	LIST-STYLE-TYPE: none
+}
+.yuimenubar UL {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yuimenu UL {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yuimenubar LI {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yuimenu LI {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yuimenu H6 {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yuimenubar H6 {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yuimenuitemlabel {
+	TEXT-ALIGN: left; WHITE-SPACE: nowrap
+}
+.yuimenubaritemlabel {
+	TEXT-ALIGN: left; WHITE-SPACE: nowrap
+}
+.yuimenubar UL {
+	ZOOM: 1
+}
+.yuimenubar .yuimenu UL {
+	ZOOM: normal
+}
+.yuimenubar > .bd > UL:after {
+	LINE-HEIGHT: 0; DISPLAY: block; HEIGHT: 0px; VISIBILITY: hidden; CLEAR: both; CONTENT: "."
+}
+.yuimenubaritem {
+	FLOAT: left
+}
+.yuimenubaritemlabel {
+	DISPLAY: block
+}
+.yuimenuitemlabel {
+	DISPLAY: block
+}
+.yuimenuitemlabel .helptext {
+	FONT-STYLE: normal; MARGIN: -1em 0px 0px 10em; DISPLAY: block
+}
+.yui-menu-shadow {
+	Z-INDEX: -1; POSITION: absolute; VISIBILITY: hidden
+}
+.yui-menu-shadow-visible {
+	BOTTOM: -3px; VISIBILITY: visible; TOP: 2px; RIGHT: -3px; LEFT: -3px
+}
+.hide-scrollbars * {
+	OVERFLOW: hidden
+}
+.hide-scrollbars SELECT {
+	DISPLAY: none
+}
+.show-scrollbars.yuimenu {
+	OVERFLOW: visible
+}
+.show-scrollbars.yuimenubar {
+	OVERFLOW: visible
+}
+.hide-scrollbars.yuimenu .yui-menu-shadow {
+	OVERFLOW: hidden
+}
+.hide-scrollbars.yuimenubar .yui-menu-shadow {
+	OVERFLOW: hidden
+}
+.show-scrollbars.yuimenu .yui-menu-shadow {
+	OVERFLOW: auto
+}
+.show-scrollbars.yuimenubar .yui-menu-shadow {
+	OVERFLOW: auto
+}
+.yui-force-redraw.yui-overlay {
+	MARGIN-BOTTOM: 1px
+}
+.yui-skin-sam .yuimenubar {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; LINE-HEIGHT: 1.9; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px 0px; FONT-SIZE: 93%; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yuimenubarnav .yuimenubaritem {
+	BORDER-RIGHT: #ccc 1px solid
+}
+.yui-skin-sam .yuimenubaritemlabel {
+	BORDER-BOTTOM: #808080 1px solid; POSITION: relative; BORDER-LEFT: #808080 0px solid; PADDING-BOTTOM: 0px; MARGIN: -1px 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; COLOR: #000; BORDER-TOP: #808080 1px solid; CURSOR: default; BORDER-RIGHT: #808080 0px solid; TEXT-DECORATION: none; PADDING-TOP: 0px
+}
+.yui-skin-sam .yuimenubarnav .yuimenubaritemlabel {
+	PADDING-RIGHT: 20px; DISPLAY: inline-block
+}
+.yui-skin-sam .yuimenubarnav .yuimenubaritemlabel-hassubmenu {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/menubaritem_submenuindicator.png) no-repeat right center
+}
+.yui-skin-sam .yuimenubaritem-selected {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px -1700px
+}
+.yui-skin-sam .yuimenubaritemlabel-selected {
+	BORDER-BOTTOM-COLOR: #7d98b8; BORDER-TOP-COLOR: #7d98b8; BORDER-RIGHT-COLOR: #7d98b8; BORDER-LEFT-COLOR: #7d98b8
+}
+.yui-skin-sam .yuimenubarnav .yuimenubaritemlabel-selected {
+	MARGIN-LEFT: -1px; BORDER-LEFT-WIDTH: 1px; LEFT: -1px
+}
+.yui-skin-sam .yuimenubaritemlabel-disabled {
+	COLOR: #a6a6a6; CURSOR: default
+}
+.yui-skin-sam .yuimenubarnav .yuimenubaritemlabel-hassubmenu-disabled {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/menubaritem_submenuindicator_disabled.png)
+}
+.yui-skin-sam .yuimenu {
+	LINE-HEIGHT: 1.45; FONT-SIZE: 93%
+}
+.yui-skin-sam .yuimenubar .yuimenu {
+	FONT-SIZE: 100%
+}
+.yui-skin-sam .yuimenu .yuimenu {
+	FONT-SIZE: 100%
+}
+.yui-skin-sam .yuimenu .bd {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BACKGROUND-COLOR: #fff; ZOOM: 1; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid; _zoom: normal
+}
+.yui-skin-sam .yuimenu .yuimenu .bd {
+	ZOOM: normal
+}
+.yui-skin-sam .yuimenu UL {
+	BORDER-BOTTOM: #ccc 0px solid; BORDER-LEFT: #ccc 0px solid; PADDING-BOTTOM: 3px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #ccc 0px solid; PADDING-TOP: 3px
+}
+.yui-skin-sam .yuimenu UL.first-of-type {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px
+}
+.yui-skin-sam .yuimenu H6 {
+	BORDER-BOTTOM: #ccc 0px solid; BORDER-LEFT: #ccc 0px solid; PADDING-BOTTOM: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; COLOR: #a4a4a4; BORDER-TOP: #ccc 1px solid; FONT-WEIGHT: bold; BORDER-RIGHT: #ccc 0px solid; PADDING-TOP: 3px
+}
+.yui-skin-sam .yuimenu UL.hastitle {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px
+}
+.yui-skin-sam .yuimenu H6.first-of-type {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px
+}
+.yui-skin-sam .yuimenu .yui-menu-body-scrolled {
+	BORDER-BOTTOM-COLOR: #ccc; BORDER-TOP-COLOR: #ccc; BORDER-RIGHT-COLOR: #808080; OVERFLOW: hidden; BORDER-LEFT-COLOR: #808080
+}
+.yui-skin-sam .yuimenu .topscrollbar {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) #fff no-repeat 0px 0px; HEIGHT: 16px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yuimenu .bottomscrollbar {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) #fff no-repeat 0px 0px; HEIGHT: 16px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yuimenu .topscrollbar {
+	BACKGROUND-POSITION: center -950px; BORDER-BOTTOM-WIDTH: 0px
+}
+.yui-skin-sam .yuimenu .topscrollbar_disabled {
+	BACKGROUND-POSITION: center -975px
+}
+.yui-skin-sam .yuimenu .bottomscrollbar {
+	BACKGROUND-POSITION: center -850px; BORDER-TOP-WIDTH: 0px
+}
+.yui-skin-sam .yuimenu .bottomscrollbar_disabled {
+	BACKGROUND-POSITION: center -875px
+}
+.yui-skin-sam .yuimenuitem {
+	_border-bottom: solid 1px #fff
+}
+.yui-skin-sam .yuimenuitemlabel {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px; COLOR: #000; CURSOR: default; TEXT-DECORATION: none; PADDING-TOP: 0px
+}
+.yui-skin-sam .yuimenuitemlabel .helptext {
+	MARGIN-TOP: -1.45em
+}
+.yui-skin-sam .yuimenuitem-hassubmenu {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/menuitem_submenuindicator.png); BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: right center
+}
+.yui-skin-sam .yuimenuitem-checked {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/menuitem_checkbox.png); BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: left center
+}
+.yui-skin-sam .yui-menu-shadow-visible {
+	FILTER: alpha(opacity=12); BACKGROUND-COLOR: #000; opacity: .12
+}
+.yui-skin-sam .yuimenuitem-selected {
+	BACKGROUND-COLOR: #b3d4ff
+}
+.yui-skin-sam .yuimenuitemlabel-disabled {
+	COLOR: #a6a6a6; CURSOR: default
+}
+.yui-skin-sam .yuimenuitem-hassubmenu-disabled {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/menuitem_submenuindicator_disabled.png)
+}
+.yui-skin-sam .yuimenuitem-checked-disabled {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/menuitem_checkbox_disabled.png)
+}
+.yui-skin-sam .yui-pg-container {
+	MARGIN: 6px 0px; DISPLAY: block; WHITE-SPACE: nowrap
+}
+.yui-skin-sam .yui-pg-first {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; ZOOM: 1; DISPLAY: inline-block; FONT-FAMILY: arial,helvetica,clean,sans-serif; PADDING-TOP: 3px
+}
+.yui-skin-sam .yui-pg-previous {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; ZOOM: 1; DISPLAY: inline-block; FONT-FAMILY: arial,helvetica,clean,sans-serif; PADDING-TOP: 3px
+}
+.yui-skin-sam .yui-pg-next {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; ZOOM: 1; DISPLAY: inline-block; FONT-FAMILY: arial,helvetica,clean,sans-serif; PADDING-TOP: 3px
+}
+.yui-skin-sam .yui-pg-last {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; ZOOM: 1; DISPLAY: inline-block; FONT-FAMILY: arial,helvetica,clean,sans-serif; PADDING-TOP: 3px
+}
+.yui-skin-sam .yui-pg-current {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; ZOOM: 1; DISPLAY: inline-block; FONT-FAMILY: arial,helvetica,clean,sans-serif; PADDING-TOP: 3px
+}
+.yui-skin-sam .yui-pg-pages {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; ZOOM: 1; DISPLAY: inline-block; FONT-FAMILY: arial,helvetica,clean,sans-serif; PADDING-TOP: 3px
+}
+.yui-skin-sam .yui-pg-page {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; ZOOM: 1; DISPLAY: inline-block; FONT-FAMILY: arial,helvetica,clean,sans-serif; PADDING-TOP: 3px
+}
+.yui-skin-sam .yui-pg-pages {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-pg-current {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 3px
+}
+.yui-skin-sam A.yui-pg-first:link {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-first:visited {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-first:active {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-first:hover {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-previous:link {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-previous:visited {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-previous:active {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-previous:hover {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-next:link {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-next:visited {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-next:active {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-next:hover {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-last:link {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-last:visited {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-last:active {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-last:hover {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-page:link {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-page:visited {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-page:active {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam A.yui-pg-page:hover {
+	OUTLINE-WIDTH: 0px; COLOR: #06c; TEXT-DECORATION: underline
+}
+.yui-skin-sam SPAN.yui-pg-first {
+	COLOR: #a6a6a6
+}
+.yui-skin-sam SPAN.yui-pg-previous {
+	COLOR: #a6a6a6
+}
+.yui-skin-sam SPAN.yui-pg-next {
+	COLOR: #a6a6a6
+}
+.yui-skin-sam SPAN.yui-pg-last {
+	COLOR: #a6a6a6
+}
+.yui-skin-sam .yui-pg-page {
+	BORDER-BOTTOM: #cbcbcb 1px solid; BORDER-LEFT: #cbcbcb 1px solid; PADDING-BOTTOM: 2px; BACKGROUND-COLOR: #fff; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; BORDER-TOP: #cbcbcb 1px solid; BORDER-RIGHT: #cbcbcb 1px solid; TEXT-DECORATION: none; PADDING-TOP: 2px
+}
+.yui-skin-sam .yui-pg-current-page {
+	BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 3px; BORDER-RIGHT-STYLE: none; BACKGROUND-COLOR: transparent; PADDING-LEFT: 6px; PADDING-RIGHT: 6px; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; FONT-WEIGHT: bold; PADDING-TOP: 3px
+}
+.yui-skin-sam .yui-pg-page {
+	MARGIN-LEFT: 1px; MARGIN-RIGHT: 1px
+}
+.yui-skin-sam .yui-pg-first {
+	PADDING-LEFT: 0px
+}
+.yui-skin-sam .yui-pg-previous {
+	PADDING-LEFT: 0px
+}
+.yui-skin-sam .yui-pg-next {
+	PADDING-RIGHT: 0px
+}
+.yui-skin-sam .yui-pg-last {
+	PADDING-RIGHT: 0px
+}
+.yui-skin-sam .yui-pg-current {
+	MARGIN-LEFT: 1em; MARGIN-RIGHT: 1em
+}
+.yui-skin-sam .yui-pg-rpp-options {
+	MARGIN-LEFT: 1em; MARGIN-RIGHT: 1em
+}
+.yui-skin-sam .yui-pv {
+	Z-INDEX: 1000; POSITION: relative; BACKGROUND-COLOR: #4a4a4a; WIDTH: 99%; MARGIN-BOTTOM: 1em; OVERFLOW: hidden
+}
+.yui-skin-sam .yui-pv .hd {
+	PADDING-BOTTOM: 2px; MIN-HEIGHT: 30px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; ZOOM: 1; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/header_background.png) repeat-x; OVERFLOW: hidden; PADDING-TOP: 2px
+}
+.yui-skin-sam .yui-pv .hd H4 {
+	PADDING-BOTTOM: 8px; MARGIN: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; FONT: bold 14px arial; COLOR: #fff; PADDING-TOP: 8px
+}
+.yui-skin-sam .yui-pv .hd A {
+	BORDER-BOTTOM: #3f567d 1px solid; BORDER-LEFT: #3f567d 1px solid; PADDING-BOTTOM: 4px; MARGIN: 3px 10px 0px 0px; PADDING-LEFT: 4px; PADDING-RIGHT: 4px; DISPLAY: block; FONT: bold 11px arial; BACKGROUND: #3f6bc3; FLOAT: right; COLOR: #fff; BORDER-TOP: #3f567d 1px solid; CURSOR: pointer; BORDER-RIGHT: #3f567d 1px solid; PADDING-TOP: 4px
+}
+.yui-skin-sam .yui-pv .hd SPAN {
+	DISPLAY: none
+}
+.yui-skin-sam .yui-pv .hd SPAN.yui-pv-busy {
+	MARGIN: 4px 10px 0px 0px; WIDTH: 18px; DISPLAY: block; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/wait.gif) no-repeat; FLOAT: right; HEIGHT: 18px; OVERFLOW: hidden
+}
+.yui-skin-sam .yui-pv .hd:after {
+	DISPLAY: block; HEIGHT: 0px; VISIBILITY: hidden; CLEAR: left; CONTENT: '.'
+}
+.yui-pv .bd:after {
+	DISPLAY: block; HEIGHT: 0px; VISIBILITY: hidden; CLEAR: left; CONTENT: '.'
+}
+.yui-skin-sam .yui-pv-chartlegend DL:after {
+	DISPLAY: block; HEIGHT: 0px; VISIBILITY: hidden; CLEAR: left; CONTENT: '.'
+}
+.yui-skin-sam .yui-pv .bd {
+	POSITION: relative; OVERFLOW-X: auto; OVERFLOW-Y: hidden; ZOOM: 1
+}
+.yui-skin-sam .yui-pv .yui-pv-table {
+	PADDING-BOTTOM: 0px; MARGIN: 5px 0px 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-pv .yui-pv-table .yui-dt-bd TD {
+	FONT: 12px arial; COLOR: #eeee5c
+}
+.yui-skin-sam .yui-pv .yui-pv-table TR.yui-dt-odd {
+	BACKGROUND: #929292
+}
+.yui-skin-sam .yui-pv .yui-pv-table TR.yui-dt-even {
+	BACKGROUND: #58637a
+}
+.yui-skin-sam .yui-pv .yui-pv-table TR.yui-dt-even TD.yui-dt-asc {
+	BACKGROUND: #384970
+}
+.yui-skin-sam .yui-pv .yui-pv-table TR.yui-dt-even TD.yui-dt-desc {
+	BACKGROUND: #384970
+}
+.yui-skin-sam .yui-pv .yui-pv-table TR.yui-dt-odd TD.yui-dt-asc {
+	BACKGROUND: #6f6e6e
+}
+.yui-skin-sam .yui-pv .yui-pv-table TR.yui-dt-odd TD.yui-dt-desc {
+	BACKGROUND: #6f6e6e
+}
+.yui-skin-sam .yui-pv .yui-pv-table .yui-dt-hd TH {
+	BACKGROUND: #2e2d2d
+}
+.yui-skin-sam .yui-pv TH.yui-dt-asc .yui-dt-liner {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/asc.gif) no-repeat right center
+}
+.yui-skin-sam .yui-pv TH.yui-dt-desc .yui-dt-liner {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/desc.gif) no-repeat right center
+}
+.yui-skin-sam .yui-pv .yui-pv-table .yui-dt-hd TH A {
+	FONT: bold 12px arial; COLOR: #fff
+}
+.yui-skin-sam .yui-pv .yui-pv-table .yui-dt-hd TH.yui-dt-asc {
+	BACKGROUND: #333
+}
+.yui-skin-sam .yui-pv .yui-pv-table .yui-dt-hd TH.yui-dt-desc {
+	BACKGROUND: #333
+}
+.yui-skin-sam .yui-pv-chartcontainer {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-pv-chart {
+	MARGIN: 5px 0px 0px; HEIGHT: 250px; COLOR: #fff; CLEAR: right
+}
+.yui-skin-sam .yui-pv-chartlegend DIV {
+	MARGIN: 0px 0px 0px 10px; FLOAT: right; _width: 250px
+}
+.yui-skin-sam .yui-pv-chartlegend DL {
+	BORDER-BOTTOM: #999 1px solid; BORDER-LEFT: #999 1px solid; PADDING-BOTTOM: 0.2em; MARGIN: 5px 0px; PADDING-LEFT: 0.5em; PADDING-RIGHT: 0px; ZOOM: 1; BORDER-TOP: #999 1px solid; BORDER-RIGHT: #999 1px solid; PADDING-TOP: 0.2em
+}
+.yui-skin-sam .yui-pv-chartlegend DT {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; WIDTH: 0.7em; PADDING-RIGHT: 0px; DISPLAY: block; FLOAT: left; HEIGHT: 0.7em; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-pv-chartlegend DD {
+	PADDING-BOTTOM: 0px; MARGIN: 0px 1em 0px 0.5em; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; DISPLAY: block; FONT: 11px arial; FLOAT: left; COLOR: #fff; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-pv-minimized {
+	HEIGHT: 35px
+}
+.yui-skin-sam .yui-pv-minimized .bd {
+	TOP: -3000px
+}
+.yui-skin-sam .yui-pv-minimized .hd A.yui-pv-refresh {
+	DISPLAY: none
+}
+.yui-resize {
+	Z-INDEX: 0; POSITION: relative; ZOOM: 1
+}
+.yui-resize-wrap {
+	ZOOM: 1
+}
+.yui-draggable {
+	CURSOR: move
+}
+.yui-resize .yui-resize-handle {
+	Z-INDEX: 1; POSITION: absolute; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 1px; PADDING-RIGHT: 0px; ZOOM: 1; HEIGHT: 1px; FONT-SIZE: 0px; PADDING-TOP: 0px
+}
+.yui-resize .yui-resize-handle-br {
+	Z-INDEX: 2; WIDTH: 5px; BOTTOM: 0px; ZOOM: 1; HEIGHT: 5px; CURSOR: se-resize; RIGHT: 0px
+}
+.yui-resize .yui-resize-handle-bl {
+	Z-INDEX: 2; WIDTH: 5px; BOTTOM: 0px; ZOOM: 1; HEIGHT: 5px; CURSOR: sw-resize; LEFT: 0px
+}
+.yui-resize .yui-resize-handle-tl {
+	Z-INDEX: 2; WIDTH: 5px; ZOOM: 1; HEIGHT: 5px; TOP: 0px; CURSOR: nw-resize; LEFT: 0px
+}
+.yui-resize .yui-resize-handle-tr {
+	Z-INDEX: 2; WIDTH: 5px; ZOOM: 1; HEIGHT: 5px; TOP: 0px; CURSOR: ne-resize; RIGHT: 0px
+}
+.yui-resize .yui-resize-handle-r {
+	WIDTH: 5px; ZOOM: 1; HEIGHT: 100%; TOP: 0px; CURSOR: e-resize; RIGHT: 0px
+}
+.yui-resize .yui-resize-handle-l {
+	WIDTH: 5px; ZOOM: 1; HEIGHT: 100%; TOP: 0px; CURSOR: w-resize; LEFT: 0px
+}
+.yui-resize .yui-resize-handle-b {
+	WIDTH: 100%; BOTTOM: 0px; ZOOM: 1; HEIGHT: 5px; CURSOR: s-resize; RIGHT: 0px
+}
+.yui-resize .yui-resize-handle-t {
+	WIDTH: 100%; ZOOM: 1; HEIGHT: 5px; TOP: 0px; CURSOR: n-resize; RIGHT: 0px
+}
+.yui-resize-proxy {
+	Z-INDEX: 1000; BORDER-BOTTOM: #000 1px dashed; POSITION: absolute; BORDER-LEFT: #000 1px dashed; VISIBILITY: hidden; BORDER-TOP: #000 1px dashed; BORDER-RIGHT: #000 1px dashed
+}
+.yui-resize-hover .yui-resize-handle {
+	FILTER: alpha(opacity=0); opacity: 0
+}
+.yui-resize-hidden .yui-resize-handle {
+	FILTER: alpha(opacity=0); opacity: 0
+}
+.yui-resize-ghost {
+	FILTER: alpha(opacity=50); opacity: .5
+}
+.yui-resize-knob .yui-resize-handle {
+	WIDTH: 6px; HEIGHT: 6px
+}
+.yui-resize-knob .yui-resize-handle-tr {
+	TOP: -3px; RIGHT: -3px
+}
+.yui-resize-knob .yui-resize-handle-tl {
+	TOP: -3px; LEFT: -3px
+}
+.yui-resize-knob .yui-resize-handle-bl {
+	BOTTOM: -3px; LEFT: -3px
+}
+.yui-resize-knob .yui-resize-handle-br {
+	BOTTOM: -3px; RIGHT: -3px
+}
+.yui-resize-knob .yui-resize-handle-t {
+	TOP: -3px; LEFT: 45%
+}
+.yui-resize-knob .yui-resize-handle-r {
+	TOP: 45%; RIGHT: -3px
+}
+.yui-resize-knob .yui-resize-handle-l {
+	TOP: 45%; LEFT: -3px
+}
+.yui-resize-knob .yui-resize-handle-b {
+	BOTTOM: -3px; LEFT: 45%
+}
+.yui-resize-status {
+	Z-INDEX: 9999; POSITION: absolute; PADDING-BOTTOM: 2px; PADDING-LEFT: 2px; PADDING-RIGHT: 2px; ZOOM: 1; DISPLAY: none; FONT-SIZE: 80%; TOP: -999px; PADDING-TOP: 2px; LEFT: -999px
+}
+.yui-resize-status STRONG {
+	PADDING-BOTTOM: 1px; FONT-STYLE: normal; PADDING-LEFT: 1px; PADDING-RIGHT: 1px; ZOOM: 1; FONT-WEIGHT: normal; PADDING-TOP: 1px
+}
+.yui-resize-status EM {
+	PADDING-BOTTOM: 1px; FONT-STYLE: normal; PADDING-LEFT: 1px; PADDING-RIGHT: 1px; ZOOM: 1; FONT-WEIGHT: normal; PADDING-TOP: 1px
+}
+.yui-skin-sam .yui-resize .yui-resize-handle {
+	BACKGROUND-COLOR: #f2f2f2; ZOOM: 1
+}
+.yui-skin-sam .yui-resize .yui-resize-handle-active {
+	BACKGROUND-COLOR: #7d98b8; ZOOM: 1
+}
+.yui-skin-sam .yui-resize .yui-resize-handle-l {
+	ZOOM: 1; HEIGHT: 100%
+}
+.yui-skin-sam .yui-resize .yui-resize-handle-r {
+	ZOOM: 1; HEIGHT: 100%
+}
+.yui-skin-sam .yui-resize .yui-resize-handle-l-active {
+	ZOOM: 1; HEIGHT: 100%
+}
+.yui-skin-sam .yui-resize .yui-resize-handle-r-active {
+	ZOOM: 1; HEIGHT: 100%
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-resize-hover .yui-resize-handle-active {
+	FILTER: alpha(opacity=100); opacity: 1
+}
+.yui-skin-sam .yui-resize-proxy {
+	BORDER-BOTTOM: #426fd9 1px dashed; BORDER-LEFT: #426fd9 1px dashed; BORDER-TOP: #426fd9 1px dashed; BORDER-RIGHT: #426fd9 1px dashed
+}
+.yui-skin-sam .yui-resize-status {
+	BORDER-BOTTOM: #a6982b 1px solid; BORDER-LEFT: #a6982b 1px solid; BACKGROUND-COLOR: #ffee69; COLOR: #000; BORDER-TOP: #d4c237 1px solid; BORDER-RIGHT: #a6982b 1px solid
+}
+.yui-skin-sam .yui-resize-status STRONG {
+	TEXT-ALIGN: center; PADDING-BOTTOM: 1px; PADDING-LEFT: 1px; PADDING-RIGHT: 1px; DISPLAY: block; FLOAT: left; CLEAR: both; PADDING-TOP: 1px
+}
+.yui-skin-sam .yui-resize-status EM {
+	TEXT-ALIGN: center; PADDING-BOTTOM: 1px; PADDING-LEFT: 1px; PADDING-RIGHT: 1px; DISPLAY: block; FLOAT: left; CLEAR: both; PADDING-TOP: 1px
+}
+.yui-skin-sam .yui-resize .yui-resize-handle-inner-r {
+	POSITION: absolute; WIDTH: 5px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png) no-repeat 0px -5px; HEIGHT: 16px; TOP: 45%
+}
+.yui-skin-sam .yui-resize .yui-resize-handle-inner-l {
+	POSITION: absolute; WIDTH: 5px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png) no-repeat 0px -5px; HEIGHT: 16px; TOP: 45%
+}
+.yui-skin-sam .yui-resize .yui-resize-handle-inner-t {
+	POSITION: absolute; WIDTH: 16px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png) no-repeat -20px 0px; HEIGHT: 5px; LEFT: 50%
+}
+.yui-skin-sam .yui-resize .yui-resize-handle-inner-b {
+	POSITION: absolute; WIDTH: 16px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png) no-repeat -20px 0px; HEIGHT: 5px; LEFT: 50%
+}
+.yui-skin-sam .yui-resize .yui-resize-handle-br {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png); BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: -22px -62px
+}
+.yui-skin-sam .yui-resize .yui-resize-handle-tr {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png); BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: -22px -42px
+}
+.yui-skin-sam .yui-resize .yui-resize-handle-tl {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png); BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: -22px -82px
+}
+.yui-skin-sam .yui-resize .yui-resize-handle-bl {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/layout_sprite.png); BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: -22px -23px
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-t {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-r {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-b {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-l {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-tl {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-tr {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-bl {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-br {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-inner-t {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-inner-r {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-inner-b {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-inner-l {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-inner-tl {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-inner-tr {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-inner-bl {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-inner-br {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-l {
+	WIDTH: 6px; HEIGHT: 6px
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-r {
+	WIDTH: 6px; HEIGHT: 6px
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-l-active {
+	WIDTH: 6px; HEIGHT: 6px
+}
+.yui-skin-sam .yui-resize-knob .yui-resize-handle-r-active {
+	WIDTH: 6px; HEIGHT: 6px
+}
+.yui-skin-sam .yui-resize-textarea .yui-resize-handle-r {
+	RIGHT: -8px
+}
+.yui-skin-sam .yui-resize-textarea .yui-resize-handle-b {
+	BOTTOM: -8px
+}
+.yui-skin-sam .yui-resize-textarea .yui-resize-handle-br {
+	BOTTOM: -8px; RIGHT: -8px
+}
+.yui-busy {
+	CURSOR: wait !important
+}
+.yui-toolbar-container FIELDSET {
+	PADDING-BOTTOM: 0px; BORDER-RIGHT-WIDTH: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; PADDING-TOP: 0px
+}
+.yui-editor-container FIELDSET {
+	PADDING-BOTTOM: 0px; BORDER-RIGHT-WIDTH: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; PADDING-TOP: 0px
+}
+.yui-toolbar-container LEGEND {
+	DISPLAY: none
+}
+.yui-toolbar-container .yui-toolbar-subcont {
+	PADDING-BOTTOM: 0.25em; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; ZOOM: 1; PADDING-TOP: 0.25em
+}
+.yui-toolbar-container-collapsed .yui-toolbar-subcont {
+	DISPLAY: none
+}
+.yui-toolbar-container .yui-toolbar-subcont:after {
+	DISPLAY: block; HEIGHT: 0px; VISIBILITY: hidden; CLEAR: both; CONTENT: '.'
+}
+.yui-toolbar-container SPAN.yui-toolbar-draghandle {
+	BORDER-LEFT: #999 1px solid; TEXT-INDENT: 77777px; MARGIN: 0px 0px 0px 0.2em; WIDTH: 2px; DISPLAY: block; FLOAT: left; HEIGHT: 20px; CLEAR: none; OVERFLOW: hidden; CURSOR: move; BORDER-RIGHT: #999 1px solid
+}
+.yui-toolbar-container .draggable.yui-toolbar-titlebar {
+	CURSOR: move
+}
+.yui-toolbar-container .yui-toolbar-titlebar {
+	POSITION: relative
+}
+.yui-toolbar-container .yui-toolbar-titlebar H2 {
+	BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 0.2em; BORDER-RIGHT-STYLE: none; MARGIN: 0px; PADDING-LEFT: 0.2em; PADDING-RIGHT: 0.2em; BORDER-TOP-STYLE: none; LETTER-SPACING: 0px; COLOR: #000; BORDER-LEFT-STYLE: none; FONT-WEIGHT: bold; PADDING-TOP: 0.2em
+}
+.yui-toolbar-container .yui-toolbar-titlebar H2 A {
+	COLOR: #000; CURSOR: default; TEXT-DECORATION: none
+}
+.yui-toolbar-grouped.yui-toolbar-container SPAN.yui-toolbar-draghandle {
+	HEIGHT: 40px
+}
+.yui-toolbar-container .yui-toolbar-group {
+	ZOOM: 1; FLOAT: left; MARGIN-RIGHT: 0.5em
+}
+.yui-toolbar-container .yui-toolbar-group:after {
+	DISPLAY: block; HEIGHT: 0px; VISIBILITY: hidden; CLEAR: both; CONTENT: '.'
+}
+.yui-toolbar-container .yui-toolbar-group H3 {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0.25em; PADDING-RIGHT: 0px; FONT-SIZE: 75%; PADDING-TOP: 0px
+}
+.yui-toolbar-container SPAN.yui-toolbar-separator {
+	PADDING-BOTTOM: 0px; MARGIN: 0.2em 0px 0.2em 0.1em; PADDING-LEFT: 0px; WIDTH: 2px; PADDING-RIGHT: 0px; DISPLAY: none; FLOAT: left; HEIGHT: 18px; PADDING-TOP: 0px
+}
+.yui-toolbar-grouped.yui-toolbar-container SPAN.yui-toolbar-separator {
+	HEIGHT: 50px
+}
+.yui-toolbar-grouped.yui-toolbar-container .yui-toolbar-group SPAN.yui-toolbar-separator {
+	DISPLAY: block; HEIGHT: 18px
+}
+.yui-toolbar-container UL LI {
+	PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: none; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-toolbar-container .yui-toolbar-nogrouplabels H3 {
+	DISPLAY: none
+}
+.yui-toolbar-container .yui-push-button {
+	POSITION: relative; CURSOR: pointer
+}
+.yui-toolbar-container .yui-color-button {
+	POSITION: relative; CURSOR: pointer
+}
+.yui-toolbar-container .yui-menu-button {
+	POSITION: relative; CURSOR: pointer
+}
+.yui-toolbar-container .yui-button .first-child {
+	WIDTH: 100%; HEIGHT: 100%; FONT-SIZE: 0px; OVERFLOW: hidden
+}
+.yui-toolbar-container .yui-button .first-child A {
+	WIDTH: 100%; HEIGHT: 100%; FONT-SIZE: 0px; OVERFLOW: hidden
+}
+.yui-toolbar-container .yui-button-disabled {
+	CURSOR: default
+}
+.yui-toolbar-container .yui-button-disabled .yui-toolbar-icon {
+	FILTER: alpha(opacity=50); opacity: .5
+}
+.yui-toolbar-container .yui-button-disabled .up {
+	FILTER: alpha(opacity=50); opacity: .5
+}
+.yui-toolbar-container .yui-button-disabled .down {
+	FILTER: alpha(opacity=50); opacity: .5
+}
+.yui-toolbar-container .yui-button A {
+	OVERFLOW: hidden
+}
+.yui-toolbar-container .yui-toolbar-select .first-child A {
+	CURSOR: pointer
+}
+.yui-toolbar-fontname-arial {
+	FONT-FAMILY: Arial
+}
+.yui-toolbar-fontname-arial-black {
+	FONT-FAMILY: Arial Black
+}
+.yui-toolbar-fontname-comic-sans-ms {
+	FONT-FAMILY: Comic Sans MS
+}
+.yui-toolbar-fontname-courier-new {
+	FONT-FAMILY: Courier New
+}
+.yui-toolbar-fontname-times-new-roman {
+	FONT-FAMILY: Times New Roman
+}
+.yui-toolbar-fontname-verdana {
+	FONT-FAMILY: Verdana
+}
+.yui-toolbar-fontname-impact {
+	FONT-FAMILY: Impact
+}
+.yui-toolbar-fontname-lucida-console {
+	FONT-FAMILY: Lucida Console
+}
+.yui-toolbar-fontname-tahoma {
+	FONT-FAMILY: Tahoma
+}
+.yui-toolbar-fontname-trebuchet-ms {
+	FONT-FAMILY: Trebuchet MS
+}
+.yui-toolbar-container .yui-toolbar-spinbutton {
+	POSITION: relative
+}
+.yui-toolbar-container .yui-toolbar-spinbutton .first-child A {
+	Z-INDEX: 0; opacity: 1
+}
+.yui-toolbar-container .yui-toolbar-spinbutton A.up {
+	Z-INDEX: 1; POSITION: absolute; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; CURSOR: pointer; PADDING-TOP: 0px
+}
+.yui-toolbar-container .yui-toolbar-spinbutton A.down {
+	Z-INDEX: 1; POSITION: absolute; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; CURSOR: pointer; PADDING-TOP: 0px
+}
+.yui-toolbar-container .yui-overlay {
+	POSITION: absolute
+}
+.yui-toolbar-container .yui-overlay UL LI {
+	LIST-STYLE-TYPE: none; MARGIN: 0px
+}
+.yui-toolbar-container {
+	Z-INDEX: 1
+}
+.yui-editor-container .yui-editor-editable-container {
+	Z-INDEX: 0; POSITION: relative; WIDTH: 100%
+}
+.yui-editor-container .yui-editor-masked {
+	POSITION: absolute; FILTER: alpha(opacity=50); BACKGROUND-COLOR: #ccc; WIDTH: 100%; HEIGHT: 100%; TOP: 0px; LEFT: 0px; opacity: .5
+}
+.yui-editor-container IFRAME {
+	PADDING-BOTTOM: 0px; BORDER-RIGHT-WIDTH: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; ZOOM: 1; DISPLAY: block; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; PADDING-TOP: 0px
+}
+.yui-editor-container .yui-editor-editable {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-editor-container .dompath {
+	FONT-SIZE: 85%
+}
+.yui-editor-panel .hd {
+	POSITION: relative; TEXT-ALIGN: left
+}
+.yui-editor-panel .hd H3 {
+	PADDING-BOTTOM: 0.25em; MARGIN: 0px; PADDING-LEFT: 0.25em; PADDING-RIGHT: 0px; FONT-WEIGHT: bold; PADDING-TOP: 0.25em
+}
+.yui-editor-panel .bd {
+	POSITION: relative; WIDTH: 100%; ZOOM: 1
+}
+.yui-editor-panel .bd DIV.yui-editor-body-cont {
+	PADDING-BOTTOM: 0.25em; PADDING-LEFT: 0.1em; PADDING-RIGHT: 0.1em; ZOOM: 1; PADDING-TOP: 0.25em
+}
+.yui-editor-panel .bd .gecko FORM {
+	OVERFLOW: auto
+}
+.yui-editor-panel .bd DIV.yui-editor-body-cont:after {
+	DISPLAY: block; HEIGHT: 0px; VISIBILITY: hidden; CLEAR: both; CONTENT: '.'
+}
+.yui-editor-panel .ft {
+	TEXT-ALIGN: right; WIDTH: 99%; FLOAT: left; CLEAR: both
+}
+.yui-editor-panel .ft SPAN.tip {
+	POSITION: relative; TEXT-ALIGN: left; PADDING-BOTTOM: 0.5em; PADDING-LEFT: 23px; PADDING-RIGHT: 0.5em; ZOOM: 1; DISPLAY: block; PADDING-TOP: 0.5em
+}
+.yui-editor-panel LABEL {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; WIDTH: 100%; PADDING-RIGHT: 0px; ZOOM: 1; FLOAT: left; CLEAR: both; PADDING-TOP: 0px
+}
+.yui-editor-panel .gecko LABEL {
+	OVERFLOW: auto
+}
+.yui-editor-panel LABEL STRONG {
+	WIDTH: 6em; FLOAT: left
+}
+.yui-editor-panel .removeLink {
+	TEXT-ALIGN: right; WIDTH: 80%
+}
+.yui-editor-panel LABEL INPUT {
+	FLOAT: left; MARGIN-LEFT: 0.25em
+}
+.yui-editor-panel .yui-toolbar-group {
+	MARGIN-BOTTOM: 0.75em
+}
+.yui-editor-panel .height-width {
+	FLOAT: left
+}
+.yui-editor-panel .height-width SPAN {
+	FONT-STYLE: italic; DISPLAY: block; FLOAT: left; OVERFLOW: visible
+}
+.yui-editor-panel .height-width SPAN.info {
+	MARGIN-TOP: 3px; FONT-SIZE: 70%
+}
+.yui-editor-panel .yui-toolbar-bordersize {
+	FONT-SIZE: 75%
+}
+.yui-editor-panel .yui-toolbar-bordertype {
+	FONT-SIZE: 75%
+}
+.yui-editor-panel .yui-toolbar-container SPAN.yui-toolbar-separator {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none
+}
+.yui-editor-panel .yui-toolbar-bordersize SPAN A SPAN {
+	POSITION: absolute; TEXT-INDENT: 52px; WIDTH: 24px; DISPLAY: block; HEIGHT: 8px; FONT-SIZE: 0px; TOP: 3px; LEFT: 4px; _top: -5px
+}
+.yui-editor-panel .yui-toolbar-bordertype SPAN A SPAN {
+	POSITION: absolute; TEXT-INDENT: 52px; WIDTH: 24px; DISPLAY: block; HEIGHT: 8px; FONT-SIZE: 0px; TOP: 3px; LEFT: 4px; _top: -5px
+}
+.yui-editor-panel .yui-toolbar-bordertype SPAN A SPAN.yui-toolbar-bordertype-solid {
+	BORDER-BOTTOM: black 1px solid
+}
+.yui-editor-panel .yui-toolbar-bordertype SPAN A SPAN.yui-toolbar-bordertype-dotted {
+	BORDER-BOTTOM: black 1px dotted
+}
+.yui-editor-panel .yui-toolbar-bordertype SPAN A SPAN.yui-toolbar-bordertype-dashed {
+	BORDER-BOTTOM: black 1px dashed
+}
+.yui-editor-panel .yui-toolbar-bordersize SPAN A SPAN.yui-toolbar-bordersize-0 {
+	TEXT-INDENT: 0px; FONT-SIZE: 75%; TOP: 0px
+}
+.yui-editor-panel .yui-toolbar-bordersize SPAN A SPAN.yui-toolbar-bordersize-1 {
+	BORDER-BOTTOM: black 1px solid
+}
+.yui-editor-panel .yui-toolbar-bordersize SPAN A SPAN.yui-toolbar-bordersize-2 {
+	BORDER-BOTTOM: black 2px solid
+}
+.yui-editor-panel .yui-toolbar-bordersize SPAN A SPAN.yui-toolbar-bordersize-3 {
+	BORDER-BOTTOM: black 3px solid; TOP: -5px
+}
+.yui-editor-panel .yui-toolbar-bordersize SPAN A SPAN.yui-toolbar-bordersize-4 {
+	BORDER-BOTTOM: black 4px solid; TOP: -5px
+}
+.yui-editor-panel .yui-toolbar-bordersize SPAN A SPAN.yui-toolbar-bordersize-5 {
+	BORDER-BOTTOM: black 5px solid; TOP: -5px
+}
+.yui-toolbar-container .yui-toolbar-bordersize-menu {
+	WIDTH: 95px !important
+}
+.yui-toolbar-container .yui-toolbar-bordertype-menu {
+	WIDTH: 95px !important
+}
+.yui-toolbar-bordersize-menu .yuimenuitemlabel {
+	MARGIN: 0px 3px 7px 17px
+}
+.yui-toolbar-bordertype-menu .yuimenuitemlabel {
+	MARGIN: 0px 3px 7px 17px
+}
+.yui-toolbar-bordersize-menu .yuimenuitemlabel {
+	MARGIN: 0px 3px 7px 17px
+}
+.yui-toolbar-bordertype-menu .yuimenuitemlabel:hover {
+	MARGIN: 0px 3px 7px 17px
+}
+.yui-toolbar-bordersize-menu .yuimenuitemlabel .checkedindicator {
+	POSITION: absolute; TOP: 14px; LEFT: 0px
+}
+.yui-toolbar-bordertype-menu .yuimenuitemlabel .checkedindicator {
+	POSITION: absolute; TOP: 14px; LEFT: 0px
+}
+.yui-toolbar-bordersize-menu LI.yui-toolbar-bordersize-1 A {
+	BORDER-BOTTOM: black 1px solid; HEIGHT: 14px
+}
+.yui-toolbar-bordersize-menu LI.yui-toolbar-bordersize-2 A {
+	BORDER-BOTTOM: black 2px solid; HEIGHT: 14px
+}
+.yui-toolbar-bordersize-menu LI.yui-toolbar-bordersize-3 A {
+	BORDER-BOTTOM: black 3px solid; HEIGHT: 14px
+}
+.yui-toolbar-bordersize-menu LI.yui-toolbar-bordersize-4 A {
+	BORDER-BOTTOM: black 4px solid; HEIGHT: 14px
+}
+.yui-toolbar-bordersize-menu LI.yui-toolbar-bordersize-5 A {
+	BORDER-BOTTOM: black 5px solid; HEIGHT: 14px
+}
+.yui-toolbar-bordertype-menu LI.yui-toolbar-bordertype-solid A {
+	BORDER-BOTTOM: black 1px solid; HEIGHT: 14px
+}
+.yui-toolbar-bordertype-menu LI.yui-toolbar-bordertype-dashed A {
+	BORDER-BOTTOM: black 1px dashed; HEIGHT: 14px
+}
+.yui-toolbar-bordertype-menu LI.yui-toolbar-bordertype-dotted A {
+	BORDER-BOTTOM: black 1px dotted; HEIGHT: 14px
+}
+H2.yui-editor-skipheader {
+	POSITION: absolute; BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 0px; BORDER-RIGHT-STYLE: none; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 0px; PADDING-RIGHT: 0px; BORDER-TOP-STYLE: none; HEIGHT: 0px; BORDER-LEFT-STYLE: none; OVERFLOW: hidden; PADDING-TOP: 0px
+}
+H3.yui-editor-skipheader {
+	POSITION: absolute; BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 0px; BORDER-RIGHT-STYLE: none; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 0px; PADDING-RIGHT: 0px; BORDER-TOP-STYLE: none; HEIGHT: 0px; BORDER-LEFT-STYLE: none; OVERFLOW: hidden; PADDING-TOP: 0px
+}
+.yui-toolbar-colors {
+	Z-INDEX: 100; WIDTH: 133px; ZOOM: 1; DISPLAY: none; OVERFLOW: hidden
+}
+.yui-toolbar-colors:after {
+	DISPLAY: block; HEIGHT: 0px; VISIBILITY: hidden; CLEAR: both; CONTENT: '.'
+}
+.yui-toolbar-colors A {
+	BORDER-BOTTOM: #f6f7ee 1px solid; BORDER-LEFT: #f6f7ee 1px solid; TEXT-INDENT: 999px; MARGIN: 0px; WIDTH: 9px; DISPLAY: block; FLOAT: left; HEIGHT: 9px; OVERFLOW: hidden; BORDER-TOP: #f6f7ee 1px solid; CURSOR: pointer; BORDER-RIGHT: #f6f7ee 1px solid
+}
+.yui-toolbar-colors A:hover {
+	BORDER-BOTTOM: black 1px solid; BORDER-LEFT: black 1px solid; BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid
+}
+.yui-color-button-menu {
+	BACKGROUND-COLOR: transparent; OVERFLOW: visible
+}
+.yui-toolbar-colors SPAN {
+	POSITION: relative; PADDING-BOTTOM: 3px; PADDING-LEFT: 3px; WIDTH: 100%; PADDING-RIGHT: 3px; ZOOM: 1; DISPLAY: block; FLOAT: left; OVERFLOW: hidden; PADDING-TOP: 3px
+}
+.yui-toolbar-colors SPAN:after {
+	DISPLAY: block; HEIGHT: 0px; VISIBILITY: hidden; CLEAR: both; CONTENT: '.'
+}
+.yui-toolbar-colors SPAN EM {
+	BORDER-BOTTOM: black 1px solid; BORDER-LEFT: black 1px solid; TEXT-INDENT: 999px; MARGIN: 0px; WIDTH: 30px; DISPLAY: block; FLOAT: left; HEIGHT: 35px; OVERFLOW: hidden; BORDER-TOP: black 1px solid; BORDER-RIGHT: black 1px solid
+}
+.yui-toolbar-colors SPAN STRONG {
+	PADDING-LEFT: 3px; WIDTH: 65%; DISPLAY: block; FLOAT: left; FONT-SIZE: 85%; FONT-WEIGHT: normal
+}
+.yui-toolbar-group-undoredo H3 {
+	WIDTH: 68px
+}
+.yui-toolbar-group-insertitem H3 {
+	WIDTH: 68px
+}
+.yui-toolbar-group-indentlist H3 {
+	WIDTH: 68px
+}
+.yui-toolbar-group-indentlist2 H3 {
+	WIDTH: 122px
+}
+.yui-toolbar-group-alignment H3 {
+	WIDTH: 130px
+}
+.yui-skin-sam .yui-editor-container {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-toolbar-container {
+	ZOOM: 1
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-titlebar {
+	POSITION: relative; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px -200px
+}
+.yui-skin-sam .yui-editor-container .draggable .yui-toolbar-titlebar {
+	CURSOR: move
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-titlebar H2 {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 0.3em; MARGIN: 0px; PADDING-LEFT: 1em; PADDING-RIGHT: 1em; COLOR: #000; FONT-SIZE: 100%; FONT-WEIGHT: bold; PADDING-TOP: 0.3em
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-group H3 {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 0px; MARGIN: 1em 0px 0px; PADDING-LEFT: 0.25em; COLOR: #808080; FONT-SIZE: 75%
+}
+.yui-toolbar-container SPAN.yui-toolbar-separator {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; TEXT-INDENT: 33px; MARGIN: 0px 0.25em; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; OVERFLOW: hidden
+}
+.yui-skin-sam .yui-toolbar-container {
+	BACKGROUND-COLOR: #f2f2f2
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-subcont {
+	BORDER-BOTTOM: #808080 1px solid; PADDING-BOTTOM: 0.35em; PADDING-LEFT: 1em; PADDING-RIGHT: 1em; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-toolbar-container-collapsed .yui-toolbar-titlebar {
+	BORDER-BOTTOM: #808080 1px solid
+}
+.yui-skin-sam .yui-editor-container .visible .yui-menu-shadow {
+	DISPLAY: none
+}
+.yui-skin-sam .yui-editor-panel .visible .yui-menu-shadow {
+	DISPLAY: none
+}
+.yui-skin-sam .yui-editor-container UL {
+	PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: none; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-editor-container UL LI {
+	PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: none; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-toolbar-group UL LI.yui-toolbar-groupitem {
+	FLOAT: left
+}
+.yui-skin-sam .yui-editor-container .dompath {
+	TEXT-ALIGN: left; PADDING-BOTTOM: 0.25em; BACKGROUND-COLOR: #f2f2f2; PADDING-LEFT: 0.25em; PADDING-RIGHT: 0.25em; COLOR: #999; BORDER-TOP: #808080 1px solid; PADDING-TOP: 0.25em
+}
+.yui-skin-sam .yui-toolbar-container .collapse {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) no-repeat 0px -400px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-titlebar SPAN.collapse {
+	POSITION: absolute; TEXT-INDENT: 9999px; WIDTH: 15px; DISPLAY: block; HEIGHT: 15px; OVERFLOW: hidden; TOP: 4px; CURSOR: pointer; RIGHT: 2px
+}
+.yui-skin-sam .yui-toolbar-container .yui-push-button {
+	BORDER-BOTTOM: #808080 1px solid; POSITION: relative; BORDER-LEFT: #808080 0px solid; MARGIN: 0px; WIDTH: 30px; ZOOM: 1; DISPLAY: block; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px 0px; HEIGHT: 22px; COLOR: #f2f2f2; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 0px solid; _font-size: 0
+}
+.yui-skin-sam .yui-toolbar-container .yui-color-button {
+	BORDER-BOTTOM: #808080 1px solid; POSITION: relative; BORDER-LEFT: #808080 0px solid; MARGIN: 0px; WIDTH: 30px; ZOOM: 1; DISPLAY: block; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px 0px; HEIGHT: 22px; COLOR: #f2f2f2; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 0px solid; _font-size: 0
+}
+.yui-skin-sam .yui-toolbar-container .yui-menu-button {
+	BORDER-BOTTOM: #808080 1px solid; POSITION: relative; BORDER-LEFT: #808080 0px solid; MARGIN: 0px; WIDTH: 30px; ZOOM: 1; DISPLAY: block; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px 0px; HEIGHT: 22px; COLOR: #f2f2f2; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 0px solid; _font-size: 0
+}
+.yui-skin-sam .yui-toolbar-container .yui-push-button A {
+	LINE-HEIGHT: 2; PADDING-LEFT: 35px; DISPLAY: block; WHITE-SPACE: nowrap; HEIGHT: 20px; COLOR: #000; FONT-SIZE: 0px; OVERFLOW: hidden; TEXT-DECORATION: none
+}
+.yui-skin-sam .yui-toolbar-container .yui-color-button A {
+	LINE-HEIGHT: 2; PADDING-LEFT: 35px; DISPLAY: block; WHITE-SPACE: nowrap; HEIGHT: 20px; COLOR: #000; FONT-SIZE: 0px; OVERFLOW: hidden; TEXT-DECORATION: none
+}
+.yui-skin-sam .yui-toolbar-container .yui-menu-button A {
+	LINE-HEIGHT: 2; PADDING-LEFT: 35px; DISPLAY: block; WHITE-SPACE: nowrap; HEIGHT: 20px; COLOR: #000; FONT-SIZE: 0px; OVERFLOW: hidden; TEXT-DECORATION: none
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton A {
+	FONT-SIZE: 12px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-select A {
+	FONT-SIZE: 12px
+}
+.yui-skin-sam .yui-toolbar-container .yui-push-button .first-child {
+	BORDER-BOTTOM: #808080 0px solid; POSITION: relative; BORDER-LEFT: #808080 1px solid; MARGIN: 0px -1px; DISPLAY: block; BORDER-TOP: #808080 0px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-toolbar-container .yui-color-button .first-child {
+	BORDER-BOTTOM: #808080 0px solid; POSITION: relative; BORDER-LEFT: #808080 1px solid; MARGIN: 0px -1px; DISPLAY: block; BORDER-TOP: #808080 0px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-toolbar-container .yui-menu-button .first-child {
+	BORDER-BOTTOM: #808080 0px solid; POSITION: relative; BORDER-LEFT: #808080 1px solid; MARGIN: 0px -1px; DISPLAY: block; BORDER-TOP: #808080 0px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-toolbar-container .yui-push-button-disabled .first-child {
+	BORDER-BOTTOM-COLOR: #ccc; BORDER-TOP-COLOR: #ccc; BORDER-RIGHT-COLOR: #ccc; BORDER-LEFT-COLOR: #ccc
+}
+.yui-skin-sam .yui-toolbar-container .yui-color-button-disabled .first-child {
+	BORDER-BOTTOM-COLOR: #ccc; BORDER-TOP-COLOR: #ccc; BORDER-RIGHT-COLOR: #ccc; BORDER-LEFT-COLOR: #ccc
+}
+.yui-skin-sam .yui-toolbar-container .yui-menu-button-disabled .first-child {
+	BORDER-BOTTOM-COLOR: #ccc; BORDER-TOP-COLOR: #ccc; BORDER-RIGHT-COLOR: #ccc; BORDER-LEFT-COLOR: #ccc
+}
+.yui-skin-sam .yui-toolbar-container .yui-push-button-disabled A {
+	COLOR: #a6a6a6; CURSOR: default
+}
+.yui-skin-sam .yui-toolbar-container .yui-color-button-disabled A {
+	COLOR: #a6a6a6; CURSOR: default
+}
+.yui-skin-sam .yui-toolbar-container .yui-menu-button-disabled A {
+	COLOR: #a6a6a6; CURSOR: default
+}
+.yui-skin-sam .yui-toolbar-container .yui-push-button-disabled {
+	BORDER-BOTTOM-COLOR: #ccc; BORDER-TOP-COLOR: #ccc; BORDER-RIGHT-COLOR: #ccc; BORDER-LEFT-COLOR: #ccc
+}
+.yui-skin-sam .yui-toolbar-container .yui-color-button-disabled {
+	BORDER-BOTTOM-COLOR: #ccc; BORDER-TOP-COLOR: #ccc; BORDER-RIGHT-COLOR: #ccc; BORDER-LEFT-COLOR: #ccc
+}
+.yui-skin-sam .yui-toolbar-container .yui-menu-button-disabled {
+	BORDER-BOTTOM-COLOR: #ccc; BORDER-TOP-COLOR: #ccc; BORDER-RIGHT-COLOR: #ccc; BORDER-LEFT-COLOR: #ccc
+}
+.yui-skin-sam .yui-toolbar-container .yui-button .first-child {
+	LEFT: 0px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-fontname {
+	WIDTH: 135px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-heading {
+	WIDTH: 92px
+}
+.yui-skin-sam .yui-toolbar-container .yui-button-hover {
+	BORDER-BOTTOM-COLOR: #808080; BORDER-TOP-COLOR: #808080; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px -1300px; BORDER-RIGHT-COLOR: #808080; BORDER-LEFT-COLOR: #808080
+}
+.yui-skin-sam .yui-toolbar-container .yui-button-selected {
+	BORDER-BOTTOM-COLOR: #808080; BORDER-TOP-COLOR: #808080; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px -1700px; BORDER-RIGHT-COLOR: #808080; BORDER-LEFT-COLOR: #808080
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-nogrouplabels H3 {
+	DISPLAY: none
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-nogrouplabels .yui-toolbar-group {
+	MARGIN-TOP: 0.75em
+}
+.yui-skin-sam .yui-toolbar-container .yui-push-button SPAN.yui-toolbar-icon {
+	POSITION: absolute; WIDTH: 18px; DISPLAY: block; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-sprite.gif) no-repeat 30px 30px; HEIGHT: 18px; OVERFLOW: hidden; TOP: 2px
+}
+.yui-skin-sam .yui-toolbar-container .yui-color-button SPAN.yui-toolbar-icon {
+	POSITION: absolute; WIDTH: 18px; DISPLAY: block; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-sprite.gif) no-repeat 30px 30px; HEIGHT: 18px; OVERFLOW: hidden; TOP: 2px
+}
+.yui-skin-sam .yui-toolbar-container .yui-menu-button SPAN.yui-toolbar-icon {
+	POSITION: absolute; WIDTH: 18px; DISPLAY: block; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-sprite.gif) no-repeat 30px 30px; HEIGHT: 18px; OVERFLOW: hidden; TOP: 2px
+}
+.yui-skin-sam .yui-toolbar-container .yui-button-selected SPAN.yui-toolbar-icon {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-sprite-active.gif)
+}
+.yui-skin-sam .yui-toolbar-container .yui-button-hover SPAN.yui-toolbar-icon {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-sprite-active.gif)
+}
+.yui-skin-sam .yui-toolbar-container .visible .yuimenuitemlabel {
+	POSITION: relative; COLOR: #000; CURSOR: pointer
+}
+.yui-skin-sam .yui-toolbar-container .yui-button-menu {
+	BACKGROUND-COLOR: #fff
+}
+.yui-skin-sam .yui-toolbar-container .yui-button-menu .yui-menu-body-scrolled {
+	POSITION: relative
+}
+.yui-skin-sam DIV.yuimenu LI.selected {
+	BACKGROUND-COLOR: #b3d4ff
+}
+.yui-skin-sam DIV.yuimenu LI.selected A.selected {
+	COLOR: #000
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-bold SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px 0px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-strikethrough SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -108px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-italic SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -36px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-undo SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -1326px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-redo SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -1355px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-underline SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -72px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-subscript SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -180px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-superscript SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -144px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-forecolor SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -216px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-backcolor SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -288px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-justifyleft SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -324px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-justifycenter SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -360px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-justifyright SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -396px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-justifyfull SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -432px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-indent SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -720px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-outdent SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -684px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-createlink SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -792px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-insertimage SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 1px -756px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-left SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -972px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-right SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -936px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-inline SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -900px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-block SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -864px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-bordercolor SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -252px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-removeformat SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -1080px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-hiddenelements SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -1044px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-insertunorderedlist SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -468px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-insertorderedlist SPAN.yui-toolbar-icon {
+	BACKGROUND-POSITION: 0px -504px; LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton {
+	WIDTH: 35px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton .first-child {
+	WIDTH: 35px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton .first-child A {
+	TEXT-ALIGN: left; PADDING-LEFT: 2px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton SPAN.yui-toolbar-icon {
+	DISPLAY: none
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton A.up {
+	PADDING-BOTTOM: 0px; MIN-HEIGHT: 0px; PADDING-LEFT: 0px; WIDTH: 7px; PADDING-RIGHT: 0px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-sprite.gif) no-repeat 0px -1222px; HEIGHT: 6px; OVERFLOW: hidden; RIGHT: 2px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton A.down {
+	PADDING-BOTTOM: 0px; MIN-HEIGHT: 0px; PADDING-LEFT: 0px; WIDTH: 7px; PADDING-RIGHT: 0px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-sprite.gif) no-repeat 0px -1222px; HEIGHT: 6px; OVERFLOW: hidden; RIGHT: 2px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton A.up {
+	BACKGROUND-POSITION: 0px -1222px; TOP: 2px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spinbutton A.down {
+	BOTTOM: 2px; BACKGROUND-POSITION: 0px -1187px
+}
+.yui-skin-sam .yui-toolbar-container SELECT {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; HEIGHT: 22px; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-select .first-child A {
+	TEXT-ALIGN: left; PADDING-LEFT: 5px
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-select SPAN.yui-toolbar-icon {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-sprite.gif) no-repeat 0px -1144px; HEIGHT: 20px; OVERFLOW: hidden; TOP: 0px; RIGHT: -2px
+}
+.yui-skin-sam .yui-editor-panel .yui-color-button-menu .bd {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; BACKGROUND-COLOR: transparent; WIDTH: 135px; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none
+}
+.yui-skin-sam .yui-color-button-menu .yui-toolbar-colors {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-editor-panel {
+	POSITION: absolute; BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 0px; BORDER-RIGHT-STYLE: none; BACKGROUND-COLOR: transparent; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; OVERFLOW: visible; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-editor-panel .hd {
+	BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 0px; BORDER-RIGHT-STYLE: none; MARGIN: 10px 0px 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-editor-panel .hd H3 {
+	BORDER-BOTTOM: #808080 1px solid; POSITION: relative; BORDER-LEFT: #808080 1px solid; PADDING-BOTTOM: 0px; TEXT-INDENT: 5px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 99%; PADDING-RIGHT: 0px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) repeat-x 0px -200px; HEIGHT: 20px; COLOR: #000; FONT-SIZE: 93%; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid; PADDING-TOP: 3px
+}
+.yui-skin-sam .yui-editor-panel .bd {
+	BORDER-LEFT: #808080 1px solid; PADDING-BOTTOM: 0px; BACKGROUND-COLOR: #f2f2f2; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 99%; PADDING-RIGHT: 0px; OVERFLOW: visible; BORDER-RIGHT: #808080 1px solid; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-editor-panel UL {
+	PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: none; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-editor-panel UL LI {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-container .yui-toolbar-subcont {
+	BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 0px; BORDER-RIGHT-STYLE: none; MARGIN-TOP: 0.35em; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-bordersize {
+	WIDTH: 50px
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-bordertype {
+	WIDTH: 50px
+}
+.yui-skin-sam .yui-editor-panel LABEL {
+	PADDING-BOTTOM: 4px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; DISPLAY: block; MARGIN-BOTTOM: 7px; FLOAT: none; PADDING-TOP: 4px
+}
+.yui-skin-sam .yui-editor-panel LABEL STRONG {
+	TEXT-ALIGN: right; FONT-SIZE: 93%; FONT-WEIGHT: normal; PADDING-TOP: 2px
+}
+.yui-skin-sam .yui-editor-panel LABEL INPUT {
+	WIDTH: 75%
+}
+.yui-skin-sam .yui-editor-panel .createlink_target {
+	WIDTH: auto; MARGIN-RIGHT: 5px
+}
+.yui-skin-sam .yui-editor-panel .insertimage_target {
+	WIDTH: auto; MARGIN-RIGHT: 5px
+}
+.yui-skin-sam .yui-editor-panel .removeLink {
+	WIDTH: 98%
+}
+.yui-skin-sam .yui-editor-panel LABEL INPUT.warning {
+	BACKGROUND-COLOR: #ffee69
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-group H3 {
+	TEXT-ALIGN: right; PADDING-BOTTOM: 0px; MARGIN: 5px 0px 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 3px; FLOAT: left; COLOR: #000; FONT-SIZE: 93%; FONT-WEIGHT: normal; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-editor-panel .height-width H3 {
+	MARGIN: 3px 0px 0px 10px
+}
+.yui-skin-sam .yui-editor-panel .height-width {
+	MARGIN: 3px 0px 0px 14px; WIDTH: 44%
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-group-border {
+	WIDTH: 190px
+}
+.yui-skin-sam .yui-editor-panel .no-button .yui-toolbar-group-border {
+	WIDTH: 210px
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-group-padding {
+	WIDTH: 203px; _width: 198px
+}
+.yui-skin-sam .yui-editor-panel .no-button .yui-toolbar-group-padding {
+	WIDTH: 172px
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-group-padding H3 {
+	MARGIN-LEFT: 12px
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-group-textflow {
+	WIDTH: 182px
+}
+.yui-skin-sam .yui-editor-panel .hd {
+	BACKGROUND: none transparent scroll repeat 0% 0%
+}
+.yui-skin-sam .yui-editor-panel .ft {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; PADDING-BOTTOM: 0px; BACKGROUND-COLOR: #f2f2f2; MARGIN: 0px 0px 2px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP: #808080 1px; BORDER-RIGHT: #808080 1px solid; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-editor-panel .hd SPAN.close {
+	POSITION: absolute; TEXT-INDENT: 500px; WIDTH: 26px; DISPLAY: block; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) no-repeat 0px -300px; HEIGHT: 16px; OVERFLOW: hidden; TOP: 2px; CURSOR: pointer; RIGHT: 5px
+}
+.yui-skin-sam .yui-editor-panel .ft SPAN.tip {
+	BACKGROUND-COLOR: #edf5ff; FONT-SIZE: 85%; BORDER-TOP: #808080 1px solid
+}
+.yui-skin-sam .yui-editor-panel .ft SPAN.tip STRONG {
+	MARGIN: 0px 2px 8px 0px; DISPLAY: block; FLOAT: left
+}
+.yui-skin-sam .yui-editor-panel .ft SPAN.tip SPAN.icon {
+	POSITION: absolute; WIDTH: 20px; DISPLAY: block; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-sprite.gif) no-repeat 0px -1260px; HEIGHT: 20px; TOP: 8px; LEFT: 2px
+}
+.yui-skin-sam .yui-editor-panel .ft SPAN.tip SPAN.icon-info {
+	BACKGROUND-POSITION: 2px -1260px
+}
+.yui-skin-sam .yui-editor-panel .ft SPAN.tip SPAN.icon-warn {
+	BACKGROUND-POSITION: 2px -1296px
+}
+.yui-skin-sam .yui-editor-panel .hd SPAN.knob {
+	POSITION: absolute; TEXT-INDENT: 9999px; WIDTH: 28px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/editor-knob.gif) no-repeat 0px 0px; HEIGHT: 10px; OVERFLOW: hidden; TOP: -10px; LEFT: 25px
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-container {
+	BACKGROUND-IMAGE: none; BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; WIDTH: 100%; BORDER-TOP-STYLE: none; FLOAT: left; BORDER-LEFT-STYLE: none
+}
+.yui-skin-sam .yui-editor-panel .yui-toolbar-container .bd {
+	BACKGROUND-COLOR: #fff
+}
+.yui-editor-blankimage {
+	BACKGROUND-IMAGE: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/blankimage.png)
+}
+.yui-skin-sam .yui-editor-container .yui-resize-handle-br {
+	BACKGROUND-COLOR: transparent; WIDTH: 11px; BACKGROUND-POSITION: -20px -60px; HEIGHT: 11px
+}
+.yui-h-slider {
+	POSITION: relative
+}
+.yui-v-slider {
+	POSITION: relative
+}
+.yui-h-slider .yui-slider-thumb {
+	POSITION: absolute; CURSOR: default
+}
+.yui-v-slider .yui-slider-thumb {
+	POSITION: absolute; CURSOR: default
+}
+.yui-skin-sam .yui-h-slider {
+	WIDTH: 228px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/bg-h.gif) no-repeat 5px 0px; HEIGHT: 28px
+}
+.yui-skin-sam .yui-h-slider .yui-slider-thumb {
+	TOP: 4px
+}
+.yui-skin-sam .yui-v-slider {
+	WIDTH: 48px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/bg-v.gif) no-repeat 12px 0px; HEIGHT: 228px
+}
+.yui-navset .yui-nav LI {
+	MARGIN: 0px 0.5em 0px 0px
+}
+.yui-navset .yui-navset-top .yui-nav LI {
+	MARGIN: 0px 0.5em 0px 0px
+}
+.yui-navset .yui-navset-bottom .yui-nav LI {
+	MARGIN: 0px 0.5em 0px 0px
+}
+.yui-navset-left .yui-nav LI {
+	MARGIN: 0px 0px 0.5em
+}
+.yui-navset-right .yui-nav LI {
+	MARGIN: 0px 0px 0.5em
+}
+.yui-navset .yui-content .yui-hidden {
+	POSITION: absolute; VISIBILITY: hidden; LEFT: -999999px
+}
+.yui-navset .yui-navset-left .yui-nav {
+	WIDTH: 6em
+}
+.yui-navset .yui-navset-right .yui-nav {
+	WIDTH: 6em
+}
+.yui-navset-left .yui-nav {
+	WIDTH: 6em
+}
+.yui-navset-right .yui-nav {
+	WIDTH: 6em
+}
+.yui-navset-top .yui-nav {
+	WIDTH: auto
+}
+.yui-navset-bottom .yui-nav {
+	WIDTH: auto
+}
+.yui-navset .yui-navset-left {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 6em; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-navset-left {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 6em; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-navset-right {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 6em; PADDING-TOP: 0px
+}
+.yui-navset-top {
+	
+}
+.yui-navset-bottom {
+	
+}
+.yui-nav {
+	PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: none; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-nav LI {
+	PADDING-BOTTOM: 0px; LIST-STYLE-TYPE: none; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-navset LI EM {
+	FONT-STYLE: normal
+}
+.yui-navset {
+	POSITION: relative; ZOOM: 1
+}
+.yui-navset .yui-content {
+	ZOOM: 1
+}
+.yui-navset .yui-content DIV {
+	ZOOM: 1
+}
+.yui-navset .yui-content:after {
+	DISPLAY: block; CLEAR: both; CONTENT: ''
+}
+.yui-navset .yui-nav LI {
+	ZOOM: 1; DISPLAY: inline; VERTICAL-ALIGN: bottom; CURSOR: pointer
+}
+.yui-navset .yui-navset-top .yui-nav LI {
+	ZOOM: 1; DISPLAY: inline; VERTICAL-ALIGN: bottom; CURSOR: pointer
+}
+.yui-navset .yui-navset-bottom .yui-nav LI {
+	ZOOM: 1; DISPLAY: inline; VERTICAL-ALIGN: bottom; CURSOR: pointer
+}
+.yui-navset-left .yui-nav LI {
+	DISPLAY: block
+}
+.yui-navset-right .yui-nav LI {
+	DISPLAY: block
+}
+.yui-navset .yui-nav A {
+	POSITION: relative
+}
+.yui-navset .yui-nav LI A {
+	ZOOM: 1; DISPLAY: inline-block; VERTICAL-ALIGN: bottom
+}
+.yui-navset-top .yui-nav LI A {
+	ZOOM: 1; DISPLAY: inline-block; VERTICAL-ALIGN: bottom
+}
+.yui-navset-bottom .yui-nav LI A {
+	ZOOM: 1; DISPLAY: inline-block; VERTICAL-ALIGN: bottom
+}
+.yui-navset-left .yui-nav LI A {
+	DISPLAY: block
+}
+.yui-navset-right .yui-nav LI A {
+	DISPLAY: block
+}
+.yui-navset-bottom .yui-nav LI A {
+	VERTICAL-ALIGN: text-top
+}
+.yui-navset .yui-nav LI A EM {
+	DISPLAY: block
+}
+.yui-navset-top .yui-nav LI A EM {
+	DISPLAY: block
+}
+.yui-navset-bottom .yui-nav LI A EM {
+	DISPLAY: block
+}
+.yui-navset .yui-navset-left .yui-nav {
+	Z-INDEX: 1; POSITION: absolute
+}
+.yui-navset .yui-navset-right .yui-nav {
+	Z-INDEX: 1; POSITION: absolute
+}
+.yui-navset-left .yui-nav {
+	Z-INDEX: 1; POSITION: absolute
+}
+.yui-navset-right .yui-nav {
+	Z-INDEX: 1; POSITION: absolute
+}
+.yui-navset-top .yui-nav {
+	POSITION: static
+}
+.yui-navset-bottom .yui-nav {
+	POSITION: static
+}
+.yui-navset .yui-navset-left .yui-nav {
+	RIGHT: auto; LEFT: 0px
+}
+.yui-navset-left .yui-nav {
+	RIGHT: auto; LEFT: 0px
+}
+.yui-navset .yui-navset-right .yui-nav {
+	RIGHT: 0px; LEFT: auto
+}
+.yui-navset-right .yui-nav {
+	RIGHT: 0px; LEFT: auto
+}
+.yui-skin-sam .yui-navset .yui-nav {
+	BORDER-BOTTOM: #2647a0 5px solid; BORDER-LEFT: #2647a0 0px solid; ZOOM: 1; BORDER-TOP: #2647a0 0px solid; BORDER-RIGHT: #2647a0 0px solid
+}
+.yui-skin-sam .yui-navset .yui-navset-top .yui-nav {
+	BORDER-BOTTOM: #2647a0 5px solid; BORDER-LEFT: #2647a0 0px solid; ZOOM: 1; BORDER-TOP: #2647a0 0px solid; BORDER-RIGHT: #2647a0 0px solid
+}
+.yui-skin-sam .yui-navset .yui-nav LI {
+	PADDING-BOTTOM: 0px; MARGIN: 0px 0.16em 0px 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; ZOOM: 1; PADDING-TOP: 1px
+}
+.yui-skin-sam .yui-navset .yui-navset-top .yui-nav LI {
+	PADDING-BOTTOM: 0px; MARGIN: 0px 0.16em 0px 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; ZOOM: 1; PADDING-TOP: 1px
+}
+.yui-skin-sam .yui-navset .yui-nav .selected {
+	MARGIN: 0px 0.16em -1px 0px
+}
+.yui-skin-sam .yui-navset .yui-navset-top .yui-nav .selected {
+	MARGIN: 0px 0.16em -1px 0px
+}
+.yui-skin-sam .yui-navset .yui-nav A {
+	BORDER-BOTTOM: #a3a3a3 0px solid; POSITION: relative; BORDER-LEFT: #a3a3a3 1px solid; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) #d8d8d8 repeat-x; COLOR: #000; BORDER-TOP: #a3a3a3 0px solid; BORDER-RIGHT: #a3a3a3 1px solid; TEXT-DECORATION: none
+}
+.yui-skin-sam .yui-navset .yui-navset-top .yui-nav A {
+	BORDER-BOTTOM: #a3a3a3 0px solid; POSITION: relative; BORDER-LEFT: #a3a3a3 1px solid; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) #d8d8d8 repeat-x; COLOR: #000; BORDER-TOP: #a3a3a3 0px solid; BORDER-RIGHT: #a3a3a3 1px solid; TEXT-DECORATION: none
+}
+.yui-skin-sam .yui-navset .yui-nav A EM {
+	BORDER-BOTTOM: #a3a3a3 0px solid; POSITION: relative; BORDER-LEFT: #a3a3a3 0px solid; PADDING-BOTTOM: 0.25em; PADDING-LEFT: 0.75em; BOTTOM: 0px; PADDING-RIGHT: 0.75em; BORDER-TOP: #a3a3a3 1px solid; TOP: -1px; CURSOR: hand; RIGHT: 0px; BORDER-RIGHT: #a3a3a3 0px solid; PADDING-TOP: 0.25em; LEFT: 0px
+}
+.yui-skin-sam .yui-navset .yui-navset-top .yui-nav A EM {
+	BORDER-BOTTOM: #a3a3a3 0px solid; POSITION: relative; BORDER-LEFT: #a3a3a3 0px solid; PADDING-BOTTOM: 0.25em; PADDING-LEFT: 0.75em; BOTTOM: 0px; PADDING-RIGHT: 0.75em; BORDER-TOP: #a3a3a3 1px solid; TOP: -1px; CURSOR: hand; RIGHT: 0px; BORDER-RIGHT: #a3a3a3 0px solid; PADDING-TOP: 0.25em; LEFT: 0px
+}
+.yui-skin-sam .yui-navset .yui-nav .selected A {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) #2647a0 repeat-x left -1400px; COLOR: #fff
+}
+.yui-skin-sam .yui-navset .yui-nav .selected A:focus {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) #2647a0 repeat-x left -1400px; COLOR: #fff
+}
+.yui-skin-sam .yui-navset .yui-nav .selected A:hover {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) #2647a0 repeat-x left -1400px; COLOR: #fff
+}
+.yui-skin-sam .yui-navset .yui-nav A:hover {
+	OUTLINE-WIDTH: 0px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) #bfdaff repeat-x left -1300px
+}
+.yui-skin-sam .yui-navset .yui-nav A:focus {
+	OUTLINE-WIDTH: 0px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/sprite.png) #bfdaff repeat-x left -1300px
+}
+.yui-skin-sam .yui-navset .yui-nav .selected A EM {
+	PADDING-BOTTOM: 0.35em; PADDING-LEFT: 0.75em; PADDING-RIGHT: 0.75em; PADDING-TOP: 0.35em
+}
+.yui-skin-sam .yui-navset .yui-nav .selected A {
+	BORDER-BOTTOM-COLOR: #243356; BORDER-TOP-COLOR: #243356; BORDER-RIGHT-COLOR: #243356; BORDER-LEFT-COLOR: #243356
+}
+.yui-skin-sam .yui-navset .yui-nav .selected A EM {
+	BORDER-BOTTOM-COLOR: #243356; BORDER-TOP-COLOR: #243356; BORDER-RIGHT-COLOR: #243356; BORDER-LEFT-COLOR: #243356
+}
+.yui-skin-sam .yui-navset .yui-content {
+	BACKGROUND: #edf5ff
+}
+.yui-skin-sam .yui-navset .yui-content {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; PADDING-BOTTOM: 0.25em; PADDING-LEFT: 0.5em; PADDING-RIGHT: 0.5em; BORDER-TOP: #243356 1px solid; BORDER-RIGHT: #808080 1px solid; PADDING-TOP: 0.25em
+}
+.yui-skin-sam .yui-navset .yui-navset-top .yui-content {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #808080 1px solid; PADDING-BOTTOM: 0.25em; PADDING-LEFT: 0.5em; PADDING-RIGHT: 0.5em; BORDER-TOP: #243356 1px solid; BORDER-RIGHT: #808080 1px solid; PADDING-TOP: 0.25em
+}
+.yui-skin-sam .yui-navset-left .yui-nav {
+	BORDER-RIGHT-WIDTH: 5px; BOTTOM: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; TOP: 0px; Xposition: absolute
+}
+.yui-skin-sam .yui-navset .yui-navset-left .yui-nav {
+	BORDER-RIGHT-WIDTH: 5px; BOTTOM: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; TOP: 0px; Xposition: absolute
+}
+.yui-skin-sam .yui-navset .yui-navset-right .yui-nav {
+	BORDER-RIGHT-WIDTH: 5px; BOTTOM: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; TOP: 0px; Xposition: absolute
+}
+.yui-skin-sam .yui-navset-right .yui-nav {
+	BORDER-RIGHT-WIDTH: 5px; BOTTOM: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; TOP: 0px; Xposition: absolute
+}
+.yui-skin-sam .yui-navset .yui-navset-right .yui-nav {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 5px
+}
+.yui-skin-sam .yui-navset-right .yui-nav {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 5px
+}
+.yui-skin-sam .yui-navset-left .yui-nav LI {
+	PADDING-BOTTOM: 0px; MARGIN: 0px 0px 0.16em; PADDING-LEFT: 1px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-navset .yui-navset-left .yui-nav LI {
+	PADDING-BOTTOM: 0px; MARGIN: 0px 0px 0.16em; PADDING-LEFT: 1px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-navset-right .yui-nav LI {
+	PADDING-BOTTOM: 0px; MARGIN: 0px 0px 0.16em; PADDING-LEFT: 1px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-navset-right .yui-nav LI {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 1px; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-navset-left .yui-nav .selected {
+	MARGIN: 0px -1px 0.16em 0px
+}
+.yui-skin-sam .yui-navset .yui-navset-left .yui-nav .selected {
+	MARGIN: 0px -1px 0.16em 0px
+}
+.yui-skin-sam .yui-navset-right .yui-nav .selected {
+	MARGIN: 0px 0px 0.16em -1px
+}
+.yui-skin-sam .yui-navset-left .yui-nav A {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 1px; BORDER-BOTTOM-WIDTH: 1px; BORDER-LEFT-WIDTH: 0px
+}
+.yui-skin-sam .yui-navset-right .yui-nav A {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 1px; BORDER-BOTTOM-WIDTH: 1px; BORDER-LEFT-WIDTH: 0px
+}
+.yui-skin-sam .yui-navset-left .yui-nav A EM {
+	PADDING-BOTTOM: 0.2em; BORDER-RIGHT-WIDTH: 0px; PADDING-LEFT: 0.75em; PADDING-RIGHT: 0.75em; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 1px; TOP: auto; PADDING-TOP: 0.2em; LEFT: -1px
+}
+.yui-skin-sam .yui-navset .yui-navset-left .yui-nav A EM {
+	PADDING-BOTTOM: 0.2em; BORDER-RIGHT-WIDTH: 0px; PADDING-LEFT: 0.75em; PADDING-RIGHT: 0.75em; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 1px; TOP: auto; PADDING-TOP: 0.2em; LEFT: -1px
+}
+.yui-skin-sam .yui-navset-right .yui-nav A EM {
+	PADDING-BOTTOM: 0.2em; BORDER-RIGHT-WIDTH: 0px; PADDING-LEFT: 0.75em; PADDING-RIGHT: 0.75em; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 1px; TOP: auto; PADDING-TOP: 0.2em; LEFT: -1px
+}
+.yui-skin-sam .yui-navset-right .yui-nav A EM {
+	BORDER-RIGHT-WIDTH: 1px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; RIGHT: -1px; LEFT: auto
+}
+.yui-skin-sam .yui-navset-left .yui-nav A {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-navset-left .yui-nav .selected A {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-navset-left .yui-nav A:hover {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-navset-right .yui-nav A {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-navset-right .yui-nav .selected A {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-navset-right .yui-nav A:hover {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-navset-bottom .yui-nav A {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-navset-bottom .yui-nav .selected A {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-navset-bottom .yui-nav A:hover {
+	BACKGROUND-IMAGE: none
+}
+.yui-skin-sam .yui-navset-left .yui-content {
+	BORDER-BOTTOM: #808080 1px solid; BORDER-LEFT: #243356 1px solid; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-navset-bottom .yui-nav {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 5px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px
+}
+.yui-skin-sam .yui-navset .yui-navset-bottom .yui-nav {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 5px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px
+}
+.yui-skin-sam .yui-navset .yui-navset-bottom .yui-nav .selected {
+	MARGIN: -1px 0.16em 0px 0px
+}
+.yui-skin-sam .yui-navset-bottom .yui-nav .selected {
+	MARGIN: -1px 0.16em 0px 0px
+}
+.yui-skin-sam .yui-navset .yui-navset-bottom .yui-nav LI {
+	PADDING-BOTTOM: 1px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; VERTICAL-ALIGN: top; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-navset-bottom .yui-nav LI {
+	PADDING-BOTTOM: 1px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; VERTICAL-ALIGN: top; PADDING-TOP: 0px
+}
+.yui-skin-sam .yui-navset .yui-navset-bottom .yui-nav A EM {
+	BORDER-RIGHT-WIDTH: 0px; BOTTOM: -1px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 1px; BORDER-LEFT-WIDTH: 0px; TOP: auto
+}
+.yui-skin-sam .yui-navset-bottom .yui-nav A EM {
+	BORDER-RIGHT-WIDTH: 0px; BOTTOM: -1px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 1px; BORDER-LEFT-WIDTH: 0px; TOP: auto
+}
+.yui-skin-sam .yui-navset-bottom .yui-content {
+	BORDER-BOTTOM: #243356 1px solid; BORDER-LEFT: #808080 1px solid; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.yui-skin-sam .yui-navset .yui-navset-bottom .yui-content {
+	BORDER-BOTTOM: #243356 1px solid; BORDER-LEFT: #808080 1px solid; BORDER-TOP: #808080 1px solid; BORDER-RIGHT: #808080 1px solid
+}
+.ygtvitem {
+	
+}
+.ygtvitem TABLE {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-TOP-STYLE: none; MARGIN-BOTTOM: 0px; BORDER-LEFT-STYLE: none
+}
+.ygtvrow TD {
+	BORDER-BOTTOM-STYLE: none; PADDING-BOTTOM: 0px; BORDER-RIGHT-STYLE: none; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; PADDING-TOP: 0px
+}
+.ygtvrow TD A {
+	TEXT-DECORATION: none
+}
+.ygtvtn {
+	WIDTH: 18px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px -5600px; HEIGHT: 22px
+}
+.ygtvtm {
+	WIDTH: 18px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px -4000px; HEIGHT: 22px; CURSOR: pointer
+}
+.ygtvtmh {
+	WIDTH: 18px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px -4800px; HEIGHT: 22px; CURSOR: pointer
+}
+.ygtvtmhh {
+	WIDTH: 18px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px -4800px; HEIGHT: 22px; CURSOR: pointer
+}
+.ygtvtp {
+	WIDTH: 18px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px -6400px; HEIGHT: 22px; CURSOR: pointer
+}
+.ygtvtph {
+	WIDTH: 18px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px -7200px; HEIGHT: 22px; CURSOR: pointer
+}
+.ygtvtphh {
+	WIDTH: 18px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px -7200px; HEIGHT: 22px; CURSOR: pointer
+}
+.ygtvln {
+	WIDTH: 18px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px -1600px; HEIGHT: 22px
+}
+.ygtvlm {
+	WIDTH: 18px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px 0px; HEIGHT: 22px; CURSOR: pointer
+}
+.ygtvlmh {
+	WIDTH: 18px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px -800px; HEIGHT: 22px; CURSOR: pointer
+}
+.ygtvlmhh {
+	WIDTH: 18px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px -800px; HEIGHT: 22px; CURSOR: pointer
+}
+.ygtvlp {
+	WIDTH: 18px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px -2400px; HEIGHT: 22px; CURSOR: pointer
+}
+.ygtvlph {
+	WIDTH: 18px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px -3200px; HEIGHT: 22px; CURSOR: pointer
+}
+.ygtvlphh {
+	WIDTH: 18px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px -3200px; HEIGHT: 22px; CURSOR: pointer
+}
+.ygtvloading {
+	WIDTH: 18px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-loading.gif) no-repeat 0px 0px; HEIGHT: 22px
+}
+.ygtvdepthcell {
+	WIDTH: 18px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px -8000px; HEIGHT: 22px
+}
+.ygtvblankdepthcell {
+	WIDTH: 18px; HEIGHT: 22px
+}
+.ygtvchildren {
+	
+}
+* HTML .ygtvchildren {
+	HEIGHT: 2%
+}
+.ygtvlabel {
+	BACKGROUND-COLOR: white; MARGIN-LEFT: 2px; CURSOR: pointer; TEXT-DECORATION: none
+}
+.ygtvlabel:link {
+	BACKGROUND-COLOR: white; MARGIN-LEFT: 2px; CURSOR: pointer; TEXT-DECORATION: none
+}
+.ygtvlabel:visited {
+	BACKGROUND-COLOR: white; MARGIN-LEFT: 2px; CURSOR: pointer; TEXT-DECORATION: none
+}
+.ygtvlabel:hover {
+	BACKGROUND-COLOR: white; MARGIN-LEFT: 2px; CURSOR: pointer; TEXT-DECORATION: none
+}
+.ygtvcontent {
+	CURSOR: default
+}
+.ygtvspacer {
+	WIDTH: 12px; HEIGHT: 22px
+}
+.ygtvfocus {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; BACKGROUND-COLOR: #c0e0e0; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none
+}
+.ygtvfocus .ygtvlabel {
+	BACKGROUND-COLOR: #c0e0e0
+}
+.ygtvfocus .ygtvlabel:link {
+	BACKGROUND-COLOR: #c0e0e0
+}
+.ygtvfocus .ygtvlabel:visited {
+	BACKGROUND-COLOR: #c0e0e0
+}
+.ygtvfocus .ygtvlabel:hover {
+	BACKGROUND-COLOR: #c0e0e0
+}
+.ygtvfocus A {
+	OUTLINE-STYLE: none
+}
+.ygtvrow TD A {
+	OUTLINE-STYLE: none
+}
+.ygtvok {
+	WIDTH: 18px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px -8800px; HEIGHT: 22px
+}
+.ygtvok:hover {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px -8844px
+}
+.ygtvcancel {
+	WIDTH: 18px; BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px -8822px; HEIGHT: 22px
+}
+.ygtvcancel:hover {
+	BACKGROUND: url(http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/treeview-sprite.gif) no-repeat 0px -8866px
+}
+.ygtv-label-editor {
+	Z-INDEX: 9000; BORDER-BOTTOM: silver 1px solid; POSITION: absolute; BORDER-LEFT: silver 1px solid; BACKGROUND-COLOR: #f2f2f2; MARGIN: auto; DISPLAY: none; OVERFLOW: hidden; BORDER-TOP: silver 1px solid; BORDER-RIGHT: silver 1px solid
+}
+.ygtv-edit-TextNode {
+	WIDTH: 190px
+}
+.ygtv-edit-TextNode .ygtvcancel {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none
+}
+.ygtv-edit-TextNode .ygtvok {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none
+}
+.ygtv-edit-TextNode .ygtv-button-container {
+	FLOAT: right
+}
+.ygtv-edit-TextNode .ygtv-input INPUT {
+	WIDTH: 140px
+}
+.ygtv-edit-DateNode .ygtvcancel {
+	BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none
+}
+.ygtv-edit-DateNode .ygtvok {
+	DISPLAY: none
+}
+.ygtv-edit-DateNode .ygtv-button-container {
+	TEXT-ALIGN: right; MARGIN: auto
+}

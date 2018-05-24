@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>jQuery Lightbox效果插件Boxer演示4_dowebok</title>
+<link rel="stylesheet" href="css/jquery.fs.boxer.css">
+<style>
+#boxer.mobile .boxer-meta { box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;}
+</style>
+</head>
+
+<body>
+<h1 style="margin: 40px; font: 32px Microsoft Yahei; text-align: center;">jQuery Lightbox效果插件Boxer演示4</h1>
+
+<div class="menu">
+	<a href="index.html">演示1（基本）</a>
+	<a href="index2.html">演示2（组图）</a>
+	<a href="index3.html">演示3（视频）</a>
+	<a class="cur" href="index4.html">演示4（移动设备）</a>
+	<a href="index5.html">演示5（固定）</a>
+	<a href="index6.html">演示6（iframe）</a>
+</div>
+
+<div style="text-align: center;">
+	<a title="标题 闪电1" rel="gallery" class="boxer" href="images/1b.jpg"><img alt="" src="images/1s.jpg"></a>
+	<a title="标题 闪电2" rel="gallery" class="boxer" href="images/2b.jpg"><img alt="" src="images/2s.jpg"></a>
+	<a title="标题 闪电3" rel="gallery" class="boxer" href="images/3b.jpg"><img alt="" src="images/3s.jpg"></a>
+	<a title="标题 闪电4" rel="gallery" class="boxer" href="images/4b.jpg"><img alt="" src="images/4s.jpg"></a>
+</div>
+
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery.fs.boxer.js"></script>
+<script>
+$(function(){
+	$('.boxer').boxer({
+		mobile: true
+	});
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 以下是统计和广告，与演示无关，不必理会 -->
+<style>
+.menu { height: 30px; margin-bottom: 30px; padding: 10px; background-color: #f0f0f0; text-align: center;}
+.menu a { display: inline-block; height: 30px; padding: 0 20px; line-height: 30px; font-size: 14px; color: #333; text-decoration: none;}
+.menu a:hover { color: #000; background-color: #e9e9e9;}
+.menu .cur { background-color: #ddd !important; color: #000;}
+
+.vad { margin:150px 0 5px; font-family: arial,宋体,sans-serif; text-align:center;}
+.vad a { display:inline-block; height: 36px; line-height: 36px; margin:0 5px; padding:0 50px; font-size:14px; text-align:center; color:#eee; text-decoration:none; background-color:#222;}
+.vad a:hover { color:#fff; background-color:#000;}
+.thead { width: 728px; height: 90px; margin: 0 auto;}
+</style>
+
+<p class="vad">
+	<a href="http://www.dowebok.com/" target="_blank">dowebok.com</a>
+	<a href="http://www.dowebok.com/82.html" target="_blank">说 明</a>
+	<a href="http://www.dowebok.com/82.html" target="_blank">下 载</a>
+</p>
+
+</body>
+</html>

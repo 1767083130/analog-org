@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script type="text/javascript" src="jquery1.4.2.js"></script>
+    <script type="text/javascript" src="wbox.js"></script>
+    <link rel="stylesheet" type="text/css" href="wbox/wbox.css" />
+    <link href="window.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .demo{ height:300px;}
+        .bottomPanel
+        {
+            display: block;
+            position: absolute;
+            display: block;
+            opacity: 1;
+            bottom: 0px;
+            right: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div id="wbox1">在页面底部弹出设置名字的wBox,关闭时会移向这里</div>
+    <!--    <div class="winTool">
+        sdfffffffffffffffffffffffffffff</div>-->
+    <br />
+
+    <script type="text/javascript">
+        var topV = $("#wbox1").offset().top;
+        var leftV = $("#wbox1").offset().left;
+        var wBox = $("#wbox1").wBox({
+            title: "Test Title Name",
+            html: "<div class='demo'><br/>点击弹出设置名字的wBox</div>",
+            drag: true,
+            autoPosition:true,
+            showMark: true,
+            beforeClose: function () {
+                var animateStyle = { height: "5px", width: "5px", top: topV, left: leftV };
+                $("#wBox").animate(animateStyle, "normal", "swing", function () {
+                    $("#wBox").css("display", "none");
+                });
+            },
+            onLoaded: function () {
+                $("#wBox").removeAttr("style");
+                $("#wBox").addClass("bottomPanel");
+            }
+        }).showBox();
+    </script>
+</body>
+</html>

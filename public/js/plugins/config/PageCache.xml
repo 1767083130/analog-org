@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 配置说明
+  LookFor：为一个正则表达式，只有当访问路径与正则表达式匹配时，才会进行页面缓存处理
+  SendTo：需要进行缓存的页面地址。
+  PageName：页面名称，请保证唯一性。特别注意的是，最终的访问地址是根据这个参数形成的，比如说，当pageName=Advise/AdviseList,
+          访问的地址会类似于http://www.360yee.com/Advise/AdviseList
+  PageType:页面类型。有两个可选值：Custom（自定义的页面）、Tab（系统生成的页面）。如果不是使用Default.aspx生成的页面，请设置为Custom
+  Params:页面参数,可以包含的参数有nick（第三方平台用户名）、userid（本地系统用户Id）、platform（平台类型，如淘宝）、portalid（站点id）。
+          当nick需要自动获取时（页面路径中不包含nick参数），一定要在页面路径中设置platform参数.如www.360yee.com/default.aspx?platform=2
+          其实nick等参数还可以直接在页面路径中设置，比如说www.360yee.com/default.aspx?pageindex=1&nick="lcm0301"，系统也会根据不同的用户设置不同的页面缓存
+  CacheTime:缓存时间。如果超过缓存保留时间，系统会自动回收缓存文件。默认值为10000
+  
+  PageType参数只为了扩展时方便，可以不设置任何值。
+-->
+<PageCache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <CacheItem>
+    <LookFor>.*Advise/AdviseList.aspx(.*)</LookFor>
+    <SendTo>~/DesktopModules/AdviseMenu/AdviseBarListUpdate.aspx$1</SendTo>
+    <PageName>Advise/AdviseList.aspx</PageName>
+    <PageType>Custom</PageType>
+    <Params></Params>
+    <IsMutil>true</IsMutil>
+    <AssemblyClass>ShopNuke.Tools.TopCatalogMenu.AdviseBarListUpdate,ShopNuke.Tools.TopCatalogMenu</AssemblyClass>
+    <CacheTime>10000</CacheTime>
+  </CacheItem>
+  <CacheItem>
+    <LookFor>.*Advise/CodeAdviseList.aspx(.*)</LookFor>
+    <SendTo>~/DesktopModules/AdviseMenu/AdviseBarListCopyCode.aspx$1</SendTo>
+    <PageName>Advise/CodeAdviseList.aspx</PageName>
+    <PageType>Custom</PageType>
+    <Params></Params>
+    <IsMutil>true</IsMutil>
+    <AssemblyClass>ShopNuke.Tools.TopCatalogMenu.AdviseBarListCopyCode,ShopNuke.Tools.TopCatalogMenu</AssemblyClass>
+    <CacheTime>10000</CacheTime>
+  </CacheItem>
+</PageCache>

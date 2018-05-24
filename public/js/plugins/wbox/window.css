@@ -1,0 +1,212 @@
+﻿ 
+body { color: #000000;font-family: 宋体,Arial,Verdana,Helvetica,Sans-Serif;}
+* { font-size: 16px; margin: 0; padding: 0;} 
+.winMain {
+    border-color: #999999;
+    border-style: solid;
+    border-width: 0 1px;
+    bottom: 0;
+    background-color:Red;
+    box-shadow: 0 0 5px #000000;
+    display: inline-block;
+    float: right;
+    height: 25px;
+    margin: 0 20px;
+    position: fixed;
+    right: 20px;
+    z-index: 9999;
+     _position:absolute;
+    _bottom:auto;
+    _top:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0)));
+}
+
+.winMain ul
+{
+    list-style:none;
+}
+
+.winMain .menuItem {
+    background-color: #FFFFFF;
+    border-top: 1px solid #999999;
+    float: left;
+    width:100px;
+    height: 26px;
+    cursor:pointer;
+    
+}
+
+.winMain .menuItemC {
+    background-color: #FFFFFF;
+    border-top: 1px solid #999999;
+    float: left;
+    width:50px;
+    
+    height: 26px;
+    cursor:pointer;
+    
+}
+
+.winMain .menuItemC .item span
+{
+    
+    display: block;
+    height: 24px;
+    width: 25px;
+    display: inline-block;
+    background-position: 5px -379px;
+    background-image: url("../Images/purchaseAssist.png");
+    background-repeat: no-repeat;
+}
+ 
+
+.winMain .menuItemC .item
+{ 
+    height:26px;
+    line-height:26px;
+    text-align:center;
+    position:relative;
+}
+
+.winMain .menuItemC .ts
+{
+    background-image:url("../Images/purchaseAssist-repeatX.png");
+    background-repeat:repeat-x;
+}
+
+.winMain .menuItem .item
+{ 
+    height:26px;
+    line-height:26px;
+    text-align:center;
+    background-image:url("../Images/purchaseAssist-repeatX.png");
+    background-repeat:repeat-x;
+    position:relative;
+}
+
+.winMain .lb
+{
+    background-image: url("../Images/purchaseAssist.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    background-position: -1px -352px;
+    padding-left: 1px;
+}
+
+.winMain .itemWin {
+    border: 1px solid #999999;
+    bottom: 24px;
+    position: absolute;
+    right: -1px;
+}
+
+.winMain .itemWin .content
+{
+    background-color:Silver;
+    height: 200px;
+    overflow:hidden;
+    width:400px; 
+}
+
+.winMain .menuItem .cur
+{
+    background-image:none;
+}
+
+
+.winTool {
+    border-color: #999999;
+    background-color:White;
+    border-style: solid;
+    border-width:1px 1px;
+    bottom: 0;
+    box-shadow: 0 0 5px #000000;
+    display: inline-block;
+    float: right;
+    height: 25px;
+    margin: 0 20px;
+    position: fixed;
+    right: 20px;
+    z-index: 9999;
+    cursor:pointer;
+    line-height:25px;
+    _position:absolute;
+    _bottom:auto;
+    _top:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0)));
+}
+
+.winTool .bar
+{
+    margin:0 2px;
+}
+
+.toolbg{ background-image:url("../Images/purchaseAssist-repeatX.png");background-repeat:repeat-x;} 
+
+.tips-box {
+    position:absolute;
+    width:84px;
+    z-index:1000;
+}
+
+.tips-box div
+{
+    background-color: #FFF3C7;
+    border: 0 solid #CE8A01;
+    color: #323337;
+    font-size: 12px;
+    line-height: 18px;
+    opacity: 1;
+    overflow: hidden;
+}
+
+.tips-box .tool
+{
+    padding:3px 6px 5px;
+    border-width:1px;
+    word-wrap:break-word;
+}
+
+.tips-box .arrow-3
+{
+    bottom:-4px;
+    position:absolute;
+    width:9px;
+    left:10px;
+}
+
+.tips-box .arrow-3 div
+{
+    border-left-width:1px;
+    border-right-width:1px;
+    height:1px;
+}
+
+.tips-box .arrow-3 .arr-0
+{
+    width:7px;
+    margin-left:0;
+}
+
+.tips-box .arrow-3 .arr-1
+{
+    width:5px;
+    margin-left:1px;
+}
+
+.tips-box .arrow-3 .arr-2
+{
+    width:3px;
+    margin-left:2px;
+}
+
+.tips-box .arrow-3 .arr-3
+{
+    width:1px;
+    margin-left:3px;
+}
+
+.tips-box .arrow-3 .arr-4
+{
+    border-right-width:0;
+    width:0;
+    margin-left:4px;
+}

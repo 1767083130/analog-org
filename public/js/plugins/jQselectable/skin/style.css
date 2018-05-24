@@ -1,0 +1,180 @@
+﻿@charset "utf-8";
+
+/*@import url("share/default.css");*/
+html, body, div,
+dl, dt, dd, ul, ol, li,
+h1, h2, h3, h4, h5, h6,
+pre, form, fieldset, input, textarea, p, blockquote, th, td {
+  margin: 0;
+  padding: 0;
+}
+
+body { line-height: 1.4 }
+ul, ol {	list-style: none }
+table {	border-collapse: collapse }
+img, fieldset { border: none }
+img { vertical-align: top }
+.strong { font-weight: bold }
+.accessGuide { display: none }
+
+/*@import url("share/fonts.css");*/
+body {
+	font: 13px/1.231 "Lucida Sans Unicode","Lucida Grande",Arial,Helvetica,"ヒラギノ丸ゴ Pro W4",HiraMaruPro-W4,"ヒラギノ角ゴ Pro W3","メイリオ",Meiryo,Osaka,sans-serif;
+	*font-size:small; /* for IE */
+	*font:x-small; /* for IE in quirks mode */
+}
+
+/**
+ * Nudge down to get to 13px equivalent for these form elements
+ */ 
+select,
+input,
+button,
+textarea {
+	font:99% arial,helvetica,clean,sans-serif;
+}
+
+/**
+ * To help tables remember to inherit
+ */
+table {
+	font-size:inherit;
+	font:100%;
+}
+
+/**
+ * Bump up IE to get to 13px equivalent for these fixed-width elements
+ */
+pre,
+code,
+kbd,
+samp,
+tt {
+	font-family:monospace;
+	*font-size:108%;
+	line-height:100%;
+}
+
+
+
+
+/* Clearfix
+=================================*/
+
+.clearfix:after {
+ content: "."; 
+ display: block; 
+ height: 0; 
+ clear: both; 
+ visibility: hidden;
+}
+
+.clearfix {
+	display: inline-block;
+}
+
+/* Hide from Mac IE \*/
+.clearfix {
+	display: block;
+}
+* html .clearfix {
+	height: 1%;
+}
+/* Hide from Mac IE */
+
+/* =========================================
+*  COMMON
+* ========================================= */
+
+html {
+	height: 100%;
+}
+
+body {
+	padding: 1em;
+	height: 100%;
+	color: #252525;
+	background: #ccc;
+	font-family: Helvetica;
+}
+
+p.note {
+	margin: 0 auto;
+	width: 830px;
+	padding: 0 0 .5em;
+	text-align: right;
+}
+
+h1 {
+	text-align: center;
+}
+h1:first-letter {
+}
+
+	h1 a {
+	}
+
+a {
+	color: #00f;
+	text-decoration: underline;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+div.sctble_mat {
+	font-size: 93%;
+}
+
+/* =========================================
+*  FRAME
+* ========================================= */
+
+div.pagebody {
+	margin: 0 auto 1em;
+	padding: 15px;
+	width: 800px;
+	background: #fafafa;
+}
+
+h2 {
+	margin-top: 1em;
+	border: solid #ccc 1px;
+	border-top: none;
+	border-right: none;
+	border-left-width: 5px;
+	padding: .3em .7em;
+	font-size: 116%;
+}
+
+p#skin {
+	margin-top: 1.5em;
+}
+
+dl {
+    padding: 0 1em 1em;
+}
+
+    dl dt {
+    	padding-top: 1.5em;
+    }
+    	
+    dl dd {
+    	padding-top: .5em;
+    }
+    
+p.copy {
+	margin-top: 1em;
+	border-top: solid #ccc 1px;
+	padding: 1em 0 0;
+	text-align: center;
+}
+	
+/* =========================================
+*  jQuery selectable
+* ========================================= */
+
+input#callback_dammy {
+	width: 9.5em;
+}

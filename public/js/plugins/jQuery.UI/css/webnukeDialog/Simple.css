@@ -1,0 +1,373 @@
+﻿/*弹出框 修改  注：jQueryUi版本不一，导致关闭按钮样式错误*/
+/*body, html
+{
+    padding: 0;
+    margin: 0;
+    overflow:hidden;
+}*/
+
+
+body > .ui-widget-overlay, .ui-widget-overlay
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: none;
+    background-color: #000;
+    opacity: 0.3;
+    filter: alpha(opacity=30); /*ie*/
+}
+body > .tkellDialog.ui-dialog
+{
+    position: absolute;
+    padding: 2px;
+}
+body > .tkellDialog .ui-dialog-titlebar, body > .tkellDialog .ui-dialog-title
+{
+    float: none;
+    border-width: 0;
+    display: block;
+}
+body > .tkellDialog .ui-dialog-title
+{
+    font-size: 16px;
+    font-weight: bold;
+    cursor: move;
+    height: 21px;
+    line-height: 21px;
+}
+/*按钮*/
+body > .tkellDialog .dnnModalCtrl
+{
+    display: block;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 69px;
+    height: 26px;
+    z-index: 100;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+        .dnnFormPopup .dnnModalCtrl .ui-dialog-titlebar-close {
+            float: right;
+            display: block;
+            height: 18px;
+            width: 28px;
+            margin: 4px 4px 0 1px;
+            overflow: hidden;
+            -webkit-border-top-right-radius: 8px;
+            -webkit-border-bottom-right-radius: 8px;
+	        border: none;
+	        outline: none;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            background: #585858 url(images/closeBtn.png) no-repeat;
+            background-position: 8px 4px;
+            text-indent: -9999em;
+	        min-width: 0 !important;
+        }
+
+body > .tkellDialog .dnnModalCtrl .ui-dialog-titlebar-close
+{
+    float: right;
+            display: block;
+            height: 18px;
+            width: 28px;
+            margin: 4px 4px 0 1px;
+            overflow: hidden;
+            -webkit-border-top-right-radius: 8px;
+            -webkit-border-bottom-right-radius: 8px;
+	        border: none;
+	        outline: none;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            background: #585858 url(images/closeBtn.png) no-repeat;
+            background-position: 8px 4px;
+            text-indent: -9999em;
+	        min-width: 0 !important;
+   
+}
+body > .tkellDialog .dnnModalCtrl .dnnToggleMax
+{
+    float: left;
+    margin: 4px 0 0 4px;
+    -webkit-border-top-left-radius: 8px;
+    -webkit-border-bottom-left-radius: 8px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-image: url(images/resizeBtn.png);
+    background-position: 10px 2px;
+}
+body > .tkellDialog .dnnModalCtrl .ui-button
+{
+    top: auto;
+    display: block;
+    height: 18px;
+    width: 28px;
+    overflow: hidden;
+    cursor: pointer;
+    background-attachment: scroll;
+    background-position: 8px 4px;
+    border: 0;
+    background-repeat: no-repeat;
+    text-indent: -9999em;
+}
+
+body > .tkellDialog .ui-button-icon-primary
+{
+    /*隐藏关闭按钮前景色*/
+    display: none;
+    width: 0 !important;
+    height: 0;
+}
+/*按钮修改结束*/
+
+/* updated by lcm 下拉框内容过长会被遮盖
+body > .tkellDialog .ui-dialog-content
+{
+    width: 100% !important; 
+    padding-top: 10px;
+    position: relative;
+    border: 0;
+    padding: 0px;
+    overflow: auto;
+    color: #222;
+}
+*/
+body > .tkellDialog .ui-dialog-content .msgContent, .tkellDialog .ui-dialog-content .msgContent
+{
+    padding:1em 2em;
+    min-height: 2em;
+    min-width: 200px;
+    height: auto;
+    width: auto;
+}
+
+/*按钮*/
+body > .tkellDialog .ui-dialog-buttonpane
+{
+    margin: 5px 0 0 0;
+    padding: 0;
+    overflow: hidden;
+    border-width: 1px 0 0 0;
+    background-image: none;
+    text-align: left;
+    border: 0;
+}
+body > .tkellDialog .ui-dialog-buttonpane .ui-dialog-buttonset
+{
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    display: block;
+    height: auto;
+    float:none;
+}
+body > .tkellDialog .ui-dialog-buttonpane .ui-button
+{
+    margin: 0 1em;
+    padding: 2px 10px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-image: none;
+    font-size: 14px;
+    font-weight: bold;
+    zoom: 1;
+    display: inline-block;
+}
+body > .tkellDialog .ui-resizable-handle
+{
+    display: none; /*不可改变大小*/
+}
+body > .tkellDialog .dnnDialog, .tkellDialog .dnnDialog
+{
+    padding: 10px;
+}
+.loadContent
+{
+    display: block;
+    width: 100%;
+    height: auto;
+    background: none;
+    text-align: center;
+    vertical-align: middle;
+}
+.dnnLoading, .tkellDialog .dnnLoading
+{
+    background: #fff url(images/loading.gif) no-repeat center center;
+    position: relative;
+    z-index: 100;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+}
+/*白色方案*/
+body > .tkellDialog.white, body > .tkellDialog.white .ui-dialog-titlebar, body > .tkellDialog.white .ui-dialog-title, body > .tkellDialog.white .ui-dialog-content, body > .tkellDialog.white .ui-dialog-buttonpane, body > .tkellDialog.white .ui-dialog-buttonset, body > .tkellDialog.white .dnnModalCtrl
+{
+    background-color: #fff;
+    background-image: none;
+    color: #666;
+    border-width: 0;
+}
+body > .tkellDialog.white .dnnModalCtrl .ui-button
+{
+    background-color: #585858;
+}
+body > .tkellDialog.white .dnnModalCtrl .ui-button:hover
+{
+    background-color: #358EEA;
+}
+body > .tkellDialog.white, body > .tkellDialog.white .dnnModalCtrl
+{
+    border: 1px solid #ddd;
+    -webkit-box-shadow:none;  /*0 0 25px 5px rgba(230, 230, 230, 0.75);*/
+    box-shadow:none; 
+}
+
+body > .tkellDialog.white .ui-dialog-buttonpane .ui-button
+{
+    background-color: #666;
+    color: #fff;
+}
+body > .tkellDialog.white .ui-dialog-buttonpane .ui-state-hover
+{
+    background-color: #358EEA;
+}
+
+
+/*蓝色方案*/
+body > .tkellDialog.light-blue, body > .tkellDialog.light-blue .ui-dialog-title, body > .tkellDialog.light-blue .ui-dialog-titlebar, body > .tkellDialog.light-blue .dnnModalCtrl, body > .tkellDialog.light-blue .ui-dialog-buttonpane, body > .tkellDialog.light-blue .ui-dialog-buttonset
+{
+    background-color: #e3eeff;
+    background-image: none;
+    border-width: 0;
+    color: #333;
+}
+body > .tkellDialog.light-blue
+{
+    border: 1px solid #4d7be0;
+}
+body > .tkellDialog.light-blue, body > .tkellDialog.light-blue .dnnModalCtrl
+{
+    -webkit-box-shadow: 0 0 0 5px rgba(227 , 238 , 255, 0.75);
+    box-shadow: 0 0 0 5px rgba(227 , 238 , 255, 0.75);
+}
+body > .tkellDialog.light-blue .ui-dialog-content
+{
+    background-color: #fff;
+}
+
+body > .tkellDialog.light-blue .ui-button
+{
+    background-color: #8eabec;
+}
+body > .tkellDialog.light-blue .ui-state-hover
+{
+    background-color: #2f7bd9;
+}
+
+
+/*简约方案*/
+body > .tkellDialog.simple, body > .tkellDialog.simple .dnnModalCtrl
+{
+    padding: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+body > .tkellDialog.simple .dnnModalCtrl
+{
+    width: auto;
+    float: none;
+    background: none;
+    position: absolute;
+    right: 0;
+    border: 0;
+    top: 0;
+}
+body > .tkellDialog.simple .dnnModalCtrl .ui-button
+{
+    float: none;
+    position: static;
+    margin: 1px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+}
+body > .tkellDialog.simple .dnnModalCtrl .dnnToggleMax
+{
+    display: none;
+}
+body > .tkellDialog.simple .ui-dialog-content
+{
+    /* updated by lcm 下拉框内容过长会被遮盖
+    overflow: hidden; */
+    min-height: auto !important;
+    min-width: auto !important;
+    max-height: 1000% !important;
+    max-width: 1000% !important;
+    _height: auto;
+}
+body > .tkellDialog.simple .ui-dialog-buttonpane
+{
+    display: none;
+}
+
+body > .tkellDialog.simple .ui-dialog-titlebar
+{
+    height: 0;
+    margin: 0;
+    padding: 0;
+    float: none;
+    display:block;    
+    position: relative;
+    z-index: 100;
+    overflow: visible;
+}
+body > .tkellDialog.simple .ui-dialog-title
+{
+    display:none;
+}
+
+/*精简带标题模式*/
+body > .tkellDialog.simple.title .ui-dialog-titlebar
+{
+    height: 21px;
+    line-height: 21px;
+    display: block;
+}
+body > .tkellDialog.simple.title .ui-dialog-titlebar .ui-dialog-title
+{
+    height: 21px;
+    font-size: 14px;
+    position: static;
+    float: left;
+    display:block;
+}
+/*无圆角模式*/
+body > .tkellDialog.no-border-radius, .tkellDialog.no-border-radius
+{
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}
+
+/* Corner radius */
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl
+{
+    border-top-left-radius: 4px;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr
+{
+    border-top-right-radius: 4px;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl
+{
+    border-bottom-left-radius: 4px;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br
+{
+    border-bottom-right-radius: 4px;
+}

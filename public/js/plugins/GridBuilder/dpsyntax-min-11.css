@@ -1,0 +1,105 @@
+TEXTAREA.JScript {
+	HEIGHT: 10em
+}
+TEXTAREA.HTML {
+	HEIGHT: 10em
+}
+TEXTAREA.XML {
+	HEIGHT: 10em
+}
+.dp-highlighter {
+	LINE-HEIGHT: 100% !important; MARGIN: 0px 0px 1em; WIDTH: 100%; OVERFLOW: auto
+}
+.dp-highlighter TABLE {
+	BORDER-BOTTOM: #eee 2px solid; BACKGROUND-COLOR: #fff; MARGIN: 2px 0px; WIDTH: 99% !important; BORDER-COLLAPSE: collapse
+}
+.dp-highlighter TBODY.hide {
+	DISPLAY: none
+}
+.dp-highlighter TBODY.show {
+	DISPLAY: table-row-group; _display: block
+}
+.dp-highlighter TD {
+	FONT-FAMILY: Courier New; FONT-SIZE: 11px
+}
+.dp-highlighter .tools-corner {
+	BACKGROUND-COLOR: #eee; FONT-SIZE: 9px
+}
+.dp-highlighter .tools {
+	BORDER-BOTTOM: gray 1px solid; PADDING-BOTTOM: 3px; BACKGROUND-COLOR: #eee; PADDING-LEFT: 10px; PADDING-RIGHT: 8px; FONT: 9px Verdana, Geneva, Arial, Helvetica, sans-serif; COLOR: silver; PADDING-TOP: 3px
+}
+.dp-highlighter .tools-corner {
+	BACKGROUND-COLOR: #eee
+}
+.dp-highlighter .tools A {
+	COLOR: gray; FONT-SIZE: 9px; TEXT-DECORATION: none
+}
+.dp-highlighter .tools A:hover {
+	COLOR: red; TEXT-DECORATION: underline
+}
+.dp-highlighter .gutter {
+	TEXT-ALIGN: right; BACKGROUND-COLOR: #eee; PADDING-LEFT: 10px; WIDTH: 5px; PADDING-RIGHT: 5px; COLOR: gray; VERTICAL-ALIGN: top; BORDER-RIGHT: gray 1px solid
+}
+.dp-highlighter .line1 {
+	PADDING-LEFT: 10px; WHITE-SPACE: nowrap
+}
+.line2 {
+	PADDING-LEFT: 10px; WHITE-SPACE: nowrap
+}
+.dp-about {
+	BACKGROUND-COLOR: #fff; MARGIN: 0px
+}
+.dp-about TABLE {
+	WIDTH: 100%; FONT-FAMILY: Tahoma, Verdana, Arial, sans-serif !important; HEIGHT: 100%; FONT-SIZE: 11px
+}
+.dp-about TD {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; VERTICAL-ALIGN: top; PADDING-TOP: 10px
+}
+.dp-about .copy {
+	BORDER-BOTTOM: #aca899 1px solid; HEIGHT: 95%
+}
+.dp-about .title {
+	COLOR: red; FONT-WEIGHT: bold
+}
+.dp-about .para {
+	MARGIN-BOTTOM: 4px
+}
+.dp-about .footer {
+	TEXT-ALIGN: right; BACKGROUND-COLOR: #eceadb; BORDER-TOP: #fff 1px solid
+}
+.dp-about .close {
+	BACKGROUND-COLOR: #eceadb; WIDTH: 60px; FONT-FAMILY: Tahoma, Verdana, Arial, sans-serif !important; HEIGHT: 22px; FONT-SIZE: 11px
+}
+.dp-c .comment {
+	COLOR: green
+}
+.dp-c .string {
+	COLOR: blue
+}
+.dp-c .preprocessor {
+	COLOR: gray
+}
+.dp-c .keyword {
+	COLOR: blue
+}
+.dp-c .vars {
+	COLOR: #d00
+}
+.dp-xml .cdata {
+	COLOR: #ff1493
+}
+.dp-xml .comments {
+	COLOR: green
+}
+.dp-xml .tag {
+	COLOR: blue
+}
+.dp-xml .tag-name {
+	COLOR: black; FONT-WEIGHT: bold
+}
+.dp-xml .attribute {
+	COLOR: red
+}
+.dp-xml .attribute-value {
+	COLOR: blue
+}

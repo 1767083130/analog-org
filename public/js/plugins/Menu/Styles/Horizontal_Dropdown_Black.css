@@ -1,0 +1,104 @@
+﻿/*菜单开始*/
+.topMenu
+{
+    height: 43px;
+    background-color: #545A6A;
+}
+.menu .item
+{
+    float: left;
+    font-size: 14px;
+    position: relative;
+}
+.menu .item .text
+{
+    padding: 0 25px;
+    float: left;
+    border: 1px solid #545a6a;
+    height: 41px;
+    line-height: 41px;
+    cursor: pointer;
+    display: block;
+    color: #fff;
+}
+.menu .disable > .context .text
+{
+    cursor: default;
+}
+
+.menu .item.current > .context .text
+{
+    color: #fff;
+    background-color: #373b45;
+}
+
+/*子菜单*/
+.menu .item > .subMenu.menu
+{
+    float: left;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    overflow: hidden;
+    display: none;
+    margin: 0;
+    background-color: #fff;
+    border: 1px solid #393F4A;
+    border-top: none;
+    width: 135px;
+}
+.menu .open.item > .subMenu.menu
+{
+    display: block;
+}
+.menu .open > .context.subMenu .text
+{
+    background: #fff;
+    color: #333;
+    border: 1px solid #393f4a;
+    border-bottom-color: #fff;
+}
+.menu .open > .subMenu.menu .text
+{
+    width: 85px;
+    height: 27px;
+    line-height: 27px;
+    clear: both;
+    color: #333;
+    font-size: 12px;
+    border: 0;
+    white-space: nowrap;
+    background: #fff;
+}
+.menu .open > .subMenu .text:hover
+{
+    filter: none;
+    background: #EEE;
+}
+
+/*其他*/
+.menu .open .menuIcon
+{
+    background: url('../Styles/sprite/uiIcons_gray.png') no-repeat -6px -10px;
+}
+.menu .menuIcon
+{
+    background: url('../Styles/sprite/uiIcons_white.png') no-repeat -136px -10px;
+    width: 18px;
+    height: 12px;
+    display: inline-block;
+    position: absolute;
+    top: 15px;
+    right: 3px;
+}
+.icon
+{
+    position: absolute;
+    display: inline-block;
+    top: 19px;
+    left: 0;
+    width: 18px;
+    height: 12px;
+}
+
+/*菜单 结束*/

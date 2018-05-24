@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>跨浏览器的placehoder - jquery插件EnPlaceholder - DEMO - iFrans.cn</title>
+    <meta name="author" content="ifrans.cn" />
+    <meta name="description" content="jQuery插件EnPlaceholder,实现跨浏览器的placehoder,让ie也支持placehoder" />
+    <meta name="keywords" content="jQuery插件,EnPlaceholder,跨浏览器,placehoder,ie" />
+    <link rel="stylesheet" type="text/css" href="style/base.css" />
+    <style type="text/css">
+        body
+        {
+            font: 12px/1.5 'simsun';
+        }
+        form
+        {
+            width: 420px;
+            height: 260px;
+            margin: 20px auto 0;
+        }
+        h3
+        {
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        p
+        {
+            margin-bottom: 10px;
+        }
+        input
+        {
+            vertical-align: middle;
+            margin-left: 10px;
+            height: 24px;
+            line-height: 24px;
+            width: 200px;
+            padding-left: 2px;
+        }
+        textarea
+        {
+            vertical-align: middle;
+            margin-left: 10px;
+            width: 200px;
+            height: 50px;
+            font: inherit;
+            padding-left: 2px;
+        }
+        .wrap-statistics
+        {
+            visibility: hidden;
+        }
+    </style>
+    <script type="text/javascript" src="http://www.360yee.com/Resources/Shared/Scripts/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.enplaceholder.js"></script>
+</head>
+<body>
+    <form id="form1">
+    <h3>
+        通过value方式模拟placeholder</h3>
+    <p>
+        $('#form1 input,#form1 textarea').placeholder();</p>
+    <p>
+        <label for="username1">
+            用户名:</label>
+        <input type="text" name="username1" id="username1" placeholder="请输入用户名" value=""
+            required>
+    </p>
+    <p>
+        <label for="address1">
+            地 址:</label>
+        <input type="text" name="address1" id="address1" placeholder="请输入地址" value="" required>
+    </p>
+    <p>
+        <label for="remarks1">
+            备 注:</label>
+        <textarea placeholder="请输入备注" id="remarks1"></textarea>
+    </p>
+    </form>
+    <form id="form2">
+    <h3>
+        在不支持placeholder的浏览器下，通过插入悬浮的span元素方式模拟</h3>
+    <h4>
+        文本框内容改变时placeholder消失:</h4>
+    <p>
+        $('#username2,#password').placeholder({isUseSpan:true});</p>
+    <p>
+        <label for="username2">
+            用户名:</label>
+        <input type="text" name="username1" id="username2" placeholder="请输入用户名" value=""
+            required>
+    </p>
+    <p>
+        <label for="password">
+            密 码:</label>
+        <input type="password" name="password" id="password" placeholder="请输入密码" value=""
+            required>
+    </p>
+    <p>
+        <label for="remarks2">
+            备 注:</label>
+        <textarea placeholder="请输入备注" id="remarks2"></textarea>
+    </p>
+    <h4>
+        获得焦点时placeholder消失:</h4>
+    <p>
+        $('#address2').placeholder({isUseSpan:true,onInput:false});</p>
+    <p>
+        <label for="address2">
+            地 址:</label>
+        <input type="text" name="address1" id="address2" placeholder="请输入地址" value="" required>
+    </p>
+    </form>
+    <script>
+        $('#form1 input,#form1 textarea').placeholder();
+        $('#username2,#password').placeholder({ isUseSpan: true });
+        $('#address2').placeholder({ isUseSpan: true, onInput: false });
+        $('#remarks2').placeholder({ isUseSpan: true });
+    </script>
+
+</body>
+</html>

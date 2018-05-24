@@ -1,0 +1,136 @@
+﻿
+.ellipsis
+{
+	white-space: nowrap;
+	text-overflow: ellipsis; /* for internet explorer */
+	overflow: hidden;
+	display: block;
+}
+html > body .ellipsis
+{
+	clear: both;
+}
+
+
+a.imgbtn
+{
+	color: #000000;
+}
+
+span.Add
+{
+    padding-left:20px;
+	/*background: url(images/icons/add.png) no-repeat 1px;*/
+}
+span.Delete
+{
+    padding-left:20px;
+	/*background: url(images/icons/delete.png) no-repeat 1px;*/
+}
+.toolBotton
+{
+	background-position: left -2px;
+	width: 100%;
+	padding: 4px 0px 4px 0px;
+	/*background: url(  "../../images/bgs/ch.gif" ) repeat-x left -2px;*/
+	text-align: left;	
+}
+.info
+{
+    /*background:#EEFAF9 url("images/icons/information.png") no-repeat 5px 50%;*/
+    border:solid 1px #D6D6D6;
+    padding:5px;
+    padding-left:25px;
+    text-align:left;
+    margin:10px;
+}
+.important
+{
+    color:Red;
+ }
+/*--------------------------表单样式开始---------------------*/
+.bbit-infocontainer
+{
+    margin:10px;
+    border:solid 1px #D6D6D6;
+    padding:5px;
+}
+.bbit-form
+{
+    font-size: 12px;
+    border: solid 1px #dddddd;
+    background-color: #fff;
+}
+.bbit-form-row-title
+{
+    background-color: #17365D;
+    Color:#fff;
+}
+
+.bbit-form td.alignright
+{
+  text-align:right;
+}
+.bbit-form tr.odd
+{
+    background-color: #EEF6FF;
+}
+.bbit-form tr.even
+{
+    background-color: #FFFFFF;	
+}
+.bbit-formItemMust
+{
+	color: red;
+}
+.bbit-textbox-File
+{
+	border: #907714 1px solid;
+}
+.bbit-textbox-TextArea
+{
+	border: #907714 1px solid;
+	overflow: auto;
+}
+.bbit-text
+{
+	border: #907714 1px solid;
+	height: 18px;
+}
+.bbit-form h3
+{
+   margin:10px;
+   padding:5px;
+   text-align:left;
+   padding-left:10px;
+   border-bottom:solid 1px #ccc;
+   font-family:"微软雅黑","宋体";
+   font-size:16px;
+   font-weight:bolder;
+}
+ .bbit-form ul
+ {
+     list-style:none;
+     line-height:28px; 
+     margin:0px;
+     margin-left:10px; 
+     margin-right:10px;
+ }
+    .bbit-form ul li
+{
+    border-style: none none dotted none;
+    border-width: 1px;
+    border-color: #000080;  
+    padding-left:30px;
+}
+   .bbit-form ul li label
+ {
+     padding-right:15px;
+     vertical-align:top;
+ }
+
+/*--------------------------表单样式开始结束---------------------*/
+.nodisplay
+{
+    display:none;        
+}

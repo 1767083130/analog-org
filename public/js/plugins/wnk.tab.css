@@ -1,0 +1,208 @@
+
+.benma_ui_tab {
+	margin: 0px;
+	padding: 0px;
+	font-size: 12px;
+	position: relative;
+	top: 0px;
+	line-height: 22px;
+	width: 1024%;
+	border: 0px solid #999999;
+	padding-top: 4px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.benma_ui_tab .tab_hr {
+	width: 100%;
+	height: 2px;
+	background-color: #336688;
+	position: relative;
+	top: 24px;
+	z-index: 113;
+	font-size: 0px;
+	display: block;
+}
+
+.benma_ui_tab .tab_item {
+	line-height: 22px;
+	z-index: 100;
+	white-space: nowrap;
+	word-spacing: 0px;
+	border-collapse: collapse;
+	margin-left: 4px;
+	float: left;
+	cursor: hand;
+	cursor: pointer;
+}
+
+.benma_ui_tab .tab_item1 {
+	background-image: url(<%=WebResource("tab1.gif")%>);
+	background-repeat: no-repeat;
+	width: 5px;
+	z-index: 100;
+	white-space: nowrap;
+}
+
+.benma_ui_tab .tab_item1_mouseover {
+	background-position: 0px -42px;
+}
+
+.benma_ui_tab .tab_item1_selected {
+	background-position: 0px -84px;
+}
+
+.benma_ui_tab .tab_item2 {
+	background-image: url(<%=WebResource("tab2.gif")%>);
+	background-repeat: repeat-x;
+	white-space: nowrap;
+	z-index: 101;
+}
+
+.benma_ui_tab .tab_item2_mouseover {
+	background-position: 0px -42px;
+}
+
+.benma_ui_tab .tab_item2_selected {
+	background-position: 0px -84px;
+	color: #ffffff;
+}
+
+.benma_ui_tab .tab_item3 {
+	background-image: url(<%=WebResource("tab3.gif")%>);
+	background-repeat: no-repeat;
+	width: 5px;
+}
+
+.benma_ui_tab .tab_item3_mouseover {
+	background-position: 0px -42px;
+}
+
+.benma_ui_tab .tab_item3_selected {
+	background-position: 0px -84px;
+}
+
+.benma_ui_tab .tab_title {
+	padding: 4px;
+	line-height: 16px;
+		font-size: 12px;
+}
+
+.benma_ui_tab .tab_close {
+	background-image: url(<%=WebResource("close.gif")%>);
+	background-repeat: no-repeat;
+	position: relative;
+	top: -1px;
+	height: 14px;
+	width: 14px;
+	font-size: 9px;
+}
+
+.benma_ui_tab .tab_close_mouseover {
+	background-position: 0px -14px;
+}
+
+.benma_ui_tab .tab_close_selected {
+	background-position: 0px 0px;
+}
+
+.benma_ui_tab .tab_close_noselected {
+	background-position: 0px -28px;
+}
+
+.benma_ui_tab .tab_close_none {
+	display: none;
+}
+
+/* bottom */
+.benma_ui_tab_bottom {
+	position: relative;
+	top: 0px;
+	width: 1024%;
+	border: 0px solid #999999;
+	padding-top:0px;
+	padding-bottom: 4px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.benma_ui_tab .tab_hr_bottom {
+	width: 100%;
+	height: 2px;
+	background-color: #336688;
+	position: relative;
+	top: 0px;
+	z-index: 113;
+	font-size: 0px;
+	display: block;
+	position: relative;
+}
+
+.benma_ui_tab .tab_item_bottom {
+	position: relative;
+	top: -2px;
+	line-height: 20px;
+	z-index: 100;
+	white-space: nowrap;
+	word-spacing: 0px;
+	border-collapse: collapse;
+	margin-left: 4px;
+	float: left;
+	cursor: hand;
+	cursor: pointer;
+}
+
+.benma_ui_tab .tab_item1_bottom {
+	background-image:url(<%=WebResource("tab1_bottom.gif")%>);
+	background-repeat: no-repeat;
+	background-position: 0px -18px;
+	width: 5px;
+}
+
+.benma_ui_tab .tab_item1_mouseover_bottom {
+	background-position: 0px -60px;
+}
+
+.benma_ui_tab .tab_item1_selected_bottom {
+	background-position: 0px -102px;
+}
+
+.benma_ui_tab .tab_item2_bottom {
+	background-image:url(<%=WebResource("tab2_bottom.gif")%>);
+	background-repeat: repeat-x;
+	background-position: 0px -18px;
+}
+
+.benma_ui_tab .tab_item2_mouseover_bottom {
+	background-position: 0px -60px;
+}
+
+.benma_ui_tab .tab_item2_selected_bottom {
+	background-position: 0px -102px;
+	color: #ffffff;
+}
+
+.benma_ui_tab .tab_item3_bottom {
+	background-image: url(<%=WebResource("tab3_bottom.gif")%>);
+	background-repeat: no-repeat;
+	background-position: 0px -18px;
+	width: 5px;
+}
+
+.benma_ui_tab .tab_item3_mouseover_bottom {
+	background-position: left -60px;
+}
+
+.benma_ui_tab .tab_item3_selected_bottom {
+	background-position: left -102px;
+}
+
+.benma_ui_tab .tab_title_bottom {
+	padding: 4px;
+	line-height: 16px;
+}
+
+.benma_ui_tab .tab_close_bottom {
+	font-size: 9px;
+	top: 1px;
+}
