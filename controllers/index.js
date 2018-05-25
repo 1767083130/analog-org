@@ -17,8 +17,8 @@ module.exports = function (router) {
         res.render('index', { user: req.user });
     });
 
-    router.get('/trade', function(req, res) {
-        res.render('trade', { user: req.user });
+    router.get('/admin/trade', function(req, res) {
+        res.render('admin/trade', { user: req.user });
     });
   
     router.get('/admin',  async(function* (req, res) {
@@ -28,7 +28,7 @@ module.exports = function (router) {
         // var clientId = clients[0]._id;
         // var timeStamp = clientId.getTimestamp();
         // var id= mongoose.Types.ObjectId(clientId.toString());
-        res.render('index', {
+        res.render('admin/index', {
             userName: userName,
             business: JSON.stringify(business),
 
@@ -41,10 +41,6 @@ module.exports = function (router) {
 
     router.get('/profile', function(req, res) {
         res.render('profile', { user: req.user });
-    });
-
-    router.get('/admin', function(req, res) {
-        res.render('admin', {});
     });
 
     //Allow the users to log out 
