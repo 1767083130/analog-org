@@ -1,0 +1,192 @@
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 350px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+                <h4 class="modal-title" id="myModalLabel">
+                    登录天客帐号</h4>
+            </div>
+            <div class="modal-body">
+                <div id="loginMsg" style="color: Red;" class="col-sm-12 help-block">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><span style="display: inline-block; width: 50px;
+                        text-align: right;">手机/邮箱</span> </span>
+                    <input type="text" id="txtLoginUserName" class="form-control" placeholder="手机/邮箱">
+                </div>
+                <br />
+                <div class="input-group">
+                    <span class="input-group-addon"><span style="display: inline-block; width: 50px;
+                        text-align: right;">密码</span></span>
+                    <input type="password" id="txtLoginPassword" class="form-control" placeholder="密码">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="text-left col-sm-6">
+                        <label>
+                            <input id="chkRememberName" checked type="checkbox" />
+                            记住用户名
+                        </label>
+                    </div>
+                    <div class="text-right col-sm-6">
+                        <a class="bs3-link" role="button" id="A1" href="/DesktopModules/WebNuke/Authentication/PasswordGet.aspx"
+                            target="_blank">忘记密码？</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button type="button" id="btnUserLogin" class="btn btn-primary btn-lg btn-block">
+                            登录</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <a class="btn bs3-link" role="button" href="/DesktopModules/WebNuke/Authentication/Register.aspx">
+                        立即注册</a>
+                </div>
+                <div class="row text-left top-line">
+                    <h5>
+                        <span style="padding: 5px;">还可以使用以下方式登录</span></h5>
+                </div>
+                <div class="row">
+                    <ul class="bd-acc-list">
+                        <li class="bd-acc-qzone" id="qqLogin" data-width="750" data-height="450" data-acc="15"
+                            data-dialog="1"><a title="QQ帐号" class="phoenix-btn-item" href="#">QQ帐号</a> </li>
+                        <li class="bd-acc-tsina" id="sinaLogin" data-width="800" data-height="669" data-acc="2"
+                            data-dialog="1"><a title="新浪微博" class="phoenix-btn-item" href="#">新浪微博</a> </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(function () {
+        //记住用户名
+        var oldUserName = $.cookie('UserName');
+        if (oldUserName) {
+            $('#txtLoginUserName').val(oldUserName);
+        }
+
+        //******登录功能×××××
+        //组10
+        $.formValidator.initConfig({ mode: "NoneTip", errorFocus: false, validatorGroup: "10", theme: "BootStrap3", submitOnce: false,
+            onError: function (msg, obj, errorlist) { },
+            ajaxPrompt: '正在验证，请稍等...'
+        });
+
+        $("#txtLoginUserName").formValidator({ validatorGroup: "10", tipID: "loginMsg", empty: false, onShow: "", onCorrect: "", onEmpty: "请输入手机或邮箱" })
+             .inputValidator({ min: 1, empty: { emptyError: "请输入手机或邮箱" }, onError: "请输入手机或邮箱" });
+
+        $("#txtLoginPassword").formValidator({ validatorGroup: "10", tipID: "loginMsg", empty: false, onShow: "", onFocus: "", onCorrect: "", onEmpty: "请输入密码" })
+             .inputValidator({ min: 1, empty: { emptyError: "请输入密码" }, onError: "请输入密码" });
+
+        //登录
+        $("#btnUserLogin").click(function () {
+            userLogin();
+        });
+
+        $('#txtLoginUserName').keyup(function (e) {
+            if (e.which == 13) {
+                $('#txtLoginPassword').focus();
+            }
+
+            var userName = $(this).val();
+            var newUserName = toCDB(userName);
+            $(this).val(newUserName);
+        });
+        $('#txtLoginPassword').keyup(function (e) {
+            if (e.which == 13) {
+                userLogin();
+            }
+
+            var userName = $(this).val();
+            var newUserName = toCDB(userName);
+            $(this).val(newUserName);
+        });
+
+        $("#qqLogin").click(function () {
+            var qqLoginUrl = '<%=WebNuke.Social.Platforms.QQ.QQClientUtil.GetQQLoginUrl()%>';
+            openWindow(qqLoginUrl, 760, 480, "newwindow", "toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no");
+        });
+
+        $("#sinaLogin").click(function () {
+            var sinaLoginUrl = '<%=WebNuke.Social.Platforms.SinaWeibo.SinaWeiboClientUtil.GetSinaWeiboLoginUrl()%>';
+            openWindow(sinaLoginUrl, 810, 700, "newwindow", "toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no");
+        });
+    });
+
+    //用户登录
+    function userLogin() {
+        if (!$.formValidator.pageIsValid("10")) {
+            return false;
+        }
+
+        var url = "/Desktopmodules/webnuke/default.aspx";
+        //var phone = $("#txtRandCode").val();
+        var userName = $("#txtLoginUserName").val();
+        var password = $("#txtLoginPassword").val();
+        var param = [{ name: 'action', value: 'Login' },
+        { name: 'UserName', value: userName },
+        { name: 'Password', value: password}];
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: param,
+            dataType: 'json',
+            success: function (data) {
+                if (data.Result == 1) {
+                    //记住用户名
+                    if ($("#chkRememberName").attr('checked') == "checked") {
+                        var options = { expires: 90 };
+                        $.cookie('UserName', userName, options);
+                    }
+                    else {
+                        $.cookie('UserName', "");
+                    }
+
+                    //window.closeMyDialog(true);
+                    document.location.reload();
+                }
+                else {
+                    $("#loginMsg").html("登录失败，用户名或密码输入错误");
+                    //alert("手机号绑定失败")
+
+                    $("#btnUserLogin").removeAttr("disabled");
+                    $("#btnUserLogin").html("登录");
+                    $("#txtLoginPassword").val("");
+                }
+
+            },
+            beforeSend: function () {
+                $("#btnUserLogin").attr("disabled", "disabled");
+                $("#btnUserLogin").html("正在登录..");
+            },
+            error: function (x, status, e) {
+                alert("网络错误，请稍后重试！");
+            }
+        });
+    }
+
+    function isMobile(data) { return regMatch(data, regexEnum.mobile); }
+    function isNum(data) { return regMatch(data, regexEnum.intege1); }
+    function isEmail(data) { return regMatch(data, regexEnum.email); }
+    function isMobile(data) { return regMatch(data, regexEnum.mobile); }
+
+    function regMatch(data, reg) {
+        if (!data) {
+            return false;
+        }
+
+        var regex = new RegExp(reg);
+        return data.match(regex);
+    }
+
+    function showLoginModal() {
+        $('#login-modal').modal({ keyboard: false });
+    }
+
+</script>
