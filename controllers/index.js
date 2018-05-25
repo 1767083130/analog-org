@@ -13,8 +13,15 @@ const Decimal = require('decimal.js');
 
 module.exports = function (router) {
     //router.get('/', account.index_api);
+    router.get('/', function(req, res) {
+        res.render('index', { user: req.user });
+    });
+
+    router.get('/trade', function(req, res) {
+        res.render('trade', { user: req.user });
+    });
   
-    router.get('/',  async(function* (req, res) {
+    router.get('/admin',  async(function* (req, res) {
         let userName = req.user.userName;
         let accounts,clients ,transferStrategys , business, strategy;
 

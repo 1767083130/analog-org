@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" class="nm-np">
+<head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/css/app.css" />
+    {% block header %} {% endblock %}
+</head>
+<body class="nm-np">
+    <header class="grey">
+    <div class="wrapper">
+        <h1>Kraken Central</h1>
+        <nav>
+            <ul class="nm-np inline">
+                <li><a href="/">Home</a></li>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/admin">Admin</a></li>
+                <li>
+                    {% if user %}
+                         <a href="/logout">Logout</a>
+                    {% else %}
+                         <a href="/login">Login</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+    <div class="wrapper">
+        <div>
+            <a href="/personal/transferStrategy">transferStrategy </a>
+            <a href="/personal/transferStrategyLog">transferStrategyLog </a>
+            <a href="/personal">other</a>
+            <div style="display:none;">
+                <input type="button" id="btnAccount" data-panel="pnlAccount" value="accounts" />
+                <input type="button" id="btnClient" data-panel="pnlClient" value="client identifier" />
+                <input type="button" id="btnStrategy" data-panel="pnlStrategy" value="strategy" />
+                <input type="button" id="btnAccountStrategy" data-panel="pnlAccountStrategys" value="Account Strategy" />
+                <input type="button" id="btnOrders" data-panel="pnlOrders" value="Orders" />
+            </div>
+        </div>
+        {% block body %} This is the default content {% endblock %}
+    </div>
+    <div id="tentacle">
+    </div>
+    {% block scripts %} 
+    {% endblock %}
+</body>
+</html>

@@ -1,49 +1,334 @@
 <!DOCTYPE html>
-<html lang="en" class="nm-np">
-<head>
-    <meta charset="utf-8" />
-    <title>{{ title }}</title>
-    <link rel="stylesheet" href="/css/app.css" />
+<html lang="zh-CN">
+<head id="Head1" runat="server">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>天客网,商家服务第一站 </title>
+    <meta name="description" content="天客网,商家服务第一站，电子商务,商城系统,网店,企业建站,店铺推广,网站模板,云主机,分销系统,淘宝推广一网打尽">
+    <meta name="keywords" content="天客,电子商务,商城系统,网店,企业建站,店铺推广,网站模板,云主机,分销系统,淘宝推广">
+    <meta name="author" content="天客网">
+    <meta name="robots" content="index,follow">
+    <meta name="application-name" content="tkell.cn">
+
     {% block header %} {% endblock %}
+    <script>
+        //百度统计代码
+        var _hmt = _hmt || [];
+    </script>
+    <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js"
+        data-appid="101149115" data-redirecturi="http://www.tkell.cn/dw/Authentication/qc_back.htm"
+        charset="utf-8"></script>
 </head>
-<body class="nm-np">
-    <header class="grey">
-    <div class="wrapper">
-        <h1>Kraken Central</h1>
-        <nav>
-            <ul class="nm-np inline">
-                <li><a href="/">Home</a></li>
-                <li><a href="/profile">Profile</a></li>
-                <li><a href="/admin">Admin</a></li>
-                <li>
-                    {% if user %}
-                         <a href="/logout">Logout</a>
-                    {% else %}
-                         <a href="/login">Login</a>
-                    {% endif %}
-                </li>
-            </ul>
-        </nav>
-    </div>
-</header>
-    <div class="wrapper">
-        <div>
-            <a href="/personal/transferStrategy">transferStrategy </a>
-            <a href="/personal/transferStrategyLog">transferStrategyLog </a>
-            <a href="/personal">other</a>
-            <div style="display:none;">
-                <input type="button" id="btnAccount" data-panel="pnlAccount" value="accounts" />
-                <input type="button" id="btnClient" data-panel="pnlClient" value="client identifier" />
-                <input type="button" id="btnStrategy" data-panel="pnlStrategy" value="strategy" />
-                <input type="button" id="btnAccountStrategy" data-panel="pnlAccountStrategys" value="Account Strategy" />
-                <input type="button" id="btnOrders" data-panel="pnlOrders" value="Orders" />
+<body>
+    <!-- header start -->
+    <div class="navbar navbar-inverse sub-nav navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">首页</a></li>
+                    <li><a href="/">首页</a></li>
+                    <li><a href="/">首页</a></li>
+                    <li><a href="/">首页</a></li>
+                </ul>
             </div>
         </div>
-        {% block body %} This is the default content {% endblock %}
     </div>
-    <div id="tentacle">
+    <div class="navbar navbar-static-top navbar-default">
+        <!--main-nav -->
+        <div class="grid-container index-bar">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand hidden-sm reg-link" href="javascript:void();" id="A1">注册</a>
+                <asp:PlaceHolder ID="pnlLogin" runat="server"><a class="navbar-brand hidden-sm" href="javascript:void();"
+                    id="btnOpenLogin">登录</a> </asp:PlaceHolder>
+                <asp:PlaceHolder ID="pnlAccount" runat="server"><a class="navbar-brand hidden-sm"
+                    href="/dt/adminindex.aspx">控制台</a>
+                    <ul class="nav navbar-nav">
+                        <li id="menu5" class="dropdown"><a id="drop5" class="text-overflow" role="button"
+                            href="#" data-toggle="dropdown">
+                            <asp:Literal runat="server" ID="ltlAccountName"></asp:Literal>
+                            <span class="caret"></span></a>
+                            <ul id="menu2" class="dropdown-menu" aria-labelledby="drop5">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="/dw/services/account/Home.aspx">我的服务</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="/dw/services/account/information.aspx">个人中心</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="/dw/Authentication/UserLogoff.aspx">退出登录</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </asp:PlaceHolder>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a class="logo" href="/dw/default.aspx"></a></li>
+                    <li><a href="/dw/default.aspx">首页</a></li>
+                    <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">产品<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://v3.bootcss.com/getting-started/" target="_blank">起步</a> </li>
+                            <li><a href="http://v3.bootcss.com/css/" target="_blank">CSS</a> </li>
+                            <li><a href="http://v3.bootcss.com/components/" target="_blank">组件</a> </li>
+                            <li><a href="http://v3.bootcss.com/javascript/" target="_blank">JavaScript插件</a>
+                            </li>
+                            <li><a href="http://v3.bootcss.com/customize/" target="_blank">定制</a> </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">解决方案<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li class=""><a href="http://v2.bootcss.com/getting-started.html" target="_blank">起步</a>
+                            </li>
+                            <li class=""><a href="http://v2.bootcss.com/scaffolding.html" target="_blank">脚手架</a>
+                            </li>
+                            <li class=""><a href="http://v2.bootcss.com/base-css.html" target="_blank">基本CSS样式</a>
+                            </li>
+                            <li class=""><a href="http://v2.bootcss.com/components.html" target="_blank">组件</a>
+                            </li>
+                            <li class=""><a href="http://v2.bootcss.com/javascript.html" target="_blank">JavaScript插件</a>
+                            </li>
+                            <li class=""><a href="http://v2.bootcss.com/customize.html" target="_blank">定制</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">合作伙伴<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://v3.bootcss.com/getting-started/" target="_blank">寻求合作伙伴</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="http://expo.bootcss.com" target="_blank">关于我们</a></li>
+                    <!--
+                            <li><a href="http://expo.bootcss.com" target="_blank">网站实例</a></li>
+                            <li><a href="/about/">关于</a></li> -->
+                </ul>
+            </div>
+        </div>
     </div>
-    {% block scripts %} 
-    {% endblock %}
+    <!-- header end -->
+
+   {% block body %} This is the default content {% endblock %}
+  
+    <!-- footer start -->
+    <div class="footer-primary">
+        <div class="grid-container ">
+            <div class="footer-top">
+                <div class="footer-top_left">
+                    <a class="footer-top_market-logo" href="https://market.envato.com">Envato Market
+                    </a>
+                </div>
+                <div class="footer-top_right is-hidden-tablet-and-below">
+                    <div class="market-stats">
+                        <div class="market-stats_stat">
+                            <p class="t-body -color-light h-remove-margin">
+                                5,755,638
+                            <span>community members
+                            </span>
+                            </p>
+                        </div>
+                        <div class="market-stats_stat">
+                            <p class="t-body -color-light h-remove-margin">
+                                8,278,591
+                                <span>items for sale
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="footer-primary_columns">
+                <div class="row">
+                    <div class="col-md-2 col-sd-6">
+                        <div class="footer-box">
+                            <div class="footer-box_header js-footer-expand-toggle" data-target="#footer-meet">
+                                <h4>走进天客
+                                </h4>
+                            </div>
+                            <div class="footer-box_content" id="footer-meet">
+                                <div class="footer-box_list">
+                                    <ul class="t-list -style-none">
+                                        <li class="t-body h-remove-margin">
+                                            <a href="http://envato.com">关于我们
+                                            </a>
+                                        </li>
+                                        <li class="t-body h-remove-margin">
+                                            <a href="http://www.envato.com/sites">了解我们的生态体系
+                                            </a>
+                                        </li>
+                                        <li class="t-body h-remove-margin">
+                                            <a href="http://envato.com/careers">天客招聘
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer-box">
+                            <div class="footer-box_header js-footer-expand-toggle" data-target="#footer-help">
+                                <h4>需要帮助?
+                                </h4>
+                            </div>
+                            <div class="footer-box_content" id="footer-help">
+                                <div class="footer-box_list">
+                                    <ul class="t-list -style-none">
+                                        <li class="t-body h-remove-margin">
+                                            <a class="footer-box_link" href="https://help.market.envato.com">帮助中心
+                                            </a>
+                                        </li>
+                                        <li class="t-body h-remove-margin">
+                                            <a href="/legal/market" rel="nofollow">代理加盟
+                                            </a>
+                                        </li>
+                                        <li class="t-body h-remove-margin">
+                                            <a href="/legal/author" rel="nofollow">成为开发者
+                                            </a>
+                                        </li>
+                                        <li class="t-body h-remove-margin">
+                                            <a href="/licenses" rel="nofollow">关于服务授权
+                                            </a>
+                                        </li>
+                                        <li class="t-body h-remove-margin">
+                                            <a href="http://www.envato.com/contact" rel="nofollow">联系我们
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4  col-sd-6">
+                        <div class="footer-box">
+                            <div class="footer-box_header js-footer-expand-toggle" data-target="#footer-community">
+                                <h4>
+                                    <span class="is-hidden-tablet-and-below">Join our
+                                    </span>
+                                    Community
+                                </h4>
+                            </div>
+                            <div class="footer-box_content" id="footer-community">
+                                <div class="footer-box_list">
+                                    <ul class="t-list -style-none">
+                                        <li class="t-body h-remove-margin">
+                                            <a href="http://community.envato.com" rel="nofollow">Home
+                                            </a>
+                                        </li>
+                                        <li class="t-body h-remove-margin">
+                                            <a href="https://forums.envato.com" rel="nofollow">Forums
+                                            </a>
+                                        </li>
+                                        <li class="t-body h-remove-margin">
+                                            <a href="http://marketblog.envato.com/">Envato Market Blog
+                                            </a>
+                                        </li>
+                                        <li class="t-body h-remove-margin">
+                                            <a href="http://community.envato.com/#/events">Community Meetups
+                                            </a>
+                                        </li>
+                                        <li class="t-body h-remove-margin">
+                                            <a href="/affiliate_program" rel="nofollow">Become an Affiliate
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer-box">
+                            <div class="footer-box_header js-footer-expand-toggle" data-target="#footer-subscribe">
+                                <h4>
+                                    <span class="is-hidden-tablet-and-below">Email
+                                    </span>
+                                    Newsletters
+                                </h4>
+                            </div>
+                            <div class="footer-box_content" id="footer-subscribe">
+                                <p class="t-body h-remove-margin is-hidden-desktop">
+                                    Subscribe to receive updates
+                                </p>
+                                <p class="t-body is-hidden-tablet-and-below">
+                                    Subscribe to receive inspiration, ideas, and news in your inbox.
+                                </p>
+                                <form name="mc-embedded-subscribe-form" class="validate footer-subscribe"
+                                    id="mc-embedded-subscribe-form" action="https://Envato.us1.list-manage.com/subscribe/post?u=01a7104df9f31fd41e34ccbed&amp;id=6f890803c2&group[21][4]=true&group[301][512]=true&group[301][8192]=true&group[301][16384]=true"
+                                    method="post" target="_blank">
+                                    <input name="EMAIL" class="footer-subscribe_input" id="mce-EMAIL" type="text"
+                                        placeholder="Email Address" />
+                                    <button name="subscribe" class="footer-subscribe_submit btn-3d  btn-color-green-3d"
+                                        id="mc-embedded-subscribe" type="submit">
+                                        Subscribe
+                                    </button>
+                                </form>
+                                <a class="footer-box_external-link is-hidden-tablet-and-below" href="http://www.envato.com/privacy">Privacy Policy
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sd-12">
+                        <div class="footer-box">
+                            <div class="footer-box_content media-box">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="https://studio.envato.com/?utm_source=marketplaces&utm_medium=themeforest&utm_campaign=internal%20navigation&utm_content=footernav"
+                                            target="_blank">
+                                            <img width="140" height="112" alt="Open. New services!" src="//dmypbau5frl9g.cloudfront.net/assets/header-footer/envato-studio-7e47f0f38bfe5302824a99554d6d57ae.png" />
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <p class="t-body">
+                                            From logo design to website development, hand-picked designers and developers
+                                                                are ready to complete your custom jobs.
+                                        </p>
+                                        <p class="t-body h-remove-margin">
+                                            <a class="t-link -color-light" href="https://studio.envato.com/?utm_source=marketplaces&utm_medium=themeforest&utm_campaign=internal%20navigation&utm_content=footernav"
+                                                target="_blank">Check out Envato Studio
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="footer-box_content media-box">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="https://studio.envato.com/?utm_source=marketplaces&utm_medium=themeforest&utm_campaign=internal%20navigation&utm_content=footernav"
+                                            target="_blank">
+                                            <img width="140" height="112" alt="Open. New services!" src="//dmypbau5frl9g.cloudfront.net/assets/header-footer/envato-studio-7e47f0f38bfe5302824a99554d6d57ae.png" />
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <p class="t-body">
+                                            From logo design to website development, hand-picked designers and developers
+                                                                are ready to complete your custom jobs.
+                                        </p>
+                                        <p class="t-body h-remove-margin">
+                                            <a class="t-link -color-light" href="https://studio.envato.com/?utm_source=marketplaces&utm_medium=themeforest&utm_campaign=internal%20navigation&utm_content=footernav"
+                                                target="_blank">Check out Envato Studio
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="t-body h-remove-margin">
+                    <small>Copyright @ 2015 tkell.cn 版权所有 
+                        <a href="http://www.miibeian.gov.cn/" style="color: #999;" target="_blank">粤ICP备11095140号</a>
+                    </small>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- footer end -->
+
+    {% block scripts %} {% endblock %}
+    <script type="text/javascript">
+        $(function () {
+            if ($.scrollUp) {
+                $.scrollUp({
+                    scrollName: 'scrollUp', topDistance: '300', topSpeed: 300, animation: 'fade', animationInSpeed: 200, animationOutSpeed: 200, scrollText: '', activeOverlay: false
+                });
+            }
+        });
+    </script>
 </body>
 </html>
