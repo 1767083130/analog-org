@@ -28,9 +28,6 @@ var transferStrategyModel = function () {
 
             action: String,  //操作类型。分为 trade(成交)、transfer（转币）两种
             side: String, //交易类型 buy(买入或者期货中的开仓)或sell(卖出或者期货中的平仓)。当action=trade时有效
-            optionType: {type: String,default: "call" }, //操作类型 （call: 看涨期权  put:看跌期权）
-                                    //期货：(开多: { optionType:"call",side:"buy" } 开空: {optionType:"put",side:"buy" })
-                                    //      (平多: { optionType:"call",side:"sell" } 平空: {optionType:"put",side:"sell")
             leverage: { type: Number, "default": 1 }, //杠杆倍数
             transferSource: String, //移动路径源交易所,当action=transfer时有效，如 transferSource = 'huobi',transferTarget = 'btctrade'，表示从huobi移向btctrade
             transferTarget: String, //移动路径目标交易所
@@ -38,11 +35,13 @@ var transferStrategyModel = function () {
             batchWait: { type: Number, default: 0 }, //如果要分批,需要等待的时间
             batchMin: { type: Number, default: 0 },  //执行分批的最小额度.如果为0,则表示不能分批
 
-            minOrderAmount: {type: Number,default: 0}, //最低额度
+            minOrderAmount: {type: Number,default: 0}, //最低额度。只可能为正数
+            isPostOnly: {type: Boolean,default: false }, //订单是否为PostOnly
             symbol: String, //btc#cny、btc、ltc、usd。 注意，当action=trade时，为btc#cny; 当action=transfer时，为btc
             previousOperate: { type: Number, default: 0 },
-            nextOperate: { type: Number, default: 0 },
-            orderAmount: String,  //这个由策略中设定。比如 5 或者 5%,数字表示多少个，百分比表示账户总额中的百分之多少
+            nextOperate: { type: Number, default: 0 }, //下一步操作ID。如果为0，则不进行下一步操作
+            orderAmount: String, //>0时，为多仓； < 0时，为空仓
+                                 //这个由策略中设定。比如 5 或者 5%,数字表示多少个，百分比表示账户总额中的百分之多少
                                  //也可以为 min(btctrade.btc#cny.buy.amount * 20%,btctrade.btc.account.available * 50%)
             auto: { type: Boolean, default: true }, //是否自动执行
             validAccount: { type: Boolean, default: false } //如果id不为1时，是否在运行策略时就需要验证账户余额（为1时一定会验证）

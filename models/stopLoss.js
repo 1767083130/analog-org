@@ -24,7 +24,7 @@ var StopLossModel = function () {
             delay: { type: Number,default: 0 },  //等待时间。如果在等待的时间内已经上去，则不执行
             lossRange: { type:Number,default: 0 }, //止损容忍的偏差范围。为幅度，比如5，表示5%
             direction: { type: String,default: 'down' }, //分为两种，up、down
-            side: { type: String, default: 'sell'}, //分为两种，buy、sell
+            operateType: { type: String, default: 'sell'}, //分为两种，buy、sell
 
             /* 移动止损 */
             trailingStop: Boolean,  //是否移动止损

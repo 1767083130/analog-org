@@ -39,8 +39,6 @@ var strategyModel = function () {
      * Methods
      */
     StrategySchema.methods = {
-
-
     }
     
     /**

@@ -317,7 +317,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/personal/account/syncAccounts",
+                url: "/admin/account/syncAccounts",
                 data: { sites: sites.join(','), "_csrf": $('input[name="_csrf"]').val() },
                 dataType: 'json'
             }).done(function (results) {
@@ -462,7 +462,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/personal/account/updateClient",
+            url: "/admin/account/updateClient",
             data: body,
             dataType: 'json'
         }).done(function (e) {
@@ -482,7 +482,7 @@
     function toggleClientValid(site) {
         $.ajax({
             type: "POST",
-            url: "/personal/account/toggleClientValid",
+            url: "/admin/account/toggleClientValid",
             data: { site: site, "_csrf": $('input[name="_csrf"]').val() },
             dataType: 'json'
         }).done(function (e) {
@@ -662,7 +662,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/personal/account/saveAccountStrategy",
+            url: "/admin/account/saveAccountStrategy",
             data: { accountStrategy:_strategy.account, "_csrf": $('input[name="_csrf"]').val() },
             dataType: 'json'
         }).done(function (e) {
@@ -799,7 +799,7 @@
     function deleteCoinAddress(address) {
         $.ajax({
             type: "POST",
-            url: "/personal/account/deleteCoinAddress",
+            url: "/admin/account/deleteCoinAddress",
             data: { address: address, "_csrf": $('input[name="_csrf"]').val() },
             dataType: 'json'
         }).done(function (e) {
@@ -835,7 +835,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/personal/account/saveCoinAddress",
+            url: "/admin/account/saveCoinAddress",
             data: { address: address, "_csrf": $('input[name="_csrf"]').val() },
             dataType: 'json'
         }).done(function (e) {
@@ -873,7 +873,7 @@
         var site = $('#dropTradeSites').val();
         $.ajax({
             type: "POST",
-            url: "/personal/trade/syncRecentTrades",
+            url: "/admin/trade/syncRecentTrades",
             data: { site: site, "_csrf": $('input[name="_csrf"]').val() },
             dataType: 'json'
         }).done(function (e) {
@@ -919,7 +919,7 @@
 
         $.ajax({
             type: "GET",
-            url: "/personal/transferStrategy/getConditionResult",
+            url: "/admin/transferStrategy/getConditionResult",
             data: { condition: condition, "_csrf": $('input[name="_csrf"]').val() },
             dataType: 'json'
         }).done(function (e) {

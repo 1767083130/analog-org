@@ -19,7 +19,7 @@ let transfer = new class{
      * @param {ClientIdentifier} identifier
      * @public
      */
-    * createTransfer(order,identifier){ //todo
+    async createTransfer(order,identifier){ //todo
         let api = new Api(identifier);
         let newOrder = new Order(order);
 
@@ -27,16 +27,16 @@ let transfer = new class{
         newOrder.status = 'consign';
 
         if(order.isTest){
-            newOrder = yield newOrder.save(newOrder); 
+            newOrder = await newOrder.save(newOrder); 
         } else {
             //todo 这里要考虑系统的鲁棒性
             let orderRes;
             let apiOptions = { symbol: newOrder.symbol, amount: newOrder.consignAmount, price: newOrder.price };
 
             if(order.side == "buy"){
-                orderRes = yield api.buy(apiOptions);
+                orderRes = await api.buy(apiOptions);
             } else  if(order.side == "sell"){
-                orderRes = yield api.sell(apiOptions);
+                orderRes = await api.sell(apiOptions);
             }
 
             if(!orderRes.isSuccess){
@@ -44,7 +44,7 @@ let transfer = new class{
             }
 
             newOrder.outerId = orderRes.outerId;
-            newOrder = yield newOrder.save(newOrder);  
+            newOrder = await newOrder.save(newOrder);  
         }
 
         let refreshAccountOptions = {
@@ -60,14 +60,14 @@ let transfer = new class{
 
             side: newOrder.side
         };
-        yield* account.refreshAccountTransfering(refreshAccountOptions,'create');
+        await account.refreshAccountTransfering(refreshAccountOptions,'create');
 
         return newOrder;
     }
 
-   * refreshTransfers(){
+    async refreshTransfers(){
        let operates = [];
-       let transferStrategyLogs = yield TransferStrategyLog.find({ status: "wait"}); //todo 查询没有成功的转币纪录
+       let transferStrategyLogs = await TransferStrategyLog.find({ status: "wait"}); //todo 查询没有成功的转币纪录
        let sitesOperates = []; //结构为 [{ userName: "lcm", site: "huobi",operates: [TransferStrategyLog.operate,userName: '',]}]
 
        /*
@@ -79,7 +79,7 @@ let transfer = new class{
        */
 
        for(let transferStrategyLog of transferStrategyLogs){
-           for(let operate transferStrategyLog.operates){
+           for(let operate of transferStrategyLog.operates){
                if(operate.status == 'wait' && operate.action == 'transfer'){
                    let existItem = sitesOperates.find(function(value){
                        return value.site == operate.transferTarget && value.userName == transferStrategyLog.userName;
@@ -100,14 +100,14 @@ let transfer = new class{
        }
 
        for(let siteOperates of sitesOperates){
-           let identifier = yield ClientIdentifier.findOne({ site: siteOperates.site, userName: siteOperates.userName,isValid: true });
+           let identifier = await ClientIdentifier.findOne({ site: siteOperates.site, userName: siteOperates.userName,isValid: true });
            if(!identifier){
                //todo 最好记录
                continue;
            }
            
            let api = new Api(identifier);
-           let account = yield api.getAccountInfo();
+           let account = await api.getAccountInfo();
            if(!account){ //这里有可能是网络的问题导致获取失败
                continue;
            }
@@ -152,7 +152,7 @@ let transfer = new class{
                           transferStrategyLog.currentStep = operate.nextOperate;
 
                           //执行后续操作
-                          yield* runStrategyOperate(operate.nextOperate);
+                          await runStrategyOperate(operate.nextOperate);
                       } else {
                           transferStrategyLog.status = "success";
                           transferStrategyLog.endTime = new Date();
@@ -168,7 +168,7 @@ let transfer = new class{
                       }
 
                       transferStrategyLog.modified = new Date(); 
-                      yield transferStrategyLog.save();
+                      await transferStrategyLog.save();
                   }
                }
            }

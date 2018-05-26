@@ -11,8 +11,8 @@ var realTimePriceModel = function () {
 
         vol: Number, //成交量
         level: Number, //涨幅
-        buys: [], //买10  每个数组项同时也为一个数组，格式为 [price,amount]，[0],价格；[1]为委托数量
-        sells: [], //卖10 每个数组项同时也为一个数组，格式为 [price,amount]，[0],价格；[1]为委托数量
+        bids: [], //买10  每个数组项同时也为一个数组，格式为 [price,amount]，[0],价格；[1]为委托数量
+        asks: [], //卖10 每个数组项同时也为一个数组，格式为 [price,amount]，[0],价格；[1]为委托数量
         //                    //期货周期类型有week,nextWeek,quarter 
         // priceHigh: Number, //最高
         // priceLow: Number, //最低
@@ -29,7 +29,7 @@ var realTimePriceModel = function () {
      */
     RealTimePriceSchema.methods = {
         getPrices : function(){
-            return this.buys.concat(this.sells);
+            return this.bids.concat(this.asks);
         }
     }
     
