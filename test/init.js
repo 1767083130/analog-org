@@ -39,11 +39,30 @@ let initLib = new class{
         }.bind(this))
     }
 
+    initClients(){
+        let client = testUtil.getClient();
+        client.connect();
+
+        return new Promise(function(resolve,reject){
+            if(this.clientStatus == 1){
+                resolve();
+                return;
+            }
+
+            client.on('open',function(){
+                this.clientStatus = 1
+                resolve();
+            }.bind(this));
+
+        }.bind(this));
+    }
+
 }
 
 before(async function() {
     console.log('开始初始化测试数据..');
     await initLib.initDatabase();
+    await initLib.initClients();
     console.log('测试数据初始化完毕。');
 });
 

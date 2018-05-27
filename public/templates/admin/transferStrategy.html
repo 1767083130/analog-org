@@ -521,7 +521,7 @@
             var itemId = $(this).attr('data-id');
             $.ajax({
                 type: "POST",
-                url: "/personal/transferStrategy/run",
+                url: "/admin/transferStrategy/run",
                 data: { strategyId: itemId,"_csrf": $('input[name="_csrf"]').val()  },
                 dataType: 'json'
             }).done(function (e) {
@@ -749,7 +749,7 @@
     function deleteTransferStrategy(strategyId,callback){
          $.ajax({
             type: "POST",
-            url: "/personal/transferStrategy/delete",
+            url: "/admin/transferStrategy/delete",
             data: { id: strategyId,"_csrf": $('input[name="_csrf"]').val()  },
             dataType: 'json'
         }).done(function (e) {
@@ -766,7 +766,7 @@
      function saveTransferStrategy(strategy,successFun,failFun) {
          $.ajax({
             type: "POST",
-            url: "/personal/transferStrategy/save",
+            url: "/admin/transferStrategy/save",
             data: { transferStrategy: strategy,"_csrf": $('input[name="_csrf"]').val()  },
             dataType: 'json'
         }).done(function (e) {

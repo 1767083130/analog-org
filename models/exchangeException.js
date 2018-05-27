@@ -12,7 +12,7 @@ var exchangeExceptionModel = function () {
 
         site: String,
         actionId: { type: Schema.ObjectId }, //orderId or transferId
-        operateId: { type: Schema.ObjectId }, //transferStrategyLog.operate._id
+        operateId: { type: Number }, //transferStrategyLog.operate.id
         status: { type: Number, "default": 0 }, //0，尚未处理；1，已处理
         message: String,
         causeCode: String, //异常类型

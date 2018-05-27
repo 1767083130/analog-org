@@ -20,7 +20,7 @@ var accountHistoryModel = function () {
         exchangeId: Schema.ObjectId, //订单或转币ID
         changeType: { type: String }, //在什末情况下更新账户.总共有3种：create（创建委托）,bargain（委托成交）,cancel(取消委托),sync_accounts(同步账户)。
 
-        operateId: Schema.ObjectId, //操作Id
+        operateId: { type: Number }, //操作Id
         created: { type: Date, default: Date.now }
     });
 

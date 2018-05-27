@@ -1,0 +1,10 @@
+几个重要的数据结构
+
+ realTimePrice: 市场及时价格信息
+ position： 用户仓位
+ account: 用户帐户信息
+ user: 用户
+ order: 交易委托
+ strategy: 市场策略
+ userSetting: 用户参数设置
+ manualTask： 需要人工处理的任务

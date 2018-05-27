@@ -184,7 +184,7 @@
         function deleteCoinAddress(address) {
             $.ajax({
                 type: "POST",
-                url: "/personal/account/deleteCoinAddress",
+                url: "/admin/account/deleteCoinAddress",
                 data: { address: address, "_csrf": $('input[name="_csrf"]').val() },
                 dataType: 'json'
             }).done(function (e) {
@@ -229,7 +229,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/personal/account/saveCoinAddress",
+                url: "/admin/account/saveCoinAddress",
                 data: { address: address, "_csrf": $('input[name="_csrf"]').val() },
                 dataType: 'json'
             }).done(function (e) {
