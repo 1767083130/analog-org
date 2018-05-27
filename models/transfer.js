@@ -24,7 +24,7 @@ var transferModel = function () {
                                                  //那末，此委托的childTransfer就为新委托
 
         actionId: Schema.ObjectId, 
-        operateId: Schema.ObjectId, //操作Id
+        operateId: Number, //操作Id
         accountAmount: { type: Number, "default":0 }, //转币前的帐户总额。当action=transfer时有效
         isSysAuto: Boolean,
         outerId: String,  //外部交易网站的Id

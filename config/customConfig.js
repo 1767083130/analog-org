@@ -1,6 +1,6 @@
-'use strict';
+﻿'use strict';
 
-module.exports = {
+var config = {
     databaseConfig: {
         host: "localhost",
         database: "Stock"
@@ -11,6 +11,7 @@ module.exports = {
             appSecret: "0123456789abcdef"
         }
     },
+    nodeEnv: "production", //development
     serverUrl: "ws://119.28.204.125:8080/ws",  
     security: {
         secret: "abdssdhfhde23239jhgdffdhhfhdvvxcm.dfhdjh?fdfhjdfhjhbgb", //加密密码 
@@ -21,7 +22,6 @@ module.exports = {
             serverUrl: "http://localhost:8001/DesktopModules/Services/API"
         }
     },
-    platforms: [],
     bcrypt: {
         difficulty: 8
     },
@@ -32,4 +32,8 @@ module.exports = {
             maxOrderWait: 5 * 60 * 60 * 1000  //5个小时
         }
     }
+    
 }
+
+module.exports = config;
+

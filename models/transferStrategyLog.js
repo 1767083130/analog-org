@@ -9,9 +9,11 @@ const paginate = require('mongoose-paginate');
 var TransferStrategyLogModel = function () {
     const TransferStrategyLogSchema = mongoose.Schema({
         strategyId: { type: Schema.ObjectId,ref: "TransferStrategy" }, 
+        strategyPlanId: { type: Schema.ObjectId,ref: "StrategyPlan" }, //执行计划Id
         userName: String,
-        status: String, //wait,sucess,failed
+        status: String, //wait,success,failed
         reason: String, //failed reason
+        isTest: { type: Boolean },
 
         currentStep: Number,
         operates: [{
@@ -37,6 +39,8 @@ var TransferStrategyLogModel = function () {
         startTime: Date,
         endTime: Date,
         modified: { type : Date, "default": Date.now() }
+    },{
+        usePushEach: true
     });
 
      /**
@@ -58,11 +62,6 @@ var TransferStrategyLogModel = function () {
         */
         load: function (_id) {
             return this.findOne({ _id })
-                .exec();
-        },
-
-        loadByOperateId: function(operateId){
-            return this.findOne({ "operates._id": operateId })
                 .exec();
         },
 

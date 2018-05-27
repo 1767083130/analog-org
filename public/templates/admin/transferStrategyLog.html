@@ -73,7 +73,7 @@
             mutilRowMessage: true,
             showLoading: true,
             showMessageOnRowClicked: true,
-            url: '/personal/transferStrategyLog/list',
+            url: '/admin/transferStrategyLog/list',
             colModel: [
                 { display: "策略名称",name: "CreatedDate",type: 0,visible: true,width: "150",sortable: true,align: "left" },
                 { display: "状态", name: "InvoleCount",type: 0,visible: true, width: "100", sortable: true,align: "left" },
@@ -247,7 +247,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/personal/transferStrategyLog/getTransfers",
+            url: "/admin/transferStrategyLog/getTransfers",
             data: options,
             dataType: 'json'
         }).done(function (e) {
@@ -279,7 +279,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/personal/transferStrategyLog/runTransferStep",
+            url: "/admin/transferStrategyLog/runTransferStep",
             data: options,
             dataType: 'json'
         }).done(function (e) {
@@ -303,7 +303,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/personal/transferStrategyLog/updateStepStatus",
+            url: "/admin/transferStrategyLog/updateStepStatus",
             data: options,
             dataType: 'json'
         }).done(function (e) {
