@@ -1,6 +1,6 @@
 'use strict';
 const Client = require('../lib/Client');
-const debug = require('debug')('ws-server:clientDemo');
+const debug = require('debug')('ws-client:clientDemo');
 const Server_Url = 'ws://119.28.204.125:8080/ws' //'ws://47.254.16.104:8080/ws'; //require('../config').ServerUrl;  
 
 let client = new Client({

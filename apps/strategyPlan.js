@@ -11,7 +11,7 @@ const Order = mongoose.model('Order');
 const StrategyPlan = mongoose.model('StrategyPlan');
 const Decimal = require('decimal.js');
 const cacheClient = require('../lib/apiClient/cacheClient').getInstance();
-const CacheClient = require('ws-server').CacheClient;
+const CacheClient = require('ws-client').CacheClient;
 const strategyPlanLib = require('../lib/strategyPlan');
 
 const INTERVAL = 4000; //4s

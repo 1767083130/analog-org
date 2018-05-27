@@ -1,7 +1,7 @@
 
 var CT = require('../lib/user/country-list');
 var AM = require('../lib/user/account-manager');
-var EM = require('../lib/user/email-dispatcher');
+//var EM = require('../lib/user/email-dispatcher');
 
 module.exports = function(app) {
 

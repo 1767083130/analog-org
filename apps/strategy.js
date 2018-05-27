@@ -9,7 +9,7 @@ database.config(dbConfig);
 
 const orderLib = require('../lib/order');
 const cacheClient = require('../lib/apiClient/cacheClient').getInstance();
-const CacheClient = require('ws-server').CacheClient;
+const CacheClient = require('ws-client').CacheClient;
 const NormalStrategyRunner = require('../lib/transferStrategys/NormalStrategyRunner');
 const transferController = require('../lib/transferStrategys/transferController');
 const User = mongoose.model('User');

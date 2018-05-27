@@ -11,7 +11,7 @@ const StrategyPlan = mongoose.model('StrategyPlan');
 const TransferStrategy = mongoose.model('TransferStrategy');
 const BaseStrategyRunner = require('../lib/transferStrategys/baseStrategyRunner');
 const NormalStrategyRunner = require('../lib/transferStrategys/normalStrategyRunner');
-const Client = require('ws-server').Client;
+const Client = require('ws-client').Client;
 
 let testUtil = new class{
     constructor(){

@@ -1,6 +1,6 @@
 .DS_Store
 .idea/
 .build/
-.ws-server/
+.ws-client/
 node_modules/
 *.iml
