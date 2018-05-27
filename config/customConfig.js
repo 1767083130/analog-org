@@ -12,7 +12,7 @@ var config = {
         }
     },
     nodeEnv: "production", //development
-    serverUrl: "ws://220.28.204.125:8080/ws",  
+    serverUrl: "ws://119.28.204.125:8080/ws",  
     security: {
         secret: "abdssdhfhde23239jhgdffdhhfhdvvxcm.dfhdjh?fdfhjdfhjhbgb", //加密密码 
         tkellApp: {
