@@ -18,6 +18,15 @@ const transferController = require('../../lib/transferStrategys/transferControll
 module.exports = function (router) {
     //router.get('/', account.index_api);
 
+    router.get('/', async(function* (req, res) {
+        try{
+            res.render('admin/trade');
+        } catch(err){
+            console.error(err);
+            res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});
+        }
+    }));
+
     router.get('/list', async(function* (req, res) {
         try{
             list(req,res,function(data){
