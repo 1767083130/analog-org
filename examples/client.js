@@ -1,12 +1,12 @@
 'use strict';
-const Client = require('../lib/Client');
+const Client = require('ws-server').Client;
 const debug = require('debug')('ws-client:clientDemo');
-const Server_Url = 'ws://119.28.204.125:8080/ws' //'ws://47.254.16.104:8080/ws'; //require('../config').ServerUrl;  
+const configUtil = require('../lib/apiClient/apiConfigUtil')
 
 let client = new Client({
     appKey: 'a',
     appSecret: 'b',
-    serverUrl: Server_Url
+    serverUrl: configUtil.getServerUrl()
 });
 let channels = ['market','order','position','wallet']; 
 
