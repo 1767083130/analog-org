@@ -58,15 +58,14 @@
 
 
     function initFlexiGrid() { 
-        var logs = {
+        var initData = {
             "page": 1,
             "total": {{ total }},
-            "userdata": { 
-            }
+            "userdata": {{ logs | safe }} || []
         };
 
         var option = {
-            data: logs,
+            data: initData,
             autoPager: false,
             autoToolBar: true,
             colResizable: true,
@@ -146,7 +145,6 @@
     }
 
     function flexiGridPreLoad(options){
-        debugger
         var  data = {
             "page": options.page,
             "total": options.total,
@@ -172,13 +170,13 @@
             return desc;
         }
 
-        var logs = options.logs || [];
+        var logs = options.userdata || [];
         //logs.push({});logs.push({});logs.push({});data.total = 3;
         for(var i = 0; i < logs.length; i++){
             var log = logs[i];
             var currentStepDesc = '未找到';
-            for(var i = 0; i < log.operates.length; i++){
-                var logOperate = log.operates[i];
+            for(var j = 0; j < log.operates.length; j++){
+                var logOperate = log.operates[j];
                 if(log.currentStep == logOperate.id){
                     currentStepDesc = getLogOperateDesc(logOperate,true);
                 }
@@ -209,12 +207,12 @@
                         "attrs": []
                     },
                     {
-                        "cellHtml": w.dateformat(log.startTime,"yyyy-MM-dd hh:mm:ss"),
+                        "cellHtml": log.startTime ? w.dateformat(new Date(log.startTime),"yyyy-MM-dd hh:mm:ss") : '',
                         "isReadOnly": true,
                         "attrs": []
                     },
                     {
-                        "cellHtml": w.dateformat(log.endTime,"yyyy-MM-dd hh:mm:ss"),
+                        "cellHtml":log.endTime ? w.dateformat(new Date(log.endTime),"yyyy-MM-dd hh:mm:ss") : '',
                         "isReadOnly": true,
                         "attrs": []
                     }

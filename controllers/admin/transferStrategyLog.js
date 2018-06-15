@@ -17,7 +17,7 @@ module.exports = function (router) {
     router.get('/', async(function* (req, res) {
         try{
             list(req,res,function(result){
-                res.render('transferStrategyLog', result);
+                res.render('admin/transferStrategyLog', result);
             });
         } catch(err){
             console.error(err);
@@ -122,11 +122,29 @@ function list(req,res,callback){
         limit: pageSize
     };
 
-    TransferStrategyLog.paginate(query, options).then(function(getRes) {
+    TransferStrategyLog.paginate(query, options).then(async function(getRes) {
+        let logs = [],orgLogs = getRes.docs || [];
+        for(let log of orgLogs){
+            //这里最好是使用pupulate
+            let strategy = await Strategy.findById(log.strategyId);
+            if(strategy){
+                log.strategy = {
+                    name: strategy.name,
+                    _id: strategy._id
+                }
+            } else {
+                log.strategy = {
+                    name: '策略已被删除',
+                    _id: null
+                }
+            }
+            logs.push(log);
+        }
+
         let t = {
             pageSize: getRes.limit,
             total: getRes.total,
-            logs: getRes.docs,
+            logs: JSON.stringify(logs || []),
             isSuccess: true
         };  
 
