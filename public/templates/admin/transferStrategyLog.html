@@ -58,15 +58,15 @@
 
 
     function initFlexiGrid() { 
-        var logs = {
+        var initData = {
             "page": 1,
             "total": {{ total }},
-            "userdata": { 
-            }
+            "logs": {{ logs | safe  }}
         };
+        //initData.logs = JSON.parse(initData.logs);
 
         var option = {
-            data: logs,
+            data: initData,
             autoPager: false,
             autoToolBar: true,
             colResizable: true,
@@ -98,7 +98,7 @@
             showTableToggleBtn: false,
             usepager: true,
             useRp: true,
-            rp: 1,
+            rp: 10,
             singleselected: false,
             nowrap: true,
             showcheckbox: false,
@@ -117,7 +117,6 @@
     };
 
     function flexiGridInited(options) {
-        debugger
         var option = { 
             pagerContainer: $("#flexiGridPager"),
             numDisplayEntries: 2, 
@@ -146,13 +145,15 @@
     }
 
     function flexiGridPreLoad(options){
-        debugger
+        if(typeof options.logs == 'string'){
+            options.logs = JSON.parse(options.logs);
+        }
+
         var  data = {
             "page": options.page,
             "total": options.total,
             "dataType": "json",
             "rows": [],
-             //emptyHtml: "一代风流",
             "userdata": {}
         };
 
@@ -173,12 +174,11 @@
         }
 
         var logs = options.logs || [];
-        //logs.push({});logs.push({});logs.push({});data.total = 3;
         for(var i = 0; i < logs.length; i++){
             var log = logs[i];
             var currentStepDesc = '未找到';
-            for(var i = 0; i < log.operates.length; i++){
-                var logOperate = log.operates[i];
+            for(var j = 0; j < log.operates.length; j++){
+                var logOperate = log.operates[j];
                 if(log.currentStep == logOperate.id){
                     currentStepDesc = getLogOperateDesc(logOperate,true);
                 }
@@ -209,12 +209,12 @@
                         "attrs": []
                     },
                     {
-                        "cellHtml": w.dateformat(log.startTime,"yyyy-MM-dd hh:mm:ss"),
+                        "cellHtml": log.startTime ? w.dateformat(new Date(log.startTime),"yyyy-MM-dd hh:mm:ss") : '',
                         "isReadOnly": true,
                         "attrs": []
                     },
                     {
-                        "cellHtml": w.dateformat(log.endTime,"yyyy-MM-dd hh:mm:ss"),
+                        "cellHtml":log.endTime ? w.dateformat(new Date(log.endTime),"yyyy-MM-dd hh:mm:ss") : '',
                         "isReadOnly": true,
                         "attrs": []
                     }
