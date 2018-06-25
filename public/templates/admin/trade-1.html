@@ -1,4 +1,5 @@
 ﻿{% extends "layouts/admin-master.html" %} 
+
 {% block body %}
 <div>
     <h1>
@@ -70,7 +71,7 @@
             mutilRowMessage: true,
             showLoading: true,
             showMessageOnRowClicked: true,
-            url: '/order/list',
+            url: '/admin/trade/list',
             colModel: [
                 { display: "名称",name: "site",type: 0,visible: true,width: "150",sortable: true,align: "left" },
                 { display: "状态", name: "autoRetry",type: 0,visible: true, width: "100", sortable: true,align: "left" },
@@ -87,7 +88,7 @@
                 width: "25"
             },
             gridClass: "bbit-grid",
-            bootStrapSupported: false,
+            bootStrapSupported: true,
             resizable: false,
             showTableToggleBtn: false,
             usepager: true,
@@ -280,4 +281,3 @@
 
 </script>
 {% endblock %}
-

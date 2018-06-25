@@ -36,7 +36,7 @@ var betweenStrategyLogModel = function () {
             batchWait: { type: Number, default: 0 }, //如果要分批,需要等待的时间
             batchMin: { type: Number, default: 0 },  //执行分批的最小额度.如果为0,则表示不能分批
 
-            minOrderAmount: {type: Number,default: 0}, //最低额度
+            minStepAmount: {type: Number,default: 0}, //最低额度
             symbol: String, //btc#cny、btc、ltc、usd。 注意，当action=trade时，为btc#cny; 当action=transfer时，为btc
             previousOperate: { type: Number, default: 0 },
             nextOperate: { type: Number, default: 0 },

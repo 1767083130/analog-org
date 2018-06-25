@@ -10,3 +10,4 @@ package-lock.json
 .build
 .vscode
 config/
+apps/

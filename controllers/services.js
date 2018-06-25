@@ -15,11 +15,11 @@ const Decimal = require('decimal.js');
 module.exports = function (router) {
     router.get('/depth',  async(function* (req, res) {
         //行情深度查询
-        res.render('depth');
+        res.render('admin/depth');
     }));
 
     router.get('/variable',  async(function* (req, res) {
         //计算表达式值
-        res.render('variable');
+        res.render('admin/variable');
     }));
 }

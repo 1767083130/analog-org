@@ -2,7 +2,6 @@
 const mongoose = require('mongoose');
 const Order  = mongoose.model('Order');
 const ClientIdentifier  = mongoose.model('ClientIdentifier');
-const Strategy = mongoose.model('Strategy');
 const TransferStrategyLog = mongoose.model('TransferStrategyLog');
 
 const Api = require('./apiClient/api');

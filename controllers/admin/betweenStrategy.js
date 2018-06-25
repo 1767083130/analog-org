@@ -26,7 +26,7 @@ module.exports = function (router) {
             list(req,res,function(data){
                 // data = { transferStrategys: [{userName:"lcm"}]}
                 // let json = {userName: JSON.stringify(data) };
-                res.render('transferStrategy', data);
+                res.render('admin/transferStrategy', data);
             });
         } catch(err){
             console.error(err);

@@ -36,7 +36,7 @@ module.exports = function (router) {
             // var clientId = clients[0]._id;
             // var timeStamp = clientId.getTimestamp();
             // var id= mongoose.Types.ObjectId(clientId.toString());
-            res.render('account', {
+            res.render('admin/account', {
                 userName: userName,
                 business: JSON.stringify(business),
                 accounts: JSON.stringify(accounts || []),
