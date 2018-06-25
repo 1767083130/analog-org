@@ -99,13 +99,11 @@ module.exports = function (router) {
 }
 
 function list(req,res,callback){
-    let sPageNumber = req.body.page;
-    let sPageSize = req.body.rp;
     let sAuto = req.body.auto;
     let sStatus = req.body.status;
 
-    let pageNumber = Number(sPageNumber) || 1;
-    let pageSize = Number(sPageSize) || 10;
+    let pageNumber = Number(req.body.page || '1') || 1;
+    let pageSize = Number(req.body.rp || '10') || 10;
 
     let userName = req.user.userName;
     let query = { "$where": function(){

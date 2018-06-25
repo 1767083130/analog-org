@@ -1,0 +1,600 @@
+FlexiGrid一些常用的API
+
+1、$.fn.getSelectedRows()  获取选中的行，返回选中行的所有数据。如
+            $("#<%=FlexiGrid.ContentTableID %>").getSelectedRows()
+
+2、$.fn.getCheckedRows()  获取选中的行，返回选中行的主键。如
+            $("#<%=FlexiGrid.ContentTableID %>").getCheckedRows().join(",");
+
+3、 追加参数的方法
+            $.fn.setNewExtParam = function (np) //为Options设置新的ExtParams,最好只是在请求数据时使用，否则会与服务器控件不兼容。如
+            var p = [{ name: "Status", value: obj}];
+            $("#<%=FlexiGrid.ContentTableID %>").setNewExtParam(p);
+            $("#<%=FlexiGrid.ContentTableID %>").flexReload();
+	重新设置参数的方法：
+	        var p = $("#<%=FlexiGridView1.ContentTableID %>").GetOptions();
+            p.rp = $(this).attr("datavalue");
+            $("#<%=FlexiGridView1.ContentTableID %>").flexOptions(p);
+
+4、$.fn.flexReload() 重新加载数据。如3中实例。
+     $("#<%=FlexiGrid.ContentTableID %>").flexReload();
+
+4.1、 执行命令  $.fn.command = function (commandName,otherParams,keyIds)  //keyIds，主键值，多个之间用","隔开；otherParams，其他附加参数，可以在服务器端用Request.Form的方法获取值
+     var otherParams = [{"name":"param1",value:"param1Value"}]; //可为空
+	 $("#<%=FlexiGrid.ContentTableID %>").command("Delete",otherParams,keyIds);
+
+	 
+
+5、设置初始宽度和高度的方法。
+   方法一、
+     （1）设置服务器控件的InitFleixJs属性为初始化函数的函数名称，如下
+	        <wnk:FlexiGridView ID="FlexiGrid" runat="server" 
+                InitJsFunction="setGridOption"></wnk:FlexiGridView>
+	     
+	  (2) 实现Js初始化函数。方法如下
+	    var mainHeight = document.documentElement.clientHeight;
+        var mainWidth = document.documentElement.clientWidth - 3 - 170; // 减去边框和左边的宽度
+		function setGridOption(option) { //特别要注意的是，一定要将option返回，否则option会丢失，导致错误
+            if (!option) {
+                return;
+            }
+            var mainHeight = document.documentElement.clientHeight;
+            var mainWidth = document.documentElement.clientWidth - 3 - 170; // 减去边框和左边的宽度
+            var otherpm = 119;
+            var gh = mainHeight - otherpm;
+
+            option.width = mainWidth;
+            option.height = gh;
+
+            var onCommand = onCommandHandle;
+            option.onCommand = onCommand; //在这里也可以设置当执行某操作时回调的Js函数
+
+            return option; //必须返回
+        }
+	    function onCommandHandle(sender, e) {
+            var operateBtn = sender;
+            var eventType = $(operateBtn).attr("eventType");
+            var redirectPageUrl = $(operateBtn).attr("redirectPageUrl");
+            var btnValue = $(operateBtn).attr("dataValue");
+            var commandName = $(operateBtn).attr("commandName");
+            var action = $(operateBtn).attr("action");
+
+            if (commandName == "edit") {
+			    //这里执行编辑操作
+			}
+		}
+	方法二：
+	   $(".bbit-grid", "#<%= FlexiGrid.ContentDivID %>").width(200);
+
+6、操作列点击事件处理。当点击某个操作时，回调Js函数。给onCommand赋值。实例见5。
+         工具栏点击事件处理。给服务器控件的ToolBarSettings中的FlexiToolBarButton的ActionJsFunction赋值。示例如下
+	<ToolBarSettings>
+        <GeneralToolBarSettings DeleteButtonBar-Visible="false">
+            <AddButtonBar EventType="CustomJavascript" Text="选择商品" ActionJSFunction="selectGoods" />
+        </GeneralToolBarSettings>
+        <ToolBarButtons>
+            <wnk:FlexiToolBarButton Text="清除全部" ActionJSFunction="clearAll" EventType="CustomJavascript" />
+        </ToolBarButtons>
+    </ToolBarSettings>
+
+	function selectGoods(){alert("click me!");}
+	function clearAll(){alert("click me!");}
+
+7、 清空数据。 
+            var p = { page: 1, total: 0, rows: [] };
+            $('#<%= FlexiGrid.ContentTableID %>').flexAddData(p);
+
+8、$.fn.noSelect() 清空选中行
+
+
+9、$.fn.flexAddData(p) 添加行。
+            var p = { page: 1, total: items.length, rows: [] };
+            for (var i = 0; i < items.length;i++ ) {
+                var item = items[i];
+                var row = { id: 1, cell: [{ cellHtml: item.Title,isReadOnly:true }, { cellHtml: '存在相同标题的商品'}], operateCell: [{
+                    alias: 'edit',
+                    commandName: 'edit',
+                    eventType: 0,  //public enum ButtonEventType { CustomJavascript = 0, RedirectPage = 1,CallBack = 2 }
+                    text: '编辑',
+                    visible: true,
+                    redirectPageUrl: ''
+                }]
+                };
+                p.rows.push(row);
+            }
+
+            $('#<%= FlexiGrid.ContentTableID %>').flexAddData(p);
+
+10、$.fn.flexToggleCol
+    
+11、获取和设置参数 
+           //设置当前页为10、每页显示两行
+            var p = $("#<%=FlexiGridView1.ContentTableID %>").GetOptions();
+            p.rp = 2;  
+			 p.newp = 10;
+            $("#<%=FlexiGridView1.ContentTableID %>").flexOptions(p);
+            $("#<%=FlexiGridView1.ContentTableID %>").flexReload();
+11\获取当前显示的数据
+            var p = $("#<%=FlexiGridView1.ContentTableID %>").GetOptions();
+            var data = p.data;
+
+12、需要实现执行操作后弹出提示结果，如何实现？
+   方法一： 在CommandOperate事件方法中给Message赋值   
+   void FlexiGrid_CommandOperate(object sender, WebNuke.Web.UI.Controls.FlexiGridViewCommandEventArgs e)
+    {
+        e.Message = "自定义消息：操作成功";
+    }
+   方法二：（1）给属性赋值CommandedJsFunction="onCommanded"；
+            （2）
+        function onCommanded(e) {
+		    if(!e.isSuccess){
+                alert("  commandName:" + e.commandName + "  msg:" + e.message);
+			}
+        }
+      
+
+13、$.fn.ChangePage(type)
+
+//重新指定宽度和高度
+14、$.fn.flexResize(w, h) 
+
+15、onLoaded事件，在加载完毕时执行，这时可以添加数据、设置操作按钮行为等。
+
+   使用方法一、在服务器控件中设置LoadedJsFunction属性值为要执行的js方法；
+   使用方法二、在客户端oninit时设置onLoaded。示例如下：
+   		function setGridOption(option) { //特别要注意的是，一定要将option返回，否则option会丢失，导致错误
+            if (!option) {
+                return;
+            }
+
+            var onLoaded = onLoadedHandle;
+            option.onLoaded = onLoaded; //在这里也可以设置当执行某操作时回调的Js函数
+            return option;
+        }
+	    function onLoadedHandle(option) {
+		    alert("OK");
+		    return option;//特别要注意的是，一定要将option返回，否则option会丢失，导致错误
+		}
+16、选中行、取消选中行相关方法
+
+    //切换指定行换中状态 如$('#<%= FlexiGrid.ContentTableID %>').setRowsCheckStatus(selItems,true,false);
+	//selItems:数组，需要取消选中或选中行的主键值。
+	//status：true，选中；false，取消选中
+	//raiseEvent：是否触发复选框更改状态事件
+    $.fn.setRowsCheckStatus = function (selItems, status, raiseEvent)
+
+	//切换全部行换中状态
+    //status：true，选中；false，取消选中
+	//raiseEvent：是否触发复选框更改状态事件
+    $.fn.setAllRowsCheckStatus = function (status, raiseEvent)
+
+   //根据每行选中状态，更换“全选”复选框状态。如$('#<%= FlexiGrid.ContentTableID %>').changeHeadCheckStatus()
+   //setRowsCheckStatus\setAllRowsCheckStatus等已调用此方法
+    $.fn.changeHeadCheckStatus = function () 
+
+17.如何获取行
+    （1）设置属性 RowClickedJsFunction="rowClicked"，或脚本参数rowClicked:rowClicked
+	（2）脚本如下
+	function rowClicked(e) {
+        var html = $(e).html(); //获取行的内容
+
+		//获取id
+		var key = $(this).attr('key');
+
+		//再获取折叠行
+		var msgRow = $("tr[type='itemMessage'][key='" + key + "']", "#FlexiGrid_ContentTable");
+    }
+
+
+17.参数说明
+  （1）属性
+    height: 'auto', //flexigrid插件的高度，单位为px
+    minHeight: '50',
+    width: 'auto', //宽度值，auto表示根据每列的宽度自动计算
+    striped: true, //是否显示斑纹效果，默认是奇偶交互的形式
+    novstripe: false,
+    minwidth: 0, //列的最小宽度
+    minheight: 80, //列的最小高度
+    resizable: true, //resizable table是否可伸缩
+    url: false, //ajax url,ajax方式对应的url地址
+    method: 'POST', // data sending method,数据发送方式
+    dataType: 'json', // type of data loaded,数据加载的类型，xml,json
+    errormsg: '发生错误', //错误信息
+    usepager: false, //是否分页
+    nowrap: true, //是否不换行
+    page: 1, //current page,默认当前页
+    total: 1, //total pages,总项数
+    useRp: true, //use the results per page select box,是否可以动态设置每页显示的结果数
+    rp: 25, // results per page,每页默认的结果数
+    rpOptions: [10, 15, 20, 25, 40, 100], //可选择设定的每页结果数
+    title: false, //是否包含标题
+    pagestat: '显示记录从{from}到{to}，总数 {total} 条', //显示当前页和总页面的样式
+    procmsg: '正在处理数据，请稍候 ...', //正在处理的提示信息
+    query: '', //搜索查询的条件
+    qtype: '', //搜索查询的类别
+    qop: "Eq", //搜索的操作符
+    nomsg: '没有符合条件的记录存在', //没有记录时的提示信息
+    minColToggle: 1, //minimum allowed column to be hidden
+    showToggleBtn: true, //show or hide column toggle popup
+    hideOnSubmit: true, //显示遮盖
+    showTableToggleBtn: true, //显示隐藏Grid 
+    autoload: true, //自动加载
+    blockOpacity: 0.5, //透明度设置
+    showcheckbox: false, //是否显示checkbox    
+    singleselected: false, //是否单选
+	selectedonclick: false, //点击行是否选中
+    showOperateCell: true,  //是否显示操作列
+    operateCellPosition: 'right', //显示操作列的位置。左边或右边。
+    showContentMenu: true, //右击行时，是否显示操作菜单
+    gridClass: "bbit-grid", //样式
+	autoPager: true,  //是否自动生成分页控件
+    autoToolBar: true //是否自动生成工具栏
+	extParam: [], //updated by webnuke {} ----> [] //此参数已被删除
+	BootStrapSupported="true"
+    GridClass="table"
+  
+  （2）支持的事件
+    onToggleCol: false, //当在行之间转换时
+    onChangeSort: false, //当改变排序时
+    onSuccess: false, //成功后执行
+    onSubmit: false, // using a custom populate function,调用自定义的计算函数
+    onInit: false, //初始化事件 //updated by webnuke 添加加载时执行的函数，可用于重新设置参数值。
+	onInited:false, //初始化完毕事件
+    onLoaded: false, //数据加载完毕事件
+    onCommand: false, //操作按钮点击事件
+    onCommanded: false, //回发执行完毕事件
+    rowhandler: false, //是否启用行的扩展事情功能
+    rowbinddata: true, //行数据绑定时
+    onRowChecked: false, //当行被选中时
+	rowClicked:false,//点击行事件
+
+   $.fn.changeHeadCheckStatus = function () {
+        this[0].grid.changeHeadItemCheckStatus();
+    }
+    $.fn.getRow = function (keyValue) {
+        var row = null;
+        if (this[0].p.data && this[0].p.data.rows) {
+            for (var i = 0; i < this[0].p.data.rows.length; i++) {
+                var temp = this[0].p.data.rows[i];
+                if (temp.id == keyValue) {
+                    row = tem;
+                }
+            }
+        }
+        return row;
+    }
+
+18.如何设置行高
+    <style type="text/css">
+        /*设置高度*/
+        .bbit-grid div.bDiv td
+        {
+            line-height: 20px;
+        }
+    </style>
+
+19.要用存储过程分页，需要设置三个属性：
+        this.FlexiGrid.AutoHandleData = false;
+        this.FlexiGrid.RowsCount = 18;
+        this.FlexiGrid.AllowPaging = true;
+
+20.服务器控件属性
+
+经测试,获取显示数据时：
+IsFlexiGridPostBack == true
+IsFlexiGridRequestData == true
+
+执行操作时：
+IsFlexiGridPostBack == true
+IsFlexiGridRequestData == false
+
+
+21.显示/隐藏“正在执行”层
+    $('#<%= FlexiGrid.ContentTableID %>').showLoading();
+    $('#<%= FlexiGrid.ContentTableID %>').hideLoading();
+
+22.服务器控件属性
+
+         /// <summary>
+        /// 宽度是否设为自动调整模式，
+        /// 为“true”时，属性“Width”失效。
+        public bool AutoWidth
+
+		 /// <summary>
+        /// 标题。
+        /// </summary>
+        [DefaultValue("")]
+        public string Title
+        {
+            get { return this.ViewState["Title"] != null ? this.ViewState["Title"].ToString() : ""; }
+            set { this.ViewState["Title"] = value; }
+        }
+
+        /// <summary>
+        /// 是否显示复选框列。
+        /// </summary>
+        [DefaultValue(false)]
+        public bool CheckBoxVisible
+        {
+            get { return this.ViewState["IsCheckBoxVisible"] != null ? (bool)this.ViewState["IsCheckBoxVisible"] : false; }
+            set { this.ViewState["IsCheckBoxVisible"] = value; }
+        }
+
+        /// <summary>
+        /// 单元格是否不换行，默认为不换行。
+        /// </summary>
+        [DefaultValue(true)]
+        public bool NoWrap
+        {
+            get { return this.ViewState["NoWrap"] != null ? (bool)this.ViewState["NoWrap"] : true; }
+            set { this.ViewState["NoWrap"] = value; }
+        }
+
+
+
+		/// <summary>
+        /// 点击行时是否选中行。默认为false
+        /// </summary>
+        [DefaultValue(false)]
+        public bool CheckRowClicked
+        {
+            get { return this.ViewState["CheckRowClicked"] != null ? (bool)this.ViewState["CheckRowClicked"] : false; }
+            set { this.ViewState["CheckRowClicked"] = value; }
+        }
+
+        /// <summary>
+        /// 鼠标右击时是否显示菜单。
+        /// </summary>
+        [DefaultValue(false)]
+        public bool ShowContentMenu
+        {
+            get { return this.ViewState["ShowContentMenu"] != null ? (bool)this.ViewState["ShowContentMenu"] : false; }
+            set { this.ViewState["ShowContentMenu"] = value; }
+        }
+
+        /// <summary>
+        /// 设置或获取是否显示操作列。
+        /// </summary>
+        [DefaultValue(true)]
+        public bool ShowOperateCell
+        {
+            get { return this.ViewState["ShowOperateCell"] != null ? (bool)this.ViewState["ShowOperateCell"] : true; }
+            set { this.ViewState["ShowOperateCell"] = value; }
+        }
+
+        /// <summary>
+        /// 设置或获取是否整个表能切换隐藏。
+        /// </summary>
+        [DefaultValue(true)]
+        public bool ShowTableToggleBtn
+        {
+            get { return this.ViewState["ShowTableToggleBtn"] != null ? (bool)this.ViewState["ShowTableToggleBtn"] : true; }
+            set { this.ViewState["ShowTableToggleBtn"] = value; }
+        }
+
+        /// <summary>
+        /// 设置或获取是否整个表能切换隐藏。
+        /// </summary>
+        [DefaultValue(true)]
+        public bool ShowToggleBtn
+        {
+            get { return this.ViewState["ShowToggleBtn"] != null ? (bool)this.ViewState["ShowToggleBtn"] : true; }
+            set { this.ViewState["ShowToggleBtn"] = value; }
+        }
+
+        /// <summary>
+        /// 设置或获取是否能伸缩。
+        /// </summary>
+        [DefaultValue(true)]
+        public bool Resizable
+        {
+            get { return this.ViewState["Resizable"] != null ? (bool)this.ViewState["Resizable"] : true; }
+            set { this.ViewState["Resizable"] = value; }
+        }
+
+        /// <summary>
+        /// 指示列是否设定之后就不能通过客户端脚本进行重设。默认为true
+        /// </summary>
+        [DefaultValue(true)]
+        public bool ColumnsFixed
+        {
+            get { return this.ViewState["columnsFixed"] != null ? (bool)this.ViewState["columnsFixed"] : true; }
+            set { this.ViewState["columnsFixed"] = value; }
+        }
+
+        /// <summary>
+        /// 设置或获取最小宽度。
+        /// </summary>
+        [DefaultValue(0)]
+        public int MinWidth
+        {
+            get { return this.ViewState["MinWidth"] != null ? (int)this.ViewState["MinWidth"] : 0; }
+            set { this.ViewState["MinWidth"] = value; }
+        }
+
+        /// <summary>
+        /// 设置或获取最小高度。
+        /// </summary>
+        [DefaultValue(0)]
+        public Unit MinHeight
+        {
+            get { return this.ViewState["MinHeight"] != null ? (Unit)this.ViewState["MinHeight"] : 0; }
+            set { this.ViewState["MinHeight"] = value; }
+        }
+
+        /// <summary>
+        /// 是否自动排序、分页、搜索等数据处理。
+        /// 默认为true。
+        /// </summary>
+        public bool AutoHandleData
+        {
+            get { return this.ViewState["AutoHandleData"] != null ? (bool)this.ViewState["AutoHandleData"] : true; }
+            set { this.ViewState["AutoHandleData"] = value; }
+        }
+
+        /// <summary>
+        /// 是否自动加载数据。
+        /// 默认为false。
+        /// </summary>
+        public bool AutoLoad
+        {
+            get { return this.ViewState["AutoLoad"] != null ? (bool)this.ViewState["AutoLoad"] : false; }
+            set { this.ViewState["AutoLoad"] = value; }
+        }
+
+        /// <summary>
+        /// 获取或设置数据的总行数
+        /// </summary>
+        [DefaultValue(0)]
+        public int RowsCount
+        {
+            get { return this.ViewState["RowsCount"] != null ? (int)this.ViewState["RowsCount"] : 0; }
+            set { this.ViewState["RowsCount"] = value; }
+        }
+
+        /// <summary>
+        /// 获取是否为该控件的某实例回传数据。
+        /// </summary>
+        public static bool IsFlexiGridViewCallBack
+        {
+            get
+            {
+                string gridID = HttpContext.Current.Request.QueryString["FlexiGridID"];
+                return !string.IsNullOrEmpty(gridID);
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置控件服务端回发前执行的Js脚本。
+        /// 比如，可用于提示操作成功
+        /// </summary>
+        public string CommandJsFunction
+        {
+            get { return this.ViewState["CommandJsFunction"] != null ? this.ViewState["CommandJsFunction"].ToString() : ""; }
+            set { this.ViewState["CommandJsFunction"] = value; }
+        }
+
+        /// <summary>
+        /// 获取或设置控件服务端处理完回发后执行的Js脚本。
+        /// 比如，可用于提示操作成功
+        /// </summary>
+        [DefaultValue("")]
+        public string CommandedJsFunction
+        {
+            get { return this.ViewState["CommandedJsFunction"] != null ? this.ViewState["CommandedJsFunction"].ToString() : ""; }
+            set { this.ViewState["CommandedJsFunction"] = value; }
+        }
+
+
+        /// <summary>
+        /// 获取或设置控件客户端开始初始化前执行的Js脚本。
+        /// 可用于重新设置参数值。
+        /// </summary>
+        [DefaultValue("")]
+        public string InitJsFunction
+        {
+            get { return this.ViewState["InitJsFunction"] != null ? this.ViewState["InitJsFunction"].ToString() : ""; }
+            set { this.ViewState["InitJsFunction"] = value; }
+        }
+
+        /// <summary>
+        /// 获取或设置控件客户端开始初始化前执行的Js脚本。
+        /// 可用于重新设置参数值。
+        /// </summary>
+        [DefaultValue("")]
+        public string InitedJsFunction
+        {
+            get { return this.ViewState["InitedJsFunction"] != null ? this.ViewState["InitedJsFunction"].ToString() : ""; }
+            set { this.ViewState["InitedJsFunction"] = value; }
+        }
+
+        /// <summary>
+        /// 获取或设置控件客户数据加载刚开始时执行的Js脚本。
+        /// </summary>
+        [DefaultValue("")]
+        public string LoadJsFunction
+        {
+            get { return this.ViewState["LoadJsFunction"] != null ? this.ViewState["LoadJsFunction"].ToString() : ""; }
+            set { this.ViewState["LoadJsFunction"] = value; }
+        }
+
+        /// <summary>
+        /// 获取或设置控件客户数据加载完毕执行的Js脚本。
+        /// </summary>
+        [DefaultValue("")]
+        public string LoadedJsFunction
+        {
+            get { return this.ViewState["LoadedJsFunction"] != null ? this.ViewState["LoadedJsFunction"].ToString() : ""; }
+            set { this.ViewState["LoadedJsFunction"] = value; }
+        }
+
+        /// <summary>
+        /// 获取或设置控件客户端行点击执行的Js脚本。
+        /// </summary>
+        [DefaultValue("")]
+        public string RowClickedJsFunction
+        {
+            get { return this.ViewState["RowClickedJsFunction"] != null ? this.ViewState["RowClickedJsFunction"].ToString() : ""; }
+            set { this.ViewState["RowClickedJsFunction"] = value; }
+        }
+
+		 /// <summary>
+        /// Gets the sort direction
+        /// </summary>
+        [PersistenceModeAttribute(PersistenceMode.InnerProperty)]
+        [BrowsableAttribute(false)]
+        [DesignerSerializationVisibilityAttribute(0)]
+        public virtual SortDirection SortDirection
+        {
+            get
+            {
+                string sord = HttpContext.Current.Request.Form["sortorder"];
+                if (string.IsNullOrEmpty(sord)) return SortDirection.Ascending;
+
+                return (sord.ToLower() == "desc") ? SortDirection.Descending : SortDirection.Ascending;
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the data field used to sort the data
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DesignerSerializationVisibilityAttribute(0)]
+        public virtual string SortField
+        {
+            get { return HttpContext.Current.Request.Form["sortname"]; }
+        }
+
+        public virtual string SortExpression
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(SortField))
+                {
+                    return string.Empty;
+                }
+
+                string sortDirection = (this.SortDirection == SortDirection.Descending) ? "desc" : "asc";
+                return string.Format("{0} {1}", SortField, sortDirection);
+            }
+        }
+
+        /// <summary>
+        /// Enables or disables sorting
+        /// </summary>
+        [DefaultValueAttribute(true)]
+        public virtual bool AllowSorting
+        {
+            get { return ViewState["AllowSorting"] != null ? (bool)ViewState["AllowSorting"] : true; }
+            set
+            {
+                if (ViewState["AllowSorting"] == null || (bool)ViewState["AllowSorting"] != value)
+                {
+                    ViewState["AllowSorting"] = value;
+                    if (Initialized)
+                        RequiresDataBinding = true;
+                }
+            }
+        }
+
+		BootStrapSupported="true" GridClass="table"

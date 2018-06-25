@@ -55,7 +55,7 @@ let testUtil = new class{
                     //transferSource: String, //移动路径源交易所,当action=transfer时有效，如 transferSource = 'huobi',transferTarget = 'btctrade'，表示从huobi移向btctrade
                     //transferTarget: String, //移动路径目标交易所
 
-                    minOrderAmount: 0.1,
+                    minStepAmount: 0.1,
                     symbol: "eth#usd", //btc#cny、btc、ltc、usd。 注意，当action=trade时，为btc#cny; 当action=transfer时，为btc
                     previousOperate: 0,
                     nextOperate: 2,
@@ -68,7 +68,7 @@ let testUtil = new class{
                     side: "sell", //buy或sell。当action=trade时有效
                     //transferSource: String, //移动路径源交易所,当action=transfer时有效，如 transferSource = 'huobi',transferTarget = 'btctrade'，表示从huobi移向btctrade
                     //transferTarget: String, //移动路径目标交易所
-                    minOrderAmount: 0.1,
+                    minStepAmount: 0.1,
                     symbol: "eth#usd_1w",  //btc#cny、btc、ltc、usd。 注意，当action=trade时，为btc#cny; 当action=transfer时，为btc
                     previousOperate: 1,
                     nextOperate: 0,
@@ -112,7 +112,7 @@ let testUtil = new class{
                     //transferSource: String, //移动路径源交易所,当action=transfer时有效，如 transferSource = 'huobi',transferTarget = 'btctrade'，表示从huobi移向btctrade
                     //transferTarget: String, //移动路径目标交易所
 
-                    minOrderAmount: 0.1,
+                    minStepAmount: 0.1,
                     symbol: "eth#usd", //btc#cny、btc、ltc、usd。 注意，当action=trade时，为btc#cny; 当action=transfer时，为btc
                     previousOperate: 0,
                     nextOperate: 2,
@@ -125,7 +125,7 @@ let testUtil = new class{
                     side: "buy", //buy或sell。当action=trade时有效
                     //transferSource: String, //移动路径源交易所,当action=transfer时有效，如 transferSource = 'huobi',transferTarget = 'btctrade'，表示从huobi移向btctrade
                     //transferTarget: String, //移动路径目标交易所
-                    minOrderAmount: 0.1,
+                    minStepAmount: 0.1,
                     symbol: "eth#usd_1w",  //btc#cny、btc、ltc、usd。 注意，当action=trade时，为btc#cny; 当action=transfer时，为btc
                     previousOperate: 1,
                     nextOperate: 0,

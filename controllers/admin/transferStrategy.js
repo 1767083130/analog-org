@@ -6,6 +6,7 @@ const Account  = mongoose.model('Account');
 const ClientIdentifier  = mongoose.model('ClientIdentifier');
 const Strategy = mongoose.model('Strategy');
 const TransferStrategy = mongoose.model('TransferStrategy');
+const StrategyPlan = mongoose.model('StrategyPlan');
 
 const co = require('co');
 const async = co.wrap;
@@ -25,7 +26,7 @@ module.exports = function (router) {
             list(req,res,function(data){
                 // data = { transferStrategys: [{userName:"lcm"}]}
                 // let json = {userName: JSON.stringify(data) };
-                res.render('transferStrategy', data);
+                res.render('admin/transferStrategy', data);
             });
         } catch(err){
             console.error(err);
@@ -101,7 +102,7 @@ module.exports = function (router) {
             transferStrategy = await transferStrategy.save();
 
             if(transferStrategy){
-                res.json({ isSuccess: true,_id: transferStrategy._id.toString() });
+                res.json({ isSuccess: true,strategy: transferStrategy });
             } else {
                 res.json({ isSuccess: false, message: "操作失败，请稍后重试" });
             }
@@ -110,7 +111,6 @@ module.exports = function (router) {
             res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});
         }
     });
-
 
     router.post('/delete', async function(req, res) {
         try{
@@ -121,24 +121,27 @@ module.exports = function (router) {
             }
     
             let userName = req.user.userName;
-            let transferStrategy = await TransferStrategy.findOne({ userName: userName, _id: strategyId});
-            if(!transferStrategy){
-                return res.json({ isSuccess: false,message: "找不到需要删除的策略" });
-            } 
-        
-            TransferStrategy.remove({userName: userName,_id: strategyId},function(err){
-                if(err){
-                    res.json({ isSuccess: false, message: "删除失败，请稍后重试"});
-                } else {
-                    res.json({ isSuccess: true, message: "删除成功！"});
-                }
+            await TransferStrategy.remove({
+                userName: userName,
+                _id: strategyId
             });
+            return { isSuccess: true };
+            // let strategy = await TransferStrategy.findOneAndUpdate({ 
+            //         userName: userName, 
+            //         _id: strategyId
+            //     },{ 
+            //         isValid: false, 
+            //         modified: new Date()
+            //     },{ 
+            //         upsert: false,
+            //         new: true
+            //     }).exec();
+            // return { isSuccess: !!strategy, strategy: strategy };
         } catch(err){
             console.error(err);
             res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});
         }
     });
-
 
     router.post('/run', async function(req, res) {
         try{
@@ -163,7 +166,7 @@ module.exports = function (router) {
 }
 
 
-function list(req,res,callback){
+async function list(req,res,callback){
     try{
         let sPageIndex = req.query.pageIndex;
         let sPageSize = req.query.pageSize;
@@ -190,6 +193,27 @@ function list(req,res,callback){
         business.sites = apiConfigUtil.getSites();
         business.symbols = apiConfigUtil.getSymbols();
 
+        //await RealTimePrice.find(query).sort({time: -1}).limit(1);
+        let plans = await StrategyPlan.find({ isValid: true,isSimple: false  }).sort({modified: -1}).limit(20);
+        let newPlans = [];
+        for(let plan of plans){
+            let consignAmounts = [0],
+                actualAmounts = [0];
+            for(let strategy of plan.strategys){
+                consignAmounts.push(Math.abs(strategy.consignAmount));
+                actualAmounts.push(Math.abs(strategy.actualAmount));
+            }
+            
+            let newPlan = {};
+            Object.assign(newPlan,plan.toJSON(),{
+                stepConsignAmount: Math.min.apply(null,consignAmounts),
+                stepActualAmount: Math.min.apply(null,actualAmounts),
+                totalConsignAmount: Math.max.apply(null,consignAmounts),
+                totalActualAmount: Math.max.apply(null,actualAmounts)
+            })
+            newPlans.push(newPlan);
+        }
+
         TransferStrategy.paginate(filters, options).then(async function(getRes) {
             let transferStrategys = getRes.docs;
             if(run){
@@ -206,12 +230,13 @@ function list(req,res,callback){
 
                         let runRes = await transferController.getConditionResult(condition,strategyType,envOptions);
                         transferStrategy.conditionRes = { 
+                            isSuccess: true,
                             fixed:runRes.fixed,
                             orders: runRes.orders 
                         } || { fixed: false,orders:[] };
                     } catch(err){
                         //忽略错误
-                        transferStrategy.conditionRes = { fixed: false,orders:[]};
+                        transferStrategy.conditionRes = { isSuccess: false, fixed: false,orders:[]};
                     }
                 }
             }
@@ -219,11 +244,11 @@ function list(req,res,callback){
             let t = {
                 pageSize: getRes.limit,
                 total: getRes.total,
+                plans: JSON.stringify(newPlans),
                 transferStrategys: JSON.stringify(transferStrategys),
                 business: JSON.stringify(business),
                 isSuccess: true
             };  
-
             callback(t);
         });
     } catch(err){

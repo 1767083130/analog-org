@@ -37,6 +37,7 @@ process.on('uncaughtException', function(e) {
     console.error(e);
 });
 
+let isRunned = false;
 let db = mongoose.connection;
 db.once('open',function callback(){
     console.log('数据库连接成功');
@@ -64,36 +65,22 @@ db.once('open',function callback(){
                 console.log('pong');
             })
 
-            setTimeout(async function() {
-                let createOrderRes = await createTestOrder();
-                if(createOrderRes.isSuccess){
-                    let renewOrderRes = await renewOrder(createOrderRes.order);
-                    console.log(JSON.stringify(renewOrderRes));
-                } else {
-                    console.log(createOrderRes.message);
-                }
-            },10000);
+            if(!isRunned){
+                setTimeout(async function() {
+                    let createOrderRes = await createTestOrder();
+                    if(createOrderRes.isSuccess){
+                        let renewOrderRes = await renewOrder(createOrderRes.order);
+                        console.log(JSON.stringify(renewOrderRes));
+                    } else {
+                        console.log(createOrderRes.message);
+                    }
+                },10000);
+                
+                isRunned = true;
+            }
         });    
     }
 });
-
-testGetMarketPrice();
-
-function testGetMarketPrice(){
-    let depths = {
-        bids: [[1,19],[0.5,20]],
-        asks:[[2,8],[3,50]]
-    };
-    let operateType = 'buy';
-    let options = {
-        ignoreStepsCount: 1,
-        ignoreAmount: 10
-    }
-    let marketPrice = orderLib.getMarketPrice(depths,operateType,options)
-    if(marketPrice != 3.1){
-        throw new Error(`getMarketPrice方法有误.预期值为3.1，而实际值为${marketPrice}`)
-    }
-}
 
 /**
  * 处理订单信息
@@ -228,3 +215,23 @@ async function renewOrder(order){
         return { isSuccess: false, message: "服务器端错误"}
     }
 }
+
+
+
+//testGetMarketPrice();
+
+// function testGetMarketPrice(){
+//     let depths = {
+//         bids: [[1,19],[0.5,20]],
+//         asks:[[2,8],[3,50]]
+//     };
+//     let operateType = 'buy';
+//     let options = {
+//         ignoreStepsCount: 1,
+//         ignoreAmount: 10
+//     }
+//     let marketPrice = orderLib.getMarketPrice(depths,operateType,options)
+//     if(marketPrice != 3.1){
+//         throw new Error(`getMarketPrice方法有误.预期值为3.1，而实际值为${marketPrice}`)
+//     }
+// }

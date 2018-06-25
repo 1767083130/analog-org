@@ -20,7 +20,9 @@ module.exports = function (router) {
 
     router.get('/', async(function* (req, res) {
         try{
-            res.render('admin/trade');
+            list(req,res,function(data){
+                res.render('admin/trade-1',data);
+            });
         } catch(err){
             console.error(err);
             res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});

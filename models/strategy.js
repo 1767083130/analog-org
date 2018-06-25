@@ -13,6 +13,7 @@ var strategyModel = function () {
         openType: { type: String, default: "private" },
         price: { type: String, default: "private" },
         isValid: { type: Boolean, default: true },
+        group: { type: String },
 
         account: { 
             totalPosition: Number, //整体仓位，如5，表示占比5%

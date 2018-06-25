@@ -19,7 +19,7 @@ module.exports = function (router) {
     router.get('/', async(function* (req, res) {
         try{
             list(req,res,function(data){
-                res.render('transfer', data);
+                res.render('admin/transfer', data);
             });
         } catch(err){
             console.error(err);
