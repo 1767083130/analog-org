@@ -21,7 +21,6 @@ var strategyPlanModel = function () {
         isValid: { type: Boolean, default: true },
         isSimple: { type: Boolean, default: false },  //是否为简单模式
         status: { type: String } , //可能的值：init、 wait、 running、success、 stopped
-        type: { type: String, default: 'union' }, //union、reverse
         
         stepAmount: { type: Number,required: true },  //每步执行数量
         totalAmount: { type: Number,required: true }, //需要执行总量。 -1，表示直到满仓为止

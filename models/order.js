@@ -19,8 +19,7 @@ var orderModel = function () {
         autoRetry: { type: Boolean, "default": true }, //失败后,是否自动尝试执行
         autoRetryFailed: { type: Number, "default": 0 }, //已自动尝试执行次数
         side: String,  //可能的值：'buy'、'sell'。这个字段需要特别注意，buy对应的是建仓（可能建多仓或空仓），sell对应的是平仓（可能平多仓或空仓）
-        type: {type: String, default: "limit"}, //“market” / “limit” / “stop” / “trailing-stop” / “fill-or-kill” / “exchange market” / “exchange limit” / 
-                      //“exchange stop” / “exchange trailing-stop” / “exchange fill-or-kill”. (type starting by “exchange ” are exchange orders, others are margin trading orders)
+        type: {type: String, default: "limit"},  //订单类型，现在暂时支持exchange、limit两种，分别是现货和保证金模式
         leverage: { type: Number, "default": 1 }, //杠杆倍数,0表示全仓
         reason: String, //原因.目前分为三种: transfer(平台差价策略产生的挂单);normal(市场交易策略产生的挂单);stoploss(止损产生的挂单);outer(外部交易平台的挂单)
         symbol: String, //cny、btc#cny、ltc、usd

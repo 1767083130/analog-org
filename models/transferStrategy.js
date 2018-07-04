@@ -23,7 +23,6 @@ var transferStrategyModel = function () {
         conditions: [String], //需要满足的条件
         strategyType: { type: String, default: "normal" }, //策略类型。现在支持between、normal两种
         operates: [{
-
             id: { type: Number, required: true }, //从1开始记数。1,2,3,4,5 ...
             site: String, //平台名称
 
@@ -32,6 +31,7 @@ var transferStrategyModel = function () {
                           //这个字段和orderAmount字段结合起来确定看涨还是看跌
                           //(1) side = 'buy'时  a) orderAmount < 0 时看跌； b) orderAmount > 0时看涨
                           //(2) side = 'sell'时  a) orderAmount > 0 时看跌；b) orderAmount < 0时看涨
+            type: { type: String,default: 'margin' },  //订单类型，现在暂时支持exchange、limit两种，分别是现货和保证金模式
             leverage: { type: Number, "default": 1 }, //杠杆倍数
             transferSource: String, //移动路径源交易所,当action=transfer时有效，如 transferSource = 'huobi',transferTarget = 'btctrade'，表示从huobi移向btctrade
             transferTarget: String, //移动路径目标交易所
@@ -55,6 +55,9 @@ var transferStrategyModel = function () {
         stepAmount: { type: Number }, //每一步执行的数量
         priority: { type: Number, default: 0 }, //优先级 
         desc: String,
+
+        relatedStrategy: { type: Schema.ObjectId }, //关联的策略
+        direction: { type: Number }, //1表示正方向，其余数值表示反方向
 
         created: { type : Date, "default": Date.now() },
         modified: { type : Date, "default": Date.now() }

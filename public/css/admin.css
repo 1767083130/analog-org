@@ -7,7 +7,7 @@
 
 .client_item, .account_strategy {
     padding: 10px;
-    height: 100px;
+    /* height: 100px; */
 }
 
 .client_item_line, .account_strategy_line {

@@ -7,6 +7,7 @@ const ClientIdentifier  = mongoose.model('ClientIdentifier');
 const Strategy = mongoose.model('Strategy');
 const TransferStrategy = mongoose.model('TransferStrategy');
 const StrategyPlan = mongoose.model('StrategyPlan');
+const Decimal = require('decimal.js');
 
 const co = require('co');
 const async = co.wrap;
@@ -58,8 +59,7 @@ module.exports = function (router) {
                 userName: userName, 
                 _id: planId
             },{ 
-                status: status, 
-                modified: new Date()
+                status: status
             },{ 
                 upsert: false,
                 new: true
@@ -141,7 +141,7 @@ module.exports = function (router) {
                 if(_transferStrategy._id){
                     strategyId = mongoose.Types.ObjectId(_transferStrategy._id);
                 }
-                transferStrategy= await TransferStrategy.findOne({_id: strategyId, userName: userName });
+                transferStrategy = await TransferStrategy.findOne({_id: strategyId, userName: userName });
                 if(!transferStrategy){
                     return res.json({ isSuccess: false,message: "修改的策略不存在，有可能已被删除" });
                 }
@@ -165,6 +165,15 @@ module.exports = function (router) {
                     consignAmount: 0,
                     actualAmount: 0
                 });
+
+                if(transferStrategy.relatedStrategy){
+                    let relatedStrategy = await TransferStrategy.findOne({_id: transferStrategy.relatedStrategy, userName: userName });
+                    if(relatedStrategy){
+                        relatedStrategy.relatedStrategy = transferStrategy._id;
+                        relatedStrategy.direction = (_transferStrategy.direction == 1 ? 2 : 1);
+                    }
+                    await relatedStrategy.save();
+                }
             }
             plan = await plan.save();
 
@@ -290,8 +299,7 @@ module.exports = function (router) {
                     userName: userName, 
                     _id: planId
                 },{ 
-                    status: 'wait', 
-                    modified: new Date()
+                    status: 'wait'
                 },{ 
                     upsert: false,
                     new: true
@@ -374,13 +382,18 @@ function list(req,res,callback){
                     strategyIds.push(strategy.strategyId);
                 }
 
-                plan.stepConsignAmount = Math.min.apply(null,consignAmounts);
-                plan.stepActualAmount = Math.min.apply(null,actualAmounts);
-                plan.totalConsignAmount = Math.max.apply(null,consignAmounts);
-                plan.totalActualAmount = Math.max.apply(null,actualAmounts);
+                plan.stepConsignAmount = Math.max.apply(null,consignAmounts);
+                plan.stepActualAmount = Math.max.apply(null,actualAmounts);
+                plan.totalConsignAmount = Math.min.apply(null,consignAmounts);
+                plan.totalActualAmount = Math.min.apply(null,actualAmounts);
 
                 let strategys = await TransferStrategy.find({ userName : userName, _id: { $in: strategyIds } });
                 plan.strategys = strategys;
+
+                if(strategys.length > 0 && strategys[0].conditions.length == 1){
+                    let expressionValue = await strategy.getExpressionValue(strategys[0].conditions[0],strategys[0].strategyType);
+                    plan.strategyValue = new Decimal(expressionValue * 100).toFixed(2) + '%';
+                }
             }
 
             let t = {

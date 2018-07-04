@@ -20,7 +20,7 @@ module.exports = function (router) {
                 };
             variable = variable.trim().toLowerCase();
 
-            let val = await expression.calculate(variable,envOptions);
+            let val = await expression.getVariableValue(variable,envOptions);
             let getRes = {
                 isSuccess: true,
                 value: val

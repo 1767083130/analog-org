@@ -49,15 +49,11 @@
                           IsPostOnly: <input type="checkbox" name="isPostOnly" value="Car" <%= step.isPostOnly ? checked="checked": "" %> /> 
                           step id: <input type="number" value="<%= step.id %>" name="stepId" min="1" max="2" />
                           side:  <select name="step_side">
-                            <option value="buy">建仓</option>
-                            <option value="sell">平仓</option>
-                        </select>
+                            <option value="buy">建仓</option><option value="sell">平仓</option></select>
+                          type:  <select name="step_type">
+                            <option value="margin">Margin</option><option value="exchange">Exchange</option></select>
                         </li>
                     </script>
-                </div>
-                <div id="pnlStrategyList" >
-                    <table id="steps">
-                    </table>
                 </div>
                 <div>
                     <input type="button" id="step_submit" value="new" />
@@ -66,12 +62,15 @@
                      <input type="button" id="btnSaveStrategy" value="保存" /> -->
                     <input type="button" id="btnEidtStrategyCancel" value="cancel" />
                 </div>
+                <div id="pnlStrategyList" >
+                    <table id="steps">
+                    </table>
+                </div>
             </div>
             <div id="pnlPlanList" >
                 <div style="margin-top: 10px; margin-bottom: 10px;">
                         <input type="button" id="btnEditPlan" value="新建计划" />
                 </div>
-
                 <ul class="account_strategys" id="plansList">
                 </ul>
                 <script id="tmplPlanItem" type="text/template">
@@ -79,7 +78,6 @@
                         <div class="account_strategy_site">
                             <span style="display: inline-block;">
                             </span> <span> <a href="#"><%= plan.name %></a> </span>
-    
                         </div>
                         <div class="account_strategy_app">
                             <div class="account_strategy_appInfo">
@@ -89,6 +87,7 @@
                             </div>
                             <div>
                                  当前状态： <%= plan.status %> 每步执行数量:<%= plan.stepAmount %> 预设执行总数：<%= plan.totalAmount %>
+                                 当前差值：<%= plan.strategyValue || '未知' %>
                                  <br> 
                                  单步已委托数量： <%= plan.stepConsignAmount %> 任务已委托数量：<%= plan.totalConsignAmount %>
                                  单步已成交数量： <%= plan.stepActualAmount %>任务已成交数量： <%= plan.totalActualAmount %>
@@ -128,6 +127,7 @@
     var _isMoreAdvance = false;
     var _strategys = []; // [{siteA: matches[1],siteB: matches[3], symbolA: 'btc#cny',symbolB: 'btc#cny', priceRange: stepRange,orderAmount: 1 }];
     var _editStrategyId = null;
+    var _relatedStrategy = null;
     var _editPlanId = null;
 
     $(function() {
@@ -200,11 +200,13 @@
             var stepA_isPostOnly = $(stepA_params).find('input[name="isPostOnly"]').prop('checked');
             var stepA_id = $(stepA_params).find('input[name="stepId"]').val();
             var stepA_side = $(stepA_params).find('select[name="step_side"]').val();
+            var stepA_type = $(stepA_params).find('select[name="step_type"]').val(); 
 
             var stepB_params = $(w.format('#stepParams li[data-group="{0}"]',2));
             var stepB_isPostOnly = $(stepB_params).find('input[name="isPostOnly"]').prop('checked');
             var stepB_id = $(stepB_params).find('input[name="stepId"]').val();
             var stepB_side = $(stepB_params).find('select[name="step_side"]').val();
+            var stepB_type = $(stepB_params).find('select[name="step_type"]').val(); 
         
             var step = {
                 _id: _editStrategyId,
@@ -213,17 +215,25 @@
                 stepA_isPostOnly: stepA_isPostOnly,
                 stepA_id: stepA_id,
                 stepA_side: stepA_side,
+                stepA_type: stepA_type,
 
                 siteB: step_siteB,
                 symbolB: step_symbolB,
                 stepB_isPostOnly: stepB_isPostOnly,
                 stepB_id: stepB_id,
                 stepB_side: stepB_side,
+                stepB_type: stepB_type,
 
                 operate: step_operate,
                 priceRange: step_range,
-                totalAmount: step_amount
+                totalAmount: step_amount,
+
+                relatedStrategy: _relatedStrategy,
             };
+
+            if(!_editStrategyId && _relatedStrategy){
+                step.direction = 2;
+            }
 
             if(!_editStrategyId){
                 var res = checkStepValue(step);
@@ -250,7 +260,7 @@
        
         $('#btnEditPlan').click(function(){
             _editPlanId = '';
-            $('#pnlStrategy').hide();
+            $('#pnlStrategys').hide();
             $('#pnlPlanEdit').show();
         });
 
@@ -303,14 +313,18 @@
 
     function resetStrategy(){
         _editStrategyId = null;
+        _relatedStrategy = null;
 
-        $('#step_siteA option[index="0"]').attr("selected",true);
+        //$('#step_siteA option:eq(0)').attr('selected','selected');
+        $('#step_siteA').get(0).selectedIndex = 0
         $('#step_symbolA').empty();
-        $('#step_siteB option[index="0"]').attr("selected",true);
+        //$('#step_siteB option:eq(0)').attr('selected','selected');
+        $('#step_siteB').get(0).selectedIndex = 0
         $('#step_symbolB').empty();
-        //$('#step_range').val();
+        $('#step_range').val(1);
         $('#step_amount').val('');
-        $('#step_operate option[index="0"]').attr("selected",true);
+        //$('#step_operate option:eq(0)').attr('selected','selected');
+        $('#step_operate').get(0).selectedIndex = 0
         $('#stepParams').html('');
         $('#step_submit').val('new');
     }
@@ -415,6 +429,7 @@
             id : step.stepA_id,
             site: step.siteA, //平台名称
             side: step.stepA_side, //buy或sell
+            type: step.stepA_type,
             symbol: step.symbolA, //cny、btc、ltc、usd
             action: 'trade',
             isPostOnly: step.stepA_isPostOnly,
@@ -429,6 +444,7 @@
             id : step.stepB_id,
             site: step.siteB, //平台名称
             side: step.stepB_side, //buy或sell
+            type: step.stepB_type,
             symbol: step.symbolB, //cny、btc、ltc、usd
             action: 'trade',
             isPostOnly: step.stepB_isPostOnly,
@@ -445,7 +461,9 @@
             isValid: true,
             totalAmount: Math.abs(step.totalAmount),
             conditions:conditions,
-            operates: operates
+            operates: operates,
+            relatedStrategy: step.relatedStrategy,
+            direction: step.direction
         };
     }
 
@@ -484,12 +502,14 @@
             stepA_isPostOnly: operateA.isPostOnly,
             stepA_id: operateA.id,
             stepA_side: operateA.side,
+            stepA_type: operateA.type,
 
             siteB: operateB.site,
             symbolB: operateB.symbol,
             stepB_isPostOnly: operateB.isPostOnly,
             stepB_id: operateB.id,
             stepB_side: operateB.side,
+            stepB_type: operateB.type,
 
             operate: conditionOperate,
             priceRange: stepRange,
@@ -545,13 +565,16 @@
         });
 
         $('a[name="setStrategys"]').click(function(){
+            $('#stepParams').html('');
+
             let planId = $(this).attr('data-id');
             _editPlanId = planId;
             showPlanStrategys(planId);
 
             $('#pnlStrategys').show();
             $('#pnlPlanEdit').hide();
-            $('#stepParams').hide();
+            //$('#stepParams').hide();
+            resetStrategy();
         });
 
         $('a[name="runPlan"]').click(function(){
@@ -615,6 +638,10 @@
         });
 
         $('a[name="delPlan"]').click(function(){
+            if(!confirm('确认要删除吗？')){
+                return;
+            }
+
             var itemId = $(this).attr('data-id');
             $.ajax({
                 type: "POST",
@@ -671,21 +698,43 @@
             source.push(s);
             source.push('<br/>');
 
-            source.push(w.format('<a href="#" name="editStep" data-id="{0}">edit</a>',step._id));
-            source.push(w.format('&nbsp;<a href="#" name="removeStep" data-id="{0}">delete</a>',step._id));
+            source.push(w.format('<a href="#" name="editStep" data-id="{0}">编辑</a>',step._id));
+            source.push(w.format('&nbsp;&nbsp;<a href="#" name="addGroupStep" data-id="{0}">设置平仓策略</a>',step._id));
+            source.push(w.format('&nbsp;&nbsp;<a href="#" name="removeStep" data-id="{0}">删除</a>',step._id));
         }
 
         $('#steps').html('');
         $('#steps').append(source.join(''));
 
         $('a[name="removeStep"]').click(function(){
+            if(!confirm('确认要删除吗？')){
+                return;
+            }
+            
             var strategyId = $(this).attr('data-id');
             deleteTransferStrategy(_editPlanId,strategyId);
             showPlanStrategys(_editPlanId);
         });
 
+        
+        $('a[name="addGroupStep"]').click(function(){
+            var strategyId = $(this).attr('data-id');
+            var strategy;
+            for(var i = 0; i < _strategys.length;i++){
+                if(_strategys[i]._id == strategyId){
+                    strategy = _strategys[i];
+                    break;
+                }
+            }
+
+            _relatedStrategy = strategyId;
+            initReverseStrategy(strategy);
+        });
+
         $('a[name="editStep"]').click(function(){
             var strategyId = $(this).attr('data-id');
+            _relatedStrategy = null;
+
             var strategy;
             for(var i = 0; i < _strategys.length;i++){
                 if(_strategys[i]._id == strategyId){
@@ -696,6 +745,14 @@
          
             editStrategy(strategy);
         });
+    }
+
+    function initReverseStrategy(strategy){
+        editStrategy(strategy);
+
+        _editStrategyId = null;
+        $('#step_submit').val('新建');
+        $('#stepParams').show();
     }
 
     function editStrategy(strategy){
@@ -736,11 +793,13 @@
         $(stepA_params).find('input[name="isPostOnly"]').prop('checked',strategy.stepA_isPostOnly);
         $(stepA_params).find('input[name="stepId"]').val(strategy.stepA_id);
         $(stepA_params).find('select[name="step_side"]').val(strategy.stepA_side);
+        $(stepA_params).find('select[name="step_type"]').val(strategy.stepA_type);
 
         var stepB_params = $(w.format('#stepParams li[data-group="{0}"]',2));
         $(stepB_params).find('input[name="isPostOnly"]').prop('checked',strategy.stepB_isPostOnly);
         $(stepB_params).find('input[name="stepId"]').val(strategy.stepB_id);
         $(stepB_params).find('select[name="step_side"]').val(strategy.stepB_side);
+        $(stepB_params).find('select[name="step_type"]').val(strategy.stepB_type);
 
         _editStrategyId = strategy._id;
         $('#step_submit').val('update');
@@ -804,10 +863,10 @@
             res.message = "设置的各项之和不能大于100%";
 
         }
-        else if (step.priceRange <= maxPriceRange) {
-            res.isSuccess = false;
-            res.message = '当前项设置的盈利点必须高于之前的' + maxPriceRange + '%';
-        }
+        // else if (step.priceRange <= maxPriceRange) {
+        //     res.isSuccess = false;
+        //     res.message = '当前项设置的盈利点必须高于之前的' + maxPriceRange + '%';
+        // }
 
         return res;
     }

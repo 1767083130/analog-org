@@ -18,6 +18,7 @@ const User = mongoose.model('User');
 const Order = mongoose.model('Order');
 const TransferStrategy = mongoose.model('TransferStrategy');
 const TransferStrategyLog = mongoose.model('TransferStrategyLog');
+const StrategyPlan = mongoose.model('StrategyPlan');
 
 const Decimal = require('decimal.js'),
     fs= require('fs'),
@@ -26,7 +27,7 @@ const Decimal = require('decimal.js'),
     symbolUtil  = require('../lib/utils/symbol');
 
 let datas = []; //e.g {"event":"subscribed","channel":"book","chanId":64,"prec":"P0","freq":"F0","len":"25","pair":"BTCUSD"}
-const INTERVAL = 0.3 * 1000; //0.3s
+const INTERVAL = 0.5 * 1000; //0.5s
 const NODE_ENV = process.env.NODE_ENV || 'production'; //development
 
 process.on('uncaughtException', function(e) {
@@ -133,7 +134,7 @@ async function onOrderMessage(res){
 async function renewOrders(){
     let now = new Date();
     let modifiedStart = new Date();
-    modifiedStart.setTime(+now - 2 * 24 * 60 * 60 * 1000); //超过2天的就不处理了
+    modifiedStart.setTime(+now - 4 * 60 * 60 * 1000); //超过4个小时的就不处理了
     let modifiedEnd = new Date();
     modifiedEnd.setTime(+now - 30 * 1000); //超过30s还未成交的就修改价格
 
@@ -183,22 +184,7 @@ async function renewOrders(){
     if(canRetryRes.retry || (!strictMode && !canRetryRes.isSuccess)){
         await updateOrderPrice(order);
     } else {
-        let cancelRes = await orderLib.cancelOrder(order);
-        if(!cancelRes.isSuccess){
-            console.log(`取消订单${order._id.toString()}失败。返回信息：${cancelRes.message}`);
-            order.autoRetryFailed++;
-            order.exceptions.push({
-                name: 'cancel',    //名称。如"retry",重试； “cancel”，撤销；“consign”，委托
-                alias: '取消订单时发生错误',   //别名。如"冻结帐户金额"
-                message: cancelRes.message,
-                Manual: true, //是否需要人工处理
-                status: order.status, //status可能的值:wait,准备开始；success,已完成;failed,失败
-                timestamp: + new Date() //时间戳
-            });
-        }
-        
-        order.desc = '因策略不再满足条件而被取消';
-        await order.save();
+        await cancelPlanOrder(order);
     }
 
     await Order.findOneAndUpdate({ 
@@ -209,6 +195,42 @@ async function renewOrders(){
     }, {
         new: true
     });
+}
+
+async function cancelPlanOrder(order){
+    let cancelRes = await orderLib.cancelOrder(order);
+    if(!cancelRes.isSuccess){
+        console.log(`取消订单${order._id.toString()}失败。返回信息：${cancelRes.message}`);
+        order.autoRetryFailed++;
+        order.exceptions.push({
+            name: 'cancel',    //名称。如"retry",重试； “cancel”，撤销；“consign”，委托
+            alias: '取消订单时发生错误',   //别名。如"冻结帐户金额"
+            message: cancelRes.message,
+            Manual: true, //是否需要人工处理
+            status: order.status, //status可能的值:wait,准备开始；success,已完成;failed,失败
+            timestamp: + new Date() //时间戳
+        });
+    } else {
+        let strategyPlan = await StrategyPlan.findById(order.strategyPlanId);
+        let strategyLog = await TransferStrategyLog.findById(order.actionId);
+        if(strategyPlan && strategyLog){
+            let planStrategyItem = strategyPlan.strategys.find(p => p.strategyId.toString() == strategyLog.strategyId.toString());
+            if(planStrategyItem){
+                planStrategyItem.consignAmount = new Decimal(planStrategyItem.consignAmount).minus(order.consignAmount).plus(order.bargainAmount).toNumber();
+            }
+    
+            let operateLog = strategyLog.operates.find(p => p.orgOperate.id == order.operateId);
+            if(operateLog){
+                operateLog.consignAmount = new Decimal(operateLog.consignAmount).minus(order.consignAmount).plus(order.bargainAmount).toNumber();
+            }
+    
+            await strategyPlan.save();
+            await strategyLog.save();
+        }
+    }
+    
+    order.desc = '因策略不再满足条件而被取消';
+    await order.save();
 }
 
 async function updateOrderPrice(order,options = {}){
@@ -229,23 +251,7 @@ async function updateOrderPrice(order,options = {}){
             });
             let conditionOrders = conditionResult.orders;
             if(!conditionOrders || conditionOrders.length == 0){
-                let cancelRes = await orderLib.cancelOrder(order);
-                if(!cancelRes.isSuccess){
-                    console.log(`取消订单${order._id.toString()}失败。返回信息：${cancelRes.message}`);
-
-                    order.exceptions.push({
-                        name: 'cancel',    //名称。如"retry",重试； “cancel”，撤销；“consign”，委托
-                        alias: '当策略不再满足条件，取消订单时发生错误',   //别名。如"冻结帐户金额"
-                        message: cancelRes.message,
-                        Manual: true, //是否需要人工处理
-                        status: 'wait', //status可能的值:wait,准备开始；success,已完成;failed,失败
-                        timestamp: + new Date() //时间戳
-                    });
-
-                    order.autoRetryFailed++;
-                    await order.save();
-                }
-
+                await cancelPlanOrder(order);
                 return;
             }
         }
@@ -253,7 +259,7 @@ async function updateOrderPrice(order,options = {}){
 
     try {
         let defaultOptions = {
-            minStepsCount: 2,
+            minStepsCount: 3,
             ignoreAmount: order.consignAmount - order.bargainAmount,
             maxLossPercent: 5
         };
