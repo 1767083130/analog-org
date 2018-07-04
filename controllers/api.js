@@ -29,8 +29,9 @@ module.exports = function (router) {
             if(!symbol){
                 return res.json(realPriceRes);
             }
+            symbol = symbol.replace(':','#');
 
-            let realPrice = await realTimePrice.getRealPrice(site,symbol);
+            let realPrice = await realTimePrice.getSymbolDepths(site,symbol);
             if(realPrice){
                 realPriceRes = { isSuccess: true, depth: realPrice};
             } else {

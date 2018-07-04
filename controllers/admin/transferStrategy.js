@@ -121,6 +121,10 @@ module.exports = function (router) {
             }
     
             let userName = req.user.userName;
+            if(!userName){
+                return  res.json({ isSuccess: false,message: "尚未登录" });
+            }
+            
             await TransferStrategy.remove({
                 userName: userName,
                 _id: strategyId

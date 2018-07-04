@@ -21,7 +21,7 @@ module.exports = function (router) {
      */
     router.post('/', function (req, res) {
         passport.authenticate('local', {
-            successRedirect: req.session.goingTo || '/account',
+            successRedirect: req.session.goingTo || '/admin/plan',
             failureRedirect: '/login',
             failureFlash: true
         })(req, res);

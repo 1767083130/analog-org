@@ -11,7 +11,9 @@
         <div id="barcon" name="barcon"></div>
         <div name="customPager" id="flexiGridPager" for="FlexiGrid_ContentTable" style="padding-top: 4px; display: none"></div>
         <input type="hidden" name="_csrf" value="{{_csrf}}" />
-        <button id="btn1">开启</button>&nbsp;&nbsp;<button id="btn2">停止</button><a href="/admin/trade">返回</a>
+        <button id="btn1" onclick="flexiGridxx()">开启</button>&nbsp;&nbsp;<button id="btn2">停止</button><a href="/admin/trade">返回</a>
+        <p><input type="button" name="btn" value="获取表格数据" onclick="showTableContent('mytable')"></p>
+        <p><div id="result"></div></p>
     </div>
 </div>
 
@@ -33,7 +35,8 @@
         initFlexiGrid();
         
 
-        flexiGridWx();
+        //flexiGridWx();
+        //flexiGridxx();
     });
 
     // function getVal(){
@@ -119,8 +122,9 @@
             onCommand: flexiGridCommand,
             
             //onSuccess:flexiGridWx,
+            //onInit: flexiGridxx,
             
-            
+
             autoload: false,    //自动加载,改自动加载就会报错
             columnsFixed: true,
             checkCell: {
@@ -374,287 +378,221 @@
     }
 
 
-    
-    
-    function flexiGridWx(){   
+    function flexiGridxx(){
+        var bb = {"userName":"lcm","outerId":"22","symbol":"btc#cny","side":"sell","modified":"2018-06-28T04:29:21.178Z","created":"2018-06-28T05:07:38.714Z","status":"wait","amount":2,"price":10000,"type":"limit"};
+        //var rr = JSON.parse(bb);
 
-        var obtn1 = document.getElementById('btn1');
-        var obtn2 = document.getElementById('btn2');
-        var timer = null;
-        
-
-        //点击开始触发获值
-        obtn1.onclick = function(){
-            debugger
-        
-        //清空表单
-        var p = { page: 1, total: 0, rows: [] };
-        //flexAddData是绑定数据
-        $('#FlexiGrid_ContentTable').flexAddData(p);
-        
-        //时间控件
-        timer = setInterval(function(){
-        
-        var ws = new WebSocket("ws://119.28.204.125:8080/ws");
-        
-        // WebSocket已连接，使用send()方法发送数据
-        ws.onopen = function() { 
-        let channels = ['market','order','position','wallet']; 
-            for(let site of ['okex','bitfinex']){       //这里需要指定  okex和bitfinex吗？
-                for(let channel of channels){
-                    let options = {
-                        event: "addChannel",
-                        channel: channel,
-                        parameters: { site: site, symbol: '*' }
-                    };
-                        ws.send(JSON.stringify(options));
+        var p = $("#FlexiGrid_ContentTable").GetOptions();
+        for(var i =0 ;i<p.data.rows.length;i++){
+            for(var j =0;j<p.data.rows[i].cell.length;j++){
+                if(p.data.rows[0].cell[0].cellHtml == bb.outerId){
+                    p.data.rows[0].cell[6].cellHtml= bb.side;
+                    
                 }
-            }
-        };
-        //客户端接收服务端数据时触发
-        ws.onmessage = function(evt) {  
-            debugger
-            let item = JSON.parse(evt.data);
-                if(item.channel == 'position'){
-                    for(var i =0 ; i<item.data.length;i++){
-                        $("#FlexiGrid_ContentTable").append("<tr style='text-align: center;width: 1044;'><td style='text-align: center;width:94px;'>"+item.data[i].site+ "</td><td style='text-align: center;width:94px;'>"+item.data[i].contractId+ 
-                        "</td><td style='text-align: center;width:94px;'>"+item.data[i].contractName+ "</td><td style='text-align: center;width:94px;'>"+item.data[i].avgPrice+ 
-                        "</td><td style='text-align: center;width:94px;'>"+item.data[i].costPrice+ "</td><td style='text-align: center;width:94px;'>"+item.data[i].eveningUp+ 
-                        "</td><td style='text-align: center;width:95px;'>"+item.data[i].positionType+ "</td><td style='text-align: center;width:95px;'>"+item.data[i].profitReal+ 
-                        "</td><td style='text-align: center;width:95px;'>"+item.data[i].holdAmount+ "</td><td style='text-align: center;width:95px;'>"+item.data[i].unit+ 
-                        "</td><td style='text-align: center;width:95px;'>"+item.data[i].leverRate+ "</td></tr>");
-                        //var aa = item.data[i];
+                
+                    if(p.data.rows[i].cell[6].cellHtml == 'buy'){
+                        p.data.rows[i].cell[5].cellHtml = p.data.rows[i].cell[5].cellHtml + bb.dealAmount;
                     }
-                    // var p = $("#FlexiGrid_ContentTable").GetOptions(aa);
+                    if(p.data.rows[i].cell[6].cellHtml == 'sell'){
+                        p.data.rows[i].cell[5].cellHtml = p.data.rows[i].cell[5].cellHtml - bb.dealAmount;
+
+                        if(p.data.rows[i].cell[5].cellHtml < 0){
+                            alert('数量错误');
+                        }
+                    }
+                
+            }
+        }
+            // p.rp = 2;  
+			// p.newp = 10;
+        $("#FlexiGrid_ContentTable").flexOptions(p);
+        $("#FlexiGrid_ContentTable").flexReload();
+
+        
+    }
+    
+// var mytable = document.getElementById("FlexiGrid_ContentTable");
+//     var data = [];
+// for(var i=0,rows=mytable.rows.length; i<rows; i++){
+//       for(var j=0,cells=mytable.rows[i].cells.length; j<cells; j++){
+//         if(!data[i]){
+//           data[i] = new Array();
+//         }
+//         data[i][j] = mytable.rows[i].cells[j].innerHTML;
+		
+//       }
+//     }
+//     return data;
+    
+//     if(data == bb.outerId){
+//             data = bb 
+            
+// 		}else{
+//             alert("错误")
+//         }
+	
+	
+//     $("#FlexiGrid_ContentTable").flexOptions(data);
+
+  /** 
+   * 遍历表格内容返回数组
+   * @param Int  id 表格id
+   * @return Array
+   */
+//   function getTableContent(){
+//     var mytable = document.getElementById("FlexiGrid_ContentTable");
+//     var data = [];
+//     for(var i=0,rows=mytable.rows.length; i<rows; i++){
+//       for(var j=0,cells=mytable.rows[i].cells.length; j<cells; j++){
+//         if(!data[i]){
+//           data[i] = new Array();
+//         }
+//         data[i][j] = mytable.rows[i].cells[j].innerHTML;
+//       }
+//     }
+//     return data;
+//   }
+ 
+  /** 
+   * 显示表格内容
+   * @param Int  id 表格id
+   */
+//   function showTableContent(id){
+//     var rr = {"userName":"lcm","outerId":"22","symbol":"btc#cny","side":"sell","modified":"2018-06-28T04:29:21.178Z","created":"2018-06-28T05:07:38.714Z","status":"wait","amount":2,"price":10000,"type":"limit"};
+//             var bb = JSON.parse(rr);
+//     var data = getTableContent(id);
+//     var tmp = '';
+//     for(i=0,rows=data.length; i<rows; i++){
+//       for(j=0,cells=data[i].length; j<cells; j++){
+//         // tmp += data[i][j] + ',';
+//         if(data[i][j]==bb.outerId){
+//             data [i][j] = bb
+//         }
+//       }
+//     //   tmp += '<br>';
+//     tmp = data;
+//     //获取当前显示的数据
+//     var p = $("#FlexiGrid_ContentTable").GetOptions(tmp);
+//             p.rp = $(this).attr("datavalue");
+//             $("#FlexiGrid_ContentTable").flexOptions(p);
+      
+//     }
+//     document.getElementById('result').innerHTML = tmp;
+//   }
+    
+    // function flexiGridWx(){   
+
+    //     var obtn1 = document.getElementById('btn1');
+    //     var obtn2 = document.getElementById('btn2');
+    //     var timer = null;
+        
+
+    //     //点击开始触发获值
+    //     obtn1.onclick = function(){
+    //         debugger
+        
+        // //清空表单
+        // var p = { page: 1, total: 0, rows: [] };
+        // //flexAddData是绑定数据
+        // $('#FlexiGrid_ContentTable').flexAddData(p);
+        
+        // var ws = new WebSocket("ws://119.28.204.125:8080/ws");
+        // var aa,bb;
+        // WebSocket已连接，使用send()方法发送数据
+        // ws.onopen = function() { 
+        // let channels = ['market','order','position','wallet']; 
+        //     for(let site of ['okex','bitfinex']){       //这里需要指定  okex和bitfinex吗？
+        //         for(let channel of channels){
+        //             let options = {
+        //                 event: "addChannel",
+        //                 channel: channel,
+        //                 parameters: { site: site, symbol: '*' }
+        //             };
+        //                 ws.send(JSON.stringify(options));
+        //         }
+        //     }
+        // };
+
+        //客户端接收服务端数据时触发
+        // ws.onmessage = function(evt) {  
+        //     debugger
+        //     let item = JSON.parse(evt.data);
+        //         if(item.channel == 'order'){
+        //             for(var i =0 ; i<item.data.length;i++){
+        //                  aa = item.data[i];
+        //                 }
+        //                 bb = JSON.parse(aa);
+        //             }
+                    
+        //         }
+        // } 
+
+        // var bb = {"userName":"lcm","outerId":"22","symbol":"btc#cny","side":"sell","modified":"2018-06-28T04:29:21.178Z","created":"2018-06-28T05:07:38.714Z","status":"wait","amount":2,"price":10000,"type":"limit"};
+            // var bb = JSON.parse(rr);
+
+        //获取flexigrid控件table中当前页面的数据
+        // var mytable = document.getElementById("FlexiGrid_ContentTable");
+        // var data = [];
+        // for(var i=0,rows=mytable.rows.length; i<rows; i++){
+        //   for(var j=0,cells=mytable.rows[i].cells.length; j<cells; j++){
+        //     if(!data[i]){
+        //       data[i] = new Array();
+        //     }
+        //     data[i][j] = mytable.rows[i].cells[j].innerHTML;
+        //   }
+        // }
+        // return data;
+      
+        // if(data.outerId == bb.outerId){
+        //     data = bb;
+        //     $("#FlexiGrid_ContentTable").flexOptions(data);
+        // }
+    
+     
+        // var p = $("#FlexiGrid_ContentTable").GetOptions(aa);
                     //     p.rp = $(this).attr("datavalue");
                     //     $("#FlexiGrid_ContentTable").flexOptions(p);
-                }
-        } 
-    },2000);
-
-    /**
- * 分页函数
- * pno--页数
- * psize--每页显示记录数
- * 分页部分是从真实数据行开始，因而存在加减某个常数，以确定真正的记录数
- * 纯js分页实质是数据行全部加载，通过是否显示属性完成分页功能
- **/
-// function goPage(pno){
-//     var itable = document.getElementById("FlexiGrid_ContentTable");
-//     var num = itable.rows.length;//表格所有行数(所有记录数)
-//     console.log(num);
-//     var totalPage = 0;//总页数
-//     var pageSize = 15;//每页显示行数
-//     //总共分几页
-//     if(num/pageSize > parseInt(num/pageSize)){
-//         totalPage=parseInt(num/pageSize)+1;
-//     }else{
-//         totalPage=parseInt(num/pageSize);
-//     }
-//     var currentPage = pno;//当前页数
-//     var startRow = (currentPage - 1) * pageSize+1;//开始显示的行  31
-//     var endRow = currentPage * pageSize;//结束显示的行   40
-//     endRow = (endRow > num)? num : endRow;    //40
-//     console.log(endRow);
-//     //遍历显示数据实现分页
-//     for(var i=1;i<(num+1);i++){
-//         var irow = itable.rows[i-1];
-//         if(i>=startRow && i<=endRow){
-//             irow.style.display = "table-row";
-//         }else{
-//             irow.style.display = "none";
-//         }
-//     }
-//     var pageEnd = document.getElementById("pageEnd");
-//     var tempStr = "<span>共"+totalPage+"页</span>";
- 
- 
-//     if(currentPage>1){
-//         tempStr += "<span class='btn' href=\"#\" onClick=\"goPage("+(1)+")\">首页</span>";
-//         tempStr += "<span class='btn' href=\"#\" onClick=\"goPage("+(currentPage-1)+")\">上一页</span>"
-//     }else{
-//         tempStr += "<span class='btn'>首页</span>";
-//         tempStr += "<span class='btn'>上一页</span>";
-//     }
- 
-//     for(var pageIndex= 1;pageIndex<totalPage+1;pageIndex++){
-//         tempStr += "<a onclick=\"goPage("+pageIndex+")\"><span>"+ pageIndex +"</span></a>";
-//     }
- 
-//     if(currentPage<totalPage){
-//         tempStr += "<span class='btn' href=\"#\" onClick=\"goPage("+(currentPage+1)+")\">下一页</span>";
-//         tempStr += "<span class='btn' href=\"#\" onClick=\"goPage("+(totalPage)+")\">尾页</span>";
-//     }else{
-//         tempStr += "<span class='btn'>下一页</span>";
-//         tempStr += "<span class='btn'>尾页</span>";
-//     }
- 
-//     document.getElementById("barcon").innerHTML = tempStr;
- 
-//     }
-}
         
 
-    obtn2.onclick = function(){  
-        clearInterval(timer);
-        var r = ws.close();
-        console.log(r)  
-               
-    }  
-}
-         //var rr = {"userName":"lcm","outerId":"22","symbol":"btc#cny","side":"sell","modified":"2018-06-28T04:29:21.178Z","created":"2018-06-28T05:07:38.714Z","status":"wait","amount":2,"price":10000,"type":"limit"};
-    //     var tt = JSON.parse(rr) || [];    
-    //     for(var i = 0;i<tt.length;i++){    
-    //         "cell":[
-    //                 {
-    //                     "cellHtml": ee.outerId,
-    //                     "isReadOnly": true,
-    //                     "attrs": []
-    //                 },
-    //                 {
-    //                     "cellHtml": ee.symbol,
-    //                     "isReadOnly": true,
-    //                     "attrs": []
-    //                 },
-    //                 {
-    //                     "cellHtml": ee.type,
-    //                     "isReadOnly": true,
-    //                     "attrs": []
-    //                 },
-    //                 {
-    //                     "cellHtml": ee.status,
-    //                     "isReadOnly": true,
-    //                     "attrs": []
-    //                 },
-    //                 {
-    //                     "cellHtml": ee.dealAmount,
-    //                     "isReadOnly": true,
-    //                     "attrs": []
-    //                 },
-    //                 {
-    //                     "cellHtml": ee.amount,
-    //                     "isReadOnly": true,
-    //                     "attrs": []
-    //                 },
-    //                 {
-    //                     "cellHtml": ee.side,
-    //                     "isReadOnly": true,
-    //                     "attrs": []
-    //                 },
-    //                 {
-    //                     "cellHtml": ee.created ? w.dateformat(new Date(ee.created),"yyyy-MM-dd hh:mm:ss") : '',
-    //                     "isReadOnly": true,
-    //                     "attrs": []
-    //                 },
-    //                 {
-    //                     "cellHtml": ee.price,
-    //                     "isReadOnly": true,
-    //                     "attrs": []
-    //                 },
-    //                 {
-    //                     "cellHtml": ee.avgPrice,
-    //                     "isReadOnly": true,
-    //                     "attrs": []
-    //                 },
-    //                 {
-    //                     "cellHtml": ee.hidden,
-    //                     "isReadOnly": true,
-    //                     "attrs": []
-    //                 }
-    //             ],
-    //             "attrs": []
-    //         };
-    // }
-    //         testData.rows.push(tt)
-    //         $('#FlexiGrid_ContentTable').flexAddData(testData);
-
-    //     alert(testData);
-
-        // var cc = [{"userName":"lcm","outerId":"22","symbol":"btc#cny","side":"sell","modified":"2018-06-28T04:29:21.178Z","created":"2018-06-28T05:07:38.714Z","status":"wait","amount":2,"price":10000,"type":"limit"},{"userName":"lcm","outerId":"233","symbol":"btc#cny","side":"buy","modified":"2018-06-27T04:29:21.178Z","created":"2018-06-27T05:07:38.714Z","status":"wait","amount":2,"price":10000,"type":"limit"},{"userName":"lcm","outerId":"2444","symbol":"btc#cny","side":"buy","modified":"2018-06-26T04:29:21.178Z","created":"2018-06-26T05:07:38.714Z","status":"wait","amount":2,"price":10000,"type":"limit"}];
-        // var aa = JSON.parse(cc) || [];  
+        //时间控件
+        // timer = setInterval(function(){
         
-
-        //     for(var i = 0; i < aa.length; i++){
-        //     var ee = aa[i];
-        //     var row = {
-        //         "cell":[
-        //             {
-        //                 "cellHtml": ee.outerId,
-        //                 "isReadOnly": true,
-        //                 "attrs": []
-        //             },
-        //             {
-        //                 "cellHtml": ee.symbol,
-        //                 "isReadOnly": true,
-        //                 "attrs": []
-        //             },
-        //             {
-        //                 "cellHtml": ee.type,
-        //                 "isReadOnly": true,
-        //                 "attrs": []
-        //             },
-        //             {
-        //                 "cellHtml": ee.status,
-        //                 "isReadOnly": true,
-        //                 "attrs": []
-        //             },
-        //             {
-        //                 "cellHtml": ee.dealAmount,
-        //                 "isReadOnly": true,
-        //                 "attrs": []
-        //             },
-        //             {
-        //                 "cellHtml": ee.amount,
-        //                 "isReadOnly": true,
-        //                 "attrs": []
-        //             },
-        //             {
-        //                 "cellHtml": ee.side,
-        //                 "isReadOnly": true,
-        //                 "attrs": []
-        //             },
-        //             {
-        //                 "cellHtml": ee.created ? w.dateformat(new Date(ee.created),"yyyy-MM-dd hh:mm:ss") : '',
-        //                 "isReadOnly": true,
-        //                 "attrs": []
-        //             },
-        //             {
-        //                 "cellHtml": ee.price,
-        //                 "isReadOnly": true,
-        //                 "attrs": []
-        //             },
-        //             {
-        //                 "cellHtml": ee.avgPrice,
-        //                 "isReadOnly": true,
-        //                 "attrs": []
-        //             },
-        //             {
-        //                 "cellHtml": ee.hidden,
-        //                 "isReadOnly": true,
-        //                 "attrs": []
+        // var ws = new WebSocket("ws://119.28.204.125:8080/ws");
+        
+        // // WebSocket已连接，使用send()方法发送数据
+        // ws.onopen = function() { 
+        // let channels = ['market','order','position','wallet']; 
+        //     for(let site of ['okex','bitfinex']){       //这里需要指定  okex和bitfinex吗？
+        //         for(let channel of channels){
+        //             let options = {
+        //                 event: "addChannel",
+        //                 channel: channel,
+        //                 parameters: { site: site, symbol: '*' }
+        //             };
+        //                 ws.send(JSON.stringify(options));
+        //         }
+        //     }
+        // };
+        // //客户端接收服务端数据时触发
+        // ws.onmessage = function(evt) {  
+        //     debugger
+        //     let item = JSON.parse(evt.data);
+        //         if(item.channel == 'position'){
+        //             for(var i =0 ; i<item.data.length;i++){
+        //                 $("#FlexiGrid_ContentTable").append("<tr style='text-align: center;width: 1044;'><td style='text-align: center;width:94px;'>"+item.data[i].site+ "</td><td style='text-align: center;width:94px;'>"+item.data[i].contractId+ 
+        //                 "</td><td style='text-align: center;width:94px;'>"+item.data[i].contractName+ "</td><td style='text-align: center;width:94px;'>"+item.data[i].avgPrice+ 
+        //                 "</td><td style='text-align: center;width:94px;'>"+item.data[i].costPrice+ "</td><td style='text-align: center;width:94px;'>"+item.data[i].eveningUp+ 
+        //                 "</td><td style='text-align: center;width:95px;'>"+item.data[i].positionType+ "</td><td style='text-align: center;width:95px;'>"+item.data[i].profitReal+ 
+        //                 "</td><td style='text-align: center;width:95px;'>"+item.data[i].holdAmount+ "</td><td style='text-align: center;width:95px;'>"+item.data[i].unit+ 
+        //                 "</td><td style='text-align: center;width:95px;'>"+item.data[i].leverRate+ "</td></tr>");
+        //                 //var aa = item.data[i];
         //             }
-        //         ],
-        //         "attrs": []
-        //     };
-        //     testData.rows.push(row);
-        // }
-        // return testData;
-
-        
-           
-            
-            
-                        //重新设置参数的方法
-                        // var p = $("#FlexiGrid_ContentTable").GetOptions(cc);
-                         
-                        // p.rp = $(this).attr(10); 
-                        // //flexOptions是更改flexigrid参数集合
-                        // $("#FlexiGrid_ContentTable").flexOptions(p).flexReload();
-
-
-                        // var p = $("#FlexiGrid_ContentTable").GetOptions();
-                        // p.rp = $(this).attr("datavalue");
-                        // $("#FlexiGrid_ContentTable").flexOptions(p);  
+        //             // var p = $("#FlexiGrid_ContentTable").GetOptions(aa);
+        //             //     p.rp = $(this).attr("datavalue");
+        //             //     $("#FlexiGrid_ContentTable").flexOptions(p);
+        //         }
+        // } 
+    // },2000);
            
 </script>
 {% endblock %}

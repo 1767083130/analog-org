@@ -16,7 +16,7 @@ const strategyPlanLib = require('../lib/strategyPlan');
 
 const INTERVAL = 4000; //4s
 const NODE_ENV = process.env.NODE_ENV || 'production'; //development
-const PLAN_ORDER_MAX_COUNT = 10; //全部计划最多能允许没有成交的订单笔数，如果超过这个数量，所有的策略计划必须停止
+const PLAN_ORDER_MAX_COUNT = 3; //全部计划最多能允许没有成交的订单笔数，如果超过这个数量，所有的策略计划必须停止
 
 process.on('uncaughtException', function(e) {
     console.error(e);
@@ -101,15 +101,17 @@ async function getStrategyPlans(){
 async function getOrdersCountOfPlan(strategyPlan){
     let now = new Date();
     let modifiedStart = new Date();
-    modifiedStart.setTime(+now - 2 * 24 * 60 * 60 * 1000); //超过2天的就不处理了
-    // let modifiedEnd = new Date();
-    // modifiedEnd.setTime(+now - 0.5 * 60 * 1000); //超过0.5分钟还未成交的就修改价格
+    modifiedStart.setTime(+now - 4 * 60 * 60 * 1000); //4 hours
 
+    //status可能的值:wait,准备开始；consign: 已委托,但未成交；success,已完成; 
+    //part_success,部分成功;will_cancel,已标记为取消,但是尚未完成;canceled: 已取消；
+    //wait_retry 准备重新发起委托，但还没有进行
+    //auto_retry: 委托超过一定时间未成交，已由系统自动以不同价格发起新的委托; failed,失败
     let orders = await Order.find({ 
         userName: strategyPlan.userName,
         //modified: { $lt: modifiedEnd },
         modified: { $gt: modifiedStart},
-        status: { $in: ['consign','part_success'] },  //,'auto_retry'
+        status: { $in: ['wait','consign','part_success','will_cancel','wait_retry'] },  //,'auto_retry'
     });
 
      return orders.length;  

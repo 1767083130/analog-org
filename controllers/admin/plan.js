@@ -49,6 +49,9 @@ module.exports = function (router) {
             if(['init','wait', 'running', 'success', 'stopped'].indexOf(status) == -1){
                 return res.json({ isSuccess: false,message: "status的值只能为init、wait、running、success或stopped" });
             }
+            if(!userName){
+                return  res.json({ isSuccess: false,message: "尚未登录" });
+            }
 
             let planId = mongoose.Types.ObjectId(sPlanId);
             let plan = await StrategyPlan.findOneAndUpdate({ 
@@ -74,8 +77,15 @@ module.exports = function (router) {
             let userName = req.user.userName;
             let env = { userName: userName };
             let envOptions = { env: env };
+            if(!userName){
+                return  res.json({ isSuccess: false,message: "尚未登录" });
+            }
 
-            let sPlanId = req.body.planId;
+            let sPlanId = req.query.planId;
+            if(!sPlanId){
+                return  res.json({ isSuccess: true, strategys: [] });
+            }
+
             let planId;
             if(sPlanId){
                 planId = mongoose.Types.ObjectId(sPlanId);
@@ -95,6 +105,9 @@ module.exports = function (router) {
             let envOptions = { env: env };
             let strategyType = req.query.strategyType || 'normal';
             let condition = req.query.condition || '1==0';
+            if(!userName){
+                return  res.json({ isSuccess: false,message: "尚未登录" });
+            }
 
             let runRes = await transferController.getConditionResult(condition,strategyType,envOptions);
             res.json({ isSuccess: true, conditionResult: runRes });
@@ -109,6 +122,9 @@ module.exports = function (router) {
             let userName = req.user.userName;
             let _transferStrategy = JSON.parse(req.body.strategy);
             let sPlanId = req.body.planId;
+            if(!userName){
+                return  res.json({ isSuccess: false,message: "尚未登录" });
+            }
 
             let planId;
             if(sPlanId){
@@ -119,7 +135,7 @@ module.exports = function (router) {
                 return res.json({ isSuccess: false,message: "修改的任务不存在，有可能已被删除" });
             }
 
-            let transferStrategy;
+            let transferStrategy,isNew;
             if(_transferStrategy._id){
                 let strategyId;
                 if(_transferStrategy._id){
@@ -134,6 +150,8 @@ module.exports = function (router) {
                     transferStrategy[key] = _transferStrategy[key];
                 }
             } else {
+                delete _transferStrategy._id;
+                isNew = true;
                 transferStrategy = new TransferStrategy(_transferStrategy);
             }
 
@@ -141,11 +159,13 @@ module.exports = function (router) {
             transferStrategy.userName = req.user.userName;
             transferStrategy = await transferStrategy.save();
 
-            plan.strategys.push({
-                strategyId: transferStrategy._id,
-                consignAmount: 0,
-                actualAmount: 0
-            });
+            if(isNew){
+                plan.strategys.push({
+                    strategyId: transferStrategy._id,
+                    consignAmount: 0,
+                    actualAmount: 0
+                });
+            }
             plan = await plan.save();
 
             res.json({ isSuccess: true,  strategy: transferStrategy });
@@ -158,6 +178,9 @@ module.exports = function (router) {
     router.post('/removeStrategy', async function (req, res) {
         try{
             let userName = req.user.userName;
+            if(!userName){
+                return  res.json({ isSuccess: false,message: "尚未登录" });
+            }
             
             let sPlanId = req.body.planId;
             let planId = mongoose.Types.ObjectId(sPlanId);
@@ -190,6 +213,9 @@ module.exports = function (router) {
         try{
             let userName = req.user.userName;
             let _plan = req.body.plan;
+            if(!userName){
+                return  res.json({ isSuccess: false,message: "尚未登录" });
+            }
 
             let plan;
             if(_plan._id){
@@ -197,6 +223,7 @@ module.exports = function (router) {
                 if(_plan._id){
                     planId = mongoose.Types.ObjectId(_plan._id);
                 }
+
                 plan= await StrategyPlan.findOne({_id: planId, userName: userName });
                 if(!plan){
                     return res.json({ isSuccess: false,message: "修改的任务不存在，有可能已被删除" });
@@ -206,6 +233,7 @@ module.exports = function (router) {
                     plan[key] = _plan[key];
                 }
             } else {
+                delete _plan._id;
                 plan = new StrategyPlan(_plan);
             }
 
@@ -228,6 +256,10 @@ module.exports = function (router) {
             }
     
             let userName = req.user.userName;
+            if(!userName){
+                return  res.json({ isSuccess: false,message: "尚未登录" });
+            }
+
             let plan = await StrategyPlan.findOneAndUpdate({ 
                     userName: userName, 
                     _id: planId
@@ -306,6 +338,9 @@ function list(req,res,callback){
         let pageIndex = Number(sPageIndex) || 0;
         let pageSize = Number(sPageSize) || 20;
         let userName = req.user.userName;
+        if(!userName){
+            return  res.json({ isSuccess: false,message: "尚未登录" });
+        }
 
         let filters = { userName : userName, isValid: true,isSimple: true };
         let run = req.query.run;

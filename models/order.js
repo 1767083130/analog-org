@@ -61,17 +61,18 @@ var orderModel = function () {
         //previousOrder: { type: Schema.ObjectId },//前置交易
         //nextOrder: { type: Schema.ObjectId }, //后置交易
         desc: { type: String }, //描述说明
+        isHidden: { type: Boolean, "default": false }, //是否为隐藏单
+        isPostOnly:  { type: Boolean, "default": false }, //当type=limit时有效。感觉是fill or kill的反面，也就是说，如果提交了post-only单，且这个单子会立刻成交的话，就自动撤单（或者移开一个最小价位）。只有这个单子能挂上去不被立刻成交的时候才会下单。
+        consignDate: Date, //委托时间
+        created: { type: Date, "default": Date.now() }, //创建时间
+        modified: { type: Date, "default": Date.now() }, //最近修改时间
 
+        /** 下面几个字段并没有使用到 */
         storeId : { type: Number, default: 0 },                // 仓位ID
         processedMoney : { type: Number, default: 0 },         // 已处理的金额数量
         margin : { type: Number, default: 0 },       // 订单冻结保证金
         processedPrice : { type: Number, default: 0 },         // 成交价格
         timeInForce: { type: String, default: "GoodTillCancel" } , //成交时间限制 "GoodTillCancel"
-        isHidden: { type: Boolean, "default": false }, //是否为隐藏单
-        isPostOnly:  { type: Boolean, "default": false }, //当type=limit时有效。感觉是fill or kill的反面，也就是说，如果提交了post-only单，且这个单子会立刻成交的话，就自动撤单（或者移开一个最小价位）。只有这个单子能挂上去不被立刻成交的时候才会下单。
-        consignDate: Date, //委托时间
-        created: { type: Date, "default": Date.now() }, //创建时间
-        modified: { type: Date, "default": Date.now() } //最近修改时间
     },{
         usePushEach: true
     });

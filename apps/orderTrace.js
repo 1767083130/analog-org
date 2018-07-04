@@ -26,7 +26,7 @@ const Decimal = require('decimal.js'),
     symbolUtil  = require('../lib/utils/symbol');
 
 let datas = []; //e.g {"event":"subscribed","channel":"book","chanId":64,"prec":"P0","freq":"F0","len":"25","pair":"BTCUSD"}
-const INTERVAL = 15 * 1000; //15s
+const INTERVAL = 0.3 * 1000; //0.3s
 const NODE_ENV = process.env.NODE_ENV || 'production'; //development
 
 process.on('uncaughtException', function(e) {
@@ -82,18 +82,22 @@ async function onOrderMessage(res){
 
     /**
      * apiOrder数据结构
-        outerId: apiOrder.id,
-        symbol: common.getApiSymbol(apiOrder.symbol,true),
-        type: type, //“LIMIT”, “MARKET”, “STOP”, “TRAILING_STOP”, “EXCHANGE_MARKET”, “EXCHANGE_LIMIT”, “EXCHANGE_STOP”, “EXCHANGE_TRAILING_STOP”, “FOK”, “EXCHANGE_FOK”
+        outerId: apiOrder.order_id,
+        symbol: this._getPositionSymbol(apiOrder.contract_name),
+        type: "LIMIT", //“LIMIT”, “MARKET”, “STOP”, “TRAILING_STOP”, “EXCHANGE_MARKET”, “EXCHANGE_LIMIT”, “EXCHANGE_STOP”, “EXCHANGE_TRAILING_STOP”, “FOK”, “EXCHANGE_FOK”
         status: status,//status可能的值:wait,准备开始；consign: 已委托,但未成交；success,已完成; 
                         //part_success,部分成功;will_cancel,已标记为取消,但是尚未完成;canceled: 已取消；
                         //auto_retry: 委托超过一定时间未成交，已由系统自动以不同价格发起新的委托; failed,失败
-        dealAmount: apiOrder.amount, //已处理数量
-        amount: apiOrder.amountOrig, //已委托数量
-        created: +apiOrder.mtsCreate,
-        price: apiOrder.price,
-        avgPrice: apiOrder.priceAvg,
-        hidden: apiOrder.hidden,
+
+        amount: amount, //已委托数量
+        dealAmount: dealAmount, //已成交数量
+        side: side,
+
+        created: +apiOrder.created_date,
+        price: apiOrder.price, //委托价格
+        avgPrice: apiOrder.price_avg, //成交的平均价格
+        hidden: false,
+        unit: `${apiOrder.unit_amount}_usd`,
         maker: apiOrder.maker
      */
     try{
@@ -104,7 +108,8 @@ async function onOrderMessage(res){
                 continue;
             }
 
-            let stepAmount = new Decimal(apiOrder.dealAmount).minus(order.bargainAmount).toNumber(); //更改帐户的金额
+            let realDealAmount = orderLib.getRealAmount(apiOrder.dealAmount,apiOrder.avgPrice || apiOrder.price,apiOrder.symbol,apiOrder.unit);
+            let stepAmount = new Decimal(realDealAmount).minus(order.bargainAmount).toNumber(); //更改帐户的金额
             let newOrder = await orderLib.refreshOrder(order, apiOrder);
 
             if(NODE_ENV != 'production'){
@@ -130,7 +135,7 @@ async function renewOrders(){
     let modifiedStart = new Date();
     modifiedStart.setTime(+now - 2 * 24 * 60 * 60 * 1000); //超过2天的就不处理了
     let modifiedEnd = new Date();
-    modifiedEnd.setTime(+now - 0.5 * 60 * 1000); //超过0.5分钟还未成交的就修改价格
+    modifiedEnd.setTime(+now - 30 * 1000); //超过30s还未成交的就修改价格
 
     let order = await Order.findOneAndUpdate({ 
         reason: "transfer",
@@ -139,7 +144,7 @@ async function renewOrders(){
         modified: { $lt: modifiedEnd },
         modified: { $gt: modifiedStart},
         autoRetryFailed: { $lt: 2 },
-        status: { $in: ['consign','part_success'] },  //,'auto_retry'
+        status: { $in: ['consign','part_success'] },   //,'auto_retry'
         "$where": function(){
             return Math.abs(this.bargainAmount) < Math.abs(this.consignAmount)
         } 
@@ -167,6 +172,7 @@ async function renewOrders(){
                 timestamp: + new Date() //时间戳
             });
 
+            order.status = 'consign';
             await order.save();
             return; 
         } else {
@@ -194,9 +200,18 @@ async function renewOrders(){
         order.desc = '因策略不再满足条件而被取消';
         await order.save();
     }
+
+    await Order.findOneAndUpdate({ 
+        _id: order._id,
+        status: 'wait_retry' 
+    },{
+        $set: { status: 'consign' }
+    }, {
+        new: true
+    });
 }
 
-async function updateOrderPrice(order){
+async function updateOrderPrice(order,options = {}){
     let normalStrategyRunner = new NormalStrategyRunner();
     if(order.actionId){
         let strategyLog = await TransferStrategyLog.findById(order.actionId);
@@ -237,10 +252,13 @@ async function updateOrderPrice(order){
     }
 
     try {
-        let options = {
+        let defaultOptions = {
+            minStepsCount: 2,
             ignoreAmount: order.consignAmount - order.bargainAmount,
             maxLossPercent: 5
         };
+        Object.assign(options,defaultOptions,options);  
+
         let res = await orderLib.updateOrderPrice(order,options);
         return res;
     } catch (err){

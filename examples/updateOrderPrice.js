@@ -23,10 +23,11 @@ const Decimal = require('decimal.js');
  * 修改订单价格
  */
 
-const SYMBOL = 'eos#usd';
-const SITE = 'bitfinex';
-// const SYMBOL = 'eth#usd_1w';
-// const SITE = 'okex';
+// const SYMBOL = 'eos#usd';
+// const SITE = 'bitfinex';
+const SYMBOL = 'eos#usd_1w';
+const SITE = 'okex';
+const ISPOSTONLY = false;
 
 const INTERVAL = 15 * 1000; //15s
 const CLIENT_TYPE = "client" 
@@ -39,6 +40,7 @@ process.on('uncaughtException', function(e) {
 
 let isRunned = false;
 let db = mongoose.connection;
+let willUpdatedOrder;
 db.once('open',function callback(){
     console.log('数据库连接成功');
     if(cacheClient.readyState == CacheClient.OPEN){
@@ -69,8 +71,12 @@ db.once('open',function callback(){
                 setTimeout(async function() {
                     let createOrderRes = await createTestOrder();
                     if(createOrderRes.isSuccess){
-                        let renewOrderRes = await renewOrder(createOrderRes.order);
-                        console.log(JSON.stringify(renewOrderRes));
+                        willUpdatedOrder = createOrderRes.order; 
+                        setInterval(async function(){
+                            let renewOrderRes = await renewOrder(willUpdatedOrder);
+                            console.log(JSON.stringify(renewOrderRes));
+                            console.log('-----------------------------------')
+                        }, 10000);
                     } else {
                         console.log(createOrderRes.message);
                     }
@@ -145,7 +151,7 @@ async function onOrderMessage(res){
     * @public
     */
 async function createTestOrder(){
-    const AMOUNT = -2;
+    const AMOUNT = 2;
     const SIDE = 'buy';
 
     let res = { isSuccess: false };
@@ -174,7 +180,7 @@ async function createTestOrder(){
         symbol: SYMBOL, //cny、btc、ltc、usd
         consignDate: new Date(), //委托时间
         
-        isPostOnly: true,
+        isPostOnly: ISPOSTONLY,
         price: price, //委托价格
         amount: AMOUNT, //总数量
 
@@ -206,7 +212,36 @@ function _getPostOnlyPrice(depths,operateType,priceSteps = 120){
 
 async function renewOrder(order){
     try {
-        let res = await orderLib.updateOrderPrice(order);
+        let newOrder1 = await Order.findOneAndUpdate({ 
+            _id: willUpdatedOrder._id
+        },{
+            $set: { status: 'wait_retry' }
+        }, {
+            new: true
+        });
+
+        let options = {
+            minStepsCount: 1,
+            minAmount: 0,
+            ignoreStepsCount: 40,
+            ignoreAmount: 0,
+            maxLossPercent: 5,
+            lazyMode: false
+        };
+        let res = await orderLib.updateOrderPrice(order,options);
+
+        await Order.findOneAndUpdate({ 
+            _id: willUpdatedOrder._id,
+            status: 'wait_retry' 
+        },{
+            $set: { status: 'consign' }
+        }, {
+            new: true
+        });
+
+        if(res.order){
+            willUpdatedOrder = res.order;
+        }
         return res;
     } catch (err){
         order.autoRetryFailed++;
@@ -215,8 +250,6 @@ async function renewOrder(order){
         return { isSuccess: false, message: "服务器端错误"}
     }
 }
-
-
 
 //testGetMarketPrice();
 

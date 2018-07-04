@@ -27,6 +27,9 @@ module.exports = function (router) {
             if(!strategy){
                 strategy = new TransferStrategy();
             }
+            if(!req.user.userName){
+                return  res.json({ isSuccess: false,message: "尚未登录" });
+            }
             
             //todo
             strategy.userName = req.user.userName;
@@ -47,6 +50,9 @@ function list(req,res,callback){
     let pageIndex = Number(sPageIndex) || 0;
     let pageSize = Number(sPageSize) || 10;
     let userName = req.user.userName;
+    if(!userName){
+        return  res.json({ isSuccess: false,message: "尚未登录" });
+    }
 
     let filters = { userName : userName}
     
