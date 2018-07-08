@@ -11,10 +11,10 @@ var transferStrategyModel = function () {
         userName: { type: String, required: true }, 
         isTest: { type: Boolean },
         openType: { type: String, default: "private" },
-        planId: { type: Schema.ObjectId }, //策略计划_id
+        planLogId: { type: Schema.ObjectId }, //策略计划_id
         
         priceRange: Number, //未成功的交易价格容忍度，如0.5，表示0.5%的价差
-        lastRunTime:{ type: Date, default: Date.now() },  //上次运行时间
+        lastRunTime:{ type: Date },  //上次运行时间
         auto: { type: Boolean,default: true },
         name: String,
         //itemId: { type: Schema.ObjectId },

@@ -39,7 +39,7 @@
                         <select id="step_symbolB" data-group="2" name="symbols"></select> 
                         <input type="text" maxlength="5" id="step_range" style="width: 40px;" />%时,
                         建仓<input type="text" maxlength="8" style="width: 80px;" id="step_amount" />个
-                   
+                        &nbsp; <a id="autoFill"  href="#">智能填充</a>
                     </div>
                     <ul id="stepParams"></ul>  
                     <script type="text/template" id="tmplStepParams">
@@ -226,12 +226,11 @@
 
                 operate: step_operate,
                 priceRange: step_range,
-                totalAmount: step_amount,
-
-                relatedStrategy: _relatedStrategy,
+                totalAmount: step_amount
             };
 
             if(!_editStrategyId && _relatedStrategy){
+                step.relatedStrategy = _relatedStrategy;
                 step.direction = 2;
             }
 
@@ -287,7 +286,21 @@
 
         $('#btnEidtStrategyCancel').click(function(){
             $('#pnlStrategys').hide();
-        })
+        });
+
+        $('#autoFill').click(function(){
+            if(_strategys.length == 0){
+                return;
+            }
+            var strategy = _strategys[0]
+            var copyStrategy = deepCopy(strategy);
+            copyStrategy.priceRange = 0;
+            copyStrategy.totalAmount = 0;
+            delete copyStrategy.relatedStrategy;
+            delete copyStrategy.direction;
+
+            initReverseStrategy(copyStrategy);
+        });
 
         var getOperateText = function(group){
             var step_operate = $('#step_operate').val();
@@ -513,6 +526,8 @@
 
             operate: conditionOperate,
             priceRange: stepRange,
+            relatedStrategy: strategy.relatedStrategy,
+            direction: strategy.direction,
             totalAmount: strategy.totalAmount
         }
         return simpleStrategy;
@@ -688,20 +703,47 @@
     //***********  STEPS s *******
     function showStrategySteps() {
         var source = [];
-        for (var j = 0; j < _strategys.length; j++) {
-            var stepsLen = _strategys.length;
-            var step = _strategys[j];
+        var addStep = function(step){
+            if(step.relatedStrategy && step.direction != 1){
+                source.push("|——&nbsp;");
+            }
 
-            source.push('<hr style=" border:1px dashed #ccc; border-style:dashed;" />');
             var s = w.format('{0}:{1} - {2}:{3},当数值{4}{5}%时,建仓数量{6}个',step.siteA,step.symbolA,step.siteB, 
                                 step.symbolB,step.operate,step.priceRange,step.totalAmount);
             source.push(s);
-            source.push('<br/>');
 
-            source.push(w.format('<a href="#" name="editStep" data-id="{0}">编辑</a>',step._id));
-            source.push(w.format('&nbsp;&nbsp;<a href="#" name="addGroupStep" data-id="{0}">设置平仓策略</a>',step._id));
+            source.push(w.format('&nbsp;&nbsp;<a href="#" name="editStep" data-id="{0}">编辑</a>',step._id));
+            if(!step.relatedStrategy){
+                source.push(w.format('&nbsp;&nbsp;<a href="#" name="addGroupStep" data-id="{0}">设置平仓策略</a>',step._id));
+            }
             source.push(w.format('&nbsp;&nbsp;<a href="#" name="removeStep" data-id="{0}">删除</a>',step._id));
         }
+
+        for (var j = 0; j < _strategys.length; j++) {
+            var stepsLen = _strategys.length;
+            var step = _strategys[j];
+            if(step.relatedStrategy && step.direction != 1){
+                continue;
+            }
+             
+            source.push('<hr style=" border:1px dashed #ccc; border-style:dashed;" />');
+            addStep(step);
+            source.push('<br/>')
+
+            var relatedStrategy = null;
+            if(step.relatedStrategy){
+                for (var k = 0; k < _strategys.length; k++) {
+                    if(_strategys[k]._id == step.relatedStrategy){
+                        relatedStrategy = _strategys[k];
+                        break;
+                    }
+                }
+            }
+            if(relatedStrategy){
+                addStep(relatedStrategy);
+            }
+        }
+        source.push('<hr style=" border:1px dashed #ccc; border-style:dashed;" />');
 
         $('#steps').html('');
         $('#steps').append(source.join(''));
@@ -712,8 +754,9 @@
             }
             
             var strategyId = $(this).attr('data-id');
-            deleteTransferStrategy(_editPlanId,strategyId);
-            showPlanStrategys(_editPlanId);
+            deleteTransferStrategy(_editPlanId,strategyId,function(){
+                showPlanStrategys(_editPlanId);
+            });
         });
 
         
@@ -728,7 +771,13 @@
             }
 
             _relatedStrategy = strategyId;
-            initReverseStrategy(strategy);
+            var relatedStrategy = deepCopy(strategy);
+            relatedStrategy.operate = (strategy.operate == '>=' ? '<=' : '>=');
+            relatedStrategy.priceRange = 0;
+            relatedStrategy.stepA_side = (strategy.stepA_side == 'buy' ? 'sell' : 'buy');
+            relatedStrategy.stepB_side = (strategy.stepB_side == 'buy' ? 'sell' : 'buy');
+
+            initReverseStrategy(relatedStrategy);
         });
 
         $('a[name="editStep"]').click(function(){
@@ -754,6 +803,7 @@
         $('#step_submit').val('新建');
         $('#stepParams').show();
     }
+    
 
     function editStrategy(strategy){
         var getOperateType = function(group){
@@ -901,7 +951,7 @@
                 successFun && successFun(e.strategy);
             }
             else {
-                failFun ? failFun() : alert("系统错误，请稍后重试！");
+                failFun ? failFun() : alert(e.message || "系统错误，请稍后重试！");
             }
         }).fail(function (e) {
             failFun ? failFun() : alert("系统错误，请稍后重试！");
@@ -934,6 +984,17 @@
         var delim;
         delim = "-";
         return S4() + S4() + delim + S4() + delim + S4() + delim + S4() + delim + S4() + S4() + S4()
+    }
+
+    function deepCopy(obj){
+        if(typeof obj != 'object'){
+            return obj;
+        }
+        var newobj = {};
+        for ( var attr in obj) {
+            newobj[attr] = deepCopy(obj[attr]);
+        }
+        return newobj;
     }
 
 </script>

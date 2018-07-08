@@ -18,6 +18,21 @@ cacheClient.start(function(){
     });
 });
 
+
+let client = cacheClient.getClient();
+// client.on('open',function(){
+//     console.log(`已连接到服务器：${client.options.serverUrl}`)
+//     let symbolDepths = cacheClient.getSymbolDepths(SITE,"btc#usd");
+//     Output && log(symbolDepths)
+// })
+
+client.on('message',function(res){
+    //Output && console.log(JSON.stringify(res));
+    if(res.channel && res.channel != 'market'){
+        //console.log(JSON.stringify(res));
+    }
+})
+
 process.on('uncaughtException', function(e) {
     console.log(e);
 });

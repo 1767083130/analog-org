@@ -17,7 +17,7 @@ const strategyPlanLib = require('../lib/strategyPlan');
 const INTERVAL = 4000; //4s
 const PLAN_RUN_INTERVAL = 5 * 1000; //5s
 const NODE_ENV = process.env.NODE_ENV || 'production'; //development
-const PLAN_ORDER_MAX_COUNT = 8; //全部计划最多能允许没有成交的订单笔数，如果超过这个数量，所有的策略计划必须停止
+const PLAN_ORDER_MAX_COUNT = 4; //全部计划最多能允许没有成交的订单笔数，如果超过这个数量，所有的策略计划必须停止
 
 process.on('uncaughtException', function(e) {
     console.error(e);
@@ -63,7 +63,7 @@ async function runStrategyPlans(){
 
     try{
         for(let strategyPlan of strategyPlans){
-            let ordersCount = getOrdersCountOfPlan(strategyPlan);
+            let ordersCount = await getOrdersCountOfPlan(strategyPlan);
             if(ordersCount >= PLAN_ORDER_MAX_COUNT){
                 console.log(`没有完成的订单多达${ordersCount}个，已超标，计划正在队列中等待...`);
                 break;
@@ -105,7 +105,7 @@ async function getStrategyPlans(){
 }
 
 async function getOrdersCountOfPlan(strategyPlan){
-    let modifiedStart = new Date(+new Date() - 4 * 60 * 60 * 1000); //4 hours
+    let modifiedStart = new Date(+new Date() - 5 * 60 * 1000); //5分钟内
 
     //status可能的值:wait,准备开始；consign: 已委托,但未成交；success,已完成; 
     //part_success,部分成功;will_cancel,已标记为取消,但是尚未完成;canceled: 已取消；

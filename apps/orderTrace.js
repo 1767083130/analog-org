@@ -19,6 +19,7 @@ const Order = mongoose.model('Order');
 const TransferStrategy = mongoose.model('TransferStrategy');
 const TransferStrategyLog = mongoose.model('TransferStrategyLog');
 const StrategyPlan = mongoose.model('StrategyPlan');
+const StrategyPlanLog = mongoose.model('StrategyPlanLog');
 
 const Decimal = require('decimal.js'),
     fs= require('fs'),
@@ -50,6 +51,11 @@ db.once('open',function callback(){
                     if(res.isSuccess){
                         await onOrderMessage(res);
                     }
+
+                    // console.log(JSON.stringify(res));
+                    fs.appendFile(path.join(__dirname,'logs', 'log.txt'), JSON.stringify(res) + '\r\n\r\n', (err) =>  {
+                        if (err) throw err;
+                    });                
                     break;
                 case 'trade':
                     //console.log(JSON.stringify(res));
@@ -199,22 +205,11 @@ async function renewOrders(){
 
 async function cancelPlanOrder(order){
     let cancelRes = await orderLib.cancelOrder(order);
-    if(!cancelRes.isSuccess){
-        console.log(`取消订单${order._id.toString()}失败。返回信息：${cancelRes.message}`);
-        order.autoRetryFailed++;
-        order.exceptions.push({
-            name: 'cancel',    //名称。如"retry",重试； “cancel”，撤销；“consign”，委托
-            alias: '取消订单时发生错误',   //别名。如"冻结帐户金额"
-            message: cancelRes.message,
-            Manual: true, //是否需要人工处理
-            status: order.status, //status可能的值:wait,准备开始；success,已完成;failed,失败
-            timestamp: + new Date() //时间戳
-        });
-    } else {
-        let strategyPlan = await StrategyPlan.findById(order.strategyPlanId);
+    if(cancelRes.isSuccess){
+        let strategyPlanLog = await StrategyPlanLog.findById(order.strategyPlanLogId);
         let strategyLog = await TransferStrategyLog.findById(order.actionId);
-        if(strategyPlan && strategyLog){
-            let planStrategyItem = strategyPlan.strategys.find(p => p.strategyId.toString() == strategyLog.strategyId.toString());
+        if(strategyPlanLog && strategyLog){
+            let planStrategyItem = strategyPlanLog.strategys.find(p => p.strategyId.toString() == strategyLog.strategyId.toString());
             if(planStrategyItem){
                 planStrategyItem.consignAmount = new Decimal(planStrategyItem.consignAmount).minus(order.consignAmount).plus(order.bargainAmount).toNumber();
             }
@@ -224,7 +219,7 @@ async function cancelPlanOrder(order){
                 operateLog.consignAmount = new Decimal(operateLog.consignAmount).minus(order.consignAmount).plus(order.bargainAmount).toNumber();
             }
     
-            await strategyPlan.save();
+            await strategyPlanLog.save();
             await strategyLog.save();
         }
     }
@@ -291,14 +286,18 @@ async function canOrderRetry(order){
     /**
      * 如果订单只有小额没成交，有时候重新下单会失败，这里检验一个订单金额是否超过10usd
      */
-
-    //考虑到交易网站都支持用btc兑换所有其他的币种，这里都将其他币种折算成btc。一旦条件不成立，这里的计算方式也必须要修改
-    let targetSymbol = symbolUtil.getSymbolByParts({targetCoin: symbolParts.targetCoin,settlementCoin: 'btc' });
-    let getSymbolPriceRes = await realPriceLib.getSymbolPrice(order.site,targetSymbol);
-    if(!getSymbolPriceRes.isSuccess){
-        return getSymbolPriceRes;
+    let coinPrice,getSymbolPriceRes;
+    if(symbolParts.targetCoin != 'btc'){
+        //考虑到交易网站都支持用btc兑换所有其他的币种，这里都将其他币种折算成btc。一旦条件不成立，这里的计算方式也必须要修改
+        let targetSymbol = symbolUtil.getSymbolByParts({targetCoin: symbolParts.targetCoin,settlementCoin: 'btc' });
+        getSymbolPriceRes = await realPriceLib.getSymbolPrice(order.site,targetSymbol);
+        if(!getSymbolPriceRes.isSuccess){
+            return getSymbolPriceRes;
+        }
+        coinPrice = getSymbolPriceRes.price;
+    } else {
+        coinPrice = 1;
     }
-    let coinPrice = getSymbolPriceRes.price;
 
     let btcSymbol = 'btc#usd';
     getSymbolPriceRes = await realPriceLib.getSymbolPrice('bitfinex',btcSymbol);

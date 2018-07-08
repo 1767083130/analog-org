@@ -7,6 +7,7 @@ const ClientIdentifier  = mongoose.model('ClientIdentifier');
 const Strategy = mongoose.model('Strategy');
 const TransferStrategy = mongoose.model('TransferStrategy');
 const StrategyPlan = mongoose.model('StrategyPlan');
+const StrategyPlanLog = mongoose.model('StrategyPlanLog');
 const Decimal = require('decimal.js');
 
 const co = require('co');
@@ -15,6 +16,7 @@ const only = require('only');
 const accountLib = require('../../lib/account');
 const transfer = require('../../lib/transfer');
 const strategy = require('../../lib/strategy');
+const strategyPlanLib = require('../../lib/strategyPlan');
 const configUtil = require('../../lib/utils/configUtil');
 const apiConfigUtil = require('../../lib/apiClient/apiConfigUtil');
 const transferController = require('../../lib/transferStrategys/transferController');
@@ -64,6 +66,8 @@ module.exports = function (router) {
                 upsert: false,
                 new: true
             }).exec();
+            await strategyPlanLib.refreshStrategyPlanLog(plan);
+
             return { isSuccess: !!plan, plan: plan };
 
         } catch(err){
@@ -90,8 +94,17 @@ module.exports = function (router) {
             if(sPlanId){
                 planId = mongoose.Types.ObjectId(sPlanId);
             }
-            let strategys = await TransferStrategy.find({ userName: userName,planId: planId,isValid: true });
-            res.json({ isSuccess: true, strategys: strategys });
+
+            let strategysId = [];
+            let strategyPlan = await StrategyPlan.findById(planId);
+            if(!strategyPlan){
+                return  res.json({ isSuccess: false, message: "计划已被删除！" });
+            }
+            strategyPlan.strategys.forEach(element => {
+                strategysId.push(element.strategyId);
+            });
+            let planStrategys = await TransferStrategy.find({ _id: {$in: strategysId},isValid: true }).sort({created: 1});
+            res.json({ isSuccess: true, strategys: planStrategys });
         } catch(err){
             console.error(err);
             res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});
@@ -135,7 +148,7 @@ module.exports = function (router) {
                 return res.json({ isSuccess: false,message: "修改的任务不存在，有可能已被删除" });
             }
 
-            let transferStrategy,isNew;
+            let transferStrategy,isNew = (!_transferStrategy._id);
             if(_transferStrategy._id){
                 let strategyId;
                 if(_transferStrategy._id){
@@ -151,11 +164,24 @@ module.exports = function (router) {
                 }
             } else {
                 delete _transferStrategy._id;
-                isNew = true;
                 transferStrategy = new TransferStrategy(_transferStrategy);
             }
 
-            transferStrategy.planId = plan._id;
+            if(transferStrategy.relatedStrategy){
+                //检测是否重复设置平仓策略
+                let relatedStrategy = await TransferStrategy.findOne({ _id: transferStrategy.relatedStrategy });
+                if(isNew){
+                    if(relatedStrategy.relatedStrategy){
+                        return res.json({ isSuccess: false, code: 500, message: "已经为此策略设置了平仓策略，不能重复设置"});
+                    }
+                } else {
+                    if(relatedStrategy.relatedStrategy.toString() != transferStrategy._id.toString()){
+                        return res.json({ isSuccess: false, code: 500, message: "已经为此策略设置了平仓策略，不能重复设置"});
+                    }
+                }
+            }
+
+            transferStrategy.planLogId = plan.currentLog;
             transferStrategy.userName = req.user.userName;
             transferStrategy = await transferStrategy.save();
 
@@ -176,6 +202,7 @@ module.exports = function (router) {
                 }
             }
             plan = await plan.save();
+            await strategyPlanLib.refreshStrategyPlanLog(plan);
 
             res.json({ isSuccess: true,  strategy: transferStrategy });
         } catch(err){
@@ -197,19 +224,36 @@ module.exports = function (router) {
             if(!plan){
                 return res.json({ isSuccess: false,message: "修改的任务不存在，有可能已被删除" });
             }
+            let planLog = await strategyPlanLib.getStrategyPlanLog(plan);
 
             let sStrategyId = req.body.strategyId;
             let strategyId = mongoose.Types.ObjectId(sStrategyId);
             let transferStrategy = await TransferStrategy.findOne({_id: strategyId, userName: userName });
-        
-            transferStrategy.isValid = false;
-            transferStrategy = await transferStrategy.save();
+            if(transferStrategy.relatedStrategy){
+                if(transferStrategy.direction == 1){
+                    //await TransferStrategy.remove({_id: transferStrategy.relatedStrategy, userName: userName });
+                    let removedIndex = plan.strategys.findIndex(p => p.strategyId.toString() == transferStrategy.relatedStrategy.toString());
+                    if(removedIndex != -1){
+                        plan.strategys.splice(removedIndex,1)
+                        plan = await plan.save();
+                    }
+                } else {
+                    await TransferStrategy.findOneAndUpdate({
+                        _id: transferStrategy.relatedStrategy, 
+                        userName: userName 
+                    },{
+                        $unset: { "relatedStrategy": true, "direction": true }
+                    });
+                }
+            } 
 
+            //await TransferStrategy.remove({_id: strategyId, userName: userName });
             let removedIndex = plan.strategys.findIndex(p => p.strategyId.toString() == strategyId.toString());
             if(removedIndex != -1){
                 plan.strategys.splice(removedIndex,1)
                 plan = await plan.save();
             }
+            await strategyPlanLib.refreshStrategyPlanLog(plan);
 
             res.json({ isSuccess: true,  plan: plan });
         } catch(err){
@@ -248,6 +292,8 @@ module.exports = function (router) {
 
             plan.userName = req.user.userName;
             plan = await plan.save();
+            await strategyPlanLib.refreshStrategyPlanLog(plan);
+
             res.json({ isSuccess: !!plan, plan: plan });
 
         } catch(err){
@@ -279,6 +325,8 @@ module.exports = function (router) {
                     upsert: false,
                     new: true
                 }).exec();
+            await strategyPlanLib.refreshStrategyPlanLog(plan);
+            
             res.json({ isSuccess: !!plan, plan: plan });
         } catch(err){
             console.error(err);
@@ -304,6 +352,7 @@ module.exports = function (router) {
                     upsert: false,
                     new: true
                 }).exec();
+         await strategyPlanLib.refreshStrategyPlanLog(plan);
             res.json({ isSuccess: !!plan, plan: plan });
         } catch(err){
             console.error(err);
@@ -324,14 +373,8 @@ module.exports = function (router) {
                 return res.json({ isSuccess: false,message: "找不到运行的任务" });
             } 
 
-            strategyPlan.status = 'init';
-            for(let strategy of strategyPlan.strategys){
-                strategy.consignAmount = 0;
-                strategy.actualAmount = 0;
-            }
-           
-            strategyPlan = await strategyPlan.save();
-            res.json({ isSuccess: !!strategyPlan,plan: strategyPlan });
+            let newPlan = strategyPlanLib.resetStrategyPlan(strategyPlan);
+            res.json({ isSuccess: !!newPlan,plan: newPlan });
         } catch(err){
             console.error(err);
             res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});
@@ -370,16 +413,23 @@ function list(req,res,callback){
         business.symbols = apiConfigUtil.getSiteSymbols();
 
         StrategyPlan.paginate(filters, options).then(async function(getRes) {
-            let plans = getRes.docs;
+            let planIds = [],plans = getRes.docs;
+            plans.forEach(p => planIds.push(p._id));
+            let planLogs = await StrategyPlanLog.find({ planId: {$in: planIds } });
+
             for(let plan of plans){
-                let strategyIds = [],
-                    consignAmounts = [0],
-                    actualAmounts = [0];
-                plan.strategys = plan.strategys || [];
-                for(let strategy of plan.strategys){
-                    consignAmounts.push(Math.abs(strategy.consignAmount));
-                    actualAmounts.push(Math.abs(strategy.actualAmount));
-                    strategyIds.push(strategy.strategyId);
+                let strategyIds = [], consignAmounts = [0],actualAmounts = [0];
+
+                if(plan.currentLog){
+                    let planLog =  planLogs.find(p => p._id.toString() == plan.currentLog.toString());
+                    if(planLog){
+                        plan.strategys = planLog.strategys || [];
+                        for(let strategy of planLog.strategys){
+                            consignAmounts.push(Math.abs(strategy.consignAmount));
+                            actualAmounts.push(Math.abs(strategy.actualAmount));
+                            strategyIds.push(strategy.strategyId);
+                        }
+                    }
                 }
 
                 plan.stepConsignAmount = Math.max.apply(null,consignAmounts);

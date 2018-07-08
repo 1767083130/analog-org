@@ -3,6 +3,7 @@
 const database = require('../lib/database');
 const customConfig = require('../config/customConfig');
 const mongoose = require('mongoose');
+const strategyPlanLib = require('../lib/strategyPlan');
 
 const dbConfig = customConfig.databaseConfig;
 database.config(dbConfig);
@@ -30,13 +31,7 @@ async function resetStrategyPlans(){
 
     try{
         for(let strategyPlan of strategyPlans){
-            strategyPlan.status = 'wait';
-            for(let strategy of strategyPlan.strategys){
-                strategy.consignAmount = 0;
-                strategy.actualAmount = 0;
-            }
-           
-            await strategyPlan.save();
+            await strategyPlanLib.resetStrategyPlan(strategyPlan);
         }
     } catch (err){
         let res = { isSuccess: false,message: `系统错误:${err.message}` };

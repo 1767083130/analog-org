@@ -10,6 +10,7 @@ database.config(dbConfig);
 const TransferStrategy = mongoose.model('TransferStrategy');
 const TransferStrategyLog = mongoose.model('TransferStrategyLog');
 const StrategyPlan = mongoose.model('StrategyPlan');
+const StrategyPlanLog = mongoose.model('StrategyPlanLog');
 const Decimal = require('decimal.js');
 const Order = mongoose.model('Order');
 
@@ -20,10 +21,10 @@ async function testUpdatePlan(){
     let orderId = mongoose.Types.ObjectId(sOrderId);
     let order = await Order.findById(orderId);
 
-    let strategyPlan = await StrategyPlan.findById(order.strategyPlanId);
+    let strategyPlanLog = await StrategyPlanLog.findById(order.strategyPlanLogId);
     let strategyLog = await TransferStrategyLog.findById(order.actionId);
-    if(strategyPlan && strategyLog){
-        let planStrategyItem = strategyPlan.strategys.find(p => p.strategyId.toString() == strategyLog.strategyId.toString());
+    if(strategyPlanLog && strategyLog){
+        let planStrategyItem = strategyPlanLog.strategys.find(p => p.strategyId.toString() == strategyLog.strategyId.toString());
         if(planStrategyItem){
             planStrategyItem.consignAmount = new Decimal(planStrategyItem.consignAmount).minus(order.consignAmount).plus(order.bargainAmount).toNumber();
         }
@@ -33,7 +34,7 @@ async function testUpdatePlan(){
             operateLog.consignAmount = new Decimal(operateLog.consignAmount).minus(order.consignAmount).plus(order.bargainAmount).toNumber();
         }
 
-        await strategyPlan.save();
+        await strategyPlanLog.save();
         await strategyLog.save();
     }
 }

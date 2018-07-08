@@ -26,6 +26,7 @@ module.exports = function (router) {
                 position: positionInfo
             });
         } catch (err){
+            console.error(err);
             res.json({ isSuccess: false, message: "系统发生错误" });
         }
     });

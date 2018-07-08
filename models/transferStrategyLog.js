@@ -9,7 +9,7 @@ const paginate = require('mongoose-paginate');
 var TransferStrategyLogModel = function () {
     const TransferStrategyLogSchema = mongoose.Schema({
         strategyId: { type: Schema.ObjectId,ref: "TransferStrategy" }, 
-        strategyPlanId: { type: Schema.ObjectId,ref: "StrategyPlan" }, //执行计划Id
+        strategyPlanLogId: { type: Schema.ObjectId,ref: "StrategyPlanLog" }, //执行计划Id
         userName: String,
         status: String, //wait,success,failed
         reason: String, //failed reason

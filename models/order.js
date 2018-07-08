@@ -40,7 +40,7 @@ var orderModel = function () {
         changeLogs: [{ type: Schema.Types.Mixed }], //变动记录,主要供测试时使用
         actionId: Schema.ObjectId,//transferStrategyLogId: Schema.ObjectId
         operateId: Number, //操作Id
-        strategyPlanId: { type: Schema.ObjectId }, //策略计划_id
+        strategyPlanLogId: { type: Schema.ObjectId }, //策略计划_id
         
         outerId: String,  //外部交易网站的Id
         isSysAuto: Boolean, //是否为本系统提交
