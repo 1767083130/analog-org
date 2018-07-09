@@ -2,7 +2,7 @@
 #
 # VERSION  0.1.0
 
-FROM docker pull hub.c.163.com/nce2/nodejs:0.12.2
+FROM hub.c.163.com/nce2/nodejs:0.12.2
 
 ENV PORT 80
 
