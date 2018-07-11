@@ -1,7 +1,10 @@
 'use strict';
 
 let config = {
-    serverUrl: "ws://10.144.100.185:8080/ws", //"ws://119.28.204.125:8080/ws"
+    server: { 
+        uri: "ws://10.144.100.185:8080/ws",
+        dev_uri: "ws://119.28.204.125:8080/ws"
+    },
     platforms: [
         {
             site: "okex",
