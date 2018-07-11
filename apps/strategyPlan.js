@@ -31,6 +31,7 @@ db.once('open',function callback(){
         setTimeout(runStrategys,INTERVAL);
     } else {
         cacheClient.start(function(){
+            console.log(`已成功连接数据服务器. ${cacheClient.options.serverUrl}`);
             let client = cacheClient.getClient();
             client.on('pong',function(){
                 console.log('pong');

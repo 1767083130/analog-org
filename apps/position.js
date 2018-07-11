@@ -36,6 +36,7 @@ db.once('open',function callback(){
     if(cacheClient.readyState == CacheClient.OPEN){
     } else {
         cacheClient.start(function(){
+            console.log(`已成功连接数据服务器. ${cacheClient.options.serverUrl}`);
             let client = cacheClient.getClient();
             //处理返回的数据
             client.on('message', async function(res){ 

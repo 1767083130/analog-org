@@ -48,6 +48,7 @@ if(cacheClient.readyState == 'OPEN'){
     setInterval(trialNoLimit,INTERVAL);
 } else {
     cacheClient.start(function(){
+        console.log(`已成功连接数据服务器. ${cacheClient.options.serverUrl}`);
         setInterval(trialNoLimit,INTERVAL);
     });    
 }

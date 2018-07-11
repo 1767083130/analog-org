@@ -9,7 +9,7 @@ module.exports = app;
 
 console.log('正在连接数据服务器...');
 cacheClient.start(function(){
-    console.log(`已成功连接数据服务器. ${cacheClient.serverUrl}`);
+    console.log(`已成功连接数据服务器. ${cacheClient.options.serverUrl}`);
     
     //Create and start HTTP server.
     let server = http.createServer(app);
