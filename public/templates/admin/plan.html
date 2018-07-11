@@ -604,10 +604,10 @@
                     alert("成功！");
                 }
                 else {
-                    alert(e.message || "系统错误，请稍后重试！");
+                    alert(e.message || "启动计划时出现系统错误，请稍后重试！");
                 }
             }).fail(function (e) {
-                alert("系统错误，请稍后重试！");
+                alert("启动计划时可能出现网络异常，请稍后重试！");
             });
         });
 
@@ -625,10 +625,10 @@
                     showPlans();
                 }
                 else {
-                    alert(e.message || "系统错误，请稍后重试！");
+                    alert(e.message || "重置计划时出现系统错误，请稍后重试！");
                 }
             }).fail(function (e) {
-                alert("系统错误，请稍后重试！");
+                alert("重置计划时可能出现网络异常，请稍后重试！");
             });
         });
     
@@ -645,10 +645,10 @@
                     upsertPlan(e.plan);
                     showPlans();
                 } else {
-                    alert(e.message || "系统错误，请稍后重试！");
+                    alert(e.message || "停止计划时出现系统错误，请稍后重试！");
                 }
             }).fail(function (e) {
-                alert("系统错误，请稍后重试！");
+                alert("停止计划时可能出现网络异常，请稍后重试！");
             });
         });
 
@@ -669,10 +669,10 @@
                     upsertPlan(e.plan);
                     showPlans();
                 } else {
-                    alert(e.message || "系统错误，请稍后重试！");
+                    alert(e.message || "删除计划时出现系统错误，请稍后重试");
                 }
             }).fail(function (e) {
-                alert("系统错误，请稍后重试！");
+                alert("删除计划时可能出现网络异常，请稍后重试！");
             });
         });
     }
@@ -693,10 +693,10 @@
                 }
                 showStrategySteps();
             } else {
-                failFun ? failFun() : alert("系统错误，请稍后重试！");
+                failFun ? failFun() : alert("获取计划的所有策略时出现系统错误，请稍后重试！");
             }
         }).fail(function (e) {
-            failFun ? failFun() : alert("系统错误，请稍后重试！");
+            failFun ? failFun() : alert("获取计划的所有策略时可能出现网络异常，请稍后重试！");
         });
     }
 
@@ -930,12 +930,12 @@
             dataType: 'json'
         }).done(function (e) {
             if (!e.isSuccess) {
-                alert("系统错误，请稍后重试！");
+                alert("删除策略时出现系统错误，请稍后重试！");
             }
 
             callback && callback(e);
         }).fail(function (e) {
-            alert("系统错误，请稍后重试！");
+            alert("删除策略时可能出现网络错误，请稍后重试！");
         });
     }
 
@@ -951,10 +951,10 @@
                 successFun && successFun(e.strategy);
             }
             else {
-                failFun ? failFun() : alert(e.message || "系统错误，请稍后重试！");
+                failFun ? failFun() : alert(e.message || "保存策略时出现系统错误，请稍后重试！");
             }
         }).fail(function (e) {
-            failFun ? failFun() : alert("系统错误，请稍后重试！");
+            failFun ? failFun() : alert("保存策略时可能出现网络错误，请稍后重试！");
         });
      }
 
@@ -969,10 +969,10 @@
             if (e.isSuccess) {
                 successFun && successFun(e.plan);
             } else {
-                failFun ? failFun() : alert("系统错误，请稍后重试！");
+                failFun ? failFun() : alert("保存计划时系统错误，请稍后重试！");
             }
         }).fail(function (e) {
-            failFun ? failFun() : alert("系统错误，请稍后重试！");
+            failFun ? failFun() : alert("保存计划时可能出现网络错误，请稍后重试！");
         });
     }
     

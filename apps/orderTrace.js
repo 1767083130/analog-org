@@ -52,10 +52,12 @@ db.once('open',function callback(){
                         await onOrderMessage(res);
                     }
 
-                    // console.log(JSON.stringify(res));
-                    fs.appendFile(path.join(__dirname,'logs', 'log.txt'), JSON.stringify(res) + '\r\n\r\n', (err) =>  {
-                        if (err) throw err;
-                    });                
+                    if(NODE_ENV != 'production') {
+                        // console.log(JSON.stringify(res));
+                        fs.appendFile(path.join(__dirname,'logs', 'log.txt'), JSON.stringify(res) + '\r\n\r\n', (err) =>  {
+                            if (err) throw err;
+                        });    
+                    }                
                     break;
                 case 'trade':
                     //console.log(JSON.stringify(res));
