@@ -20,7 +20,7 @@ var transferStrategyModel = function () {
         //itemId: { type: Schema.ObjectId },
         isSimple: Boolean,  //是否为简单模式
         isValid: {type: Boolean,default: true},
-        conditions: [String], //需要满足的条件
+        conditions: [String], //需要满足的条件. 需要特别注意的是，这个字段现在系统只支持长度为1的数组
         strategyType: { type: String, default: "normal" }, //策略类型。现在支持between、normal两种
         operates: [{
             id: { type: Number, required: true }, //从1开始记数。1,2,3,4,5 ...

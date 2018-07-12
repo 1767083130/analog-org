@@ -13,6 +13,7 @@ const Decimal = require('decimal.js');
 const cacheClient = require('../lib/apiClient/cacheClient').getInstance();
 const CacheClient = require('ws-client').CacheClient;
 const strategyPlanLib = require('../lib/strategyPlan');
+const clientNetMonitor = require('../lib/apiClient/clientNetMonitor');
 
 const INTERVAL = 4000; //4s
 const PLAN_RUN_INTERVAL = 5 * 1000; //5s
@@ -32,24 +33,26 @@ db.once('open',function callback(){
     } else {
         cacheClient.start(function(){
             console.log(`已成功连接数据服务器. ${cacheClient.options.serverUrl}`);
+ 
             let client = cacheClient.getClient();
-            client.on('pong',function(){
-                console.log('pong');
-            })
+            client.on('message', async function(res){ 
+                switch(res.channel){
+                case 'pong':
+                    //console.log(JSON.stringify(res));
+                    clientNetMonitor.pushPongItem(res.data);
+                    break;
+                }
+            });
 
             if(NODE_ENV == 'production'){
                 setTimeout(function(){
                     setInterval(runStrategyPlans,INTERVAL);
                 },10000)
             } else {
-                // if(!runned){
-                //     setTimeout(runStrategyPlans,10000);
-                //     runned = true;
-                // }
                 setTimeout(function(){
                     setInterval(runStrategyPlans,INTERVAL);
                 },10000)
-            }
+            } 
         });    
     }
 });

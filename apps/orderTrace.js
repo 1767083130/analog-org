@@ -8,6 +8,7 @@ const dbConfig = customConfig.databaseConfig;
 database.config(dbConfig);
 
 const orderLib = require('../lib/order');
+const clientNetMonitor = require('../lib/apiClient/clientNetMonitor');
 const realPriceLib = require('../lib/realTimePrice');
 const cacheClient = require('../lib/apiClient/cacheClient').getInstance();
 const CacheClient = require('ws-client').CacheClient;
@@ -48,7 +49,6 @@ db.once('open',function callback(){
             let client = cacheClient.getClient();
             //处理返回的数据
             client.on('message', async function(res){ 
-                
                 switch(res.channel){
                 case 'order':
                     if(res.isSuccess){
@@ -69,9 +69,6 @@ db.once('open',function callback(){
                 }
             }.bind(this));
 
-            client.on('pong',function(){
-                console.log('pong');
-            })
 
             let _renewOrders = async function(){
                 await renewOrders();
@@ -129,9 +126,12 @@ async function onOrderMessage(res){
             }
 
             let newOrder = refreshOrderRes.order;
+            newOrder.changeLogs.push(res.orgData);
+            newOrder = await newOrder.save();
+
             if(NODE_ENV != 'production'){
-                newOrder.changeLogs.push(res.orgData);
-                newOrder = await newOrder.save();
+                // newOrder.changeLogs.push(res.orgData);
+                // newOrder = await newOrder.save();
                 // console.log(`\n order ${newOrder._id.toString()} changeLogs:`);
                 // console.log(JSON.stringify(newOrder.changeLogs));
             }

@@ -95,11 +95,11 @@
                             <div>
                                 <%= plan.isValid ? '有效' : '已被停用' %>
                                 <a name="setPlan" data-id="<%= plan._id %>" href="#">修改</a>
-                                <a name="setStrategys" data-id="<%= plan._id %>" href="#">设置策略</a>
-                                <a name="runPlan" data-id="<%= plan._id %>" href="#">运行</a>
-                                <a name="resetPlan" data-id="<%= plan._id %>" href="#">重置</a>
-                                <a name="stopPlan" data-id="<%= plan._id %>"  href="#">停用</a>
-                                <a name="delPlan" data-id="<%= plan._id %>"  href="#">删除</a>
+                                <a name="setStrategys" data-id="<%= plan._id %>" href="#" >设置策略</a>
+                                <a name="runPlan" data-id="<%= plan._id %>" href="javascript:void(0);">运行</a>
+                                <a name="resetPlan" data-id="<%= plan._id %>" href="javascript:void(0);">重置</a>
+                                <a name="stopPlan" data-id="<%= plan._id %>"  href="javascript:void(0);">停用</a>
+                                <a name="delPlan" data-id="<%= plan._id %>"  href="javascript:void(0);">删除</a>
                             </div>
                         </div>
                         <div class="clear" />
