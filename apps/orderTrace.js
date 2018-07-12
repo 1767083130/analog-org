@@ -129,9 +129,12 @@ async function onOrderMessage(res){
             }
 
             let newOrder = refreshOrderRes.order;
+            newOrder.changeLogs.push(res.orgData);
+            newOrder = await newOrder.save();
+
             if(NODE_ENV != 'production'){
-                newOrder.changeLogs.push(res.orgData);
-                newOrder = await newOrder.save();
+                // newOrder.changeLogs.push(res.orgData);
+                // newOrder = await newOrder.save();
                 // console.log(`\n order ${newOrder._id.toString()} changeLogs:`);
                 // console.log(JSON.stringify(newOrder.changeLogs));
             }
