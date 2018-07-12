@@ -43,11 +43,12 @@ db.once('open',function callback(){
     } else {
         cacheClient.start(function(){
             console.log(`已成功连接数据服务器. ${cacheClient.options.serverUrl}`);
+            console.log('开始跟踪处理委托单..');
             
             let client = cacheClient.getClient();
             //处理返回的数据
             client.on('message', async function(res){ 
-                //console.log(JSON.stringify(res));
+                
                 switch(res.channel){
                 case 'order':
                     if(res.isSuccess){
@@ -55,6 +56,7 @@ db.once('open',function callback(){
                     }
 
                     if(NODE_ENV != 'production') {
+                        console.log(JSON.stringify(res) );
                         // console.log(JSON.stringify(res));
                         fs.appendFile(path.join(__dirname,'logs', 'log.txt'), JSON.stringify(res) + '\r\n\r\n', (err) =>  {
                             if (err) throw err;
@@ -121,8 +123,12 @@ async function onOrderMessage(res){
 
             let realDealAmount = orderLib.getRealAmount(apiOrder.dealAmount,apiOrder.avgPrice || apiOrder.price,apiOrder.symbol,apiOrder.unit);
             let stepAmount = new Decimal(realDealAmount).minus(order.bargainAmount).toNumber(); //更改帐户的金额
-            let newOrder = await orderLib.refreshOrder(order, apiOrder);
+            let refreshOrderRes = await orderLib.refreshOrder(order, apiOrder);
+            if(refreshOrderRes.expired){
+                continue;
+            }
 
+            let newOrder = refreshOrderRes.order;
             if(NODE_ENV != 'production'){
                 newOrder.changeLogs.push(res.orgData);
                 newOrder = await newOrder.save();

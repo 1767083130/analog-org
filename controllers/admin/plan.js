@@ -1,20 +1,10 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const Account  = mongoose.model('Account');
-const ClientIdentifier  = mongoose.model('ClientIdentifier');
-const Strategy = mongoose.model('Strategy');
 const TransferStrategy = mongoose.model('TransferStrategy');
 const StrategyPlan = mongoose.model('StrategyPlan');
 const StrategyPlanLog = mongoose.model('StrategyPlanLog');
 const Decimal = require('decimal.js');
-
-const co = require('co');
-const async = co.wrap;
-const only = require('only');
-const accountLib = require('../../lib/account');
-const transfer = require('../../lib/transfer');
 const strategy = require('../../lib/strategy');
 const strategyPlanLib = require('../../lib/strategyPlan');
 const configUtil = require('../../lib/utils/configUtil');
@@ -68,8 +58,7 @@ module.exports = function (router) {
             }).exec();
             await strategyPlanLib.refreshStrategyPlanLog(plan);
 
-            return { isSuccess: !!plan, plan: plan };
-
+            res.json({ isSuccess: !!plan, plan: plan });
         } catch(err){
             console.error(err);
             res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});
@@ -224,7 +213,6 @@ module.exports = function (router) {
             if(!plan){
                 return res.json({ isSuccess: false,message: "修改的任务不存在，有可能已被删除" });
             }
-            let planLog = await strategyPlanLib.getStrategyPlanLog(plan);
 
             let sStrategyId = req.body.strategyId;
             let strategyId = mongoose.Types.ObjectId(sStrategyId);
@@ -292,7 +280,7 @@ module.exports = function (router) {
 
             plan.userName = req.user.userName;
             plan = await plan.save();
-            await strategyPlanLib.refreshStrategyPlanLog(plan);
+            await strategyPlanLib.refreshStrategyPlanLog(plan,true);
 
             res.json({ isSuccess: !!plan, plan: plan });
 
@@ -352,7 +340,7 @@ module.exports = function (router) {
                     upsert: false,
                     new: true
                 }).exec();
-         await strategyPlanLib.refreshStrategyPlanLog(plan);
+            await strategyPlanLib.refreshStrategyPlanLog(plan);
             res.json({ isSuccess: !!plan, plan: plan });
         } catch(err){
             console.error(err);
@@ -400,9 +388,9 @@ function list(req,res,callback){
         }
         
         var options = {
-            //select:   'title date author',
+            //select:'title date author',
             sort: { modified : -1 },
-            //populate: 'strategyId',
+            //populate:'strategyId',
             lean: true,
             page: pageIndex + 1, 
             limit: pageSize
@@ -418,28 +406,24 @@ function list(req,res,callback){
             let planLogs = await StrategyPlanLog.find({ planId: {$in: planIds } });
 
             for(let plan of plans){
-                let strategyIds = [], consignAmounts = [0],actualAmounts = [0];
-
-                if(plan.currentLog){
-                    let planLog =  planLogs.find(p => p._id.toString() == plan.currentLog.toString());
-                    if(planLog){
-                        plan.strategys = planLog.strategys || [];
-                        for(let strategy of planLog.strategys){
-                            consignAmounts.push(Math.abs(strategy.consignAmount));
-                            actualAmounts.push(Math.abs(strategy.actualAmount));
-                            strategyIds.push(strategy.strategyId);
-                        }
-                    }
+                let strategyIds = [];
+                let planLog =  planLogs.find(p => p._id.toString() == plan.currentLog.toString());
+                if(!planLog){
+                    break;
                 }
 
-                plan.stepConsignAmount = Math.max.apply(null,consignAmounts);
-                plan.stepActualAmount = Math.max.apply(null,actualAmounts);
-                plan.totalConsignAmount = Math.min.apply(null,consignAmounts);
-                plan.totalActualAmount = Math.min.apply(null,actualAmounts);
+                planLog.strategys.forEach(element => {
+                    strategyIds.push(element.strategyId);
+                });
+
+                let planRunLogInfo = await strategyPlanLib.getStrategyPlanLogRunInfo(planLog);
+                Object.assign(plan,plan,{
+                    totalConsignAmount: 0,  //任务已委托数量
+                    totalActualAmount: 0    //任务已成交数量
+                },planRunLogInfo);
 
                 let strategys = await TransferStrategy.find({ userName : userName, _id: { $in: strategyIds } });
                 plan.strategys = strategys;
-
                 if(strategys.length > 0 && strategys[0].conditions.length == 1){
                     let expressionValue = await strategy.getExpressionValue(strategys[0].conditions[0],strategys[0].strategyType);
                     plan.strategyValue = new Decimal(expressionValue * 100).toFixed(2) + '%';

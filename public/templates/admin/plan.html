@@ -4,7 +4,7 @@
 <link href="/css/admin.css" rel="stylesheet">
 {%endblock%}
 {% block body %}
-<div>
+<div style="margin-bottom: 50px;">
     <h1>
        策略计划
     </h1>
@@ -89,8 +89,8 @@
                                  当前状态： <%= plan.status %> 每步执行数量:<%= plan.stepAmount %> 预设执行总数：<%= plan.totalAmount %>
                                  当前差值：<%= plan.strategyValue || '未知' %>
                                  <br> 
-                                 单步已委托数量： <%= plan.stepConsignAmount %> 任务已委托数量：<%= plan.totalConsignAmount %>
-                                 单步已成交数量： <%= plan.stepActualAmount %>任务已成交数量： <%= plan.totalActualAmount %>
+                                 已委托数量：<%= plan.totalConsignAmount %>
+                                 已成交数量： <%= plan.totalActualAmount %>
                             </div>
                             <div>
                                 <%= plan.isValid ? '有效' : '已被停用' %>

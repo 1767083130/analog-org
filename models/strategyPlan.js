@@ -13,7 +13,7 @@ var strategyPlanModel = function () {
         desc:  { type: String }, 
         strategys: [{ 
             strategyId: { type: Schema.ObjectId,ref: "TransferStrategy" },  
-            consignAmount: { type: Number,default: 0 }, //已执行委托但尚未完成的数量.必须为大于0的数
+            consignAmount: { type: Number,default: 0 }, //已执行委托但尚未完成的数量.必须为大于0的数。
             actualAmount: { type: Number,default: 0 }, //已执行完成的数量.必须为大于0的数
         }],
         

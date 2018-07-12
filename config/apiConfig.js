@@ -3,7 +3,7 @@
 let config = {
     server: { 
         uri: "ws://10.144.100.185:8080/ws",
-        dev_uri: "ws://119.28.204.125:8080/ws"
+        dev_uri: "ws://localhost:8080/ws" //"ws://119.28.204.125:8080/ws"
     },
     platforms: [
         {

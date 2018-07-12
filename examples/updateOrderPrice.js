@@ -121,8 +121,12 @@ async function onOrderMessage(res){
             }
 
             let stepAmount = new Decimal(apiOrder.dealAmount).minus(order.bargainAmount).toNumber(); //更改帐户的金额
-            let newOrder = await orderLib.refreshOrder(order, apiOrder);
+            let refreshOrderRes = await orderLib.refreshOrder(order, apiOrder);
+            if(refreshOrderRes.expired){
+                continue;
+            }
 
+            let newOrder = refreshOrderRes.order;
             newOrder.changeLogs = res.orgData;
             newOrder = await newOrder.save();
 
