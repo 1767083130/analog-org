@@ -26,12 +26,12 @@ async function testUpdatePlan(){
     if(strategyPlanLog && strategyLog){
         let planStrategyItem = strategyPlanLog.strategys.find(p => p.strategyId.toString() == strategyLog.strategyId.toString());
         if(planStrategyItem){
-            planStrategyItem.consignAmount = new Decimal(planStrategyItem.consignAmount).minus(order.consignAmount).plus(order.bargainAmount).toNumber();
+            planStrategyItem.consignAmount = new Decimal(planStrategyItem.consignAmount).minus(Math.abs(order.consignAmount)).plus(Math.abs(order.bargainAmount)).toNumber();
         }
 
         let operateLog = strategyLog.operates.find(p => p.orgOperate.id == order.operateId);
         if(operateLog){
-            operateLog.consignAmount = new Decimal(operateLog.consignAmount).minus(order.consignAmount).plus(order.bargainAmount).toNumber();
+            operateLog.consignAmount = new Decimal(operateLog.consignAmount).minus(Math.abs(order.consignAmount)).plus(Math.abs(order.bargainAmount)).toNumber();
         }
 
         await strategyPlanLog.save();

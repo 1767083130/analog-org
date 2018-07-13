@@ -1,7 +1,4 @@
-﻿/**
- * A model for order
- */
-'use strict';
+﻿'use strict';
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const paginate = require('mongoose-paginate');
@@ -57,22 +54,20 @@ var orderModel = function () {
                                                   //part_success,部分成功;will_cancel,已标记为取消,但是尚未完成;canceled: 已取消；
                                                   //wait_retry 准备重新发起委托，但还没有进行
                                                   //auto_retry: 委托超过一定时间未成交，已由系统自动以不同价格发起新的委托; failed,失败
-        //previousOrder: { type: Schema.ObjectId },//前置交易
-        //nextOrder: { type: Schema.ObjectId }, //后置交易
         desc: { type: String }, //描述说明
         isHidden: { type: Boolean, "default": false }, //是否为隐藏单
         isPostOnly:  { type: Boolean, "default": false }, //当type=limit时有效。感觉是fill or kill的反面，也就是说，如果提交了post-only单，且这个单子会立刻成交的话，就自动撤单（或者移开一个最小价位）。只有这个单子能挂上去不被立刻成交的时候才会下单。
         consignDate: Date, //委托时间
         created: { type: Date, "default": Date.now() }, //创建时间
         modified: { type: Date, "default": Date.now() }, //最近修改时间
-        syncTime: { type: Date }, //最近一次从第三方交易平台同步的时间
+        syncTimestamp: { type: Date }, //最近一次从第三方交易平台同步的时间
 
-        /** 下面几个字段并没有使用到 */
-        storeId : { type: Number, default: 0 },                // 仓位ID
-        processedMoney : { type: Number, default: 0 },         // 已处理的金额数量
-        margin : { type: Number, default: 0 },       // 订单冻结保证金
-        processedPrice : { type: Number, default: 0 },         // 成交价格
-        timeInForce: { type: String, default: "GoodTillCancel" } , //成交时间限制 "GoodTillCancel"
+        // /** 下面几个字段并没有使用到 */
+        // storeId : { type: Number, default: 0 },                // 仓位ID
+        // processedMoney : { type: Number, default: 0 },         // 已处理的金额数量
+        // margin : { type: Number, default: 0 },       // 订单冻结保证金
+        // processedPrice : { type: Number, default: 0 },         // 成交价格
+        // timeInForce: { type: String, default: "GoodTillCancel" } , //成交时间限制 "GoodTillCancel"
     },{
         usePushEach: true
     });
@@ -81,6 +76,15 @@ var orderModel = function () {
      * Methods
      */
     OrderSchema.methods = {
+       /*
+        * 获取货币可用的数量。可用数量 = 总量 - 冻结额度 - 提现额度
+         * 
+         * @param {String} coin 货币
+         * @returns {Number} 货币可用的数量 
+         */
+        isEnded: function(){
+            return ['canceled','success'].indexOf(this.status) != -1;
+        },
     }
     
     /**

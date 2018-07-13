@@ -98,6 +98,7 @@
                                 <a name="setStrategys" data-id="<%= plan._id %>" href="#" >设置策略</a>
                                 <a name="runPlan" data-id="<%= plan._id %>" href="javascript:void(0);">运行</a>
                                 <a name="resetPlan" data-id="<%= plan._id %>" href="javascript:void(0);">重置</a>
+                                <a name="resetPlanAndRun" data-id="<%= plan._id %>" href="javascript:void(0);">重置并运行</a>
                                 <a name="stopPlan" data-id="<%= plan._id %>"  href="javascript:void(0);">停用</a>
                                 <a name="delPlan" data-id="<%= plan._id %>"  href="javascript:void(0);">删除</a>
                             </div>
@@ -611,25 +612,14 @@
             });
         });
 
+        $('a[name="resetPlanAndRun"]').click(function(){
+            var itemId = $(this).attr('data-id');
+            resetPlan(itemId,'wait');
+        });
+
         $('a[name="resetPlan"]').click(function(){
             var itemId = $(this).attr('data-id');
-            $.ajax({
-                type: "POST",
-                url: "/admin/plan/reset",
-                data: { planId: itemId,"_csrf": $('input[name="_csrf"]').val()  },
-                dataType: 'json'
-            }).done(function (e) {
-                if (e.isSuccess) {
-                    alert("成功！");
-                    upsertPlan(e.plan);
-                    showPlans();
-                }
-                else {
-                    alert(e.message || "重置计划时出现系统错误，请稍后重试！");
-                }
-            }).fail(function (e) {
-                alert("重置计划时可能出现网络异常，请稍后重试！");
-            });
+            resetPlan(itemId);
         });
     
         $('a[name="stopPlan"]').click(function(){
@@ -674,6 +664,27 @@
             }).fail(function (e) {
                 alert("删除计划时可能出现网络异常，请稍后重试！");
             });
+        });
+    }
+
+    function resetPlan(planId,status,failFun){
+        status = status || 'init';
+        $.ajax({
+            type: "POST",
+            url: "/admin/plan/reset",
+            data: { planId: planId, status: status, "_csrf": $('input[name="_csrf"]').val()  },
+            dataType: 'json'
+        }).done(function (e) {
+            if (e.isSuccess) {
+                alert("成功！");
+                upsertPlan(e.plan);
+                showPlans();
+            }
+            else {
+                alert(e.message || "重置计划时出现系统错误，请稍后重试！");
+            }
+        }).fail(function (e) {
+            alert("重置计划时可能出现网络异常，请稍后重试！");
         });
     }
 

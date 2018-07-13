@@ -41,7 +41,7 @@ describe('差价策略基类测试. path: transferStrategys/transferController.j
         done();
     });
 
-    it('onOrderStatusChanged',async function (done) {
+    it('renewApiOrder',async function (done) {
         let stepAmount = 1;
         let identifier;
         let options = { 
@@ -56,11 +56,22 @@ describe('差价策略基类测试. path: transferStrategys/transferController.j
         let res = await orderController.runOrderOperate(logOperate,identifier,stepAmount);
         let order = res.order;
 
-        let e = {
-            order: order, //变更后的订单
-            changeAmount: stepAmount //变更的额度
-        };
-        await transferController.onOrderStatusChanged(e);
+        let apiOrder = { //todo
+            outerId: apiOrder.id,
+            symbol: common.getApiSymbol(apiOrder.symbol,true),
+            type: type, //“LIMIT”, “MARKET”, “STOP”, “TRAILING_STOP”, “EXCHANGE_MARKET”, “EXCHANGE_LIMIT”, “EXCHANGE_STOP”, “EXCHANGE_TRAILING_STOP”, “FOK”, “EXCHANGE_FOK”
+            status: status,//status可能的值:wait,准备开始；consign: 已委托,但未成交；success,已完成; 
+                            //part_success,部分成功;will_cancel,已标记为取消,但是尚未完成;canceled: 已取消；
+                            //auto_retry: 委托超过一定时间未成交，已由系统自动以不同价格发起新的委托; failed,失败
+            dealAmount: apiOrder.amount, //已处理数量
+            amount: apiOrder.amountOrig, //已委托数量
+            created: +apiOrder.mtsCreate,
+            price: apiOrder.price,
+            avgPrice: apiOrder.priceAvg,
+            hidden: apiOrder.hidden,
+            maker: apiOrder.maker    
+        }
+        await transferController.renewApiOrder(apiOrder);
 
         //检验下一步操作是否生成正确
         strategyLog = await TransferStrategyLog.load(strategyLog._id);

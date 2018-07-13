@@ -26,34 +26,40 @@ process.on('uncaughtException', function(e) {
 
 let runned = false;
 let db = mongoose.connection;
+let runPlansTimer = null;
 db.once('open',function callback(){
     console.log(`数据库连接成功。系统开始运行策略计划`);
     if(cacheClient.readyState == CacheClient.OPEN){
-        setTimeout(runStrategys,INTERVAL);
+        if(runPlansTimer){
+            clearInterval(runPlansTimer);
+        }
+        runPlansTimer = setInterval(runStrategyPlans,INTERVAL);
     } else {
+        let client = cacheClient.getClient();
         cacheClient.start(function(){
             console.log(`已成功连接数据服务器. ${cacheClient.options.serverUrl}`);
- 
-            let client = cacheClient.getClient();
-            client.on('message', async function(res){ 
-                switch(res.channel){
-                case 'pong':
-                    //console.log(JSON.stringify(res));
-                    clientNetMonitor.pushPongItem(res.data);
-                    break;
-                }
-            });
-
+            if(runPlansTimer){
+                clearInterval(runPlansTimer);
+            }
             if(NODE_ENV == 'production'){
                 setTimeout(function(){
-                    setInterval(runStrategyPlans,INTERVAL);
+                    runPlansTimer = setInterval(runStrategyPlans,INTERVAL);
                 },10000)
             } else {
                 setTimeout(function(){
-                    setInterval(runStrategyPlans,INTERVAL);
+                    runPlansTimer = setInterval(runStrategyPlans,INTERVAL);
                 },10000)
             } 
         });    
+        
+        client.on('message', async function(res){ 
+            switch(res.channel){
+            case 'pong':
+                //console.log(JSON.stringify(res));
+                clientNetMonitor.pushPongItem(res.data);
+                break;
+            }
+        });
     }
 });
 
@@ -78,6 +84,7 @@ async function runStrategyPlans(){
                 "env": env
             };
             let res = await strategyPlanLib.runStrategyPlan(strategyPlan,options);
+
             if(!res.isSuccess){
                 console.log(`运行计划“${strategyPlan.name}”失败，返回错误信息: ${res.message}`);
             } else {
@@ -109,7 +116,7 @@ async function getStrategyPlans(){
 }
 
 async function getOrdersCountOfPlan(strategyPlan){
-    let modifiedStart = new Date(+new Date() - 5 * 60 * 1000); //5分钟内
+    let modifiedStart = new Date(+new Date() - 30 * 60 * 1000); //30 minutes
 
     //status可能的值:wait,准备开始；consign: 已委托,但未成交；success,已完成; 
     //part_success,部分成功;will_cancel,已标记为取消,但是尚未完成;canceled: 已取消；
@@ -117,6 +124,8 @@ async function getOrdersCountOfPlan(strategyPlan){
     //auto_retry: 委托超过一定时间未成交，已由系统自动以不同价格发起新的委托; failed,失败
     let ordersCount = await Order.find({ 
         userName: strategyPlan.userName,
+        isSysAuto: true,
+        strategyPlanLogId: strategyPlan.currentLog,
         modified: { $gt: modifiedStart},
         status: { $in: ['wait','consign','part_success','will_cancel','wait_retry'] },  //,'auto_retry'
     }).count();

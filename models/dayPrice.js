@@ -1,7 +1,5 @@
-﻿/**
- * A model for our account
- */
-'use strict';
+﻿'use strict';
+
 const mongoose = require('mongoose');
 
 var dayPriceModel = function () {

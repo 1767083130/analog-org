@@ -9,8 +9,8 @@ var ignoreFolders = ['node_modules'];
 // 复制目录
 exists(rootPath + '/server/ws-client', rootPath + '/analog-org/node_modules/ws-client',ignoreFolders, copy);
 exists(rootPath + '/server/ws-server', rootPath + '/analog-org/node_modules/ws-server',ignoreFolders, copy);
-exists(rootPath + '/server/bitcoin-clients', rootPath + '/server/ws-server/node_modules/bitcoin-clients',ignoreFolders, copy);
-exists(rootPath + '/server/bitcoin-clients', rootPath + '/analog-org/node_modules/bitcoin-clients',ignoreFolders, copy);
+//exists(rootPath + '/server/bitcoin-clients', rootPath + '/server/ws-server/node_modules/bitcoin-clients',ignoreFolders, copy);
+exists(rootPath + '/server/bitcoin-clients', rootPath + '/analog-org/node_modules/ws-server/node_modules/bitcoin-clients',ignoreFolders, copy);
 
 process.on('uncaughtException', function(e) {
     console.error(e);

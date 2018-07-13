@@ -14,6 +14,7 @@ const cacheClient = require('../lib/apiClient/cacheClient').getInstance();
 const CacheClient = require('ws-client').CacheClient;
 const NormalStrategyRunner = require('../lib/transferStrategys/NormalStrategyRunner');
 const transferController = require('../lib/transferStrategys/transferController');
+const strategyPlanLib = require('../lib/strategyPlan');
 const ClientIdentifier = mongoose.model('ClientIdentifier');
 const User = mongoose.model('User');
 const Order = mongoose.model('Order');
@@ -21,6 +22,7 @@ const TransferStrategy = mongoose.model('TransferStrategy');
 const TransferStrategyLog = mongoose.model('TransferStrategyLog');
 const StrategyPlan = mongoose.model('StrategyPlan');
 const StrategyPlanLog = mongoose.model('StrategyPlanLog');
+
 
 const Decimal = require('decimal.js'),
     fs= require('fs'),
@@ -37,48 +39,55 @@ process.on('uncaughtException', function(e) {
 });
 
 let db = mongoose.connection;
+let renewOrdersTimer = null;
 db.once('open',function callback(){
     console.log(`数据库连接成功.程序在${NODE_ENV}环境下运行`);
     if(cacheClient.readyState == CacheClient.OPEN){
-        setTimeout(runStrategys,INTERVAL);
+        if(renewOrdersTimer){
+            clearInterval(renewOrdersTimer);
+        }
+        renewOrdersTimer = setInterval(_renewOrders,INTERVAL);
     } else {
+        let client = cacheClient.getClient();
         cacheClient.start(function(){
             console.log(`已成功连接数据服务器. ${cacheClient.options.serverUrl}`);
             console.log('开始跟踪处理委托单..');
             
-            let client = cacheClient.getClient();
-            //处理返回的数据
-            client.on('message', async function(res){ 
-                switch(res.channel){
-                case 'order':
-                    if(res.isSuccess){
-                        await onOrderMessage(res);
-                    }
-
-                    if(NODE_ENV != 'production') {
-                        console.log(JSON.stringify(res) );
-                        // console.log(JSON.stringify(res));
-                        fs.appendFile(path.join(__dirname,'logs', 'log.txt'), JSON.stringify(res) + '\r\n\r\n', (err) =>  {
-                            if (err) throw err;
-                        });    
-                    }                
-                    break;
-                case 'trade':
-                    //console.log(JSON.stringify(res));
-                    break;
-                }
-            }.bind(this));
-
-
+            if(renewOrdersTimer){
+                clearInterval(renewOrdersTimer);
+            }
             let _renewOrders = async function(){
                 await renewOrders();
             }
             if(NODE_ENV == 'production'){
-                setInterval(_renewOrders,INTERVAL);
+                renewOrdersTimer = setInterval(_renewOrders,INTERVAL);
             } else { //dev
-                setInterval(_renewOrders,INTERVAL);
+                renewOrdersTimer = setInterval(_renewOrders,INTERVAL);
             }
         });    
+
+        //处理返回的数据
+        client.on('message', async function(res){ 
+            switch(res.channel){
+            case 'order':
+                if(res.isSuccess){
+                    await onOrderMessage(res);
+                }
+
+                if(NODE_ENV != 'production') {       
+                }   
+                console.log(JSON.stringify(res) );
+                // console.log(JSON.stringify(res));
+                fs.appendFile(path.join(__dirname,'logs', 'log.txt'), JSON.stringify(res) + '\r\n\r\n', (err) =>  {
+                    if (err) throw err;
+                });    
+          
+                break;
+            case 'trade':
+                //console.log(JSON.stringify(res));
+                break;
+            }
+        }.bind(this));
     }
 });
 
@@ -113,34 +122,7 @@ async function onOrderMessage(res){
     try{
         for(let apiOrder of apiOrders){
             apiOrder.site = site;
-            let order = await Order.findOne({ outerId: apiOrder.outerId,site: site });
-            if(!order){
-                continue;
-            }
-
-            let realDealAmount = orderLib.getRealAmount(apiOrder.dealAmount,apiOrder.avgPrice || apiOrder.price,apiOrder.symbol,apiOrder.unit);
-            let stepAmount = new Decimal(realDealAmount).minus(order.bargainAmount).toNumber(); //更改帐户的金额
-            let refreshOrderRes = await orderLib.refreshOrder(order, apiOrder);
-            if(refreshOrderRes.expired){
-                continue;
-            }
-
-            let newOrder = refreshOrderRes.order;
-            newOrder.changeLogs.push(res.orgData);
-            newOrder = await newOrder.save();
-
-            if(NODE_ENV != 'production'){
-                // newOrder.changeLogs.push(res.orgData);
-                // newOrder = await newOrder.save();
-                // console.log(`\n order ${newOrder._id.toString()} changeLogs:`);
-                // console.log(JSON.stringify(newOrder.changeLogs));
-            }
-
-            let e = {
-                order: newOrder, //变更后的订单
-                stepAmount: stepAmount //变更的额度
-            };
-            await transferController.onOrderStatusChanged(e);
+            await transferController.renewApiOrder(apiOrder);
         }
     } catch (err) {
         console.error(err);
@@ -214,41 +196,35 @@ async function renewOrders(){
 }
 
 async function cancelPlanOrder(order){
-    let cancelRes = await orderLib.cancelOrder(order);
+    let cancelRes = await orderLib.cancelOrder(order);   
     if(cancelRes.isSuccess){
-        let strategyPlanLog = await StrategyPlanLog.findById(order.strategyPlanLogId);
-        let strategyLog = await TransferStrategyLog.findById(order.actionId);
-        if(strategyPlanLog && strategyLog){
-            let planStrategyItem = strategyPlanLog.strategys.find(p => p.strategyId.toString() == strategyLog.strategyId.toString());
-            if(planStrategyItem){
-                planStrategyItem.consignAmount = new Decimal(planStrategyItem.consignAmount).minus(order.consignAmount).plus(order.bargainAmount).toNumber();
-            }
-    
-            let operateLog = strategyLog.operates.find(p => p.orgOperate.id == order.operateId);
-            if(operateLog){
-                operateLog.consignAmount = new Decimal(operateLog.consignAmount).minus(order.consignAmount).plus(order.bargainAmount).toNumber();
-            }
-    
-            await strategyPlanLog.save();
-            await strategyLog.save();
-        }
+        order.desc = '因策略不再满足条件而被取消';
+        await order.save();
+    } else {
+        order.exceptions.push({
+            name: 'cancel',    //名称。如"retry",重试； “cancel”，撤销；“consign”，委托; "maxLossPercent"，超最大最大能容忍的亏损百分比 
+            alias: '取消委托单',   //别名。如"冻结帐户金额"
+            message: `apps/orderTrace中的cancelPlanOrder发生错误:${cancelRes.message}`,
+            Manual: false, //是否需要人工处理
+            status: order.status, //status可能的值:wait,准备开始；success,已完成;failed,失败
+            timestamp: +new Date() //最近一次修改日期
+        });  
+        await order.save(); 
     }
-    
-    order.desc = '因策略不再满足条件而被取消';
-    await order.save();
 }
 
 async function updateOrderPrice(order,options = {}){
+    let strategyLog = null;
     let normalStrategyRunner = new NormalStrategyRunner();
-    if(order.actionId){
-        let strategyLog = await TransferStrategyLog.findById(order.actionId);
+    if(order.actionId && order.operateId == 1){ //如果是策略的第一步，判断策略是否满足条件，如果不满足条件，则将其取消
+        strategyLog = await TransferStrategyLog.findById(order.actionId);
         if(strategyLog){
             let strategy = await TransferStrategy.findById(strategyLog.strategyId);
 
             //如果条件不再满足，则取消订单
             let condition = '1==0';
             if(strategy.conditions){
-                condition =  strategy.conditions.join(' && ');
+                condition = strategy.conditions.join(' && ');
             }
 
             let conditionResult = await normalStrategyRunner.getConditionResult(condition,{ 
@@ -265,12 +241,22 @@ async function updateOrderPrice(order,options = {}){
     try {
         let defaultOptions = {
             minStepsCount: 3,
-            ignoreAmount: order.consignAmount - order.bargainAmount,
+            ignoreAmount: Math.abs(order.consignAmount) - Math.abs(order.bargainAmount),
             maxLossPercent: 5
         };
         Object.assign(options,defaultOptions,options);  
-
         let res = await orderLib.updateOrderPrice(order,options);
+
+        if(res.isSuccess && res.updated && strategyLog){
+            let strategyPlanLog = await StrategyPlanLog.findOne({ _id: strategyLog.strategyPlanLogId });
+            if(strategyPlanLog){
+                let planOptions = {
+                    strategyId: strategyLog.strategyId,
+                    consignAmountChange: Math.abs(res.order.consignAmount)
+                };
+                await strategyPlanLib.updateStrategyPlanAmount(strategyPlanLog,planOptions);
+            }
+        }
         return res;
     } catch (err){
         order.exceptions.push({

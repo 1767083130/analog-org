@@ -115,26 +115,7 @@ async function onOrderMessage(res){
     try{
         for(let apiOrder of apiOrders){
             apiOrder.site = site;
-            let order = await Order.findOne({ outerId: apiOrder.outerId,site: site });
-            if(!order){
-                continue;
-            }
-
-            let stepAmount = new Decimal(apiOrder.dealAmount).minus(order.bargainAmount).toNumber(); //更改帐户的金额
-            let refreshOrderRes = await orderLib.refreshOrder(order, apiOrder);
-            if(refreshOrderRes.expired){
-                continue;
-            }
-
-            let newOrder = refreshOrderRes.order;
-            newOrder.changeLogs = res.orgData;
-            newOrder = await newOrder.save();
-
-            let e = {
-                order: newOrder, //变更后的订单
-                stepAmount: stepAmount //变更的额度
-            };
-            await transferController.onOrderStatusChanged(e);
+            await transferController.renewApiOrder(apiOrder);
         }
     } catch (err) {
         console.error(err);
@@ -155,7 +136,7 @@ async function onOrderMessage(res){
     * @public
     */
 async function createTestOrder(){
-    const AMOUNT = 2;
+    const AMOUNT = 1;
     const SIDE = 'buy';
 
     let res = { isSuccess: false };

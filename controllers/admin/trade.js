@@ -41,6 +41,7 @@ module.exports = function (router) {
     }));
     
     router.post('/syncRecentOrders', async function(req, res) {
+        throw new Error('尚未实现的方法');
         try{
             let userName = req.user.userName;
             let site = req.body.site;
@@ -53,7 +54,7 @@ module.exports = function (router) {
             }
 
             let onChanged = async function(e){
-                await transferController.onOrderStatusChanged(e);
+                await transferController.renewApiOrder(e);
             };
             let onDelayed = async function(e){
                 await transferController.onOrderDelayed(e);

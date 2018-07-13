@@ -355,13 +355,14 @@ module.exports = function (router) {
             if(sPlanId){
                 planId = mongoose.Types.ObjectId(sPlanId);
             }
-    
+
+            let status = req.body.status || 'wait';  
             let strategyPlan = await StrategyPlan.findOne({ userName: req.user.userName, _id: planId});
             if(!strategyPlan){
                 return res.json({ isSuccess: false,message: "找不到运行的任务" });
             } 
 
-            let newPlan = strategyPlanLib.resetStrategyPlan(strategyPlan);
+            let newPlan = strategyPlanLib.resetStrategyPlan(strategyPlan,status);
             res.json({ isSuccess: !!newPlan,plan: newPlan });
         } catch(err){
             console.error(err);
@@ -409,7 +410,7 @@ function list(req,res,callback){
                 let strategyIds = [];
                 let planLog =  planLogs.find(p => p._id.toString() == plan.currentLog.toString());
                 if(!planLog){
-                    break;
+                    continue;
                 }
 
                 planLog.strategys.forEach(element => {

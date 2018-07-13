@@ -60,12 +60,15 @@ db.once('open',function callback(){
             }.bind(this));
 
             client.on('pong',function(){
-                console.log('pong');
+                //console.log('pong');
             })
 
             setTimeout(async function() {
-                let createOrderRes = await createTestOrder();
-                console.log(JSON.stringify(createOrderRes));
+                for(let i = 0; i < 30; i++){
+                    await createTestOrder();
+                    //let createOrderRes = await createTestOrder();
+                    //console.log(JSON.stringify(createOrderRes));
+                }
                 // if(createOrderRes.isSuccess){
                 //     let renewOrderRes = await renewOrder(createOrderRes.order);
                 //     console.log(JSON.stringify(renewOrderRes));
@@ -113,7 +116,7 @@ async function createTestOrder(){
         operateType = (operateType == 'buy' ? 'sell' : 'buy');
     }
     let price = _getPostOnlyPrice(newDepths,operateType);
-    price += 1;
+    price -= 1;
     let order = {
         site: SITE, //平台名称
         userName: 'lcm', 
