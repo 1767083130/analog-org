@@ -3,6 +3,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+/**
+ * api执行时的一些参数记录。比如okex上次调用接口时间
+ */
 var apiRunSettingsModal = function () {
     const ApiRunSettingsSchema = mongoose.Schema({
         site: { type: String, required: true },

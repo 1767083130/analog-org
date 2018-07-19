@@ -12,9 +12,6 @@ var orderModel = function () {
         
         //account: { type: Schema.ObjectId, ref: "Account" },
         userName: { type: String, required: true }, 
-        isTest: { type: Boolean, "default": false },
-        autoRetry: { type: Boolean, "default": true }, //失败后,是否自动尝试执行
-        autoRetryFailed: { type: Number, "default": 0 }, //已自动尝试执行次数
         side: String,  //可能的值：'buy'、'sell'。这个字段需要特别注意，buy对应的是建仓（可能建多仓或空仓），sell对应的是平仓（可能平多仓或空仓）
         type: {type: String, default: "limit"},  //订单类型，现在暂时支持exchange、limit两种，分别是现货和保证金模式
         leverage: { type: Number, "default": 1 }, //杠杆倍数,0表示全仓
@@ -42,6 +39,12 @@ var orderModel = function () {
         outerId: String,  //外部交易网站的Id
         isSysAuto: Boolean, //是否为本系统提交
 
+        isTest: { type: Boolean, "default": false },
+        autoRetry: { type: Boolean, "default": true }, //失败后,是否自动尝试执行
+        autoRetryFailed: { type: Number, "default": 0 }, //已自动尝试执行次数
+        autoRetryTime: { type: Date }, //最近一次重试时间
+        waitRetry: { type: Boolean,default: false }, //是否正在等待自动尝试执行
+
         exceptions:[{
             name: { type :String },    //名称。如"retry",重试； “cancel”，撤销；“consign”，委托; "maxLossPercent"，超最大最大能容忍的亏损百分比 
             alias: { type: String },   //别名。如"冻结帐户金额"
@@ -52,7 +55,6 @@ var orderModel = function () {
         }],   
         status: { type: String,default: "wait" }, //status可能的值:wait,准备开始；consign: 已委托,但未成交；success,已完成; 
                                                   //part_success,部分成功;will_cancel,已标记为取消,但是尚未完成;canceled: 已取消；
-                                                  //wait_retry 准备重新发起委托，但还没有进行
                                                   //auto_retry: 委托超过一定时间未成交，已由系统自动以不同价格发起新的委托; failed,失败
         desc: { type: String }, //描述说明
         isHidden: { type: Boolean, "default": false }, //是否为隐藏单

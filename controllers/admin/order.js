@@ -1,16 +1,8 @@
 'use strict';
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const Account  = mongoose.model('Account');
-const ClientIdentifier  = mongoose.model('ClientIdentifier');
-const Strategy = mongoose.model('Strategy');
 const Order = mongoose.model('Order');
 
-const co = require('co');
 const async = require('co').wrap;
-const only = require('only');
-const accountLib = require('../../lib/account');
-const transfer = require('../../lib/transfer');
 const order = require('../../lib/order');
 const apiConfigUtil = require('../../lib/apiClient/apiConfigUtil');
 const transferController = require('../../lib/transferStrategys/transferController');

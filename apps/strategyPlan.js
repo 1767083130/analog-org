@@ -73,7 +73,7 @@ async function runStrategyPlans(){
 
     try{
         for(let strategyPlan of strategyPlans){
-            let ordersCount = await getOrdersCountOfPlan(strategyPlan);
+            let ordersCount = await strategyPlanLib.getUnEndedPlanOrdersCount(strategyPlan);
             if(ordersCount >= PLAN_ORDER_MAX_COUNT){
                 console.log(`没有完成的订单多达${ordersCount}个，已超标，计划正在队列中等待...`);
                 break;
@@ -115,23 +115,6 @@ async function getStrategyPlans(){
     return strategyPlans;
 }
 
-async function getOrdersCountOfPlan(strategyPlan){
-    let modifiedStart = new Date(+new Date() - 30 * 60 * 1000); //30 minutes
 
-    //status可能的值:wait,准备开始；consign: 已委托,但未成交；success,已完成; 
-    //part_success,部分成功;will_cancel,已标记为取消,但是尚未完成;canceled: 已取消；
-    //wait_retry 准备重新发起委托，但还没有进行
-    //auto_retry: 委托超过一定时间未成交，已由系统自动以不同价格发起新的委托; failed,失败
-    let ordersCount = await Order.find({ 
-        userName: strategyPlan.userName,
-        isSysAuto: true,
-        strategyPlanLogId: strategyPlan.currentLog,
-        modified: { $gt: modifiedStart},
-        status: { $in: ['wait','consign','part_success','will_cancel','wait_retry'] },  //,'auto_retry'
-    }).count();
-
-    return ordersCount;
-    //return orders.length;  
-}
 
 

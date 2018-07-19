@@ -12,9 +12,8 @@ module.exports = function (router) {
      */
     router.get('/getPositions',async function(req, res) {
         try{
-            let site = req.query['site'],
-                symbol = req.query['symbol'];
-            let positionsInfo = await position.getPositions(site,symbol);
+            let site = req.query['site'];
+            let positionsInfo = await position.getPositions(site);
             res.json(positionsInfo);
         } catch (err){
             console.error(err);

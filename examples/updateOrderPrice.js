@@ -200,7 +200,7 @@ async function renewOrder(order){
         let newOrder1 = await Order.findOneAndUpdate({ 
             _id: willUpdatedOrder._id
         },{
-            $set: { status: 'wait_retry' }
+            $set: { waitRetry: true }
         }, {
             new: true
         });
@@ -217,9 +217,9 @@ async function renewOrder(order){
 
         await Order.findOneAndUpdate({ 
             _id: willUpdatedOrder._id,
-            status: 'wait_retry' 
+            waitRetry: true
         },{
-            $set: { status: 'consign' }
+            $set: { waitRetry: false }
         }, {
             new: true
         });
