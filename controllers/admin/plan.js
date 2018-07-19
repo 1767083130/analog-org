@@ -14,6 +14,9 @@ const transferController = require('../../lib/transferStrategys/transferControll
 module.exports = function (router) {
     router.get('/', async function(req, res) {
         try{
+            if(!req.user.userName){
+                return res.json({ isSuccess: false, code: 401, message: "未登录"});
+            }
             list(req,res,function(data){
                 res.render('admin/plan', data);
             });
@@ -422,6 +425,8 @@ function list(req,res,callback){
                     totalConsignAmount: 0,  //任务已委托数量
                     totalActualAmount: 0    //任务已成交数量
                 },planRunLogInfo);
+                plan.totalConsignAmount = new Decimal(plan.totalConsignAmount).toFixed(2);
+                plan.totalActualAmount = new Decimal(plan.totalActualAmount).toFixed(2);
 
                 let strategys = await TransferStrategy.find({ userName : userName, _id: { $in: strategyIds } });
                 plan.strategys = strategys;
@@ -429,6 +434,16 @@ function list(req,res,callback){
                     let expressionValue = await strategy.getExpressionValue(strategys[0].conditions[0],strategys[0].strategyType);
                     plan.strategyValue = new Decimal(expressionValue * 100).toFixed(2) + '%';
                 }
+
+                let checkRes = await strategyPlanLib.hasNecessaryData(planLog);
+                if(!checkRes.hasFull){
+                    plan.net = { hasFull: false, message: `网络可能出现中断或系统配置错误，可能获取不到必需的数据: ${JSON.stringify(checkRes)}`}
+                } else {
+                    plan.net = { hasFull: true };
+                }
+
+                let unEndedOrdersCount = await strategyPlanLib.getUnEndedPlanOrdersCount(plan);
+                plan.unEndedOrdersCount = unEndedOrdersCount;
             }
 
             let t = {

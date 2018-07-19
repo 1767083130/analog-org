@@ -5,15 +5,10 @@
 {%endblock%}
 {% block body %}
 <div style="margin-bottom: 50px;">
-    <h1>
+    <h3>
        策略计划
-    </h1>
+    </h3>
     <div id="pnlStrategy" name="panel">
-        <div>
-            <div>
-              <a href="#" id="lnkAdvance">计划</a>  <a href="#" id="lnkStrategyPlan">自定义计划</a>   
-            </div>
-        </div>
         <div id="pnlStrategyPlan">
             <div id="pnlPlanEdit" style="display: none;">
                 Name:<input type="text" id="txtPlanName" /><br />
@@ -69,7 +64,8 @@
             </div>
             <div id="pnlPlanList" >
                 <div style="margin-top: 10px; margin-bottom: 10px;">
-                        <input type="button" id="btnEditPlan" value="新建计划" />
+                    <input type="button" id="btnEditPlan" value="新建计划" />
+                    <a href="#" id="lnkStrategyPlan">自定义计划</a>   
                 </div>
                 <ul class="account_strategys" id="plansList">
                 </ul>
@@ -90,8 +86,10 @@
                                  当前差值：<%= plan.strategyValue || '未知' %>
                                  <br> 
                                  已委托数量：<%= plan.totalConsignAmount %>
-                                 已成交数量： <%= plan.totalActualAmount %>
+                                 已成交数量：<%= plan.totalActualAmount %>
+                                 有<a href="/admin/order?planLogId=<%= plan.currentLog %>&type=1"><%= plan.unEndedOrdersCount %>个委托</a>未完成
                             </div>
+                            <div style="color:red;display:<%= plan.net.hasFull ? 'none':'block' %>" ><%= plan.net.message %></div>
                             <div>
                                 <%= plan.isValid ? '有效' : '已被停用' %>
                                 <a name="setPlan" data-id="<%= plan._id %>" href="#">修改</a>

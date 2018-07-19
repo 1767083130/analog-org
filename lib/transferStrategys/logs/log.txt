@@ -1,0 +1,42 @@
+runOperate! stepAmount: -3 apiOrder: {"outerId":14527356061,"symbol":"eos#usd","type":"LIMIT","status":"success","dealAmount":3,"amount":3,"side":"buy","created":1532072910969,"timestamp":1532072917160,"price":8.032,"avgPrice":8.032,"site":"bitfinex"}
+
+runOperate! stepAmount: -3 apiOrder: {"outerId":14527357047,"symbol":"eos#usd","type":"LIMIT","status":"success","dealAmount":3,"amount":3,"side":"buy","created":1532072912995,"timestamp":1532072917175,"price":8.032,"avgPrice":8.032,"site":"bitfinex"}
+
+runOperate! stepAmount: -3 apiOrder: {"outerId":14527356543,"symbol":"eos#usd","type":"LIMIT","status":"success","dealAmount":3,"amount":3,"side":"buy","created":1532072911971,"timestamp":1532072917175,"price":8.032,"avgPrice":8.032,"site":"bitfinex"}
+
+runOperate! stepAmount: -3 apiOrder: {"outerId":14527407738,"symbol":"eos#usd","type":"LIMIT","status":"success","dealAmount":3,"amount":3,"side":"buy","created":1532073020741,"timestamp":1532073023882,"price":8.016,"avgPrice":8.016,"site":"bitfinex"}
+
+runOperate! stepAmount: -3 apiOrder: {"outerId":14527412823,"symbol":"eos#usd","type":"LIMIT","status":"success","dealAmount":3,"amount":3,"side":"buy","created":1532073031079,"timestamp":1532073042737,"price":8.0201,"avgPrice":8.0201,"site":"bitfinex"}
+
+runOperate! stepAmount: -3 apiOrder: {"outerId":14527413310,"symbol":"eos#usd","type":"LIMIT","status":"success","dealAmount":3,"amount":3,"side":"buy","created":1532073032099,"timestamp":1532073042737,"price":8.0201,"avgPrice":8.0201,"site":"bitfinex"}
+
+runOperate! stepAmount: -8.967 apiOrder: {"outerId":14527475243,"symbol":"eth#usd","type":"LIMIT","status":"part_success","dealAmount":8.967,"amount":20,"side":"buy","created":1532073149782,"timestamp":1532073154783,"price":456.97,"avgPrice":456.97,"site":"bitfinex"}
+
+runOperate! stepAmount: -1.007 apiOrder: {"outerId":14527475243,"symbol":"eth#usd","type":"LIMIT","status":"part_success","dealAmount":9.974,"amount":20,"side":"buy","created":1532073149782,"timestamp":1532073157064,"price":456.97,"avgPrice":456.97,"site":"bitfinex"}
+
+runOperate! stepAmount: -0.219 apiOrder: {"outerId":14527475243,"symbol":"eth#usd","type":"LIMIT","status":"part_success","dealAmount":10.193,"amount":20,"side":"buy","created":1532073149782,"timestamp":1532073157247,"price":456.97,"avgPrice":456.97,"site":"bitfinex"}
+
+runOperate! stepAmount: -7.966 apiOrder: {"outerId":14527475243,"symbol":"eth#usd","type":"LIMIT","status":"part_success","dealAmount":18.159,"amount":20,"side":"buy","created":1532073149782,"timestamp":1532073157351,"price":456.97,"avgPrice":456.97,"site":"bitfinex"}
+
+runOperate! stepAmount: -0.875 apiOrder: {"outerId":14527475243,"symbol":"eth#usd","type":"LIMIT","status":"part_success","dealAmount":19.034,"amount":20,"side":"buy","created":1532073149782,"timestamp":1532073158101,"price":456.97,"avgPrice":456.97,"site":"bitfinex"}
+
+runOperate! stepAmount: -0.966 apiOrder: {"outerId":14527481838,"symbol":"eth#usd","type":"LIMIT","status":"success","dealAmount":0.966,"amount":0.966,"side":"buy","created":1532073162964,"timestamp":1532073163373,"price":457,"avgPrice":457,"site":"bitfinex"}
+
+runOperate! stepAmount: -0.14588892 apiOrder: {"outerId":14528010908,"symbol":"eth#usd","type":"LIMIT","status":"part_success","dealAmount":0.14588892,"amount":20,"side":"buy","created":1532074216940,"timestamp":1532074219311,"price":461.78,"avgPrice":461.78,"site":"bitfinex"}
+
+runOperate! stepAmount: -1.88995288 apiOrder: {"outerId":14528010908,"symbol":"eth#usd","type":"LIMIT","status":"part_success","dealAmount":2.0358418,"amount":20,"side":"buy","created":1532074216940,"timestamp":1532074219892,"price":461.78,"avgPrice":461.78,"site":"bitfinex"}
+
+runOperate! stepAmount: -3.29211482 apiOrder: {"outerId":14528010908,"symbol":"eth#usd","type":"LIMIT","status":"part_success","dealAmount":5.32795662,"amount":20,"side":"buy","created":1532074216940,"timestamp":1532074220344,"price":461.78,"avgPrice":461.78,"site":"bitfinex"}
+
+runOperate! stepAmount: -14.67204338 apiOrder: {"outerId":14528010908,"symbol":"eth#usd","type":"LIMIT","status":"success","dealAmount":20,"amount":20,"side":"buy","created":1532074216940,"timestamp":1532074220929,"price":461.78,"avgPrice":461.78,"site":"bitfinex"}
+
+runOperate! stepAmount: -5.29850092 apiOrder: {"outerId":14528011440,"symbol":"eth#usd","type":"LIMIT","status":"part_success","dealAmount":5.29850092,"amount":20,"side":"buy","created":1532074218017,"timestamp":1532074220929,"price":461.78,"avgPrice":461.78,"site":"bitfinex"}
+
+runOperate! stepAmount: -2.12936866 apiOrder: {"outerId":14528011440,"symbol":"eth#usd","type":"LIMIT","status":"part_success","dealAmount":7.42786958,"amount":20,"side":"buy","created":1532074218017,"timestamp":1532074221342,"price":461.78,"avgPrice":461.78,"site":"bitfinex"}
+
+runOperate! stepAmount: -0.14994 apiOrder: {"outerId":14528011440,"symbol":"eth#usd","type":"LIMIT","status":"part_success","dealAmount":7.57780958,"amount":20,"side":"buy","created":1532074218017,"timestamp":1532074221578,"price":461.78,"avgPrice":461.78,"site":"bitfinex"}
+
+runOperate! stepAmount: -3.25115097 apiOrder: {"outerId":14528102918,"symbol":"eth#usd","type":"LIMIT","status":"part_success","dealAmount":3.25115097,"amount":20,"side":"buy","created":1532074389020,"timestamp":1532074389838,"price":467.17,"avgPrice":467.17,"site":"bitfinex"}
+
+runOperate! stepAmount: -20 apiOrder: {"outerId":14528105441,"symbol":"eth#usd","type":"LIMIT","status":"success","dealAmount":20,"amount":20,"side":"buy","created":1532074392938,"timestamp":1532074393035,"price":467.19,"avgPrice":467.19,"site":"bitfinex"}
+

@@ -1,6 +1,6 @@
 'use strict';
 const Client = require('ws-server').Client;
-const debug = require('debug')('ws-client:clientDemo');
+const debug = require('debug')('analog:ws-client:clientDemo');
 const configUtil = require('../lib/apiClient/apiConfigUtil')
 
 let client = new Client({
