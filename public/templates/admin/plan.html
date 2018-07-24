@@ -89,7 +89,8 @@
                                  <br> 
                                  已委托数量：<%= plan.totalConsignAmount %>
                                  已成交数量：<%= plan.totalActualAmount %>
-                                 有<a href="/admin/order?planLogId=<%= plan.currentLog %>&type=1"><%= plan.unEndedOrdersCount %>个委托</a>未完成
+                                 有<a href="/admin/trade?planLogId=<%= plan.currentLog %>&type=1"><%= plan.unEndedOrdersCount %>个委托</a>未完成
+                                 <a href="/admin/trade?planLogId=<%= plan.currentLog %>&type=2">全部委托</a>
                             </div>
                             <div style="color:red;display:<%= !plan.net || plan.net.hasFull ? 'none':'block' %>" ><%= plan.net ? plan.net.message : '' %></div>
                             <div>

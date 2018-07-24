@@ -1,217 +1,237 @@
-{% extends "layouts/master.html" %}
-{% block header %}
-
-<link rel="stylesheet" type="text/css" href="../js/plugins/bootstrap/3.3.5/css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="../css/site.css" />
-{% endblock %}
-
+{% extends "layouts/admin-master.html" %} 
 {% block body %}
+<div>
+    
+    <h3>委托列表:</h3>
+    <div>
+        <div style="width: 1040px; padding:2px; background-color: #C2DAFA;">  
+            site:
+            <select id="inquirysite" name="inquirysite">
+                <option value="">请选择</option>
+                <option value="bitfinex">bitfinex</option>
+                <option value="okex">okex</option>
+            </select>
+            symbol: 
+            <select id="inquirysymbol" name="inquirysymbol">  
+                <option value="">请选择</option>
+                <option value="eos#usd">eos#usd</option>
+                <option value="btc#cny">btc#cny</option>
+            </select>
 
-<div class="page-section page-section-tab -color-grey">
-    <div class="grid-container">
-        <div class="page-bar">
-            <ul class="page-breadcrumb">
-                <li>
-                    <i class="glyphicon glyphicon-home"></i>
-                    <a href="/dw/default.aspx">首页</a>
-                    <i class="glyphicon glyphicon-menu-right"></i>
-                </li>
-                <li>
-                    <a href="#">个人中心</a>
-                    <i class="glyphicon glyphicon-menu-right"></i>
-                </li>
-                <li>
-                    <a href="#">充值</a>
-                </li>
-            </ul>
+            <span>
+            起始时间<input type="text" id="origin"/>
+            结束时间<input type="text" id="end"/>
+            </span>
+            <input type="button" id="btnSearch" value="查询" /> 
         </div>
-
-        <ul class="nav nav-tabs -border-none" role="tablist" style="padding-top: 30px;">
-            <li class="active"><a href="#profile" role="tab" data-toggle="tab">个人中心</a></li>
-            <li><a href="#home" role="tab" data-toggle="tab">图片管理</a></li>
-        </ul>
+        <div id="FlexiGrid_ContentDiv">
+            <table id="FlexiGrid_ContentTable" style="display: none">
+            </table>
+        </div>
+        <div id="barcon" name="barcon"></div>
+        <div name="customPager" id="flexiGridPager" for="FlexiGrid_ContentTable" style="padding-top: 4px; display: none"></div>
+        <input type="hidden" name="_csrf" value="{{_csrf}}" />
+        <!-- <a href="/admin/trade">返回</a> -->
     </div>
 </div>
 
-<div class="grid-container">
-    <div class="row main-row">
-        <div class="col-sm-4 col-md-3">
-            <div class="list-group">
-                <a href="home.aspx" class="list-group-item">我的服务</a>
-                <a href="information.aspx" class="list-group-item active">个人信息</a>
-                <a href="vipaccount.aspx" class="list-group-item ">收支明细</a>
-                <a href="userorders.aspx" class="list-group-item">订单管理</a>
-            </div>
-        </div>
-        <div class="col-sm-8 col-md-9">
-            <div class="portlet">
-                <div class="portlet-title">
-                    <div class="caption bold">
-                        <span class="caption-subject">
-                            <i class="glyphicon glyphicon-usd"></i>账户收支</span>
-                    </div>
-                </div>
-
-                <div class="portlet-body  -margin-v20">
-
-                    <h4>当前余额:<em>￥<asp:Literal runat="server" Text="0" ID="lblAmtLeft"></asp:Literal></em>
-                        <!-- ngIf: vm.accountDetail.dedtAmount != 0 -->
-                    </h4>
-
-                    <div class="tabbable-custom -margin-v20">
-                        <ul class="nav nav-tabs ">
-                            <li class="active">
-                                <a href="#tab_5_1" data-toggle="tab">支付宝</a>
-                            </li>
-                          
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="tab_5_1">
-                                <div class="recharge" ui-view="recharge" style="margin-top: 30px;">
-                                    <form name="rechargeAlipayForm" class="form-horizontal" id="rechargeAlipayFormModel"
-                                        role="form" action="RechargeItem.aspx" method="GET" target="_blank">
-                                        <div class="form-body">
-                                            <div class="form-group">
-                                                <label class="col-md-2 control-label">充值金额</label>
-                                                <div class="col-md-3">
-                                                    <input type="text" class="form-control" name="amount" />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <input name="payway" type="hidden" value="Alipay" />
-                                            </div>
-                                            <div class="simple-form-field">
-                                                <label class="bank-alipay" for="bank-alipay"></label>
-                                                <div class="alert alert-info">
-                                                    <span>温馨提示：</span>
-                                                    <br />
-                                                    <span>1、通过信用卡的快捷支付有500元限制，超过500元时您可以选择其他方式支付。</span>
-                                                    <br />
-                                                    <span style="color: red;">2、如您有欠费账单，充值后会优先补扣欠费账单。</span>
-                                                    <br />
-                                                    <span>3、充值后请及时对支付订单进行结算，以免影响正常服务。</span>
-                                                    <br />
-                                                </div>
-                                            </div>
-
-                                            <div class="simple-form-field">
-                                                <div class="form-group simple-form-submit">
-                                                    <label class="space control-label" for="rechargeAlipayFormModelsubmit3">
-                                                        <span class="ng-binding"></span>
-                                                    </label>
-                                                    <div class="col-sm-4">
-                                                        <button class="btn btn-primary" type="submit">充值</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /.modal -->
-<div id="responsive" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-hidden="true">
-    <div class="modal-header">
-        <button class="close" type="button" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">充值</h4>
-    </div>
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-sm-1 text-center"><span class="text-size-32  icon-warning-1 dialog-icon-color" ng-class="iconClass"></span></div>
-            <div class="col-sm-11 breakall ">
-                <p class="ng-binding " ng-bind-html="message">
-                    <p><strong class="lead"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>请您在新打开的页面上完成充值。</strong></p>
-                    <p class="text-muted">充值完成后，根据您的情况点击下面按钮。</p>
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="javascript:document.location = document.location;">充值成功</button>
-        <button type="button" data-dismiss="modal" class="btn btn-default">充值失败</button>
-    </div>
-</div>
-
-
-{% endblock %} 
-{% block scripts %}
-
-<script src="../js/plugins/jquery/1.11.1/jquery.js" type="text/javascript"></script>
-<script src="../js/plugins/flexigrid/jquery.flexigrid.js" type="text/javascript"></script>
+{% endblock %} {% block scripts %}
+<script src="../js/jquery-1.8.2.js" type="text/javascript"></script>
+<script src="../js/lib/jquery.flexigrid.js" type="text/javascript"></script>
 <script src="../js/common.js" type="text/javascript"></script>
-<script type="text/javascript" src="../js/plugins/bootstrap/3.3.5/js/bootstrap.min.js" charset="utf-8"></script>
-
-<!-- /.modal -->
-<script type="text/javascript">
-    jQuery(document).ready(function () {
-        validation();
-    });
-
-    // basic validation
-    function validation() {
-
-        jQuery.validator.addMethod("currecy", function (value, element) {
-            var pattern = /^((0.0[1-9])|(0.[1-9][0-9]?)|([1-9][0-9]*(.\d{1,2})?))$/;
-            if (value != '') { if (!pattern.exec(value)) { return false; } };
-            return true;
-        }, "充值金额必须是大于0的整数或者两位以内的小数！");
-
-        var form1 = $("form[name='rechargeAlipayForm']");
-        form1.validate({
-            errorElement: 'span', //default input error message container
-            errorClass: 'help-block help-block-error', // default input error message class
-            focusInvalid: false, // do not focus the last invalid input
-            ignore: "",  // validate all fields including form hidden input
-            messages: {
-                amount: {
-                    required: "请输入充值金额！",
-                    range: "输入的金额必须小于1000000！"
-                }
-            },
-            rules: {
-                amount: {
-                    required: true,
-                    currecy: true,
-                    range: [0, 1000000]
-                }
-            },
-            invalidHandler: function (event, validator) { //display error alert on form submit     
-                //webnuke.scrollTo(error1, -200);
-            },
-            highlight: function (element) { // hightlight error inputs
-                $(element).closest('.form-group').addClass('has-error'); // set error class to the control group
-            },
-            unhighlight: function (element) { // revert the change done by hightlight
-                $(element).closest('.form-group').removeClass('has-error'); // set error class to the control group
-            },
-            success: function (label) {
-                label.closest('.form-group').removeClass('has-error'); // set success class to the control group
-            },
-            submitHandler: function (form) {
-                $("#responsive").modal('toggle');
-                form.submit();
-            }
-        });
-    }
-</script>
-<!-- END JAVASCRIPTS -->
 
 <script type="text/javascript">
     $(function () {
-        var a = '<%= Request.QueryString["a"] %>';
-        if (!a) {
-            a = 0;
+        $('#btnSearch').click(function(){
+            var newParams = [
+                { name: "type", value: w.getQueryStringValue('type') },
+                { name: "planLogId",value: w.getQueryStringValue('planLogId') }
+            ];
+            $("#FlexiGrid_ContentTable").setNewExtParam(newParams);
+            $("#FlexiGrid_ContentTable").flexReload();
+        })
+
+        initFlexiGrid();
+        
+    });
+
+    function initFlexiGrid() { 
+        var initData = {
+            "page": 1,  //当前页
+            "total": {{ total }},   //总页面数
+            "orders": {{ orders | safe }}
+        };
+
+        var option = {
+            width: 1044,
+            height: 'auto',
+            data: initData,
+            autoPager: false,//分页菜单栏
+            autoToolBar: true,
+            colResizable: true,
+            mutilRowMessage: true,
+            showLoading: true,
+            showMessageOnRowClicked: true,
+            url: '/admin/trade/list',
+            colModel: [
+                { display: "交易网站", name: "site",type: 0,visible: true, width: "80", sortable: true,align: "center" },
+                { display: "交易品种", name: "symbol",type: 0,visible: true, width: "80", sortable: true,align: "center" },
+                { display: "委托类型",name: "type", type: 0,visible: true,width: "80",sortable: true,align: "center" },
+                { display: "委托状态",name: "status", type: 0,visible: true,width: "80",sortable: true,align: "center" },
+                { display: "总数量",name: "amount", type: 0,visible: true,width: "100",sortable: true,align: "center" },
+                { display: "已成交数量",name: "bargainAmount", type: 0,visible: true,width: "80",sortable: true,align: "center" },
+                { display: "交易类型",name: "side", type: 0,visible: true,width: "80",sortable: true,align: "center" },
+                { display: "创建时间",name: "created", type: 0,visible: true,width: "140",sortable: true,align: "center" },
+                { display: "委托价格",name: "price", type: 0,visible: true,width: "100",sortable: true,align: "center" },
+                { display: "平均成交价格",name: "avgPrice", type: 0,visible: true,width: "100",sortable: true,align: "center" }
+            ],
+            //分页页码
+            onInited: flexiGridInited,
+            //加载表格
+            onPreLoad: flexiGridPreLoad,
+            onLoaded: flexiGridLoaded,
+            onCommand: flexiGridCommand,
+            
+            //onInquiry:flexiGridInquiry,
+            //onSuccess:flexiGridWx,
+            //onInit: flexiGridxx,
+            
+
+            autoload: false,    //自动加载,改自动加载就会报错
+            columnsFixed: true,
+            checkCell: {
+                showCheckAll: true,
+                width: "25"
+            },
+            gridClass: "bbit-grid",
+            bootStrapSupported: false,
+            resizable: false,
+            showTableToggleBtn: false,
+            usepager: true, //是否分页
+            useRp: true,    //是否可动态设置分页显示的结果数
+            rp: 10,  //每页默认的结果数
+            singleselected: false,
+            nowrap: true,   //是否不换行
+            showcheckbox: false,
+            rpOptions: [10,20,30],  //可选择设定的每页结果数
+            newp: 1,    //自定义翻页事件,定义刷新后第一页停留在哪个位置
+            selectedonclick: false
+        };
+        
+        $("#FlexiGrid_ContentTable").flexigrid(option);
+        // $("#FlexiGrid_ContentTable").flexOptions(option).flexReload();
+        var csrf = $('input[name="_csrf"]').val();
+        $("#FlexiGrid_ContentTable").setNewExtParam([{name: "_csrf",value: csrf }]);   
+    }
+
+    onToggoleLeft = function () {
+        $('#FlexiGrid_ContentTable').fixGridWidth();
+    };
+
+    function flexiGridInquiry(){
+        var option = {
+            symbol:$("#symbol").val(),
+            newp:1
         }
-        $("li", ".nav-sidebar").removeClass("active");
-        $("li[order=" + a + "]", ".nav-sidebar").addClass("active");
-    })
+
+        $.ajax({
+            type:"POST",
+            url:'trade.js',
+            data:option,
+            dataType:'json'
+        }).success(function(data){
+            $("#FlexiGrid_ContentTable").flexOptions(data).flexReload(); 
+            console.log(data);
+        })
+
+    }
+
+    //分页页码
+    function flexiGridInited(options) {
+        debugger
+        var newParams = [
+            { name: "type", value: w.getQueryStringValue('type') },
+            { name: "planLogId",value: w.getQueryStringValue('planLogId') }
+        ];
+        $("#FlexiGrid_ContentTable").setNewExtParam(newParams);
+
+        var option = { 
+            pagerContainer: $("#flexiGridPager"),
+            numDisplayEntries: 2, 
+            numEdgeEntries: 2
+        };
+        $("#FlexiGrid_ContentTable").flexiGridPager(option);
+        return options;
+    }
+
+    //这个很重要
+    function flexiGridLoaded(options){
+        $('a[name="manualOperate"]').click(function(){
+            var orderId = $(this).attr("data-orderId");
+            var operateLog;
+            for(var i = 0; i < options.orders.length;i++){
+                if(options.orders[i]._id == orderId){
+                    operateLog = options.orders[i];
+                    break;
+                }
+            }
+
+            if(operateLog){
+                _currentOperateLog = operateLog;
+                $('#txtOperateAmount').val(operateLog.orgOperate.orderAmount)
+            }
+        });
+    }
+
+    //加载表格数据
+    function flexiGridPreLoad(options){
+        if(typeof options.orders == 'string'){
+            options.orders = JSON.parse(options.orders);
+        }
+
+        var  data = {
+            "page": options.page,
+            "total": options.total,
+            "dataType": "json",
+            "rows": [],
+            "orders": {}
+        };
+
+        var orders = options.orders || [];
+        for(var i = 0; i < orders.length; i++){
+            var order = orders[i];
+            var row = {
+                "id":order._id,
+                "itemMessage": w.format("<div style='white-space:normal;word-break:break-all;word-wrap:break-word;'>{0}</div><hr/>", $.toJSON(order)),
+                "cell":[
+                    { "cellHtml": order.site },
+                    { "cellHtml": order.symbol },
+                    { "cellHtml": order.type },
+                    { "cellHtml": order.status },
+                    { "cellHtml": order.amount || 0 },
+                    { "cellHtml": order.bargainAmount || 0 },
+                    { "cellHtml": order.side },
+                    { "cellHtml": order.created ? w.dateformat(new Date(order.created),"yyyy-MM-dd hh:mm:ss") : '' },
+                    { "cellHtml": order.price },
+                    { "cellHtml": order.avgPrice || 0 }
+                ],
+                "attrs": []
+            };
+            data.rows.push(row);
+        }
+        return data;
+    }
+
+    function flexiGridCommand(sender, e) {
+        var operateBtn = sender;
+        var btnValue = $(operateBtn).attr("dataValue");
+        var commandName = $(operateBtn).attr("commandName");
+    }
+
+    onToggoleLeft = function () {
+        $('#refundRecordFlexiGrid_ContentTable').fixGridWidth();
+    };
+
 </script>
-{% endblock %} 
+{% endblock %}
+ 
