@@ -13,8 +13,9 @@
     };
 
     //获取通过页面参数传递过来的值
-    WebNuke.prototype.getQueryStringValue = function (keyName) {
-        return this.getQueryStringValue(keyName);
+    WebNuke.prototype.getQueryStringValue = function (item) {
+        var svalue = location.search.match(new RegExp("[\?\&]" + item + "=([^\&]*)(\&?)","i"));
+        return svalue ? svalue[1] : svalue;
     };
 
     //webnuke.format("{0}{1}","hello ","world") => hello world
