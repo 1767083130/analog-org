@@ -84,8 +84,6 @@ function list(req,res,callback){
     
     //设置查询条件变量
     let params = { } ;
-
-    
     if( req.query.type == 1 ){
         let modifiedStart = new Date(+new Date() - 30 * 60 * 1000); //30 minutes 之前的数据
         let planLogId = req.query.planLogId;
@@ -108,7 +106,6 @@ function list(req,res,callback){
     if(req.body.site){
         params.site = req.body.site;
     }
-
 
     var options = {
         //select:   'title date author',
