@@ -10,8 +10,8 @@ var strategyPlanModel = function () {
         desc:  { type: String }, 
         strategys: [{ 
             strategyId: { type: Schema.ObjectId,ref: "TransferStrategy" },  
-            consignAmount: { type: Number,default: 0 }, //已执行委托但尚未完成的数量.必须为大于0的数。
-            actualAmount: { type: Number,default: 0 }, //已执行完成的数量.必须为大于0的数
+            consignAmount: { type: Number,default: 0,min: 0 }, //已执行委托但尚未完成的数量.必须为大于0的数。
+            actualAmount: { type: Number,default: 0,min: 0 }, //已执行完成的数量.必须为大于0的数
         }],
         
         currentLog: { type: Schema.ObjectId,ref: "TransferStrategyLog" }, //当前实例
@@ -19,8 +19,8 @@ var strategyPlanModel = function () {
         isSimple: { type: Boolean, default: false },  //是否为简单模式
         status: { type: String,default: 'init' } , //可能的值：init、 wait、 running、success、 stopped
         
-        stepAmount: { type: Number,required: true },  //每步执行数量
-        totalAmount: { type: Number,required: true }, //需要执行总量。 -1，表示直到满仓为止
+        stepAmount: { type: Number,required: true, min: 0 },  //每步执行数量
+        totalAmount: { type: Number,required: true, min: 0 }, //需要执行总量。 -1，表示直到满仓为止
         //actualAmount: { type: Number,default: 0 }, //已执行数量
 
         lastRunTime: Date, //上次执行时间

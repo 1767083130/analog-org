@@ -44,6 +44,8 @@ var orderModel = function () {
         autoRetryFailed: { type: Number, "default": 0 }, //已自动尝试执行次数
         autoRetryTime: { type: Date }, //最近一次重试时间
         waitRetry: { type: Boolean,default: false }, //是否正在等待自动尝试执行
+        waitCreateChild: { type: Boolean, default: false }, //是否被撤销后，需要生成新的委托，一般在接收到第三方交易网站发送的委托状态时进行处理
+        waitRetryPrice: { type: Number },
 
         exceptions:[{
             name: { type :String },    //名称。如"retry",重试； “cancel”，撤销；“consign”，委托; "maxLossPercent"，超最大最大能容忍的亏损百分比 
@@ -52,7 +54,9 @@ var orderModel = function () {
             Manual: { type: Boolean,default: true }, //是否需要人工处理
             status: { type: String }, //status可能的值:wait,准备开始；success,已完成;failed,失败
             timestamp: { type : Number } //最近一次修改日期
-        }],   
+        }], 
+        apiOrder: { type: Schema.Types.Mixed },  
+        apiStatus: { type: String }, //通过api获取到的最新委托状态，目的是为了防止重复处理（在处理委托时，可能会出现脏数据的问题，导致提交重复数据），导致仓位出现问题
         status: { type: String,default: "wait" }, //status可能的值:wait,准备开始；consign: 已委托,但未成交；success,已完成; 
                                                   //part_success,部分成功;will_cancel,已标记为取消,但是尚未完成;canceled: 已取消；
                                                   //auto_retry: 委托超过一定时间未成交，已由系统自动以不同价格发起新的委托; failed,失败
@@ -85,7 +89,7 @@ var orderModel = function () {
          * @returns {Number} 货币可用的数量 
          */
         isEnded: function(){
-            return ['canceled','success','failed'].indexOf(this.status) != -1;
+            return ['canceled','success','failed'].indexOf(this.apiStatus) != -1;
         },
     }
     

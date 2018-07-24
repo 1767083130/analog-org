@@ -66,6 +66,8 @@
                 <div style="margin-top: 10px; margin-bottom: 10px;">
                     <input type="button" id="btnEditPlan" value="新建计划" />
                     <a href="#" id="lnkStrategyPlan">自定义计划</a>   
+                    <a href="#" id="lnkStopAllPlans">全部暂停</a>  
+                    <a href="#" id="lnkStartAllPlans">全部开启</a>  
                 </div>
                 <ul class="account_strategys" id="plansList">
                 </ul>
@@ -89,15 +91,15 @@
                                  已成交数量：<%= plan.totalActualAmount %>
                                  有<a href="/admin/order?planLogId=<%= plan.currentLog %>&type=1"><%= plan.unEndedOrdersCount %>个委托</a>未完成
                             </div>
-                            <div style="color:red;display:<%= plan.net.hasFull ? 'none':'block' %>" ><%= plan.net.message %></div>
+                            <div style="color:red;display:<%= !plan.net || plan.net.hasFull ? 'none':'block' %>" ><%= plan.net ? plan.net.message : '' %></div>
                             <div>
-                                <%= plan.isValid ? '有效' : '已被停用' %>
+                                <%= plan.isValid ? '有效' : '已被暂停' %>
                                 <a name="setPlan" data-id="<%= plan._id %>" href="#">修改</a>
                                 <a name="setStrategys" data-id="<%= plan._id %>" href="#" >设置策略</a>
                                 <a name="runPlan" data-id="<%= plan._id %>" href="javascript:void(0);">运行</a>
                                 <a name="resetPlan" data-id="<%= plan._id %>" href="javascript:void(0);">重置</a>
                                 <a name="resetPlanAndRun" data-id="<%= plan._id %>" href="javascript:void(0);">重置并运行</a>
-                                <a name="stopPlan" data-id="<%= plan._id %>"  href="javascript:void(0);">停用</a>
+                                <a name="stopPlan" data-id="<%= plan._id %>"  href="javascript:void(0);">暂停</a>
                                 <a name="delPlan" data-id="<%= plan._id %>"  href="javascript:void(0);">删除</a>
                             </div>
                         </div>
@@ -318,6 +320,18 @@
             $(stepB_params).find('span[name="operateType"]').html(getOperateText(2));
         });
 
+        $('#lnkStopAllPlans').click(function(){
+            if(!confirm('确认要停止全部计划吗？')){
+                return;
+            }
+            stopAllPlans();
+        });
+        $('#lnkStartAllPlans').click(function(){
+            if(!confirm('确认要启动全部计划吗？')){
+                return;
+            }
+            startAllPlans();
+        });
         showStrategySteps();
         showPlans();
         refreshPlans();
@@ -662,6 +676,44 @@
             }).fail(function (e) {
                 alert("删除计划时可能出现网络异常，请稍后重试！");
             });
+        });
+    }
+
+    function startAllPlans(){
+        $.ajax({
+            type: "POST",
+            url: "/admin/plan/startAllPlans",
+            data: { "_csrf": $('input[name="_csrf"]').val()  },
+            dataType: 'json'
+        }).done(function (e) {
+            if (e.isSuccess) {
+                alert("成功！");
+                showPlans();
+            }
+            else {
+                alert(e.message || "重置计划时出现系统错误，请稍后重试！");
+            }
+        }).fail(function (e) {
+            alert("重置计划时可能出现网络异常，请稍后重试！");
+        });
+    }
+
+    function stopAllPlans(){
+        $.ajax({
+            type: "POST",
+            url: "/admin/plan/stopAllPlans",
+            data: { "_csrf": $('input[name="_csrf"]').val() },
+            dataType: 'json'
+        }).done(function (e) {
+            if (e.isSuccess) {
+                alert("成功！");
+                showPlans();
+            }
+            else {
+                alert(e.message || "重置计划时出现系统错误，请稍后重试！");
+            }
+        }).fail(function (e) {
+            alert("重置计划时可能出现网络异常，请稍后重试！");
         });
     }
 

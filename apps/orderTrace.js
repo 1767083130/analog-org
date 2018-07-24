@@ -70,16 +70,16 @@ db.once('open',function callback(){
         //处理返回的数据
         //client.removeAllListeners('message');
         client.on('message', async function(res){ 
-            //debug(`listeners: ${client.listeners('message').length} `);
             switch(res.channel){
             case 'order':
                 await onOrderMessage(res);
+                //console.log(JSON.stringify(res) );
+                fs.appendFile(path.join(__dirname,'logs', 'log.txt'), JSON.stringify(res) + '\r\n\r\n', (err) =>  {
+                    if (err) throw err;
+                }); 
                 
                 if(NODE_ENV != 'production') {  
-                    console.log(JSON.stringify(res) );
-                    fs.appendFile(path.join(__dirname,'logs', 'log.txt'), JSON.stringify(res) + '\r\n\r\n', (err) =>  {
-                        if (err) throw err;
-                    }); 
+
                 }   
                 break;
             case 'trade':
@@ -87,8 +87,6 @@ db.once('open',function callback(){
                 break;
             }
         }.bind(this));
-
-        debug(`listeners: ${client.listeners('message').length} `);
     }
 });
 
@@ -255,7 +253,7 @@ async function updateOrderPrice(order,options = {}){
 
     if(res.isSuccess && res.updated && strategyLog){
         let strategyPlanLog = await StrategyPlanLog.findOne({ _id: strategyLog.strategyPlanLogId });
-        if(strategyPlanLog){
+        if(strategyPlanLog && res.order && res.order.operateId == 1){ //TODO 待测试
             let planOptions = {
                 strategyId: strategyLog.strategyId,
                 consignAmountChange: Math.abs(res.order.consignAmount)

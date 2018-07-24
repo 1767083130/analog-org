@@ -365,9 +365,39 @@ module.exports = function (router) {
                 return res.json({ isSuccess: false,message: "找不到运行的任务" });
             } 
 
-            let newPlan = strategyPlanLib.resetStrategyPlan(strategyPlan,status);
+            let newPlan = await strategyPlanLib.resetStrategyPlan(strategyPlan,status);
             res.json({ isSuccess: !!newPlan,plan: newPlan });
         } catch(err){
+            console.error(err);
+            res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});
+        }
+    });
+
+    router.post('/startAllPlans', async function(req, res) {
+        try {
+            let userName = req.user.userName;
+            await StrategyPlan.update({ 
+                userName: userName,
+                isValid: true
+            },{
+                status: 'wait'
+            });
+        } catch (err){
+            console.error(err);
+            res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});
+        }
+    });
+
+    router.post('/stopAllPlans', async function(req, res) {
+        try {
+            let userName = req.user.userName;
+            await StrategyPlan.update({ 
+                userName: userName,
+                isValid: true
+            },{
+                status: 'stopped'
+            });
+        } catch (err){
             console.error(err);
             res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});
         }
