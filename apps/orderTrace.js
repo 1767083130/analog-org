@@ -138,14 +138,14 @@ async function renewOrders(){
     let modifiedStart = new Date();
     modifiedStart.setTime(+now - 4 * 60 * 60 * 1000); //超过4个小时的就不处理了
     let modifiedEnd = new Date();
-    modifiedEnd.setTime(+now - 30 * 1000); //超过30s还未成交的就修改价格
+    modifiedEnd.setTime(+now - 5 * 1000); //超过5s还未成交的就修改价格
 
     let order = await Order.findOneAndUpdate({ 
         reason: "transfer",
         isSysAuto: true,
         autoRetry: true,
-        modified: { $lt: modifiedEnd },
-        modified: { $gt: modifiedStart},
+        modified: { $gt: modifiedStart }, 
+        $or: [{ autoRetryTime: {$exists: false} },  { autoRetryTime: {$gt: modifiedEnd} }],
         autoRetryFailed: { $lt: 2 },
         waitRetry: false,
         status: { $in: ['consign','part_success'] },   //,'auto_retry'
@@ -256,7 +256,15 @@ async function updateOrderPrice(order,options = {}){
         if(strategyPlanLog && res.order && res.order.operateId == 1){ //TODO 待测试
             let planOptions = {
                 strategyId: strategyLog.strategyId,
-                consignAmountChange: Math.abs(res.order.consignAmount)
+                consignAmountChange: Math.abs(res.order.consignAmount),
+                log: {
+                    source: '_5',
+                    strategyId: strategyLog.strategyId,
+                    consignAmountChange: Math.abs(res.order.consignAmount),
+                    newOrder: null,
+                    oldOrder: null, 
+                    desc: `更改价格时发生`
+                }
             };
             await strategyPlanLib.updateStrategyPlanAmount(strategyPlanLog,planOptions);
             debug('updateStrategyPlanAmount_5')

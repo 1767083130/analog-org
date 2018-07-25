@@ -14,8 +14,8 @@ var strategyPlanLogModel = function () {
             actualAmount: { type: Number,default: 0 }, //已执行完成的数量.必须为大于0的数
         }],
 
-        consignAmountLogs: { type: Schema.Types.Mixed },
-        actualAmountLogs: { type: Schema.Types.Mixed },
+        consignAmountLogs: [{ type: Schema.Types.Mixed }],
+        actualAmountLogs: [{ type: Schema.Types.Mixed }],
         
         planId: { type: Schema.ObjectId,required: true  }, 
         isValid: { type: Boolean, default: true },

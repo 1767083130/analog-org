@@ -9,8 +9,8 @@
 <body class="nm-np">
     <header class="grey">
     <div class="wrapper">
-        <h1>Kraken Central</h1>
-        <nav>
+        <h1>红桃K量化交易系统</h1>
+        <nav style="display: none;">
             <ul class="nm-np inline">
                 <li><a href="/">Home</a></li>
                 <li><a href="/profile">Profile</a></li>
@@ -27,13 +27,21 @@
     </div>
 </header>
     <div class="wrapper">
-        <div>
+        <div style="float: left;">
             <a href="/admin/plan">策略计划</a>
             <a href="/admin/positions">账户仓位</a>
             <a href="/admin/trade">委托列表</a>
             <a href="/admin/wallets">资金管理</a>
-
         </div>
+        <div style="float: right;">
+            <a href="/admin">Admin</a>
+            {% if user %}
+                <a href="/logout">Logout</a>
+           {% else %}
+                <a href="/login">Login</a>
+           {% endif %}
+        </div>
+        <div style="clear: both;"></div>
         {% block body %} This is the default content {% endblock %}
     </div>
     <div id="tentacle">
