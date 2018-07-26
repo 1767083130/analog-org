@@ -2,7 +2,7 @@
 {% block body %}
 <div>
     
-    <h3>委托列表:</h3>
+    <h4>委托列表</h4>
     <div>
        
         <div style="width: 1044px; padding:2px; background-color: #C2DAFA;">  
@@ -28,12 +28,16 @@
                 <option value="failed">已失败</option>
             </select><br/>
 
-            起始时间:<input size="16"  type="text" id="datetimeStart" readonly class="form_datetime">--
-            结束时间:<input size="16"  type="text" id="datetimeEnd" readonly class="form_datetime"> 
+            起始时间:<input size="16"  type="text" id="datetimeStart" class="form_datetime">--
+            结束时间:<input size="16"  type="text" id="datetimeEnd" class="form_datetime"> 
            
             <input type="button" id="btnSearch" value="查询" />
             <button onClick="document.location.reload()">重置</button>
         </div>
+        <div id="quotation" style="display:none;">
+            <span>aa</span><span>bb</span>
+        </div>
+
         <div id="FlexiGrid_ContentDiv" onLoad="goPage(1,10);">
             <table id="FlexiGrid_ContentTable" style="display: none;">
             </table>
@@ -53,7 +57,6 @@
 <script src="../js/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript" language="utf-8"></script>
 <script src="../js/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" language="utf-8"></script>
 
-<link rel="stylesheet" href="../js/plugins/bootstrap/3.3.5/css/bootstrap.min.css" />
 <link rel="stylesheet" href="../js/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" type="text/css" media="screen"/>
 <script type="text/javascript">
     var _business = {{ business | safe }};
@@ -104,6 +107,7 @@
         });
 
         $('select[name="sites"]').change(function(){
+            $('#quotation').show();
             $('#hide').show();
             $('#inquirysymbol').show();
             var group = $(this).attr('data-group');
@@ -151,17 +155,16 @@
             showMessageOnRowClicked: true,
             url: '/admin/trade/list',
             colModel: [
-                { display: "第三方id",name: "outerId",type: 0,visible: true,width: "80",sortable: true,align: "center" },
-                { display: "交易品种", name: "symbol",type: 0,visible: true, width: "80", sortable: true,align: "center" },
-                { display: "委托类型",name: "type", type: 0,visible: true,width: "80",sortable: true,align: "center" },
-                { display: "委托状态",name: "status", type: 0,visible: true,width: "80",sortable: true,align: "center" },
-                { display: "已成交数量",name: "dealAmount", type: 0,visible: true,width: "80",sortable: true,align: "center" },
-                { display: "总数量",name: "amount", type: 0,visible: true,width: "100",sortable: true,align: "center" },
-                { display: "交易类型",name: "side", type: 0,visible: true,width: "80",sortable: true,align: "center" },
-                { display: "时间戳",name: "created", type: 0,visible: true,width: "140",sortable: true,align: "center" },
-                { display: "委托价格",name: "price", type: 0,visible: true,width: "100",sortable: true,align: "center" },
-                { display: "平均成交价格",name: "avgPrice", type: 0,visible: true,width: "100",sortable: true,align: "center" },
-                { display: "是否隐藏单",name: "hidden", type: 0,visible: true,width: "100",sortable: true,align: "center" }
+                { display: "交易网站", name: "site",type: 0,visible: true, width: "80", sortable: true,align:"left"},
+                { display: "交易品种", name: "symbol",type: 0,visible: true, width: "80", sortable: true,align: "left" },
+                { display: "委托时间",name: "created", type: 0,visible: true,width: "140",sortable: true,align: "left" },
+                { display: "委托类型",name: "type", type: 0,visible: true,width: "80",sortable: true,align: "left" },
+                { display: "交易类型",name: "side", type: 0,visible: true,width: "80",sortable: true,align: "left" },
+                { display: "委托数量",name: "amount", type: 0,visible: true,width: "100",sortable: true,align: "left" },
+                { display: "委托价格",name: "price", type: 0,visible: true,width: "100",sortable: true,align: "left" },
+                { display: "已成交",name: "bargainAmount", type: 0,visible: true,width: "80",sortable: true,align: "left" },
+                { display: "成交均价",name: "avgPrice", type: 0,visible: true,width: "100",sortable: true,align: "left" },
+                { display: "委托状态",name: "status", type: 0,visible: true,width: "80",sortable: true,align: "left" },
             ],
             //分页页码
             onInited: flexiGridInited,
@@ -219,7 +222,6 @@
     }
 
     function flexiGridInited(options) {
-        debugger
         var newParams = [
                 { name:"type", value: w.getQueryStringValue('type') },
                 { name:"planLogId",value: w.getQueryStringValue('planLogId') }
@@ -266,69 +268,30 @@
             "rows": [],
             "orders": {}
         };
-
+      
         var orders = options.orders || [];
         for(var i = 0; i < orders.length; i++){
             var order = orders[i];
+            var side;
+            if(order.side == 'buy'){
+                side =  (order.amount > 0 ? '<span style="color:green;">买入开多</span>' : '<span style="color:red;">卖出开空</span>');
+            } else { //sell
+                side =  (order.amount < 0 ? '<span style="color:green;">买入平空</span>' : '<span style="color:red;">卖出平多</span>');
+            }
             var row = {
                 "id":order._id,
-                "itemMessage": "",
+                "itemMessage": w.format('<div style="width:900px;white-space:normal;word-break:break-all;word-wrap:break-word">{0}</div>',$.toJSON(order)),
                 "cell":[
-                    {
-                        "cellHtml": order.outerId,
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.symbol,
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.type,
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.status,
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.dealAmount,
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.amount,
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.side,
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.created ? w.dateformat(new Date(order.created),"yyyy-MM-dd hh:mm:ss") : '',
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.price,
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.avgPrice,
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.hidden,
-                        "isReadOnly": true,
-                        "attrs": []
-                    }
+                    {"cellHtml": order.site},
+                    {"cellHtml": order.symbol},
+                    {"cellHtml": order.created ? w.dateformat(new Date(order.created),"yyyy-MM-dd hh:mm:ss") : ''},
+                    {"cellHtml": order.type},
+                    {"cellHtml": side},
+                    {"cellHtml": w.toDecimal(Math.abs(order.amount || 0),4) },
+                    {"cellHtml": order.price },
+                    {"cellHtml": w.toDecimal(Math.abs(order.bargainAmount || 0),4)},
+                    {"cellHtml": w.toDecimal(Math.abs(order.avgPrice || 0),3)},
+                    {"cellHtml": order.status},
                 ],
                 "attrs": []
             };
@@ -361,7 +324,6 @@
             data: options,
             dataType: 'json'
         }).done(function (e) {
-
             if (e.isSuccess) {
                 alert("成功！");
             }

@@ -4,7 +4,7 @@
 <link href="/css/admin.css" rel="stylesheet">
 {%endblock%}
 {% block body %}
-<div style="margin-bottom: 50px;">
+<div style="margin-top: 20px; margin-bottom: 50px;">
     <h3>
        策略计划
     </h3>
@@ -93,8 +93,7 @@
                                  <a href="/admin/trade?planLogId=<%= plan.currentLog %>&type=2">全部委托</a>
                             </div>
                             <div style="color:red;display:<%= !plan.net || plan.net.hasFull ? 'none':'block' %>" ><%= plan.net ? plan.net.message : '' %></div>
-                            <div>
-                                <%= plan.isValid ? '有效' : '已被暂停' %>
+                            <div style=" margin-left: 3px;">
                                 <a name="setPlan" data-id="<%= plan._id %>" href="#">修改</a>
                                 <a name="setStrategys" data-id="<%= plan._id %>" href="#" >设置策略</a>
                                 <a name="runPlan" data-id="<%= plan._id %>" href="javascript:void(0);">运行</a>
@@ -821,7 +820,6 @@
             });
         });
 
-        
         $('a[name="addGroupStep"]').click(function(){
             var strategyId = $(this).attr('data-id');
             var strategy;

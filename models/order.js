@@ -19,6 +19,7 @@ var orderModel = function () {
         symbol: String, //cny、btc#cny、ltc、usd
         price: { type: Number, "default": 0 }, //最新的委托价格
         orgPrice: { type: Number, "default": 0 }, //最原先的委托价格
+        avgPrice: { type: Number, "default": 0 }, //成交平均价格
 
         amount: { type: Number, "default": 0 }, //总数量。>0时，为多仓； < 0时，为空仓
                                                 //Notice: 总数量并不是总等于consignAmount，因为有的委托没成功的时候，会分多个委托再次进行。
