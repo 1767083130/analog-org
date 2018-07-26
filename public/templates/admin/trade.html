@@ -4,49 +4,149 @@
     
     <h3>委托列表:</h3>
     <div>
-        <div style="width: 1040px; padding:2px; background-color: #C2DAFA;">  
-            site:
-            <select id="inquirysite" name="inquirysite">
-                <option value="">请选择</option>
-                <option value="bitfinex">bitfinex</option>
-                <option value="okex">okex</option>
-            </select>
-            symbol: 
-            <select id="inquirysymbol" name="inquirysymbol">  
-                <option value="">请选择</option>
-                <option value="eos#usd">eos#usd</option>
-                <option value="btc#cny">btc#cny</option>
-            </select>
+       
+        <div style="width: 1044px; padding:2px; background-color: #C2DAFA;">  
 
-            <span>
-            起始时间<input type="text" id="origin"/>
-            结束时间<input type="text" id="end"/>
-            </span>
-            <input type="button" id="btnSearch" value="查询" /> 
+            site:
+            <select id="inquirysite" name="sites" data-group="1" >
+                <!-- <option value="">请选择</option>
+                <option value="bitfinex">bitfinex</option>
+                <option value="okex">okex</option> -->
+            </select>&nbsp;&nbsp;
+
+            <span id="hide" style="display:none">symbol: 
+            <select id="inquirysymbol" name="symbols" data-group="1" >  
+                <!-- <option value="">请选择</option>
+                <option value="eos#usd">eos#usd</option>
+                <option value="btc#cny">btc#cny</option> -->
+            </select>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+            status:
+            <select id="inquirystatus" name="statuss" >
+                <option value="">--请选择--</option>
+                <option value="wait">运行中</option>
+                <option value="consign">已委托未成交</option>
+                <option value="sucess">已完成</option>
+                <option value="part_success">部分成功</option>
+                <option value="will_cancel">已标记取消未完成</option>
+                <option value="canceled">已取消</option>
+                <option value="auto_retry">超时不同价格重新委托</option>
+                <option value="failed">已失败</option>
+            </select><br/>
+
+
+
+            起始时间:<input size="16"  type="text" id="datetimeStart" readonly class="form_datetime">--
+            结束时间:<input size="16"  type="text" id="datetimeEnd" readonly class="form_datetime"> 
+
+
+            <!-- <div class = "input-append date form_datetime" data-date = "" id="datetime">  
+                    <input size = "16" type = "text" value = "" readonly >    
+                    <span class = "add-on" > <i class = "icon-remove" > </i> </span>  
+                    <span class = "add-on" > <i class = "icon-calendar" > </i> </span>  
+            </div> -->
+           
+            <input type="button" id="btnSearch" value="查询" />
+            <input type="reset" name="button" id="button" value="重置" onclick="reset()"/>
         </div>
-        <div id="FlexiGrid_ContentDiv">
+        <div id="FlexiGrid_ContentDiv" onLoad="goPage(1,10);">
             <table id="FlexiGrid_ContentTable" style="display: none">
             </table>
         </div>
         <div id="barcon" name="barcon"></div>
         <div name="customPager" id="flexiGridPager" for="FlexiGrid_ContentTable" style="padding-top: 4px; display: none"></div>
         <input type="hidden" name="_csrf" value="{{_csrf}}" />
-        <!-- <a href="/admin/trade">返回</a> -->
+        <a href="/admin/trade">返回</a>
     </div>
 </div>
 
 {% endblock %} {% block scripts %}
 <script src="../js/jquery-1.8.2.js" type="text/javascript"></script>
+<script src="../js/plugins/bootstrap/3.3.5/js/bootstrap.min.js" type="text/javascript" language="utf-8"></script>
 <script src="../js/lib/jquery.flexigrid.js" type="text/javascript"></script>
 <script src="../js/common.js" type="text/javascript"></script>
+<script src="../js/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript" language="utf-8"></script>
+<script src="../js/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" language="utf-8"></script>
 
+
+
+<link rel="stylesheet" href="../js/plugins/bootstrap/3.3.5/css/bootstrap.css" />
+<link rel="stylesheet" href="../js/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" type="text/css" media="screen"/>
 <script type="text/javascript">
+   
+
+    var _business = {{ business | safe }};
+
+    var _currentOperateLog;
+    
     $(function () {
+
+        $("#datetimeStart").datetimepicker({
+            format:'yyyy-mm-dd hh:ii',
+            endDate:new Date(),
+            todayBtn: true,
+            // startView:2,//点开插件后显示的界面。0、小时1、天2、月3、年4、十年，默认值2
+            // minView:1,//插件可以精确到那个时间，比如1的话就只能选择到天，不能选择小时了
+            minuteStep: 5,
+            language:'zh-CN',
+            autoclose:true
+        // }).on("click",function(){
+        //     $("#datetimeStart").datetimepicker("setEndDate",$("#datetimeEnd").val())
+        });
+        $("#datetimeEnd").datetimepicker({
+            format:'yyyy-mm-dd hh:ii',
+            endDate:new Date(),
+            todayBtn: true,
+            minuteStep: 5,
+            // startView:2,//点开插件后显示的界面。0、小时1、天2、月3、年4、十年，默认值2
+            // minView:1,//插件可以精确到那个时间，比如1的话就只能选择到天，不能选择小时了
+            language:'zh-CN',
+            autoclose:true
+        }).on("click",function(){
+        $("#datetimeEnd").datetimepicker("setStartDate",$("#datetimeStart").val())
+        });
+
+
+
+        $('select[name="sites"]').each(function(){
+            $('<option/>').appendTo(this).val('').html('--请选择--');
+            for(var i = 0; i < _business.sites.length;i++){
+                var site = _business.sites[i];
+                $('<option/>').appendTo(this).val(site).html(site);
+            }
+        });
+
+        $('select[name="symbols"]').each(function(){
+            
+            var group = $(this).attr('data-group');
+            var site = $(this).val();
+            var $element = $(w.format('select[name="symbols"][data-group="{0}"]',group));
+            initSymbolItems($(this),site);
+            
+        });
+
+        $('select[name="sites"]').change(function(){
+            $('#hide').show();
+            $('#inquirysymbol').show();
+            var group = $(this).attr('data-group');
+            var site = $(this).val();
+            if(!site){
+                return;
+            }
+
+            var $element = $(w.format('select[name="symbols"][data-group="{0}"]',group));
+            initSymbolItems($element,site);
+        });
+        
         $('#btnSearch').click(function(){
+            console.log($("#datetime").val());
             var newParams = [
-                { name: "type", value: w.getQueryStringValue('type') },
-                { name: "planLogId",value: w.getQueryStringValue('planLogId') }
-            ];
+                { name:"site", value:$('#inquirysite').val() },
+                { name:"symbol", value:$('#inquirysymbol').val() },
+                { name:"status", value:$('#inquirystatus').val() },
+                { name:"createdStart", value:$('#datetimeStart').val()},
+                { name:"createdEnd", value:$('#datetimeEnd').val()}
+            ]
             $("#FlexiGrid_ContentTable").setNewExtParam(newParams);
             $("#FlexiGrid_ContentTable").flexReload();
         })
@@ -54,6 +154,16 @@
         initFlexiGrid();
         
     });
+
+    function reset(){
+        $('select[name="sites"]').val('');
+        $('#hide').hide();
+        $('#inquirysymbol').hide();
+        $('#inquirystatus').val('');
+        $('#datetimeStart').val('');
+        $('#datetimeEnd').val('');
+
+    }
 
     function initFlexiGrid() { 
         var initData = {
@@ -74,17 +184,17 @@
             showMessageOnRowClicked: true,
             url: '/admin/trade/list',
             colModel: [
-                { display: "outerId", name: "outerId",type: 0,visible: true, width: "80", sortable: true,align: "center" },
-                { display: "交易网站", name: "site",type: 0,visible: true, width: "80", sortable: true,align: "center" },
+                { display: "第三方id",name: "outerId",type: 0,visible: true,width: "80",sortable: true,align: "center" },
                 { display: "交易品种", name: "symbol",type: 0,visible: true, width: "80", sortable: true,align: "center" },
                 { display: "委托类型",name: "type", type: 0,visible: true,width: "80",sortable: true,align: "center" },
                 { display: "委托状态",name: "status", type: 0,visible: true,width: "80",sortable: true,align: "center" },
+                { display: "已成交数量",name: "dealAmount", type: 0,visible: true,width: "80",sortable: true,align: "center" },
                 { display: "总数量",name: "amount", type: 0,visible: true,width: "100",sortable: true,align: "center" },
-                { display: "已成交数量",name: "bargainAmount", type: 0,visible: true,width: "80",sortable: true,align: "center" },
                 { display: "交易类型",name: "side", type: 0,visible: true,width: "80",sortable: true,align: "center" },
-                { display: "创建时间",name: "created", type: 0,visible: true,width: "140",sortable: true,align: "center" },
+                { display: "时间戳",name: "created", type: 0,visible: true,width: "140",sortable: true,align: "center" },
                 { display: "委托价格",name: "price", type: 0,visible: true,width: "100",sortable: true,align: "center" },
-                { display: "平均成交价格",name: "avgPrice", type: 0,visible: true,width: "100",sortable: true,align: "center" }
+                { display: "平均成交价格",name: "avgPrice", type: 0,visible: true,width: "100",sortable: true,align: "center" },
+                { display: "是否隐藏单",name: "hidden", type: 0,visible: true,width: "100",sortable: true,align: "center" }
             ],
             //分页页码
             onInited: flexiGridInited,
@@ -151,10 +261,12 @@
     function flexiGridInited(options) {
         debugger
         var newParams = [
-            { name: "type", value: w.getQueryStringValue('type') },
-            { name: "planLogId",value: w.getQueryStringValue('planLogId') }
-        ];
+                { name:"type", value: w.getQueryStringValue('type') },
+                { name:"planLogId",value: w.getQueryStringValue('planLogId') }
+        ]
         $("#FlexiGrid_ContentTable").setNewExtParam(newParams);
+        //$("#FlexiGrid_ContentTable").flexReload();
+
 
         var option = { 
             pagerContainer: $("#flexiGridPager"),
@@ -198,24 +310,83 @@
             "orders": {}
         };
 
+        var getLogOperateDesc = function(logOperate,isCurrent){
+            var desc, operate = logOperate.orgOperate;
+            if(operate.action == "transfer"){
+                desc = w.format("从{0}网站转出{1}个{2}至{3}网站",operate.transferSource,operate.orderAmount,operate.symbol,operate.transferTarget);
+            } else { //order 
+                desc = w.format("从{0}网站{1}个{2}",operate.site,operate.side == 'sell' ? '卖出' : '买入',operate.symbol);
+            }
+
+            if(isCurrent && !operate.auto){
+                desc += '<br/>';
+                desc += w.format('<a href="#" name="manualOperate" data-logId="{0}">手动操作</a>',logOperate._id);
+            }
+            return desc;
+        }
+
         var orders = options.orders || [];
         for(var i = 0; i < orders.length; i++){
             var order = orders[i];
             var row = {
                 "id":order._id,
-                "itemMessage": w.format("<div style='white-space:normal;word-break:break-all;word-wrap:break-word;'>{0}</div><hr/>", $.toJSON(order)),
+                "itemMessage": "",
                 "cell":[
-                    { "cellHtml": order.outerId },
-                    { "cellHtml": order.site },
-                    { "cellHtml": order.symbol },
-                    { "cellHtml": order.type },
-                    { "cellHtml": order.status },
-                    { "cellHtml": order.amount || 0 },
-                    { "cellHtml": order.bargainAmount || 0 },
-                    { "cellHtml": order.side },
-                    { "cellHtml": order.created ? w.dateformat(new Date(order.created),"yyyy-MM-dd hh:mm:ss") : '' },
-                    { "cellHtml": order.price },
-                    { "cellHtml": order.avgPrice || 0 }
+                    {
+                        "cellHtml": order.outerId,
+                        "isReadOnly": true,
+                        "attrs": []
+                    },
+                    {
+                        "cellHtml": order.symbol,
+                        "isReadOnly": true,
+                        "attrs": []
+                    },
+                    {
+                        "cellHtml": order.type,
+                        "isReadOnly": true,
+                        "attrs": []
+                    },
+                    {
+                        "cellHtml": order.status,
+                        "isReadOnly": true,
+                        "attrs": []
+                    },
+                    {
+                        "cellHtml": order.dealAmount,
+                        "isReadOnly": true,
+                        "attrs": []
+                    },
+                    {
+                        "cellHtml": order.amount,
+                        "isReadOnly": true,
+                        "attrs": []
+                    },
+                    {
+                        "cellHtml": order.side,
+                        "isReadOnly": true,
+                        "attrs": []
+                    },
+                    {
+                        "cellHtml": order.created ? w.dateformat(new Date(order.created),"yyyy-MM-dd hh:mm:ss") : '',
+                        "isReadOnly": true,
+                        "attrs": []
+                    },
+                    {
+                        "cellHtml": order.price,
+                        "isReadOnly": true,
+                        "attrs": []
+                    },
+                    {
+                        "cellHtml": order.avgPrice,
+                        "isReadOnly": true,
+                        "attrs": []
+                    },
+                    {
+                        "cellHtml": order.hidden,
+                        "isReadOnly": true,
+                        "attrs": []
+                    }
                 ],
                 "attrs": []
             };
@@ -234,6 +405,107 @@
         $('#refundRecordFlexiGrid_ContentTable').fixGridWidth();
     };
 
+    function getTransferLogs() {
+        var options = {
+            pageIndex: 0,
+            pageSize: 20,
+            status: "wait",
+            "_csrf": $('input[name="_csrf"]').val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/admin/trade/list",
+            data: options,
+            dataType: 'json'
+        }).done(function (e) {
+
+            if (e.isSuccess) {
+                alert("成功！");
+            }
+            else {
+                alert("系统错误，请稍后重试！");
+            }
+        }).fail(function (e) {
+            alert("系统错误，请稍后重试！");
+        });
+
+    }
+
+    function runTransferStep(){
+        var sAmount = $('#txtOperateAmount').val();
+        var amount = new Number(sAmount);
+        if(isNaN(amount) || !isFinite(amount)){
+            alert('请输入正确的金额');
+            return;
+        }
+
+        var options = {
+            logId: _currentOperateLog._id,
+            amount
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/admin/trade/list",
+            data: options,
+            dataType: 'json'
+        }).done(function (e) {
+
+            if (e.isSuccess) {
+                alert("成功！");
+            }
+            else {
+                alert("系统错误，请稍后重试！");
+            }
+        }).fail(function (e) {
+            alert("系统错误，请稍后重试！");
+        });
+    }
+
+    function updateStepStatus() {
+        var options = {
+            orderId: 0,
+            status: "wait"
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/admin/trade/list",
+            data: options,
+            dataType: 'json'
+        }).done(function (e) {
+            if (e.isSuccess) {
+                alert("成功！");
+            }
+            else {
+                alert("系统错误，请稍后重试！");
+            }
+        }).fail(function (e) {
+            alert("系统错误，请稍后重试！");
+        });
+    }
+
+        
+    function initSymbolItems($element,site){
+        $element.html('--请选择--');
+
+        var symbols = [];
+        for(var i = 0; i < _business.symbols.length;i++){
+            if(_business.symbols[i].site == site){
+                symbols = _business.symbols[i].symbols;
+                break;
+            }
+        }
+        
+        for(var i = 0; i < symbols.length;i++){
+            var symbol = symbols[i];
+            $('<option/>').appendTo($element).val(symbol).html(symbol);
+        }
+    }
+
+
 </script>
 {% endblock %}
  
+
