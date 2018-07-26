@@ -9,16 +9,10 @@
 
             site:
             <select id="inquirysite" name="sites" data-group="1" >
-                <!-- <option value="">请选择</option>
-                <option value="bitfinex">bitfinex</option>
-                <option value="okex">okex</option> -->
             </select>&nbsp;&nbsp;
 
             <span id="hide" style="display:none">symbol: 
             <select id="inquirysymbol" name="symbols" data-group="1" >  
-                <!-- <option value="">请选择</option>
-                <option value="eos#usd">eos#usd</option>
-                <option value="btc#cny">btc#cny</option> -->
             </select>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
             status:
@@ -34,29 +28,20 @@
                 <option value="failed">已失败</option>
             </select><br/>
 
-
-
             起始时间:<input size="16"  type="text" id="datetimeStart" readonly class="form_datetime">--
             结束时间:<input size="16"  type="text" id="datetimeEnd" readonly class="form_datetime"> 
-
-
-            <!-- <div class = "input-append date form_datetime" data-date = "" id="datetime">  
-                    <input size = "16" type = "text" value = "" readonly >    
-                    <span class = "add-on" > <i class = "icon-remove" > </i> </span>  
-                    <span class = "add-on" > <i class = "icon-calendar" > </i> </span>  
-            </div> -->
            
             <input type="button" id="btnSearch" value="查询" />
-            <input type="reset" name="button" id="button" value="重置" onclick="reset()"/>
+            <button onClick="document.location.reload()">重置</button>
         </div>
         <div id="FlexiGrid_ContentDiv" onLoad="goPage(1,10);">
-            <table id="FlexiGrid_ContentTable" style="display: none">
+            <table id="FlexiGrid_ContentTable" style="display: none;">
             </table>
         </div>
         <div id="barcon" name="barcon"></div>
         <div name="customPager" id="flexiGridPager" for="FlexiGrid_ContentTable" style="padding-top: 4px; display: none"></div>
         <input type="hidden" name="_csrf" value="{{_csrf}}" />
-        <a href="/admin/trade">返回</a>
+        
     </div>
 </div>
 
@@ -70,8 +55,8 @@
 
 
 
-<link rel="stylesheet" href="../js/plugins/bootstrap/3.3.5/css/bootstrap.css" />
-<link rel="stylesheet" href="../js/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" type="text/css" media="screen"/>
+<link rel="stylesheet" href="../js/plugins/bootstrap/3.3.5/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../js/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" type="text/css" media="screen"/>
 <script type="text/javascript">
    
 
@@ -155,16 +140,7 @@
         
     });
 
-    function reset(){
-        $('select[name="sites"]').val('');
-        $('#hide').hide();
-        $('#inquirysymbol').hide();
-        $('#inquirystatus').val('');
-        $('#datetimeStart').val('');
-        $('#datetimeEnd').val('');
-
-    }
-
+    
     function initFlexiGrid() { 
         var initData = {
             "page": 1,  //当前页
@@ -203,11 +179,6 @@
             onLoaded: flexiGridLoaded,
             onCommand: flexiGridCommand,
             
-            //onInquiry:flexiGridInquiry,
-            //onSuccess:flexiGridWx,
-            //onInit: flexiGridxx,
-            
-
             autoload: false,    //自动加载,改自动加载就会报错
             columnsFixed: true,
             checkCell: {
@@ -508,4 +479,3 @@
 </script>
 {% endblock %}
  
-
