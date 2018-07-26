@@ -8,7 +8,7 @@ module.exports = function (router) {
   
     /**
      * 获取账户资产详情
-     * http://localhost:4000/api/position/getPositions
+     * http://localhost/api/position/getPositions
      */
     router.get('/getPositions',async function(req, res) {
         try{

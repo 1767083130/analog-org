@@ -40,41 +40,6 @@ module.exports = function (router) {
             res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});
         } 
     }));
-
-    router.post('/syncRecentOrders', async function(req, res) {
-        try{
-            let userName = req.user.userName;
-            let site = req.body.site;
-
-            let sites = [];
-            if(site == -1){
-                sites = apiConfigUtil.getSites();
-            } else {
-                sites.push(site);
-            }
-
-            let onChanged = async function(e){
-                await transferController.onOrderStatusChanged(e);
-            };
-            let onDelayed = async function(e){
-                await transferController.onOrderDelayed(e);
-            }
-
-            order.on('change',onChanged);
-            order.on('delayed',onDelayed);
-
-            let stepCallBack;
-            await order.syncUserRecentOrders(userName,sites,stepCallBack);
-
-            order.off('change',onChanged);
-            order.off('delayed',onDelayed);
-
-            res.json({ isSuccess: true });
-        } catch(err){
-            console.error(err);
-            res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});
-        }
-    });
 }
 
 function list(req,res,callback){
@@ -123,7 +88,6 @@ function list(req,res,callback){
         params.created =  createdEnd ;
     }
 
-    
 
     params.userName = userName;
     var options = {

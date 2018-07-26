@@ -138,7 +138,7 @@ async function renewOrders(){
     let modifiedStart = new Date();
     modifiedStart.setTime(+now - 4 * 60 * 60 * 1000); //超过4个小时的就不处理了
     let modifiedEnd = new Date();
-    modifiedEnd.setTime(+now - 5 * 1000); //超过5s还未成交的就修改价格
+    modifiedEnd.setTime(+now - 10 * 1000); //超过10s还未成交的就修改价格
 
     let order = await Order.findOneAndUpdate({ 
         reason: "transfer",

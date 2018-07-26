@@ -9,16 +9,10 @@
 
             site:
             <select id="inquirysite" name="sites" data-group="1" >
-                <!-- <option value="">请选择</option>
-                <option value="bitfinex">bitfinex</option>
-                <option value="okex">okex</option> -->
             </select>&nbsp;&nbsp;
 
             <span id="hide" style="display:none">symbol: 
             <select id="inquirysymbol" name="symbols" data-group="1" >  
-                <!-- <option value="">请选择</option>
-                <option value="eos#usd">eos#usd</option>
-                <option value="btc#cny">btc#cny</option> -->
             </select>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
             status:
@@ -34,29 +28,20 @@
                 <option value="failed">已失败</option>
             </select><br/>
 
-
-
             起始时间:<input size="16"  type="text" id="datetimeStart" readonly class="form_datetime">--
             结束时间:<input size="16"  type="text" id="datetimeEnd" readonly class="form_datetime"> 
-
-
-            <!-- <div class = "input-append date form_datetime" data-date = "" id="datetime">  
-                    <input size = "16" type = "text" value = "" readonly >    
-                    <span class = "add-on" > <i class = "icon-remove" > </i> </span>  
-                    <span class = "add-on" > <i class = "icon-calendar" > </i> </span>  
-            </div> -->
            
             <input type="button" id="btnSearch" value="查询" />
-            <input type="reset" name="button" id="button" value="重置" onclick="reset()"/>
+            <button onClick="document.location.reload()">重置</button>
         </div>
         <div id="FlexiGrid_ContentDiv" onLoad="goPage(1,10);">
-            <table id="FlexiGrid_ContentTable" style="display: none">
+            <table id="FlexiGrid_ContentTable" style="display: none;">
             </table>
         </div>
         <div id="barcon" name="barcon"></div>
         <div name="customPager" id="flexiGridPager" for="FlexiGrid_ContentTable" style="padding-top: 4px; display: none"></div>
         <input type="hidden" name="_csrf" value="{{_csrf}}" />
-        <a href="/admin/trade">返回</a>
+        
     </div>
 </div>
 
@@ -68,15 +53,10 @@
 <script src="../js/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript" language="utf-8"></script>
 <script src="../js/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" language="utf-8"></script>
 
-
-
-<link rel="stylesheet" href="../js/plugins/bootstrap/3.3.5/css/bootstrap.css" />
-<link rel="stylesheet" href="../js/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" type="text/css" media="screen"/>
+<link rel="stylesheet" href="../js/plugins/bootstrap/3.3.5/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../js/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" type="text/css" media="screen"/>
 <script type="text/javascript">
-   
-
     var _business = {{ business | safe }};
-
     var _currentOperateLog;
     
     $(function () {
@@ -105,8 +85,6 @@
         }).on("click",function(){
         $("#datetimeEnd").datetimepicker("setStartDate",$("#datetimeStart").val())
         });
-
-
 
         $('select[name="sites"]').each(function(){
             $('<option/>').appendTo(this).val('').html('--请选择--');
@@ -152,18 +130,7 @@
         })
 
         initFlexiGrid();
-        
     });
-
-    function reset(){
-        $('select[name="sites"]').val('');
-        $('#hide').hide();
-        $('#inquirysymbol').hide();
-        $('#inquirystatus').val('');
-        $('#datetimeStart').val('');
-        $('#datetimeEnd').val('');
-
-    }
 
     function initFlexiGrid() { 
         var initData = {
@@ -203,11 +170,6 @@
             onLoaded: flexiGridLoaded,
             onCommand: flexiGridCommand,
             
-            //onInquiry:flexiGridInquiry,
-            //onSuccess:flexiGridWx,
-            //onInit: flexiGridxx,
-            
-
             autoload: false,    //自动加载,改自动加载就会报错
             columnsFixed: true,
             checkCell: {
@@ -254,10 +216,8 @@
             $("#FlexiGrid_ContentTable").flexOptions(data).flexReload(); 
             console.log(data);
         })
-
     }
 
-    //分页页码
     function flexiGridInited(options) {
         debugger
         var newParams = [
@@ -265,8 +225,6 @@
                 { name:"planLogId",value: w.getQueryStringValue('planLogId') }
         ]
         $("#FlexiGrid_ContentTable").setNewExtParam(newParams);
-        //$("#FlexiGrid_ContentTable").flexReload();
-
 
         var option = { 
             pagerContainer: $("#flexiGridPager"),
@@ -277,7 +235,6 @@
         return options;
     }
 
-    //这个很重要
     function flexiGridLoaded(options){
         $('a[name="manualOperate"]').click(function(){
             var orderId = $(this).attr("data-orderId");
@@ -309,21 +266,6 @@
             "rows": [],
             "orders": {}
         };
-
-        var getLogOperateDesc = function(logOperate,isCurrent){
-            var desc, operate = logOperate.orgOperate;
-            if(operate.action == "transfer"){
-                desc = w.format("从{0}网站转出{1}个{2}至{3}网站",operate.transferSource,operate.orderAmount,operate.symbol,operate.transferTarget);
-            } else { //order 
-                desc = w.format("从{0}网站{1}个{2}",operate.site,operate.side == 'sell' ? '卖出' : '买入',operate.symbol);
-            }
-
-            if(isCurrent && !operate.auto){
-                desc += '<br/>';
-                desc += w.format('<a href="#" name="manualOperate" data-logId="{0}">手动操作</a>',logOperate._id);
-            }
-            return desc;
-        }
 
         var orders = options.orders || [];
         for(var i = 0; i < orders.length; i++){
@@ -463,30 +405,6 @@
         });
     }
 
-    function updateStepStatus() {
-        var options = {
-            orderId: 0,
-            status: "wait"
-        };
-
-        $.ajax({
-            type: "POST",
-            url: "/admin/trade/list",
-            data: options,
-            dataType: 'json'
-        }).done(function (e) {
-            if (e.isSuccess) {
-                alert("成功！");
-            }
-            else {
-                alert("系统错误，请稍后重试！");
-            }
-        }).fail(function (e) {
-            alert("系统错误，请稍后重试！");
-        });
-    }
-
-        
     function initSymbolItems($element,site){
         $element.html('--请选择--');
 
@@ -508,4 +426,3 @@
 </script>
 {% endblock %}
  
-
