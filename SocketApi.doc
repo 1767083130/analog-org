@@ -55,21 +55,16 @@ WebSocket API
 
 (2) 获取持仓信息
 
-    客户端订阅数据：websocket.send(" {'event':'addChannel','channel':'market','parameters': { symbol: 'btc#usd' } } ");
+    客户端订阅数据：websocket.send(" {'event':'addChannel','channel':'position' } ");
     客户端发送数据：websocket.send(" {'event':'push','channel':'market','parameters': { depths: [{ site:"qq", symbol: 'btc#usd',bids: [[19000,1.02],[19899,0.95],[19888.5,0.87]] }]} } "); 
 
     示例
     # Request 
-    {'event':'addChannel','channel':'market','parameters': { symbol: 'btc#usd' } }
-    其中， symbol为交易品种，如果为"*",表示全部交易品种
+    {'event':'addChannel','channel':'position' }
      
     # Response
     {
-        site: "baidu",  //网站名称
-        symbol: "btc#usd", //交易品种，如果为"*",则表示订阅如 "btc#usd"表示使用美元兑换比特币的交易品种
-        bids: [[19000,1.02],[19899,0.95],[19888.5,0.87]],   //array, 买单深度,已按照价格降序排列 数组索引(string) 0 价格, 1 量(张)
-        asks: [[19100,1.03],[19105,0.98]]   //array,卖单深度,已按照价格升序排列 数组索引(string) 0 价格, 1 量(张)
-        timestamp: res.realPrice.time //long, 服务器时间戳
+
     }
 
 (3) 获取账户资产情况

@@ -6,7 +6,7 @@ let config = {
         dev_uri: "ws://localhost:8080/ws" //"ws://119.28.204.125:8080/ws"
     },
     platforms: [
-        {
+        {   
             site: "okex",
             autoTransfer: false,
             symbols: [
