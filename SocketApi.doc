@@ -63,8 +63,39 @@ WebSocket API
     {'event':'addChannel','channel':'position' }
      
     # Response
+    现货：
     {
+        site: "bitfinex",
+        avgPrice: 12; // 开仓均价
+        positionType: 1, // 仓位 1多仓 2空仓
+        holdAmount: 12, // 持仓量.为大于0的数
+        unit: "10_btc",
+        symbol: "btc#usd", // btc_usd   ltc_usd   eth_usd   etc_usd   bch_usd
+        status: "active" //可能的值：active、closed
+    }
 
+    期货：
+    {
+        position.site = SITE_NAME;
+        position.avgPrice = apiPosition.avgprice; // 开仓均价
+        position.positionType = apiPosition.position; // 仓位 1多仓 2空仓
+        position.holdAmount = apiPosition.hold_amount; // 持仓量
+        position.unit = futuresCommon.getUnitName(symbol);
+        position.symbol = symbol;
+        position.status = 'active'; //可能的值：active、closed
+
+        position.contractId = apiPosition.contract_id; // 合约id
+        position.contractName = apiPosition.contract_name; // 合约名称
+        position.balance = apiPosition.balance; // 合约账户余额
+        position.bondFreez = apiPosition.bondfreez; // 当前合约冻结保证金
+        position.costPrice = apiPosition.costprice; // 开仓价格
+        position.eveningUp = apiPosition.eveningup; // 可平仓量
+        position.forcedPrice = apiPosition.forcedprice; // 强平价格
+        position.profitReal = apiPosition.profitreal; // 已实现盈亏
+        position.fixMargin = apiPosition.fixmargin; // 固定保证金
+        position.leverRate = apiPosition.lever_rate; // 杠杆倍数
+        position.positionId = apiPosition.position_id; // 仓位id
+        position.userId = apiPosition.user_id; //用户ID
     }
 
 (3) 获取账户资产情况
