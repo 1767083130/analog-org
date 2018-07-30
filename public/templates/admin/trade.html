@@ -34,9 +34,11 @@
             <input type="button" id="btnSearch" value="查询" />
             <button onClick="document.location.reload()">重置</button>
         </div>
-        <div id="quotation" style="display:none;">
-            <span>aa</span><span>bb</span>
-        </div>
+        <table style="width: 1044px; background-color: #C2DAFA;">
+            <tr id="show" style='text-align: center;'>
+
+            </tr>
+        </table>
 
         <div id="FlexiGrid_ContentDiv" onLoad="goPage(1,10);">
             <table id="FlexiGrid_ContentTable" style="display: none;">
@@ -60,10 +62,12 @@
 <link rel="stylesheet" href="../js/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" type="text/css" media="screen"/>
 <script type="text/javascript">
     var _business = {{ business | safe }};
+    var _bargainAmountSum = {{ bargainAmountSum | safe }};
     var _currentOperateLog;
+    var _symbolAmounts = []; // { site: "",symbol: "",amount1: 234,avavgPrice: 123 }
     
     $(function () {
-
+        setInterval(quotation(),5000);
         $("#datetimeStart").datetimepicker({
             format:'yyyy-mm-dd hh:ii',
             endDate:new Date(),
@@ -382,6 +386,50 @@
             var symbol = symbols[i];
             $('<option/>').appendTo($element).val(symbol).html(symbol);
         }
+    }
+    
+    function quotation(){
+        var amount;
+            // 
+            // $('#bas').text( $('#inquirysymbol').val());
+            for(var i = 0,l =_bargainAmountSum.length; i< l ;i++){
+                    amount = (_bargainAmountSum[i]._id.side=="buy"?_bargainAmountSum[i].bargainAmount:-_bargainAmountSum[i].bargainAmount);
+                    var symbolItem = getItem(_bargainAmountSum[i]._id.site,_bargainAmountSum[i]._id.symbol);//,_bargainAmountSum[i]._id.avgPrice
+                    symbolItem.amount += amount;
+                
+            }
+
+            var temp = [];
+            for(var j = 0; j <  _symbolAmounts.length; j++){
+                var item = _symbolAmounts[j];
+                temp.push(w.format('site: {0}, symbol: {1}, amount: {2} ',item.site,item.symbol,item.amount));//avgPrice:{3}    ,item.avgPrice
+            }
+
+            for(var i = 0; i<temp.length;i++){
+                $("#show").append("<td style='text-align:center;width:200px;'>"+temp[i]+ "</td>")
+            }
+            // $("#sum").text(temp.join(";"));
+
+            
+            // $('#quotation').show();
+    }
+
+
+    function getItem(site,symbol,avgPrice){
+        var t;
+        for(var i = 0,l = _symbolAmounts.length; i< l ;i++){
+        // for( var item in _bargainAmountSum){
+            if(_symbolAmounts[i].site == site && _symbolAmounts[i].symbol == symbol ){//&& _symbolAmounts[i].avgPrice == avgPrice
+                t = _symbolAmounts[i];
+                break;
+            }
+        }
+
+        if(!t){
+            t = {site:site,symbol:symbol,amount:0} //,avgPrice:avgPrice
+            _symbolAmounts.push(t);
+        }
+      return t;  
     }
 
 
