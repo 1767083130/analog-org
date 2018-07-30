@@ -82,12 +82,12 @@ function list(req,res,callback){
     let createdEnd = req.query.createdEnd || req.body.createdEnd;
     if(createdStart && createdEnd){
         params.created = {"$gte" : createdStart, "$lt" : createdEnd};  //ISODate
-    } else if(createdStart){
-        params.created =  createdStart ;
+        params.created = {"$gte" : createdStart };
     } else if(createdEnd){
-        params.created =  createdEnd ;
+        params.created = {"$lt" : createdEnd };
     }
 
+    let bargainAmountSum = await Order.aggregate([{$group:{_id: {site:"$site",side:"$side",symbol:"$symbol"},bargainAmount: {"$sum": "$bargainAmount"}}}]);
 
     params.userName = userName;
     var options = {
