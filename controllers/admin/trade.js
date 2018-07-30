@@ -82,6 +82,7 @@ function list(req,res,callback){
     let createdEnd = req.query.createdEnd || req.body.createdEnd;
     if(createdStart && createdEnd){
         params.created = {"$gte" : createdStart, "$lt" : createdEnd};  //ISODate
+    } else if(createdStart){
         params.created = {"$gte" : createdStart };
     } else if(createdEnd){
         params.created = {"$lt" : createdEnd };
