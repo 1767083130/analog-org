@@ -110,6 +110,7 @@ function list(req,res,callback){
             total: getRes.total,
             orders: JSON.stringify(orders || []),
             business:JSON.stringify(business || []),
+            bargainAmountSum:JSON.stringify(bargainAmountSum || []),
             isSuccess: true
         };  
 
