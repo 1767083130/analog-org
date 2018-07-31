@@ -26,7 +26,13 @@
                 <option value="canceled">已取消</option>
                 <option value="auto_retry">超时不同价格重新委托</option>
                 <option value="failed">已失败</option>
-            </select><br/>
+            </select>
+            <!-- <div class="checkbox "></div> -->
+                <label>
+                  <input type="checkbox" id="showAll">包括废弃委托
+                </label>
+
+            <br/>
 
             起始时间:<input size="16"  type="text" id="datetimeStart" class="form_datetime">--
             结束时间:<input size="16"  type="text" id="datetimeEnd" class="form_datetime"> 
@@ -62,19 +68,13 @@
 <script src="../js/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript" language="utf-8"></script>
 <script src="../js/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" language="utf-8"></script>
 
-
-
 <link rel="stylesheet" href="../js/plugins/bootstrap/3.3.5/css/bootstrap.min.css" />
 <link rel="stylesheet" href="../js/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" type="text/css" media="screen"/>
 <script type="text/javascript">
-   
 
     var _business = {{ business | safe }};
-
     var _bargainAmountSum = {{ bargainAmountSum | safe }};
-
     var _currentOperateLog;
-
     var _symbolAmounts = []; // { site: "",symbol: "",amount1: 234,avavgPrice: 123 }
     
     $(function () {
@@ -105,7 +105,6 @@
         }).on("click",function(){
         $("#datetimeEnd").datetimepicker("setStartDate",$("#datetimeStart").val())
         });
-
 
         $('select[name="sites"]').each(function(){
             $('<option/>').appendTo(this).val('').html('--请选择--');
@@ -155,10 +154,16 @@
             ]
             $("#FlexiGrid_ContentTable").setNewExtParam(newParams);
             $("#FlexiGrid_ContentTable").flexReload();
-        })
+        });
 
-        initFlexiGrid();
-        
+        $('#showAll').change(function(){
+            var newParams = [
+                { name:"type", value: $(this).prop('checked') ? 1 : 0 },
+            ]
+            $("#FlexiGrid_ContentTable").setNewExtParam(newParams);
+        });
+
+        initFlexiGrid();    
     });
     
     function initFlexiGrid() { 
@@ -180,17 +185,16 @@
             showMessageOnRowClicked: true,
             url: '/admin/trade/list',
             colModel: [
-                { display: "第三方id",name: "outerId",type: 0,visible: true,width: "80",sortable: true,align: "center" },
-                { display: "交易品种", name: "symbol",type: 0,visible: true, width: "80", sortable: true,align: "center" },
-                { display: "委托类型",name: "type", type: 0,visible: true,width: "80",sortable: true,align: "center" },
-                { display: "委托状态",name: "status", type: 0,visible: true,width: "80",sortable: true,align: "center" },
-                { display: "总数量",name: "amount", type: 0,visible: true,width: "100",sortable: true,align: "center" },
-                { display: "已成交数量",name: "bargainAmount", type: 0,visible: true,width: "80",sortable: true,align: "center" },
-                { display: "交易类型",name: "side", type: 0,visible: true,width: "80",sortable: true,align: "center" },
-                { display: "创建时间",name: "created", type: 0,visible: true,width: "140",sortable: true,align: "center" },
-                { display: "委托价格",name: "price", type: 0,visible: true,width: "100",sortable: true,align: "center" },
-                { display: "平均成交价格",name: "avgPrice", type: 0,visible: true,width: "100",sortable: true,align: "center" },
-                { display: "是否隐藏单",name: "hidden", type: 0,visible: true,width: "100",sortable: true,align: "center" }
+                { display: "交易网站", name: "site",type: 0,visible: true, width: "80", sortable: true,align:"left"},
+                { display: "交易品种", name: "symbol",type: 0,visible: true, width: "80", sortable: true,align: "left" },
+                { display: "委托时间",name: "created", type: 0,visible: true,width: "140",sortable: true,align: "left" },
+                { display: "委托类型",name: "type", type: 0,visible: true,width: "80",sortable: true,align: "left" },
+                { display: "交易类型",name: "side", type: 0,visible: true,width: "80",sortable: true,align: "left" },
+                { display: "委托数量",name: "amount", type: 0,visible: true,width: "100",sortable: true,align: "left" },
+                { display: "委托价格",name: "price", type: 0,visible: true,width: "100",sortable: true,align: "left" },
+                { display: "已成交",name: "bargainAmount", type: 0,visible: true,width: "80",sortable: true,align: "left" },
+                { display: "成交均价",name: "avgPrice", type: 0,visible: true,width: "100",sortable: true,align: "left" },
+                { display: "委托状态",name: "status", type: 0,visible: true,width: "80",sortable: true,align: "left" },
             ],
             //分页页码
             onInited: flexiGridInited,
@@ -233,12 +237,6 @@
     function showReports(){
         var amount;
         for(var i = 0,l =_bargainAmountSum.length; i< l ;i++){
-
-            
-            // if( _bargainAmountSum[i].site.split("_")[0] == _bargainAmountSum[i].site){
-            //     _bargainAmountSum[i].bargainAmount+=_bargainAmountSum[i].bargainAmount
-            // }
-
             amount = (_bargainAmountSum[i]._id.side=="buy"?_bargainAmountSum[i].bargainAmount:-_bargainAmountSum[i].bargainAmount);
             var symbolItem = getItem(_bargainAmountSum[i]._id.site,_bargainAmountSum[i]._id.symbol); //,_bargainAmountSum[i]._id.avgPrice
             symbolItem.amount += amount;
@@ -253,7 +251,6 @@
         for(var i = 0; i<temp.length;i++){
             $("#show").append("<td style='text-align:center;width:200px;'>"+temp[i]+ "</td>")
         }
-
     }
 
     function flexiGridInquiry(){
@@ -272,19 +269,15 @@
 
             console.log(data);
         })
-
     }
 
     //分页页码
     function flexiGridInited(options) {
-        debugger
         var newParams = [
                 { name:"type", value: w.getQueryStringValue('type') },
                 { name:"planLogId",value: w.getQueryStringValue('planLogId') }
         ]
         $("#FlexiGrid_ContentTable").setNewExtParam(newParams);
-        //$("#FlexiGrid_ContentTable").flexReload();
-
 
         var option = { 
             pagerContainer: $("#flexiGridPager"),
@@ -328,86 +321,30 @@
             "orders": {}
         };
 
-        var getLogOperateDesc = function(logOperate,isCurrent){
-            var desc, operate = logOperate.orgOperate;
-            if(operate.action == "transfer"){
-                desc = w.format("从{0}网站转出{1}个{2}至{3}网站",operate.transferSource,operate.orderAmount,operate.symbol,operate.transferTarget);
-            } else { //order 
-                desc = w.format("从{0}网站{1}个{2}",operate.site,operate.side == 'sell' ? '卖出' : '买入',operate.symbol);
-            }
-
-            if(isCurrent && !operate.auto){
-                desc += '<br/>';
-                desc += w.format('<a href="#" name="manualOperate" data-logId="{0}">手动操作</a>',logOperate._id);
-            }
-            return desc;
-        }
-
         var orders = options.orders || [];
         for(var i = 0; i < orders.length; i++){
             var order = orders[i];
+            var side;
+            if(order.side == 'buy'){
+                side =  (order.amount > 0 ? '<span style="color:green;">买入开多</span>' : '<span style="color:red;">卖出开空</span>');
+            } else { //sell
+                side =  (order.amount < 0 ? '<span style="color:green;">买入平空</span>' : '<span style="color:red;">卖出平多</span>');
+            }
             var row = {
                 "id":order._id,
-                "itemMessage": "",
+                "itemMessage": w.format('<div style="width:900px;white-space:normal;word-break:break-all;word-wrap:break-word">{0}</div>',$.toJSON(order)),
                 "cell":[
-                    {
-                        "cellHtml": order.outerId,
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.symbol,
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.type,
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.status,
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.amount,
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.bargainAmount,
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    
-                    {
-                        "cellHtml": order.side,
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.created ? w.dateformat(new Date(order.created),"yyyy-MM-dd hh:mm:ss") : '',
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.price,
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.avgPrice,
-                        "isReadOnly": true,
-                        "attrs": []
-                    },
-                    {
-                        "cellHtml": order.hidden,
-                        "isReadOnly": true,
-                        "attrs": []
-                    }
-                ],
-                "attrs": []
+                    {"cellHtml": order.site},
+                    {"cellHtml": order.symbol},
+                    {"cellHtml": order.created ? w.dateformat(new Date(order.created),"yyyy-MM-dd hh:mm:ss") : ''},
+                    {"cellHtml": order.type},
+                    {"cellHtml": side},
+                    {"cellHtml": w.toDecimal(Math.abs(order.amount || 0),4) },
+                    {"cellHtml": order.price },
+                    {"cellHtml": w.toDecimal(Math.abs(order.bargainAmount || 0),4)},
+                    {"cellHtml": w.toDecimal(Math.abs(order.avgPrice || 0),3)},
+                    {"cellHtml": order.status},
+                ]
             };
             data.rows.push(row);
         }
@@ -438,7 +375,6 @@
             data: options,
             dataType: 'json'
         }).done(function (e) {
-
             if (e.isSuccess) {
                 _bargainAmountSum = e.bargainAmountSum;
                 showReports();

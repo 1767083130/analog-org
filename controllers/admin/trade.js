@@ -84,9 +84,9 @@ async function list(req,res,callback){
     let userName = req.user.userName;
     
     //设置查询条件变量
-    let params = { } ;
+    let params = {} ;
     let showType = req.query.type || req.body.type;
-    if( showType == 1 ){  //显示策略计划没用完成的委托
+    if(showType == 1){  //显示策略计划没用完成的委托
         let modifiedStart = new Date(+new Date() - 30 * 60 * 1000); //30 minutes 之前的数据
         let planLogId = req.query.planLogId;
         params = {
@@ -96,11 +96,24 @@ async function list(req,res,callback){
             modified: { $gt: modifiedStart},    //大于半小时之后
             status: { $in: ['wait','consign','part_success','will_cancel','wait_retry'] }  //,'auto_retry'
         };
-    }else if( showType == 2 ){
+    } else if(showType == 2){//显示策略计划当前运行实例的所有委托单
         let planLogId = req.query.planLogId || req.body.planLogId;
         params = {
             strategyPlanLogId:mongoose.Types.ObjectId(planLogId)    //策略计划id
         };
+    } else if(showType == 3){
+
+    }
+
+    //不显示废弃单
+    var showAll = (req.body.showAll == 1 ? true : false);
+    if(!showAll){
+        params.$where = function() { 
+            if(this.status == 'auto_retry' || this.status == 'canceled'){
+                return this.bargainAmount != 0;
+            }
+            return true;
+        }
     }
 
     //通过页面刷新fexligrid插件,setNewExtParam获取来的值
@@ -134,7 +147,6 @@ async function list(req,res,callback){
             }
         }
     ]);
-
 
     params.userName = userName;
     var options = {
