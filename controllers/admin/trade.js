@@ -40,9 +40,44 @@ module.exports = function (router) {
             res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});
         } 
     }));
+
+    router.post('/syncRecentOrders', async function(req, res) {
+        try{
+            let userName = req.user.userName;
+            let site = req.body.site;
+
+            let sites = [];
+            if(site == -1){
+                sites = apiConfigUtil.getSites();
+            } else {
+                sites.push(site);
+            }
+
+            let onChanged = async function(e){
+                await transferController.onOrderStatusChanged(e);
+            };
+            let onDelayed = async function(e){
+                await transferController.onOrderDelayed(e);
+            }
+
+            order.on('change',onChanged);
+            order.on('delayed',onDelayed);
+
+            let stepCallBack;
+            await order.syncUserRecentOrders(userName,sites,stepCallBack);
+
+            order.off('change',onChanged);
+            order.off('delayed',onDelayed);
+
+            res.json({ isSuccess: true });
+        } catch(err){
+            console.error(err);
+            res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});
+        }
+    });
 }
 
-function list(req,res,callback){
+async function list(req,res,callback){
     let pageNumber = Number(req.body.page || '1') || 1;
     let pageSize = Number(req.body.rp || '10') || 10;
 
@@ -88,7 +123,18 @@ function list(req,res,callback){
         params.created = {"$lt" : createdEnd };
     }
 
-    let bargainAmountSum = await Order.aggregate([{$group:{_id: {site:"$site",side:"$side",symbol:"$symbol"},bargainAmount: {"$sum": "$bargainAmount"}}}]);
+    let bargainAmountSum = await Order.aggregate([
+        {
+            $match: params 
+        },
+        { 
+            $group: { 
+                _id: { site:"$site",side:"$side",symbol:"$symbol" }, 
+                bargainAmount: { "$sum": "$bargainAmount" }
+            }
+        }
+    ]);
+
 
     params.userName = userName;
     var options = {
@@ -112,10 +158,10 @@ function list(req,res,callback){
             orders: JSON.stringify(orders || []),
             business:JSON.stringify(business || []),
             bargainAmountSum:JSON.stringify(bargainAmountSum || []),
+            //matchGroup:JSON.stringify(matchGroup || []),
             isSuccess: true
         };  
 
         callback(t);
     });
 }
-
