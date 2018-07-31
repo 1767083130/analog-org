@@ -158,7 +158,6 @@ async function list(req,res,callback){
             orders: JSON.stringify(orders || []),
             business:JSON.stringify(business || []),
             bargainAmountSum:JSON.stringify(bargainAmountSum || []),
-            //matchGroup:JSON.stringify(matchGroup || []),
             isSuccess: true
         };  
 
