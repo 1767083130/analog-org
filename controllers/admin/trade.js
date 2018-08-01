@@ -28,6 +28,7 @@ module.exports = function (router) {
             res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});
         }
     }));
+
  
     router.post('/list', async(function* (req,res){
         try{
@@ -82,9 +83,13 @@ async function list(req,res,callback){
     let pageSize = Number(req.body.rp || '10') || 10;
 
     let userName = req.user.userName;
+    let showAll = ((req.query.showAll || req.body.showAll) == 1 ? true : false);
     
     //设置查询条件变量
-    let params = {} ;
+    let params = {
+        reason: 'transfer',
+        isSysAuto: true
+    };
     let showType = req.query.type || req.body.type;
     if(showType == 1){  //显示策略计划没用完成的委托
         let modifiedStart = new Date(+new Date() - 30 * 60 * 1000); //30 minutes 之前的数据
@@ -101,13 +106,26 @@ async function list(req,res,callback){
         params = {
             strategyPlanLogId:mongoose.Types.ObjectId(planLogId)    //策略计划id
         };
-    } else if(showType == 3){
-
+    } else if(showType == 3){ //显示异常委托单
+        let modifiedStart = new Date(+new Date() - 15 * 60 * 1000); //15 minutes 之前的数据
+        let planLogId = req.query.planLogId;
+        params = {
+            modified: { $lt: modifiedStart}, 
+            status: { $nin: ['success','canceled'] }  //,'auto_retry'
+        };
+        if(planLogId){
+            params.strategyPlanLogId =  mongoose.Types.ObjectId(planLogId); //策略计划id
+        }
+        showAll = true;
     }
 
-    //不显示废弃单
-    var showAll = (req.body.showAll == 1 ? true : false);
+
     if(!showAll){
+        // params.$not = { $or: [ 
+        //     { status: 'auto_retry', bargainAmount: 0 },
+        //     { status: 'canceled', bargainAmount: 0 }
+        // ]};
+        //这里使用$where效率是个问题 //TODO
         params.$where = function() { 
             if(this.status == 'auto_retry' || this.status == 'canceled'){
                 return this.bargainAmount != 0;

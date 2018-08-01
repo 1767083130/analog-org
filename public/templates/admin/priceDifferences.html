@@ -85,27 +85,21 @@
 
         showDifferences();
 
-        // var coin = $('#txtCoin').val();
-        // showCoinPositions(coin);
-
         // setInterval(function(){
-        //     var coin = $('#txtCoin').val();
-        //     showCoinPositions(coin);
-        // },1000);
+        //     trialNoLimit();
+        // },5000);
     });
 
-    function searchPositions(coin){
+    function trialNoLimit(){
         $.ajax({
             type: "GET",
-            url: "/api/position/getPositions",
+            url: "/api/strategy/trialNoLimit",
             data: { "_csrf": $('input[name="_csrf"]').val()  },
             dataType: 'json'
         }).done(function (e) {
-            if(e.isSuccess){
-                _lastSyncTime = +new Date();
-                _positions = e.data || [];
-                showCoinPositions(coin);
-            }
+            _lastSyncTime = +new Date();
+            _differences = e || [];
+            showDifferences();
         }).fail(function (e) {
             //alert("启动计划时可能出现网络异常，请稍后重试！");
         });

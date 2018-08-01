@@ -22,8 +22,8 @@ var accountModel = function () {
             cost: { type: Number,default: 0 }  //成本
         }],
 
-        created: { type : Number, "default": +new Date() },
-        modified: { type : Number, "default": +new Date() } //最近一次更新时间
+        created: { type : Number, "default": Date.now() },
+        modified: { type : Number, "default": Date.now() } //最近一次更新时间
 
     });
 

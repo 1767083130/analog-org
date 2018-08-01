@@ -96,7 +96,7 @@ describe('支付测试. path: order.js', function () {
         done();
     });
 
-    it.only('getMarketPrice',async function (done) {
+    it('getMarketPrice',async function (done) {
 
         /**
          * 当订单需要按照市场价成交时，应当进行的委托价格

@@ -16,8 +16,11 @@ module.exports = function (router) {
                 { site: "bitfinex", contractType: "spot"},
                 { site: "okex", contractType: "spot"}
             ];
-            let positionsInfo = await trialMarket.trialNoLimit(siteItems);
-            res.json(positionsInfo);
+
+            let pairItems = await trialMarket.trialNoLimit(siteItems);
+            let items = [].concat.apply([],pairItems);
+            items = items.sort((a,b) => a.period > b.period ? -1 : 1);
+            res.json(items);
         } catch (err){
             console.error(err);
             res.json({ isSuccess: false, message: "系统发生错误" });

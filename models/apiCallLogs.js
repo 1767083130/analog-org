@@ -6,8 +6,8 @@ const Schema = mongoose.Schema;
 /**
  * api执行时的一些参数记录。比如okex上次调用接口时间
  */
-var apiCallLogsModal = function () {
-    const ApiCallLogsSchema = mongoose.Schema({
+var apiCallLogModal = function () {
+    const ApiCallLogSchema = mongoose.Schema({
         site: { type: String, required: true },
         clientType: {type: String },
         method: { type: String },
@@ -16,19 +16,20 @@ var apiCallLogsModal = function () {
         params: { type:Schema.Types.Mixed },
         isSuccess: { type: Boolean },
         message: {type: String },
-        created: { type: Date }
+        created: { type: Date, default: Date.now() },
+        modified: {type: Date, default: Date.now() }
     });
 
      /**
      * Methods
      */
-    ApiCallLogsSchema.methods = {
+    ApiCallLogSchema.methods = {
     }
     
     /**
      * Statics
      */
-    ApiCallLogsSchema.statics = {
+    ApiCallLogSchema.statics = {
 
         /**
         * Find article by id
@@ -41,8 +42,8 @@ var apiCallLogsModal = function () {
                 .exec();
         }
     };
-    return mongoose.model('ApiCallLogs', ApiCallLogsSchema);
+    return mongoose.model('ApiCallLog', ApiCallLogSchema);
 };
 
-module.exports = new apiCallLogsModal();
+module.exports = new apiCallLogModal();
 

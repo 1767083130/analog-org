@@ -1,56 +1,97 @@
 {% extends "layouts/admin-master.html" %} 
 {% block body %}
-<div>
-    <h3>委托列表</h3>
+
+<hr/>
+<div class="container">
     <div>
-        <div style="width: 1044px; padding:2px; background-color: #C2DAFA;">  
-            site:
-            <select id="inquirysite" name="sites" data-group="1" >
-            </select>&nbsp;&nbsp;
+        <div class="pull-left" style=" padding: 20px;">
 
-            <span id="hide" style="display:none;">symbol: 
-            <select id="inquirysymbol" name="symbols" data-group="1" >
-            </select>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-
-            status:
-            <select id="inquirystatus" name="status" >
-                <option value=""></option>
-                <option value="wait">运行中</option>
-                <option value="consign">已委托未成交</option>
-                <option value="success">已完成</option>
-                <option value="part_success">部分成功</option>
-                <option value="will_cancel">已标记取消未完成</option>
-                <option value="canceled">已取消</option>
-                <option value="auto_retry">超时不同价格重新委托</option>
-                <option value="failed">已失败</option>
+        </div>
+        <div class="pull-left" style="padding: 20px;">
+            交易网站：<select id="order_site" data-group="1" name="sites" ></select>&nbsp;&nbsp;
+            货币：<select id="order_symbol" data-group="1" name="symbols">
             </select>
             <br/>
-
-            起始时间:<input size="16"  type="text" id="datetimeStart" class="form_datetime">--
-            结束时间:<input size="16"  type="text" id="datetimeEnd" class="form_datetime"> 
-           
-            <input type="button" id="btnSearch" value="查询" />
-            <button onClick="document.location.reload()">重置</button>
-            <!-- <div class="checkbox "></div> -->
-            <label><input type="checkbox" id="showAll">包含已撤销委托</label>
-            <a href="javascript:void(0)" id="showExceptionOrders">异常委托单</a>
+            价格：<input id="order_price" type="text">
+            <br/>
+            <label><input type="checkbox" id="market_price" data-group="price">市场价</label>
+            <label><input type="checkbox" id="isPostOnly_price" data-group="price">被动成交</label>
+            <br/>
+            <!-- side:  <select name="order_side">
+              <option value="buy">建仓</option><option value="sell">平仓</option></select> -->
+             type:  <select id="order_type">
+               <option value="margin">Margin</option><option value="exchange">Exchange</option></select> 
+             <br/>
+            数量：<input id="order_amount" type="text">
+            <br/><br/>
+            <button type="button" style="width: 120px;" data-type="operate" data-operateType="buy" class="btn btn-primary">买入</button>
+            <button type="button" style="width: 120px;" data-type="operate" data-operateType="sell" class="btn btn-danger">卖出</button>
         </div>
-       <!-- <div id="quotation" > --> <!--style="display:none;" -->
-           <!-- <span  id="bas" ></span><span id="sum"></span> -->
+        <div class="pull-left" style="padding: 20px;">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <thead><th style="width: 120px;">价格</th><th>数量</th></thead>
+                <tr ><td colspan="2"><hr style="padding: 0; margin: 0"/></td></tr>
+                <tr><td style="color:red">32432423</td><td>32432423</td></tr>
+                <tr ><td colspan="2"><hr style="padding: 0; margin: 0"/></td></tr>
+                <tr><td colspan="2" >32432423</td></tr>
+                <tr ><td colspan="2"><hr style="padding: 0; margin: 0"/></td></tr>
+                <tr><td style="color:green">32432423</td><td>32432423</td></tr>
+            </table>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div>
+        <h3>委托列表</h3>
+        <div>
+            <div style="width: 1044px; padding:2px; background-color: #C2DAFA;">  
+                site:
+                <select id="inquirysite" name="sites" data-group="2" >
+                </select>&nbsp;&nbsp;
+
+                <span id="hide" style="display:none;">symbol: 
+                <select id="inquirysymbol" name="symbols" data-group="2" >
+                </select>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+                status:
+                <select id="inquirystatus" name="status" >
+                    <option value=""></option>
+                    <option value="wait">运行中</option>
+                    <option value="consign">已委托未成交</option>
+                    <option value="success">已完成</option>
+                    <option value="part_success">部分成功</option>
+                    <option value="will_cancel">已标记取消未完成</option>
+                    <option value="canceled">已取消</option>
+                    <option value="auto_retry">超时不同价格重新委托</option>
+                    <option value="failed">已失败</option>
+                </select>
+                <br/>
+
+                起始时间:<input size="16"  type="text" id="datetimeStart" class="form_datetime">--
+                结束时间:<input size="16"  type="text" id="datetimeEnd" class="form_datetime"> 
+            
+                <input type="button" id="btnSearch" value="查询" />
+                <button onClick="document.location.reload()">重置</button>
+                <!-- <div class="checkbox "></div> -->
+                <label><input type="checkbox" id="showAll" checked>包含已撤销委托</label>
+                <a href="javascript:void(0)" id="showExceptionOrders">异常委托单</a>
+            </div>
+        <!-- <div id="quotation" > --> <!--style="display:none;" -->
+            <!-- <span  id="bas" ></span><span id="sum"></span> -->
             <table style="width: 1044px; background-color: #C2DAFA;">
                 <tr id="show" style='text-align: center;'>
                 </tr>
             </table> 
-        <!-- </div> -->
+            <!-- </div> -->
 
-        <div id="FlexiGrid_ContentDiv" onLoad="goPage(1,10);">
-            <table id="FlexiGrid_ContentTable" style="display: none;">
-            </table>
+            <div id="FlexiGrid_ContentDiv" onLoad="goPage(1,10);">
+                <table id="FlexiGrid_ContentTable" style="display: none;">
+                </table>
+            </div>
+            <div id="barcon" name="barcon"></div>
+            <div name="customPager" id="flexiGridPager" for="FlexiGrid_ContentTable" style="padding-top: 4px; display: none"></div>
+            <input type="hidden" name="_csrf" value="{{_csrf}}" />
+            
         </div>
-        <div id="barcon" name="barcon"></div>
-        <div name="customPager" id="flexiGridPager" for="FlexiGrid_ContentTable" style="padding-top: 4px; display: none"></div>
-        <input type="hidden" name="_csrf" value="{{_csrf}}" />
-        
     </div>
 </div>
 
@@ -64,10 +105,101 @@
 
 <link rel="stylesheet" href="../js/plugins/bootstrap/3.3.5/css/bootstrap.min.css" />
 <link rel="stylesheet" href="../js/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" type="text/css" media="screen"/>
-<script type="text/javascript">
 
+<script type="text/javascript">  
+    /**
+     * 参考文档： http://www.runoob.com/html/html5-websocket.html
+     *           ../SocketApi.doc
+     * */
+    var ws = new WebSocket("ws://119.28.204.125:8080/ws");  
+    ws.onopen = function() {  
+        console.log("连接状态", ws);  
+        $("#show").html("连接状态:" + getReadyState(ws.readyState) + "</br>");  
+        console.log("open");  
+        //ws.open("start");  
+
+        let channels = ['market','order','position','wallet']; 
+        for(let site of ['okex','bitfinex']){
+            for(let channel of channels){
+                let options = {
+                    event: "addChannel",
+                    channel: channel,
+                    parameters: { site: site, symbol: '*' }
+                };
+                ws.send(JSON.stringify(options));
+            }
+        }
+    };  
+    ws.onmessage = function(evt) {  
+        // console.log(evt.data)  
+        // alert(evt.data); 
+        // var oldHtml = $("#show").html();
+        // var str = oldHtml + "</br>" + evt.data;
+        // $("#show").html(str); 
+        
+        // try{
+        //     let item = JSON.parse(evt.data);
+        //     if(item.channel != 'market'){
+        //         $("#show").append(evt.data + "</br>"); 
+        //         document.getElementById('show').scrollTop= 60000; 
+        //     }
+        // } catch (err){
+        //     //忽略错误
+        // }
+    };  
+
+    ws.onclose = function(evt) {  
+        $("#show").html("连接状态:" + getReadyState(ws.readyState) + "</br>");
+        console.log("WebSocketClosed!");  
+        console.log(evt);  
+    };  
+    ws.onerror = function(evt) { 
+        $("#show").html("连接状态:" + getReadyState(ws.readyState) + "</br>"); 
+        console.log("WebSocketError!");  
+    };  
+    
+    function send() {  
+        var msg = $("#message").val();  
+        var key = $("#token").val();  
+        var name = $("#name").val();  
+        var str = "{name:'" + name + "',msg:'" + msg + "',key:'" + key + "'}";  
+        console.log("发送", str);  
+        ws.send(str);  
+    };  
+    
+    function exit() {  
+        var r = ws.close();  
+        $("#show").html("连接状态:" + getReadyState(ws.readyState) + "</br>");
+        console.log("退出", r);  
+    }  
+
+    function getReadyState(state){
+        // 0 - 表示连接尚未建立。
+        // 1 - 表示连接已建立，可以进行通信。
+        // 2 - 表示连接正在进行关闭。
+        // 3 - 表示连接已经关闭或者连接不能打开。
+        var str;
+        switch(state){
+            case 0:
+            str = '尚未建立连接';
+            break;
+            case 1:
+            str = '连接已建立，可以进行通信';
+            break
+            case 2:
+            str = '连接正在进行关闭';
+            break;
+            case 3:
+            str = '连接已经关闭或者连接不能打开';
+            break;
+        }
+        return str;
+    }
+</script>  
+
+<script type="text/javascript">
     var _business = {{ business | safe }};
-    var _bargainAmountSum = {{ bargainAmountSum | safe }}; //e.g { }
+    var _bargainAmountSum = [];
     var _currentOperateLog;
     var _symbolAmounts = []; // { site: "",symbol: "",amount: 234,avavgPrice: 123, plusAmount: 1,minusAmount: -1 }
     
@@ -76,6 +208,11 @@
         setInterval(function(){
             $("#FlexiGrid_ContentTable").flexReload();
         },3000)
+
+        $('button[data-type="operate"]').click(function(){
+            var operateType = $(this).attr('data-operateType');
+            createOrder(operateType);
+        })
 
         // setInterval(quotation(),5000);
         $("#datetimeStart").datetimepicker({
@@ -109,7 +246,6 @@
                 var site = _business.sites[i];
                 $('<option/>').appendTo(this).val(site).html(site);
             }
-            
         });
 
         $('select[name="symbols"]').each(function(){
@@ -169,7 +305,7 @@
 
         initFlexiGrid();    
     });
-    
+
     function initFlexiGrid() { 
         var initData = {
             "page": 1,  //当前页
@@ -187,7 +323,7 @@
             mutilRowMessage: true,
             showLoading: false,
             showMessageOnRowClicked: true,
-            url: '/admin/trade/list',
+            url: '/admin/order/list',
             colModel: [
                 { display: "交易网站", name: "site",type: 0,visible: true, width: "80", sortable: true,align:"left"},
                 { display: "交易品种", name: "symbol",type: 0,visible: true, width: "80", sortable: true,align: "left" },
@@ -234,6 +370,41 @@
         $("#FlexiGrid_ContentTable").setNewExtParam([{name: "_csrf",value: csrf }]);   
     }
 
+    function createOrder(operateType){
+        var site = $('#order_site').val();
+        var symbol = $('#order_symbol').val();
+        var price = $('#order_price').val();
+        var amount = $('#order_amount').val();
+
+        var options = {
+            site: site, //平台名称
+            operate: operateType, //buy或sell
+            type: $('#order_type').val(),
+            symbol: symbol, //cny、btc、ltc、usd
+            price: price, //委托价格
+            amount: amount, //总数量
+
+            isPostOnly: $('#isPostOnly_price').prop('checked') ? 1 : 0,
+            isMarketPrice: $('#market_price').prop('checked') ? 1 : 0
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/admin/order/createOrder",
+            data: { options: options,"_csrf": $('input[name="_csrf"]').val()  },
+            dataType: 'json'
+        }).done(function (e) {
+            if (e.isSuccess) {
+                alert("成功！");
+            }
+            else {
+                alert(e.message || "系统错误，请稍后重试！");
+            }
+        }).fail(function (e) {
+            alert("可能出现网络异常，请稍后重试！");
+        });
+    }
+
     onToggoleLeft = function () {
         $('#FlexiGrid_ContentTable').fixGridWidth();
     };
@@ -262,7 +433,6 @@
         }
     }
 
-    //分页页码
     function flexiGridInited(options) {
         var newParams = [
                 { name:"type", value: w.getQueryStringValue('type') },
@@ -279,7 +449,6 @@
         return options;
     }
 
-    //这个很重要
     function flexiGridLoaded(options){
         $('a[name="manualOperate"]').click(function(){
             var orderId = $(this).attr("data-orderId");
@@ -298,7 +467,6 @@
         });
     }
 
-    //加载表格数据
     function flexiGridPreLoad(options){
         if(typeof options.orders == 'string'){
             options.orders = JSON.parse(options.orders);
@@ -384,6 +552,7 @@
         }
       return t;  
     }
+
 </script>
 {% endblock %}
  
