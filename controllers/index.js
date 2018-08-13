@@ -49,6 +49,10 @@ module.exports = function (router) {
         });
     });
 
+    router.get('/test', function(req, res) {
+        res.render('test', { user: req.user });
+    });
+
     router.get('/profile', function(req, res) {
         res.render('profile', { user: req.user });
     });

@@ -3,3 +3,9 @@
 （2）如何启动单元测试  mocha --recursive    
   
 启动mongodb内存限制： mongod --wiredTigerCacheSizeGB 1
+
+tasks:
+（1）如果长时间没有数据，自动启动clients
+（2）编辑任务计划时有BUG
+（3）各种api的安全漏洞
+ (4) 交易网站出现问题后的风险控制

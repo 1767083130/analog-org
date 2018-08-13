@@ -479,9 +479,7 @@ require('./Themes/simple/main.css');
                             if (p.onError) {
                                 p.onError(data);
                             }
-                            else {
-                                alert("获取数据发生异常，请尝试重新登录系统。")
-                            }
+
                             g.hideLoading();
                         }
                         catch (e) { }
@@ -978,9 +976,6 @@ require('./Themes/simple/main.css');
                         try {
                             if (p.onError) {
                                 p.onError(data);
-                            }
-                            else {
-                                alert("获取数据发生异常。")
                             }
                             if (p.showLoading) {
                                 g.hideLoading();

@@ -1,3 +1,173 @@
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
 'use strict';
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -20,7 +190,7 @@ module.exports = function (router) {
     router.get('/', async(function* (req, res) {
         try{
             list(req,res,function(result){
-                res.render('admin/trade',result);
+                res.render('admin/report',result);
             });
             
         } catch(err){
@@ -28,9 +198,8 @@ module.exports = function (router) {
             res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});
         }
     }));
-
  
-    router.post('/list', async(function* (req,res){
+    router.get('/list', async(function* (req,res){
         try{
             list(req,res,function(result){
                 res.json(result);
@@ -83,17 +252,13 @@ async function list(req,res,callback){
     let pageSize = Number(req.body.rp || '10') || 10;
 
     let userName = req.user.userName;
-    let showAll = ((req.query.showAll || req.body.showAll) == 1 ? true : false);
     
     //设置查询条件变量
-    let params = {
-        reason: 'transfer',
-        isSysAuto: true
-    };
+    let params = { } ;
     let showType = req.query.type || req.body.type;
-    if(showType == 1){  //显示策略计划没用完成的委托
+    if( showType == 1 ){  //显示策略计划没用完成的委托
         let modifiedStart = new Date(+new Date() - 30 * 60 * 1000); //30 minutes 之前的数据
-        let planLogId = req.query.planLogId || req.body.planLogId;
+        let planLogId = req.query.planLogId;
         params = {
             userName: userName,
             isSysAuto: true,
@@ -101,45 +266,20 @@ async function list(req,res,callback){
             modified: { $gt: modifiedStart},    //大于半小时之后
             status: { $in: ['wait','consign','part_success','will_cancel','wait_retry'] }  //,'auto_retry'
         };
-    } else if(showType == 2){//显示策略计划当前运行实例的所有委托单
+    }else if( showType == 2 ){
         let planLogId = req.query.planLogId || req.body.planLogId;
         params = {
             strategyPlanLogId:mongoose.Types.ObjectId(planLogId)    //策略计划id
         };
-    } else if(showType == 3){ //显示异常委托单
-        let modifiedStart = new Date(+new Date() - 15 * 60 * 1000); //15 minutes 之前的数据
-        let planLogId = req.query.planLogId || req.body.planLogId;
-        params = {
-            modified: { $lt: modifiedStart}, 
-            status: { $nin: ['success','canceled'] }  //,'auto_retry'
-        };
-        if(planLogId){
-            params.strategyPlanLogId =  mongoose.Types.ObjectId(planLogId); //策略计划id
-        }
-        showAll = true;
-    }
-
-
-    if(!showAll){
-        // params.$not = { $or: [ 
-        //     { status: 'auto_retry', bargainAmount: 0 },
-        //     { status: 'canceled', bargainAmount: 0 }
-        // ]};
-        //这里使用$where效率是个问题 //TODO
-        params.$where = function() { 
-            if(this.status == 'auto_retry' || this.status == 'canceled'){
-                return this.bargainAmount != 0;
-            }
-            return true;
-        }
     }
 
     //通过页面刷新fexligrid插件,setNewExtParam获取来的值
-    let symbol = req.query.symbol || req.body.symbol;
-    symbol && (params.symbol = symbol);
 
     let site = req.query.site || req.body.site;
     site && (params.site = site);
+
+    let symbol = req.query.symbol || req.body.symbol;
+    symbol && (params.symbol = symbol);
 
     let status = req.query.status || req.body.status;
     status && (params.status = status);
@@ -154,11 +294,7 @@ async function list(req,res,callback){
         params.created = {"$lt" : createdEnd };
     }
 
-    var s = new Date(+new Date() - 24 * 60 * 60 * 1000 * 15); //至多只能查询15天之内的数据
-    if(!createdStart || s > createdStart){
-        createdStart = s;
-    }
-
+    //获取成交总量\平均价
     let bargainAmountSum = await Order.aggregate([
         {
             $match: params 
@@ -166,7 +302,9 @@ async function list(req,res,callback){
         { 
             $group: { 
                 _id: { site:"$site",side:"$side",symbol:"$symbol" }, 
-                bargainAmount: { "$sum": "$bargainAmount" }
+                bargainAmount: { $sum: "$bargainAmount" },
+                total: { $sum:{ $multiply:["$bargainAmount","$avgPrice"] }},    //total总价
+                sum: { $sum: "$bargainAmount" }     //sum总量
             }
         }
     ]);
@@ -190,7 +328,7 @@ async function list(req,res,callback){
         let t = {
             pageSize: getRes.limit,
             total: getRes.total,
-            orders: JSON.stringify(orders || []),
+            //orders: JSON.stringify(orders || []),
             business:JSON.stringify(business || []),
             bargainAmountSum:JSON.stringify(bargainAmountSum || []),
             isSuccess: true
@@ -199,3 +337,4 @@ async function list(req,res,callback){
         callback(t);
     });
 }
+

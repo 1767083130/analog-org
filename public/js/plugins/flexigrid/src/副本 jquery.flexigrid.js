@@ -388,9 +388,6 @@
                             if (p.onError) {
                                 p.onError(data);
                             }
-                            else {
-                                alert("获取数据发生异常，请尝试重新登录系统。")
-                            }
                             g.hideLoading();
                         }
                         catch (e) { }
@@ -762,9 +759,6 @@
                         try {
                             if (p.onError) {
                                 p.onError(data);
-                            }
-                            else {
-                                alert("获取数据发生异常，请尝试重新登录系统。")
                             }
                             g.hideLoading();
                         }

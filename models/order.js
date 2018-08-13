@@ -67,7 +67,7 @@ var orderModel = function () {
         consignDate: Date, //委托时间
         created: { type: Date, "default": Date.now() }, //创建时间
         modified: { type: Date, "default": Date.now() }, //最近修改时间
-        syncTimestamp: { type: Date }, //最近一次从第三方交易平台同步的时间
+        lastSyncTime: { type: Date }, //最近一次从第三方交易平台同步的时间
 
         // /** 下面几个字段并没有使用到 */
         // storeId : { type: Number, default: 0 },                // 仓位ID

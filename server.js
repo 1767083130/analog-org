@@ -1,6 +1,8 @@
 'use strict';
 const app = require('./index');
 const http = require('http');
+const fs= require('fs');
+const path = require('path');
 const cacheClient = require('./lib/apiClient/cacheClient').getInstance();
 const clientNetMonitor = require('./lib/apiClient/clientNetMonitor');
 const NODE_ENV = process.env.NODE_ENV || 'production'; //development
@@ -32,12 +34,22 @@ client.on('message', async function(res){
         //console.log(JSON.stringify(res));
         clientNetMonitor.pushPongItem(res.data);
         break;
+    case 'position':
+        log(res);
+        break;
     }
 });
 
 process.on('uncaughtException', function(e) {
     console.log(e);
 });
+
+function log(data){
+    fs.appendFile(path.join(__dirname,'logs',  'position.txt'), JSON.stringify(data) + '\r\n\r\n', (err) =>  {
+        if (err) throw err;
+        //console.log("Export Account Success!");
+    });
+}
 
 
 

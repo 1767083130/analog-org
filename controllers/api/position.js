@@ -3,6 +3,7 @@
 const only = require('only');
 const Decimal = require('decimal.js');
 const position = require('../../lib/position');
+const cacheClient = require('../../lib/apiClient/cacheClient').getInstance();
 
 module.exports = function (router) {
   
@@ -12,9 +13,62 @@ module.exports = function (router) {
      */
     router.get('/getPositions',async function(req, res) {
         try{
-            let site = req.query['site'];
+            let site = req.query['site'],
+                coins = req.query['coins'];
             let positionsInfo = await position.getPositions(site);
+            if(!positionsInfo.isSuccess){
+                res.json(positionsInfo);
+            }
+
+            if(coins){
+                let items = [],arrCoins = coins.split(',');
+                for(let i = 0; i < arrCoins.length; i++){
+                    let coin = arrCoins[i];
+                    let coinItem = positionsInfo.data.coins.find( p => p.coin == coin);
+                    items.push(coinItem);
+                }
+                positionsInfo = {
+                    "isSuccess": true,
+                    "data": {
+                        "coins": items
+                    }
+                }
+            }
             res.json(positionsInfo);
+        } catch (err){
+            console.error(err);
+            res.json({ isSuccess: false, message: "系统发生错误" });
+        }
+    });
+
+        /**
+     * 获取账户资产详情
+     * http://localhost/api/position/getCachePositions
+     */
+    router.get('/getCachePositions',async function(req, res) {
+        try{
+            let site = req.query['site'],
+                coins = req.query['coins'];
+            let positionItemsRes = cacheClient.getPositions(site);
+            if(!positionItemsRes.isSuccess){
+                res.json(positionItemsRes);
+            }
+
+            if(coins){
+                let items = [],arrCoins = coins.split(',');
+                for(let i = 0; i < arrCoins.length; i++){
+                    let coin = arrCoins[i];
+                    let coinItem = positionsInfo.data.coins.find( p => p.coin == coin);
+                    items.push(coinItem);
+                }
+                positionsInfo = {
+                    "isSuccess": true,
+                    "data": {
+                        "coins": items
+                    }
+                }
+            }
+            res.json(positionItemsRes);
         } catch (err){
             console.error(err);
             res.json({ isSuccess: false, message: "系统发生错误" });

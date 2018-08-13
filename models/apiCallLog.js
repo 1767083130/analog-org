@@ -11,11 +11,14 @@ var apiCallLogModal = function () {
         site: { type: String, required: true },
         clientType: {type: String },
         method: { type: String },
+        apiName: { type: String },
         code: { type: String },
+        willRetry: { type: Boolean },
         isRetry: { type: Boolean },
-        params: { type:Schema.Types.Mixed },
+        params: { type: String },
         isSuccess: { type: Boolean },
         message: {type: String },
+        error: { type: String },
         created: { type: Date, default: Date.now() },
         modified: {type: Date, default: Date.now() }
     });
