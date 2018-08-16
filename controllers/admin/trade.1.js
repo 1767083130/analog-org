@@ -20,7 +20,7 @@ module.exports = function (router) {
     router.get('/', async(function* (req, res) {
         try{
             list(req,res,function(result){
-                res.render('admin/report',result);
+                res.render('admin/trade',result);
             });
             
         } catch(err){
@@ -28,8 +28,9 @@ module.exports = function (router) {
             res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});
         }
     }));
+
  
-    router.get('/list', async(function* (req,res){
+    router.post('/list', async(function* (req,res){
         try{
             list(req,res,function(result){
                 res.json(result);
@@ -78,15 +79,21 @@ module.exports = function (router) {
 }
 
 async function list(req,res,callback){
+    let pageNumber = Number(req.body.page || '1') || 1;
+    let pageSize = Number(req.body.rp || '10') || 10;
 
     let userName = req.user.userName;
+    let showAll = ((req.query.showAll || req.body.showAll) == 1 ? true : false);
     
     //设置查询条件变量
-    let params = { } ;
+    let params = {
+        reason: 'transfer',
+        isSysAuto: true
+    };
     let showType = req.query.type || req.body.type;
-    if( showType == 1 ){  //显示策略计划没用完成的委托
+    if(showType == 1){  //显示策略计划没用完成的委托
         let modifiedStart = new Date(+new Date() - 30 * 60 * 1000); //30 minutes 之前的数据
-        let planLogId = req.query.planLogId;
+        let planLogId = req.query.planLogId || req.body.planLogId;
         params = {
             userName: userName,
             isSysAuto: true,
@@ -94,40 +101,64 @@ async function list(req,res,callback){
             modified: { $gt: modifiedStart},    //大于半小时之后
             status: { $in: ['wait','consign','part_success','will_cancel','wait_retry'] }  //,'auto_retry'
         };
-    } else if( showType == 2 ){
+    } else if(showType == 2){//显示策略计划当前运行实例的所有委托单
         let planLogId = req.query.planLogId || req.body.planLogId;
         params = {
             strategyPlanLogId:mongoose.Types.ObjectId(planLogId)    //策略计划id
         };
+    } else if(showType == 3){ //显示异常委托单
+        let modifiedStart = new Date(+new Date() - 15 * 60 * 1000); //15 minutes 之前的数据
+        let planLogId = req.query.planLogId || req.body.planLogId;
+        params = {
+            modified: { $lt: modifiedStart}, 
+            status: { $nin: ['success','canceled'] }  //,'auto_retry'
+        };
+        if(planLogId){
+            params.strategyPlanLogId =  mongoose.Types.ObjectId(planLogId); //策略计划id
+        }
+        showAll = true;
     }
 
 
-    let site = req.query.site || req.body.site;
-    site && (params.site = site);
+    if(!showAll){
+        // params.$not = { $or: [ 
+        //     { status: 'auto_retry', bargainAmount: 0 },
+        //     { status: 'canceled', bargainAmount: 0 }
+        // ]};
+        //这里使用$where效率是个问题 //TODO
+        params.$where = function() { 
+            if(this.status == 'auto_retry' || this.status == 'canceled'){
+                return this.bargainAmount != 0;
+            }
+            return true;
+        }
+    }
 
+    //通过页面刷新fexligrid插件,setNewExtParam获取来的值
     let symbol = req.query.symbol || req.body.symbol;
     symbol && (params.symbol = symbol);
+
+    let site = req.query.site || req.body.site;
+    site && (params.site = site);
 
     let status = req.query.status || req.body.status;
     status && (params.status = status);
 
     let createdStart = req.query.createdStart || req.body.createdStart;
     let createdEnd = req.query.createdEnd || req.body.createdEnd;
+    if(createdStart && createdEnd){
+        params.created = {"$gte" : createdStart, "$lt" : createdEnd};  //ISODate
+    } else if(createdStart){
+        params.created = {"$gte" : createdStart };
+    } else if(createdEnd){
+        params.created = {"$lt" : createdEnd };
+    }
 
     var s = new Date(+new Date() - 24 * 60 * 60 * 1000 * 15); //至多只能查询15天之内的数据
     if(!createdStart || s > createdStart){
         createdStart = s;
     }
 
-    if(createdStart && createdEnd){
-        params.created = {"$gte" : new Date(createdStart), "$lt" : new Date(createdEnd) };  //ISODate
-    } else if(createdStart){
-        params.created = {"$gte" : new Date(createdStart) };
-    } else if(createdEnd){
-        params.created = {"$lt" : new Date(createdEnd) };
-    }
-
-    //获取成交总量\平均价
     let bargainAmountSum = await Order.aggregate([
         {
             $match: params 
@@ -135,23 +166,31 @@ async function list(req,res,callback){
         { 
             $group: { 
                 _id: { site:"$site",side:"$side",symbol:"$symbol" }, 
-                bargainAmount: { $sum: "$bargainAmount" },
-                total: { $sum:{ $multiply:["$bargainAmount","$avgPrice"] }},    //total总价
-                sum: { $sum: "$bargainAmount" }     //sum总量
+                bargainAmount: { "$sum": "$bargainAmount" }
             }
         }
     ]);
 
     params.userName = userName;
-   
+    var options = {
+        //select:   'title date author',
+        sort: { created : -1 },
+        //populate: 'strategyId',
+        lean: true,
+        page: pageNumber, 
+        limit: pageSize
+    };
 
     let business = configUtil.getBusiness();
     business.sites = apiConfigUtil.getSites();
     business.symbols = apiConfigUtil.getSiteSymbols();
 
-    Order.paginate(params).then(async function(getRes) {
-        
+    Order.paginate(params, options).then(async function(getRes) {
+        let orders = getRes.docs || [];
         let t = {
+            pageSize: getRes.limit,
+            total: getRes.total,
+            orders: JSON.stringify(orders || []),
             business:JSON.stringify(business || []),
             bargainAmountSum:JSON.stringify(bargainAmountSum || []),
             isSuccess: true

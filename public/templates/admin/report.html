@@ -1,10 +1,8 @@
 {% extends "layouts/admin-master.html" %} 
 {% block body %}
 <div >
-    
     <h3>委托列表:</h3>
     <div>
-       
         <div style="width: 1044px; padding:2px;background-color: rgb(199, 217, 247); ">  
 
             site:
@@ -32,14 +30,12 @@
             结束时间:<input size="16"  type="text" id="datetimeEnd" class="form_datetime">
            
             <input type="button" id="btnSearch" value="查询" />
-            <button onClick="document.location.reload()">重置</button>
+            <button onclick="document.location.reload()">重置</button>
         </div>
-       
-       
+            
             <div id="report" style="width: 1044px;"> 
-
+                
             </div>
-
     </div>
 </div>
 
@@ -242,7 +238,7 @@
            
         }
         
-        $("#report").empty("");
+        $("#report").empty();
         for(var key in result ){
             var html ="<div style='border:1px solid #A9A9A9;width:50%;float:left;'><table><thead style='border-bottom:1px dashed #A9A9A9;'><tr><td>币种:<span style='color:red;'>" + key + 
                 "</span></td><td>总建仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].amount || 0),2) +

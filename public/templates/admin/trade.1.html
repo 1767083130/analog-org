@@ -14,7 +14,7 @@
 
             status:
             <select id="inquirystatus" name="status" >
-                <option value="">--请选择--</option>
+                <option value=""></option>
                 <option value="wait">运行中</option>
                 <option value="consign">已委托未成交</option>
                 <option value="success">已完成</option>
@@ -30,21 +30,15 @@
             结束时间:<input size="16"  type="text" id="datetimeEnd" class="form_datetime"> 
            
             <input type="button" id="btnSearch" value="查询" />
-            <button onclick="document.location.reload()">重置</button>
-
+            <button onClick="document.location.reload()">重置</button>
+            <!-- <div class="checkbox "></div> -->
             <label><input type="checkbox" id="showAll">包含已撤销委托</label>
             <a href="javascript:void(0)" id="showExceptionOrders">异常委托单</a>
-
-            <input type="button" id="btnReport" value="展开" style="float:right">
         </div>
-       <!-- <div id="quotation" > --> <!--style="display:none;" -->
-           <!-- <span  id="bas" ></span><span id="sum"></span> -->
-            <table style="width: 1044px; background-color: #C2DAFA;">
-                <tr id="show" style='text-align: center;'>
-                </tr>
-            </table> 
-        <!-- </div> -->
-
+        <table style="width: 1044px; background-color: #C2DAFA;">
+            <tr id="show" style='text-align: center;'>
+            </tr>
+        </table> 
         <div id="FlexiGrid_ContentDiv" onLoad="goPage(1,10);">
             <table id="FlexiGrid_ContentTable" style="display: none;">
             </table>
@@ -69,7 +63,7 @@
 <script type="text/javascript">
 
     var _business = {{ business | safe }};
-    var _bargainAmountSum = {{ bargainAmountSum | safe }}; //e.g { }
+    var _bargainAmountSum = {{ bargainAmountSum | safe }}; //e.g //{"_id":{"site":"bitfinex","side":"buy","symbol":"eos#btc_1w"},"bargainAmount":400,"total":1600000,"sum":400}
     var _currentOperateLog;
     var _symbolAmounts = []; // { site: "",symbol: "",amount: 234,avavgPrice: 123, plusAmount: 1,minusAmount: -1 }
     
@@ -106,7 +100,7 @@
         });
 
         $('select[name="sites"]').each(function(){
-            $('<option/>').appendTo(this).val('').html('--请选择--');
+            $('<option/>').appendTo(this).val('').html('');
             for(var i = 0; i < _business.sites.length;i++){
                 var site = _business.sites[i];
                 $('<option/>').appendTo(this).val(site).html(site);
@@ -115,7 +109,7 @@
         });
 
         $('select[name="symbols"]').each(function(){
-            $('<option/>').appendTo(this).val('').html('--请选择--');
+            $('<option/>').appendTo(this).val('').html('');
             var group = $(this).attr('data-group');
             var site = $(this).val();
             var $element = $(w.format('select[name="symbols"][data-group="{0}"]',group));
@@ -126,7 +120,7 @@
         $('select[name="sites"]').change(function(){
             if($('select[name="sites"]').val()==''){
                 $('#hide').hide();
-                $('select[name="symbols"]').val('').html('--请选择--');
+                $('select[name="symbols"]').val('').html('');
                 
             }else{
                 $('#hide').show();
@@ -141,9 +135,7 @@
         });
         
         $('#btnSearch').click(function(){
-            _symbolAmounts =[];
-            $("#report").empty();
-            // showReports();
+            showReports();
 
             // console.log($("#datetime").val());
             var newParams = [
@@ -156,13 +148,6 @@
             $("#FlexiGrid_ContentTable").setNewExtParam(newParams);
             $("#FlexiGrid_ContentTable").flexReload();
         });
-
-        $("#report").hide();
-
-        $("#btnReport").click(function(){
-            $("#report").toggle('slow');
-            $(this).val($(this).val()=="展开"?"隐藏":"展开");
-        })
 
         $('#showAll').change(function(){
             var newParams = [
@@ -250,20 +235,19 @@
     };
 
     function showReports(){
-        
+        return;
         var amount; //总成交量
-        var middle = 0; //总价
+        var profit = 0;  //利润
         var multipleWarehouse = 0; //多仓
         var shortPosition = 0; //空仓
         
         for(var i = 0,l =_bargainAmountSum.length; i< l ;i++){
             amount = (_bargainAmountSum[i]._id.side=="buy"?_bargainAmountSum[i].bargainAmount:-_bargainAmountSum[i].bargainAmount);
-
-            middle = _bargainAmountSum[i].total;
+            profit = (_bargainAmountSum[i].total/_bargainAmountSum[i].sum);
 
             var symbolItem = getItem(_bargainAmountSum[i]._id.site,_bargainAmountSum[i]._id.symbol); 
             symbolItem.amount += amount;
-            symbolItem.middle += middle;
+            symbolItem.profit += profit;
 
             if(amount > 0 ){
                 symbolItem.multipleWarehouse += amount;
@@ -272,21 +256,20 @@
             }
         }
 
-        var arr= []; // {eos#btc,btc#cny,btc#usd}
-        var result = {};// {[eos#btc:amount:400 data:Array(1)0:{site: "okex", symbol: "eos#btc", amount: 400, profit: 2000, multipleWarehouse: 400, …} multipleWarehouse:400 profit:2000 shortPosition:0]}
-        
+        var arr= []; // 
+        var result = {};//
+        var cc =[]; //
         for (var i = 0; i < _symbolAmounts.length; i++) {
             if(arr.indexOf(_symbolAmounts[i].symbol) == -1){
                 arr.push(_symbolAmounts[i].symbol);
             }
         }
-        
 
         for (var i = 0; i < arr.length; i++) {
             var amount = 0;
             var profit = 0;
             var multipleWarehouse = 0;
-            var shortPosition = 0;
+            var shortPosition =0;
 
             result[arr[i]] = {
                 amount: 0,
@@ -301,7 +284,7 @@
                     amount += _symbolAmounts[j].amount;
                     multipleWarehouse += _symbolAmounts[j].multipleWarehouse;
                     shortPosition +=  _symbolAmounts[j].shortPosition;
-                    profit -=  _symbolAmounts[j].middle;
+                    profit += _symbolAmounts[j].profit;
 
                     result[arr[i]].amount = amount;
                     result[arr[i]].multipleWarehouse = multipleWarehouse;
@@ -312,32 +295,27 @@
             }
         }
 
-        $("#report").empty();
         for(var key in result ){
-            var html ="<div style='border:1px solid #A9A9A9;width:50%;float:left;'><table><thead style='border-bottom:1px dashed #A9A9A9;'><tr><td>币种:<span style='color:red;'>" + key + 
-                "</span></td><td>总建仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].amount || 0),2) +
-                "</span>,</td><td>总多仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].multipleWarehouse || 0),2) +
-                "</span>,</td><td>总空仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].shortPosition || 0),2) +
-                    //result[key].profit需要正数转负数
-                "</span>,</td><td>总利润:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].profit || 0),2) +
-                "</span></td></tr></thead><tbody><tr><td colspan='5'>其中:</td></tr>";
+            var html ="<div style='border:1px solid;width:50%;float:left;'><table><thead style='border-bottom:1px dashed;'><tr><td>币种:<span style='color:red;'>" + key + 
+                "</span>,</td><td>总建仓:<span style='color:red;'>" + result[key].amount +
+                "</span>,</td><td>总多仓:<span style='color:red;'>" + result[key].multipleWarehouse +
+                "</span>,</td><td>总空仓:<span style='color:red;'>" + result[key].shortPosition +
+                "</span>,</td><td>总利润:<span style='color:red;'>" + result[key].profit +
+                "</span></td></tr></thead><tbody><tr><td colspan='5'>&nbsp;&nbsp;&nbsp;其中:</td></tr>";
 
-        
-            for(var i = 0; i<result[key].data.length;i++){
-                html+="<tr><td>网站:<span style='color:red;'>" +  result[key].data[i].site +
-                    "</span></td><td>建仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].data[i].amount || 0),2) +
-                    "</span>,</td><td>多仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].data[i].multipleWarehouse || 0),2) +
-                    "</span>,</td><td>空仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].data[i].shortPosition || 0),2) +
-                    "</span></td></tr>"; 
+            for(var i = 0; i < result[key].data.length;i++){
+                html+="<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网站:<span style='color:red;'>" + result[key].data[i].site +
+                    "</span>,</td><td>建仓:<span style='color:red;'>" + result[key].data[i].amount +
+                    "</span>,</td><td>多仓:<span style='color:red;'>" + result[key].data[i].multipleWarehouse +
+                    "</span>,</td><td>空仓:<span style='color:red;'>" + result[key].data[i].shortPosition +
+                    "</span>,</td><td>利润:<span style='color:red;'>" + result[key].data[i].profit + "</span></td></tr>"; 
             }
 
             html+="</tbody></table></div>";
-            $("#report").append(html);
+            $("#show").append(html);
         }  
     }
 
-    //"</span>,</td><td>总利润:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].profit || 0),4) +
-        //<td>利润:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].data[i].profit || 0),4) + "</span></td>
 
     //分页页码
     function flexiGridInited(options) {
@@ -383,9 +361,8 @@
 
         if(typeof options.bargainAmountSum == 'string'){
             _bargainAmountSum = JSON.parse(options.bargainAmountSum); 
-            showReports();
         }
-        // showReports();
+        showReports();
 
         var  data = {
             "page": options.page,
@@ -417,7 +394,7 @@
                     {"cellHtml": order.price },
                     {"cellHtml": w.toDecimal(Math.abs(order.bargainAmount || 0),4)},
                     {"cellHtml": w.toDecimal(Math.abs(order.avgPrice || 0),3)},
-                    {"cellHtml": order.status}
+                    {"cellHtml": order.status},
                 ]
             };
             data.rows.push(row);
@@ -436,7 +413,7 @@
     };
 
     function initSymbolItems($element,site){
-        $element.html('--请选择--');
+        $element.html('');
         var symbols = [];
         for(var i = 0; i < _business.symbols.length;i++){
             if(_business.symbols[i].site == site){
@@ -455,18 +432,20 @@
         var t,
             coinsPair = symbol.split('_')[0];
         for(var i = 0,l = _symbolAmounts.length; i< l ;i++){
-            if(_symbolAmounts[i].site == site && _symbolAmounts[i].symbol == coinsPair){
+            if(_symbolAmounts[i].site == site && _symbolAmounts[i].symbol == coinsPair ){
                 t = _symbolAmounts[i];
                 break;
             }
         }
 
         if(!t){
-            t = { site:site, symbol:coinsPair, amount: 0, middle: 0, multipleWarehouse: 0, shortPosition: 0 } //profit: 0,
+            t = { site:site, symbol:coinsPair, amount: 0, profit: 0, multipleWarehouse: 0, shortPosition: 0 } 
             _symbolAmounts.push(t);
         }
+        
         return t;  
     }
+
 </script>
 {% endblock %}
  

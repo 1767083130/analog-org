@@ -1020,6 +1020,7 @@
 
     function saveStrategyPlan(strategyPlan,successFun,failFun) {
         strategyPlan.isSimple = true;
+
          $.ajax({
             type: "POST",
             url: "/admin/plan/save",

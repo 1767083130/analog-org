@@ -48,26 +48,15 @@ module.exports = function (router) {
     router.get('/getCachePositions',async function(req, res) {
         try{
             let site = req.query['site'],
-                coins = req.query['coins'];
-            let positionItemsRes = cacheClient.getPositions(site);
-            if(!positionItemsRes.isSuccess){
-                res.json(positionItemsRes);
+                symbol = req.query['symbol'];
+            if(!site){
+                return res.json({ isSuccess: false, message: '参数site不能为空'});
+            }
+            if(symbol){
+                symbol = symbol.replace('/','#');
             }
 
-            if(coins){
-                let items = [],arrCoins = coins.split(',');
-                for(let i = 0; i < arrCoins.length; i++){
-                    let coin = arrCoins[i];
-                    let coinItem = positionsInfo.data.coins.find( p => p.coin == coin);
-                    items.push(coinItem);
-                }
-                positionsInfo = {
-                    "isSuccess": true,
-                    "data": {
-                        "coins": items
-                    }
-                }
-            }
+            let positionItemsRes = cacheClient.getPositions(site,symbol);
             res.json(positionItemsRes);
         } catch (err){
             console.error(err);
