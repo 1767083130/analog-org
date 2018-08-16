@@ -30,7 +30,7 @@
             结束时间:<input size="16"  type="text" id="datetimeEnd" class="form_datetime"> 
            
             <input type="button" id="btnSearch" value="查询" />
-            <button onClick="document.location.reload()">重置</button>
+            <button onclick="document.location.reload()">重置</button>
 
             <label><input type="checkbox" id="showAll">包含已撤销委托</label>
             <a href="javascript:void(0)" id="showExceptionOrders">异常委托单</a>
@@ -41,7 +41,7 @@
                 
             </div>
 
-        <div id="FlexiGrid_ContentDiv" onLoad="goPage(1,10);">
+        <div id="FlexiGrid_ContentDiv" onload="goPage(1,10);">
             <table id="FlexiGrid_ContentTable" style="display: none;">
             </table>
         </div>
@@ -308,7 +308,7 @@
             }
         }
 
-        $("#report").empty("");
+        $("#report").empty();
         for(var key in result ){
             var html ="<div style='border:1px solid #A9A9A9;width:50%;float:left;'><table><thead style='border-bottom:1px dashed #A9A9A9;'><tr><td>币种:<span style='color:red;'>" + key + 
                 "</span></td><td>总建仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].amount || 0),2) +
