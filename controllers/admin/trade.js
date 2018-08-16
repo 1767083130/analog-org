@@ -135,28 +135,29 @@ async function list(req,res,callback){
     }
 
     //通过页面刷新fexligrid插件,setNewExtParam获取来的值
+	let site = req.query.site || req.body.site;
+    site && (params.site = site);
+	
     let symbol = req.query.symbol || req.body.symbol;
     symbol && (params.symbol = symbol);
-
-    let site = req.query.site || req.body.site;
-    site && (params.site = site);
 
     let status = req.query.status || req.body.status;
     status && (params.status = status);
 
     let createdStart = req.query.createdStart || req.body.createdStart;
     let createdEnd = req.query.createdEnd || req.body.createdEnd;
-    if(createdStart && createdEnd){
-        params.created = {"$gte" : createdStart, "$lt" : createdEnd};  //ISODate
-    } else if(createdStart){
-        params.created = {"$gte" : createdStart };
-    } else if(createdEnd){
-        params.created = {"$lt" : createdEnd };
-    }
 
     var s = new Date(+new Date() - 24 * 60 * 60 * 1000 * 15); //至多只能查询15天之内的数据
     if(!createdStart || s > createdStart){
         createdStart = s;
+    }
+
+    if(createdStart && createdEnd){
+        params.created = {"$gte" : new Date(createdStart), "$lt" : new Date(createdEnd) };  //ISODate
+    } else if(createdStart){
+        params.created = {"$gte" : new Date(createdStart) };
+    } else if(createdEnd){
+        params.created = {"$lt" : new Date(createdEnd) };
     }
 
     let bargainAmountSum = await Order.aggregate([
@@ -166,7 +167,9 @@ async function list(req,res,callback){
         { 
             $group: { 
                 _id: { site:"$site",side:"$side",symbol:"$symbol" }, 
-                bargainAmount: { "$sum": "$bargainAmount" }
+                bargainAmount: { "$sum": "$bargainAmount" },
+                total: { $sum:{ $multiply:["$bargainAmount","$avgPrice"] }},    //total总价
+                sum: { $sum: "$bargainAmount" }     //sum总量
             }
         }
     ]);
