@@ -12,10 +12,10 @@
             货币：<select id="order_symbol" data-group="1" name="symbols">
             </select>
             <br/>
-            价格：<input id="order_price" type="text">
+            价格：<input id="order_price" name="order_price" type="text" disabled="disabled">
             <br/>
-            <label><input type="checkbox" id="market_price" data-group="price">市场价</label>
-            <label><input type="checkbox" id="isPostOnly_price" data-group="price">被动成交</label>
+            <label><input type="checkbox" id="market_price" data-group="price" onclick = 'check(this)' checked="checked">市场价</label>
+            <label><input type="checkbox" id="isPostOnly_price" data-group="price" onclick = 'check(this)'>被动成交</label>
             <br/>
             <!-- side:  <select name="order_side">
               <option value="buy">建仓</option><option value="sell">平仓</option></select> -->
@@ -305,6 +305,18 @@
 
         initFlexiGrid();    
     });
+	
+	function check(obj){
+		if(obj.id == 'market_price' && obj.checked == true){
+			document.getElementById('isPostOnly_price').checked = false;
+		  document.getElementById("order_price").value="";
+		  document.getElementById("order_price").disabled=true;
+		}else if(obj.id == 'isPostOnly_price' && obj.checked == true){
+			document.getElementById('market_price').checked = false;
+		}else{
+		  document.getElementById("order_price").disabled=false;
+		}
+	}
 
     function initFlexiGrid() { 
         var initData = {
