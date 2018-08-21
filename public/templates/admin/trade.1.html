@@ -35,14 +35,10 @@
             <label><input type="checkbox" id="showAll">包含已撤销委托</label>
             <a href="javascript:void(0)" id="showExceptionOrders">异常委托单</a>
         </div>
-       <!-- <div id="quotation" > --> <!--style="display:none;" -->
-           <!-- <span  id="bas" ></span><span id="sum"></span> -->
-            <table style="width: 1044px; background-color: #C2DAFA;">
-                <tr id="show" style='text-align: center;'>
-                </tr>
-            </table> 
-        <!-- </div> -->
-
+        <table style="width: 1044px; background-color: #C2DAFA;">
+            <tr id="show" style='text-align: center;'>
+            </tr>
+        </table> 
         <div id="FlexiGrid_ContentDiv" onLoad="goPage(1,10);">
             <table id="FlexiGrid_ContentTable" style="display: none;">
             </table>
@@ -67,7 +63,7 @@
 <script type="text/javascript">
 
     var _business = {{ business | safe }};
-    var _bargainAmountSum = {{ bargainAmountSum | safe }}; //e.g { }
+    var _bargainAmountSum = {{ bargainAmountSum | safe }}; //e.g //{"_id":{"site":"bitfinex","side":"buy","symbol":"eos#btc_1w"},"bargainAmount":400,"total":1600000,"sum":400}
     var _currentOperateLog;
     var _symbolAmounts = []; // { site: "",symbol: "",amount: 234,avavgPrice: 123, plusAmount: 1,minusAmount: -1 }
     
@@ -239,28 +235,87 @@
     };
 
     function showReports(){
-        var amount;
+        return;
+        var amount; //总成交量
+        var profit = 0;  //利润
+        var multipleWarehouse = 0; //多仓
+        var shortPosition = 0; //空仓
+        
         for(var i = 0,l =_bargainAmountSum.length; i< l ;i++){
             amount = (_bargainAmountSum[i]._id.side=="buy"?_bargainAmountSum[i].bargainAmount:-_bargainAmountSum[i].bargainAmount);
-            var symbolItem = getItem(_bargainAmountSum[i]._id.site,_bargainAmountSum[i]._id.symbol); //,_bargainAmountSum[i]._id.avgPrice
+            profit = (_bargainAmountSum[i].total/_bargainAmountSum[i].sum);
+
+            var symbolItem = getItem(_bargainAmountSum[i]._id.site,_bargainAmountSum[i]._id.symbol); 
             symbolItem.amount += amount;
-            if(amount > 0){
-                symbolItem.plusAmount += _bargainAmountSum[i].bargainAmount;
-            } else {
-                symbolItem.minusAmount += _bargainAmountSum[i].bargainAmount;
+            symbolItem.profit += profit;
+
+            if(amount > 0 ){
+                symbolItem.multipleWarehouse += amount;
+            } else{ 
+                symbolItem.shortPosition += amount;
             }
         }
 
-        var temp = [];
-        for(var j = 0; j <  _symbolAmounts.length; j++){
-            var item = _symbolAmounts[j];
-            temp.push(w.format('site: {0}, symbol: {1}, amount: {2} ',item.site,item.symbol,item.amount)); //avgPrice:{3},item.avgPrice
+        var arr= []; // 
+        var result = {};//
+        var cc =[]; //
+        for (var i = 0; i < _symbolAmounts.length; i++) {
+            if(arr.indexOf(_symbolAmounts[i].symbol) == -1){
+                arr.push(_symbolAmounts[i].symbol);
+            }
         }
 
-        for(var i = 0; i<temp.length;i++){
-            $("#show").append("<td style='text-align:center;width:200px;'>"+temp[i]+ "</td>")
+        for (var i = 0; i < arr.length; i++) {
+            var amount = 0;
+            var profit = 0;
+            var multipleWarehouse = 0;
+            var shortPosition =0;
+
+            result[arr[i]] = {
+                amount: 0,
+                multipleWarehouse : 0,
+                shortPosition : 0,
+                profit : 0,
+                data : []
+            };
+
+            for (var j = 0; j < _symbolAmounts.length; j++) {
+                if(_symbolAmounts[j].symbol == arr[i]) {
+                    amount += _symbolAmounts[j].amount;
+                    multipleWarehouse += _symbolAmounts[j].multipleWarehouse;
+                    shortPosition +=  _symbolAmounts[j].shortPosition;
+                    profit += _symbolAmounts[j].profit;
+
+                    result[arr[i]].amount = amount;
+                    result[arr[i]].multipleWarehouse = multipleWarehouse;
+                    result[arr[i]].shortPosition = shortPosition;
+                    result[arr[i]].profit = profit;
+                    result[arr[i]].data.push(_symbolAmounts[j]);
+                }
+            }
         }
+
+        for(var key in result ){
+            var html ="<div style='border:1px solid;width:50%;float:left;'><table><thead style='border-bottom:1px dashed;'><tr><td>币种:<span style='color:red;'>" + key + 
+                "</span>,</td><td>总建仓:<span style='color:red;'>" + result[key].amount +
+                "</span>,</td><td>总多仓:<span style='color:red;'>" + result[key].multipleWarehouse +
+                "</span>,</td><td>总空仓:<span style='color:red;'>" + result[key].shortPosition +
+                "</span>,</td><td>总利润:<span style='color:red;'>" + result[key].profit +
+                "</span></td></tr></thead><tbody><tr><td colspan='5'>&nbsp;&nbsp;&nbsp;其中:</td></tr>";
+
+            for(var i = 0; i < result[key].data.length;i++){
+                html+="<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网站:<span style='color:red;'>" + result[key].data[i].site +
+                    "</span>,</td><td>建仓:<span style='color:red;'>" + result[key].data[i].amount +
+                    "</span>,</td><td>多仓:<span style='color:red;'>" + result[key].data[i].multipleWarehouse +
+                    "</span>,</td><td>空仓:<span style='color:red;'>" + result[key].data[i].shortPosition +
+                    "</span>,</td><td>利润:<span style='color:red;'>" + result[key].data[i].profit + "</span></td></tr>"; 
+            }
+
+            html+="</tbody></table></div>";
+            $("#show").append(html);
+        }  
     }
+
 
     //分页页码
     function flexiGridInited(options) {
@@ -303,6 +358,11 @@
         if(typeof options.orders == 'string'){
             options.orders = JSON.parse(options.orders);
         }
+
+        if(typeof options.bargainAmountSum == 'string'){
+            _bargainAmountSum = JSON.parse(options.bargainAmountSum); 
+        }
+        showReports();
 
         var  data = {
             "page": options.page,
@@ -372,18 +432,20 @@
         var t,
             coinsPair = symbol.split('_')[0];
         for(var i = 0,l = _symbolAmounts.length; i< l ;i++){
-            if(_symbolAmounts[i].site == site && _symbolAmounts[i].symbol == coinsPair){
+            if(_symbolAmounts[i].site == site && _symbolAmounts[i].symbol == coinsPair ){
                 t = _symbolAmounts[i];
                 break;
             }
         }
 
         if(!t){
-            t = {site:site,symbol:coinsPair,amount:0} 
+            t = { site:site, symbol:coinsPair, amount: 0, profit: 0, multipleWarehouse: 0, shortPosition: 0 } 
             _symbolAmounts.push(t);
         }
+        
         return t;  
     }
+
 </script>
 {% endblock %}
  
