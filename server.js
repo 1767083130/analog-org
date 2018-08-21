@@ -51,11 +51,7 @@ process.on('uncaughtException', function(e) {
 });
 
 function log(data){
-<<<<<<< HEAD
     return
-=======
-    return;
->>>>>>> e916d75dd8736736220153e9b5966ddda0ab8692
     fs.appendFile(path.join(__dirname,'logs',  'position.txt'), JSON.stringify(data) + '\r\n\r\n', (err) =>  {
         if (err) throw err;
         //console.log("Export Account Success!");
