@@ -1,18 +1,19 @@
 ﻿{% extends "layouts/admin-master.html" %} 
 {% block body %}
 <div>
-    <h4>委托列表</h4>
+    <h3>委托列表</h3>
     <div>
         <div style="width: 1044px; padding:2px; background-color: #C2DAFA;">  
             site:
             <select id="inquirysite" name="sites" data-group="1" >
             </select>&nbsp;&nbsp;
-            <span id="hide" style="display:none">symbol: 
-            <select id="inquirysymbol" name="symbols" data-group="1" >  
+
+            <span id="hide" style="display:none;">symbol: 
+            <select id="inquirysymbol" name="symbols" data-group="1" >
             </select>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
             status:
-            <select id="inquirystatus" name="statuss" >
+            <select id="inquirystatus" name="status" >
                 <option value="">--请选择--</option>
                 <option value="wait">运行中</option>
                 <option value="consign">已委托未成交</option>
@@ -22,21 +23,25 @@
                 <option value="canceled">已取消</option>
                 <option value="auto_retry">超时不同价格重新委托</option>
                 <option value="failed">已失败</option>
-            </select><br/>
+            </select>
+            <br/>
 
             起始时间:<input size="16"  type="text" id="datetimeStart" class="form_datetime">--
             结束时间:<input size="16"  type="text" id="datetimeEnd" class="form_datetime"> 
            
             <input type="button" id="btnSearch" value="查询" />
-            <button onClick="document.location.reload()">重置</button>
+            <button onclick="document.location.reload()">重置</button>
+
+            <label><input type="checkbox" id="showAll">包含已撤销委托</label>
+            <a href="javascript:void(0)" id="showExceptionOrders">异常委托单</a>
+
+            <input type="button" id="btnReport" value="展开" style="float:right">
         </div>
-        <table style="width: 1044px; background-color: #C2DAFA;">
-            <tr id="show" style='text-align: center;'>
+            <div id="report" style="width: 1044px;"> 
+                
+            </div>
 
-            </tr>
-        </table>
-
-        <div id="FlexiGrid_ContentDiv" onLoad="goPage(1,10);">
+        <div id="FlexiGrid_ContentDiv" onload="goPage(1,10);">
             <table id="FlexiGrid_ContentTable" style="display: none;">
             </table>
         </div>
@@ -55,15 +60,22 @@
 <script src="../js/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript" language="utf-8"></script>
 <script src="../js/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" language="utf-8"></script>
 
+<link rel="stylesheet" href="../js/plugins/bootstrap/3.3.5/css/bootstrap.min.css" />
 <link rel="stylesheet" href="../js/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" type="text/css" media="screen"/>
 <script type="text/javascript">
+
     var _business = {{ business | safe }};
-    var _bargainAmountSum = {{ bargainAmountSum | safe }};
+    var _bargainAmountSum = {{ bargainAmountSum | safe }}; //e.g //{"_id":{"site":"bitfinex","side":"buy","symbol":"eos#btc_1w"},"bargainAmount":400,"total":1600000,"sum":400}
     var _currentOperateLog;
-    var _symbolAmounts = []; // { site: "",symbol: "",amount1: 234,avavgPrice: 123 }
+    var _symbolAmounts = []; // { site: "",symbol: "",amount: 234,avavgPrice: 123, plusAmount: 1,minusAmount: -1 }
     
     $(function () {
-        setInterval(quotation(),5000);
+        showReports();
+        // setInterval(function(){
+        //     $("#FlexiGrid_ContentTable").flexReload();
+        // },5000)
+
+        // setInterval(quotation(),5000);
         $("#datetimeStart").datetimepicker({
             format:'yyyy-mm-dd hh:ii',
             endDate:new Date(),
@@ -95,10 +107,11 @@
                 var site = _business.sites[i];
                 $('<option/>').appendTo(this).val(site).html(site);
             }
+            
         });
 
         $('select[name="symbols"]').each(function(){
-            
+            $('<option/>').appendTo(this).val('').html('--请选择--');
             var group = $(this).attr('data-group');
             var site = $(this).val();
             var $element = $(w.format('select[name="symbols"][data-group="{0}"]',group));
@@ -107,21 +120,28 @@
         });
 
         $('select[name="sites"]').change(function(){
-            $('#quotation').show();
-            $('#hide').show();
-            $('#inquirysymbol').show();
-            var group = $(this).attr('data-group');
-            var site = $(this).val();
-            if(!site){
-                return;
-            }
-
-            var $element = $(w.format('select[name="symbols"][data-group="{0}"]',group));
-            initSymbolItems($element,site);
+            if($('select[name="sites"]').val()==''){
+                $('#hide').hide();
+                $('select[name="symbols"]').val('').html('--请选择--');
+                
+            }else{
+                $('#hide').show();
+                var group = $(this).attr('data-group');
+                var site = $(this).val();
+                if(!site){
+                    return;
+                }
+                var $element = $(w.format('select[name="symbols"][data-group="{0}"]',group));
+                initSymbolItems($element,site);
+            } 
         });
         
         $('#btnSearch').click(function(){
-            console.log($("#datetime").val());
+            _symbolAmounts =[];
+            $("#report").empty();
+            // showReports();
+
+            // console.log($("#datetime").val());
             var newParams = [
                 { name:"site", value:$('#inquirysite').val() },
                 { name:"symbol", value:$('#inquirysymbol').val() },
@@ -131,11 +151,32 @@
             ]
             $("#FlexiGrid_ContentTable").setNewExtParam(newParams);
             $("#FlexiGrid_ContentTable").flexReload();
+        });
+
+        $("#report").hide();
+
+        $("#btnReport").click(function(){
+            $("#report").toggle('slow');
+            $(this).val($(this).val()=="展开"?"隐藏":"展开");
         })
 
-        initFlexiGrid();
-    });
+        $('#showAll').change(function(){
+            var newParams = [
+                { name:"showAll", value: $(this).prop('checked') ? 1 : 0 },
+            ]
+            $("#FlexiGrid_ContentTable").setNewExtParam(newParams);
+            $("#FlexiGrid_ContentTable").flexReload();
+        });
+        
+        $('#showExceptionOrders').click(function(){
+            var newParams = [{ name:"type", value: 3 }]
+            $("#FlexiGrid_ContentTable").setNewExtParam(newParams);
+            $("#FlexiGrid_ContentTable").flexReload();
+        });
 
+        initFlexiGrid();    
+    });
+    
     function initFlexiGrid() { 
         var initData = {
             "page": 1,  //当前页
@@ -151,21 +192,24 @@
             autoToolBar: true,
             colResizable: true,
             mutilRowMessage: true,
-            showLoading: true,
+            showLoading: false,
             showMessageOnRowClicked: true,
             url: '/admin/trade/list',
             colModel: [
+               // { display: 'Select', name: 'id', width: 40, align: 'center', checkbox:true},  
                 { display: "交易网站", name: "site",type: 0,visible: true, width: "80", sortable: true,align:"left"},
                 { display: "交易品种", name: "symbol",type: 0,visible: true, width: "80", sortable: true,align: "left" },
                 { display: "委托时间",name: "created", type: 0,visible: true,width: "140",sortable: true,align: "left" },
                 { display: "委托类型",name: "type", type: 0,visible: true,width: "80",sortable: true,align: "left" },
                 { display: "交易类型",name: "side", type: 0,visible: true,width: "80",sortable: true,align: "left" },
                 { display: "委托数量",name: "amount", type: 0,visible: true,width: "100",sortable: true,align: "left" },
-                { display: "委托价格",name: "price", type: 0,visible: true,width: "100",sortable: true,align: "left" },
+                { display: "委托价格",name: "price", type: 0,visible: true,width: "100",sortable: true,align: "left",process:formatMoney },
                 { display: "已成交",name: "bargainAmount", type: 0,visible: true,width: "80",sortable: true,align: "left" },
-                { display: "成交均价",name: "avgPrice", type: 0,visible: true,width: "100",sortable: true,align: "left" },
+                { display: "成交均价",name: "avgPrice", type: 0,visible: true,width: "100",sortable: true,align: "left",process:formatMoney },
                 { display: "委托状态",name: "status", type: 0,visible: true,width: "80",sortable: true,align: "left" },
+                { display: "操作",name: "cancel", type: 0,visible: true,width: "80",sortable: true,align: "left" }
             ],
+            
             //分页页码
             onInited: flexiGridInited,
             //加载表格
@@ -177,21 +221,22 @@
             columnsFixed: true,
             checkCell: {
                 showCheckAll: true,
-                width: "25"
+                width: "100"
             },
             gridClass: "bbit-grid",
             bootStrapSupported: false,
             resizable: false,
-            showTableToggleBtn: false,
+            showTableToggleBtn: true, 
             usepager: true, //是否分页
             useRp: true,    //是否可动态设置分页显示的结果数
             rp: 10,  //每页默认的结果数
             singleselected: false,
             nowrap: true,   //是否不换行
-            showcheckbox: false,
+            //showcheckbox: true,
             rpOptions: [10,20,30],  //可选择设定的每页结果数
             newp: 1,    //自定义翻页事件,定义刷新后第一页停留在哪个位置
             selectedonclick: false
+            // checkbox:true
         };
         
         $("#FlexiGrid_ContentTable").flexigrid(option);
@@ -204,23 +249,97 @@
         $('#FlexiGrid_ContentTable').fixGridWidth();
     };
 
-    function flexiGridInquiry(){
-        var option = {
-            symbol:$("#symbol").val(),
-            newp:1
+    function showReports(){
+        
+        var amount; //总成交量
+        var middle = 0; //总价
+        var multipleWarehouse = 0; //多仓
+        var shortPosition = 0; //空仓
+        
+        for(var i = 0,l =_bargainAmountSum.length; i< l ;i++){
+            amount = (_bargainAmountSum[i]._id.side=="buy"?_bargainAmountSum[i].bargainAmount:-_bargainAmountSum[i].bargainAmount);
+
+            middle = _bargainAmountSum[i].total;
+
+            var symbolItem = getItem(_bargainAmountSum[i]._id.site,_bargainAmountSum[i]._id.symbol); 
+            symbolItem.amount += amount;
+            symbolItem.middle += middle;
+
+            if(amount > 0 ){
+                symbolItem.multipleWarehouse += amount;
+            } else{ 
+                symbolItem.shortPosition += amount;
+            }
         }
 
-        $.ajax({
-            type:"POST",
-            url:'trade.js',
-            data:option,
-            dataType:'json'
-        }).success(function(data){
-            $("#FlexiGrid_ContentTable").flexOptions(data).flexReload(); 
-            console.log(data);
-        })
+        var arr= []; // {eos#btc,btc#cny,btc#usd}
+        var result = {};// {[eos#btc:amount:400 data:Array(1)0:{site: "okex", symbol: "eos#btc", amount: 400, profit: 2000, multipleWarehouse: 400, …} multipleWarehouse:400 profit:2000 shortPosition:0]}
+        
+        for (var i = 0; i < _symbolAmounts.length; i++) {
+            if(arr.indexOf(_symbolAmounts[i].symbol) == -1){
+                arr.push(_symbolAmounts[i].symbol);
+            }
+        }
+        
+
+        for (var i = 0; i < arr.length; i++) {
+            var amount = 0;
+            var profit = 0;
+            var multipleWarehouse = 0;
+            var shortPosition = 0;
+
+            result[arr[i]] = {
+                amount: 0,
+                multipleWarehouse : 0,
+                shortPosition : 0,
+                profit : 0,
+                data : []
+            };
+
+            for (var j = 0; j < _symbolAmounts.length; j++) {
+                if(_symbolAmounts[j].symbol == arr[i]) {
+                    amount += _symbolAmounts[j].amount;
+                    multipleWarehouse += _symbolAmounts[j].multipleWarehouse;
+                    shortPosition +=  _symbolAmounts[j].shortPosition;
+                    profit -=  _symbolAmounts[j].middle;
+
+                    result[arr[i]].amount = amount;
+                    result[arr[i]].multipleWarehouse = multipleWarehouse;
+                    result[arr[i]].shortPosition = shortPosition;
+                    result[arr[i]].profit = profit;
+                    result[arr[i]].data.push(_symbolAmounts[j]);
+                }
+            }
+        }
+
+        $("#report").empty();
+        for(var key in result ){
+            var html ="<div style='border:1px solid #A9A9A9;width:50%;float:left;'><table><thead style='border-bottom:1px dashed #A9A9A9;'><tr><td>币种:<span style='color:red;'>" + key + 
+                "</span></td><td>总建仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].amount || 0),2) +
+                "</span>,</td><td>总多仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].multipleWarehouse || 0),2) +
+                "</span>,</td><td>总空仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].shortPosition || 0),2) +
+                    //result[key].profit需要正数转负数
+                "</span>,</td><td>总利润:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].profit || 0),2) +
+                "</span></td></tr></thead><tbody><tr><td colspan='5'>其中:</td></tr>";
+
+        
+            for(var i = 0; i<result[key].data.length;i++){
+                html+="<tr><td>网站:<span style='color:red;'>" +  result[key].data[i].site +
+                    "</span></td><td>建仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].data[i].amount || 0),2) +
+                    "</span>,</td><td>多仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].data[i].multipleWarehouse || 0),2) +
+                    "</span>,</td><td>空仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].data[i].shortPosition || 0),2) +
+                    "</span></td></tr>"; 
+            }
+
+            html+="</tbody></table></div>";
+            $("#report").append(html);
+        }  
     }
 
+    //"</span>,</td><td>总利润:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].profit || 0),4) +
+        //<td>利润:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].data[i].profit || 0),4) + "</span></td>
+
+    //分页页码
     function flexiGridInited(options) {
         var newParams = [
                 { name:"type", value: w.getQueryStringValue('type') },
@@ -237,6 +356,7 @@
         return options;
     }
 
+  
     function flexiGridLoaded(options){
         $('a[name="manualOperate"]').click(function(){
             var orderId = $(this).attr("data-orderId");
@@ -253,13 +373,35 @@
                 $('#txtOperateAmount').val(operateLog.orgOperate.orderAmount)
             }
         });
+        
+
+        //撤销
+        $('a[data-type="restart"]').click(function(){
+            var name = $(this).attr("data-name");
+            restart(name);
+        })
     }
 
+    //操作函数
+    function formatMoney(value, pid) {
+
+        return "￥" + parseFloat(value).toFixed(2);
+
+    }
+
+    
+    
     //加载表格数据
     function flexiGridPreLoad(options){
         if(typeof options.orders == 'string'){
             options.orders = JSON.parse(options.orders);
         }
+
+        if(typeof options.bargainAmountSum == 'string'){
+            _bargainAmountSum = JSON.parse(options.bargainAmountSum); 
+            showReports();
+        }
+        // showReports();
 
         var  data = {
             "page": options.page,
@@ -268,7 +410,7 @@
             "rows": [],
             "orders": {}
         };
-      
+
         var orders = options.orders || [];
         for(var i = 0; i < orders.length; i++){
             var order = orders[i];
@@ -289,16 +431,44 @@
                     {"cellHtml": side},
                     {"cellHtml": w.toDecimal(Math.abs(order.amount || 0),4) },
                     {"cellHtml": order.price },
-                    {"cellHtml": w.toDecimal(Math.abs(order.bargainAmount || 0),4)},
-                    {"cellHtml": w.toDecimal(Math.abs(order.avgPrice || 0),3)},
-                    {"cellHtml": order.status},
-                ],
-                "attrs": []
+                    {"cellHtml": w.toDecimal(Math.abs(order.bargainAmount || 0),4) },
+                    {"cellHtml": w.toDecimal(Math.abs(order.avgPrice || 0),3) },
+                    {"cellHtml": order.status },
+                    {"cellHtml": w.format('<a href="javascript:void(0);" data-type="restart" data-name="{0}">restart</a>',order.outerId )}
+                ]
             };
             data.rows.push(row);
         }
         return data;
     }
+
+
+    function restart(name){
+        if(!confirm(w.format('确定要撤销进程{0}？',name))){
+            return;
+        }
+        $("#FlexiGrid_ContentTable").showLoading();
+
+        $.ajax({
+            type:"POST",
+            url:"/admin/trade/cancelOrder",
+            data:{name:name,"_csrf": $('input[name="_csrf"]').val()},
+            dataType:"json"
+        }).done(function(e){
+            $("#FlexiGrid_ContentTable").hideLoading();
+            if(e.isSuccess){
+                $("#FlexiGrid_ContentTable").flexReload();
+                //回调函数
+                successFun && successFun(e.plan);
+            }else{
+                failFun ? failFun(): alert("撤销失败，请稍后重试！");
+            }
+        }).fail(function(e){
+            $("#FlexiGrid_ContentTable").hideLoading();
+            failFun ? failFun(): alert("撤销失败，请稍后重试！");
+        })
+    }
+
 
     function flexiGridCommand(sender, e) {
         var operateBtn = sender;
@@ -307,69 +477,11 @@
     }
 
     onToggoleLeft = function () {
-        $('#refundRecordFlexiGrid_ContentTable').fixGridWidth();
+        $('#FlexiGrid_ContentTable').fixGridWidth();
     };
-
-    function getTransferLogs() {
-        var options = {
-            pageIndex: 0,
-            pageSize: 20,
-            status: "wait",
-            "_csrf": $('input[name="_csrf"]').val()
-        };
-
-        $.ajax({
-            type: "POST",
-            url: "/admin/trade/list",
-            data: options,
-            dataType: 'json'
-        }).done(function (e) {
-            if (e.isSuccess) {
-                alert("成功！");
-            }
-            else {
-                alert("系统错误，请稍后重试！");
-            }
-        }).fail(function (e) {
-            alert("系统错误，请稍后重试！");
-        });
-
-    }
-
-    function runTransferStep(){
-        var sAmount = $('#txtOperateAmount').val();
-        var amount = new Number(sAmount);
-        if(isNaN(amount) || !isFinite(amount)){
-            alert('请输入正确的金额');
-            return;
-        }
-
-        var options = {
-            logId: _currentOperateLog._id,
-            amount
-        };
-
-        $.ajax({
-            type: "POST",
-            url: "/admin/trade/list",
-            data: options,
-            dataType: 'json'
-        }).done(function (e) {
-
-            if (e.isSuccess) {
-                alert("成功！");
-            }
-            else {
-                alert("系统错误，请稍后重试！");
-            }
-        }).fail(function (e) {
-            alert("系统错误，请稍后重试！");
-        });
-    }
 
     function initSymbolItems($element,site){
         $element.html('--请选择--');
-
         var symbols = [];
         for(var i = 0; i < _business.symbols.length;i++){
             if(_business.symbols[i].site == site){
@@ -377,54 +489,30 @@
                 break;
             }
         }
-        
+
         for(var i = 0; i < symbols.length;i++){
             var symbol = symbols[i];
             $('<option/>').appendTo($element).val(symbol).html(symbol);
         }
     }
-    
-    function quotation(){
-        var amount;
-        // 
-        // $('#bas').text( $('#inquirysymbol').val());
-        for(var i = 0,l =_bargainAmountSum.length; i< l ;i++){
-            amount = (_bargainAmountSum[i]._id.side=="buy"?_bargainAmountSum[i].bargainAmount:-_bargainAmountSum[i].bargainAmount);
-            var symbolItem = getItem(_bargainAmountSum[i]._id.site,_bargainAmountSum[i]._id.symbol);//,_bargainAmountSum[i]._id.avgPrice
-            symbolItem.amount += amount;
-        }
 
-        var temp = [];
-        for(var j = 0; j <  _symbolAmounts.length; j++){
-            var item = _symbolAmounts[j];
-            temp.push(w.format('site: {0}, symbol: {1}, amount: {2} ',item.site,item.symbol,item.amount));//avgPrice:{3}    ,item.avgPrice
-        }
-
-        for(var i = 0; i<temp.length;i++){
-            $("#show").append("<td style='text-align:center;width:200px;'>"+temp[i]+ "</td>")
-        }
-        // $("#sum").text(temp.join(";"));
-        // $('#quotation').show();
-    }
-
-
-    function getItem(site,symbol,avgPrice){
-        var t;
+    function getItem(site,symbol){
+        var t,
+            coinsPair = symbol.split('_')[0];
         for(var i = 0,l = _symbolAmounts.length; i< l ;i++){
-        // for( var item in _bargainAmountSum){
-            if(_symbolAmounts[i].site == site && _symbolAmounts[i].symbol == symbol ){//&& _symbolAmounts[i].avgPrice == avgPrice
+            if(_symbolAmounts[i].site == site && _symbolAmounts[i].symbol == coinsPair ){
                 t = _symbolAmounts[i];
                 break;
             }
         }
 
         if(!t){
-            t = {site:site,symbol:symbol,amount:0} //,avgPrice:avgPrice
+            t = { site:site, symbol:coinsPair, amount: 0, middle: 0, multipleWarehouse: 0, shortPosition: 0 } //profit: 0,
             _symbolAmounts.push(t);
         }
+        
         return t;  
     }
-
 
 </script>
 {% endblock %}
