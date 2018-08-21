@@ -135,11 +135,11 @@ async function list(req,res,callback){
     }
 
     //通过页面刷新fexligrid插件,setNewExtParam获取来的值
+	let site = req.query.site || req.body.site;
+    site && (params.site = site);
+	
     let symbol = req.query.symbol || req.body.symbol;
     symbol && (params.symbol = symbol);
-
-    let site = req.query.site || req.body.site;
-    site && (params.site = site);
 
     let status = req.query.status || req.body.status;
     status && (params.status = status);
@@ -153,11 +153,11 @@ async function list(req,res,callback){
     }
 
     if(createdStart && createdEnd){
-        params.created = {"$gte" : createdStart, "$lt" : createdEnd};  //ISODate
+        params.created = {"$gte" : new Date(createdStart), "$lt" : new Date(createdEnd) };  //ISODate
     } else if(createdStart){
-        params.created = {"$gte" : createdStart };
+        params.created = {"$gte" : new Date(createdStart) };
     } else if(createdEnd){
-        params.created = {"$lt" : createdEnd };
+        params.created = {"$lt" : new Date(createdEnd) };
     }
 
     let bargainAmountSum = await Order.aggregate([
