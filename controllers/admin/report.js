@@ -78,8 +78,6 @@ module.exports = function (router) {
 }
 
 async function list(req,res,callback){
-    let pageNumber = Number(req.body.page || '1') || 1;
-    let pageSize = Number(req.body.rp || '10') || 10;
 
     let userName = req.user.userName;
     
@@ -103,7 +101,6 @@ async function list(req,res,callback){
         };
     }
 
-    //通过页面刷新fexligrid插件,setNewExtParam获取来的值
 
     let site = req.query.site || req.body.site;
     site && (params.site = site);
@@ -116,12 +113,18 @@ async function list(req,res,callback){
 
     let createdStart = req.query.createdStart || req.body.createdStart;
     let createdEnd = req.query.createdEnd || req.body.createdEnd;
+
+    var s = new Date(+new Date() - 24 * 60 * 60 * 1000 * 15); //至多只能查询15天之内的数据
+    if(!createdStart || s > createdStart){
+        createdStart = s;
+    }
+
     if(createdStart && createdEnd){
-        params.created = {"$gte" : createdStart, "$lt" : createdEnd};  //ISODate
+        params.created = {"$gte" : new Date(createdStart), "$lt" : new Date(createdEnd) };  //ISODate
     } else if(createdStart){
-        params.created = {"$gte" : createdStart };
+        params.created = {"$gte" : new Date(createdStart) };
     } else if(createdEnd){
-        params.created = {"$lt" : createdEnd };
+        params.created = {"$lt" : new Date(createdEnd) };
     }
 
     //获取成交总量\平均价
@@ -140,25 +143,15 @@ async function list(req,res,callback){
     ]);
 
     params.userName = userName;
-    var options = {
-        //select:   'title date author',
-        sort: { created : -1 },
-        //populate: 'strategyId',
-        lean: true,
-        page: pageNumber, 
-        limit: pageSize
-    };
+   
 
     let business = configUtil.getBusiness();
     business.sites = apiConfigUtil.getSites();
     business.symbols = apiConfigUtil.getSiteSymbols();
 
-    Order.paginate(params, options).then(async function(getRes) {
-        let orders = getRes.docs || [];
+    Order.paginate(params).then(async function(getRes) {
+        
         let t = {
-            pageSize: getRes.limit,
-            total: getRes.total,
-            //orders: JSON.stringify(orders || []),
             business:JSON.stringify(business || []),
             bargainAmountSum:JSON.stringify(bargainAmountSum || []),
             isSuccess: true
@@ -167,4 +160,3 @@ async function list(req,res,callback){
         callback(t);
     });
 }
-

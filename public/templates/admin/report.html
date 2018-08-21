@@ -1,11 +1,9 @@
 {% extends "layouts/admin-master.html" %} 
 {% block body %}
 <div >
-    
     <h3>委托列表:</h3>
     <div>
-       
-        <div style="width: 1035px; padding:2px;background-color: rgb(199, 217, 247); ">  
+        <div style="width: 1044px; padding:2px;background-color: rgb(199, 217, 247); ">  
 
             site:
             <select id="inquirysite" name="sites" data-group="1" >
@@ -32,29 +30,18 @@
             结束时间:<input size="16"  type="text" id="datetimeEnd" class="form_datetime">
            
             <input type="button" id="btnSearch" value="查询" />
-            <button onClick="document.location.reload()">重置</button>
+            <button onclick="document.location.reload()">重置</button>
         </div>
-       
-            <!-- <table id="show" border="1" style="width: 1044px; background-color: rgb(199, 217, 247); ">  
-            </table>  onLoad="goPage(1,10);" -->
-            <div id="show" style="width: 1035px;"> 
-
+            
+            <div id="report" style="width: 1044px;"> 
+                
             </div>
-
-        <div id="FlexiGrid_ContentDiv" >
-            <table id="FlexiGrid_ContentTable" style="display: none;">
-            </table>
-        </div>
-        <div id="barcon" name="barcon"></div>
-        <div name="customPager" id="flexiGridPager" for="FlexiGrid_ContentTable" style="padding-top: 4px; display: none;"></div>
-        <input type="hidden" name="_csrf" value="{{_csrf}}" />
     </div>
 </div>
 
 {% endblock %} {% block scripts %}
 <script src="../js/jquery-1.8.2.js" type="text/javascript"></script>
 <script src="../js/plugins/bootstrap/3.3.5/js/bootstrap.min.js" type="text/javascript" language="utf-8"></script>
-<script src="../js/lib/jquery.flexigrid.js" type="text/javascript"></script>
 <script src="../js/common.js" type="text/javascript"></script>
 <script src="../js/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript" language="utf-8"></script>
 <script src="../js/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" language="utf-8"></script>
@@ -77,6 +64,9 @@
     
     $(function () {
         showReports();
+        setInterval(function(){
+            showReports();
+        },3000)
 
         $("#datetimeStart").datetimepicker({
             format:'yyyy-mm-dd hh:ii',
@@ -141,131 +131,77 @@
         
         $('#btnSearch').click(function(){
             _symbolAmounts =[];
-            $("#show").empty("");
+            $("#report").empty();
 
-            var site = $('#inquirysite').val();
-            var symbol = $('#inquirysymbol').val();
-            var status = $('#inquirystatus').val();
-            var createdStart = $('#datetimeStart').val();
-            var createdEnd = $('#datetimeEnd').val();
-
-            var newParams = [
-                { name:"site", value:site },
-                { name:"symbol", value:symbol},
-                { name:"status", value:status },
-                { name:"createdStart", value:createdStart},
-                { name:"createdEnd", value:createdEnd}
-            ]
-
-            $("#FlexiGrid_ContentTable").setNewExtParam(newParams);
-            $("#FlexiGrid_ContentTable").flexReload();
-         
+            init();
 
         });
-
-        initFlexiGrid();
         
     });
-    
-    function initFlexiGrid() { 
-        var initData = {
-            "page": 1,  //当前页
-            "total": {{ total }},   //总页面数
-            //"orders": {{ orders | safe }}
-        };
 
-        var option = {
-            width: 0,
-            height: 'auto',
-            data: initData,
-            autoPager: false,//分页菜单栏
-            //autoToolBar: true,
-            //colResizable: true,
-            //mutilRowMessage: true,
-            //showLoading: true,
-            //showMessageOnRowClicked: true,
-            url: '/admin/report/list',
-            // colModel: [
-            //     { display: "第三方id",name: "outerId",type: 0,visible: true,width: "80",sortable: true,align: "center" },
-            //     { display: "交易品种", name: "symbol",type: 0,visible: true, width: "80", sortable: true,align: "center" },
-            //     { display: "委托类型",name: "type", type: 0,visible: true,width: "80",sortable: true,align: "center" },
-            //     { display: "委托状态",name: "status", type: 0,visible: true,width: "80",sortable: true,align: "center" },
-            //     { display: "总数量",name: "amount", type: 0,visible: true,width: "100",sortable: true,align: "center" },
-            //     { display: "已成交数量",name: "bargainAmount", type: 0,visible: true,width: "80",sortable: true,align: "center" },
-            //     { display: "交易类型",name: "side", type: 0,visible: true,width: "80",sortable: true,align: "center" },
-            //     { display: "创建时间",name: "created", type: 0,visible: true,width: "140",sortable: true,align: "center" },
-            //     { display: "委托价格",name: "price", type: 0,visible: true,width: "100",sortable: true,align: "center" },
-            //     { display: "平均成交价格",name: "avgPrice", type: 0,visible: true,width: "100",sortable: true,align: "center" },
-            //     { display: "是否隐藏单",name: "hidden", type: 0,visible: true,width: "100",sortable: true,align: "center" }
-            // ],
-            //分页页码
-            //onInited: flexiGridInited,
-            //加载表格
-            onPreLoad: flexiGridPreLoad,
-            // onLoaded: flexiGridLoaded,
-            // onCommand: flexiGridCommand,
-            
-            autoload: false,    //自动加载,改自动加载就会报错
-            //columnsFixed: true,
-            //checkCell: {
-            //     showCheckAll: true,
-            //     width: "25"
-            // },
-            //gridClass: "bbit-grid",
-            bootStrapSupported: false,
-            resizable: false,
-            showTableToggleBtn: false,
-            //usepager: true, //是否分页
-            //useRp: true,    //是否可动态设置分页显示的结果数
-            rp: 10,  //每页默认的结果数
-            singleselected: false,
-            nowrap: true,   //是否不换行
-            showcheckbox: false,
-            rpOptions: [10,20,30],  //可选择设定的每页结果数
-            newp: 1,    //自定义翻页事件,定义刷新后第一页停留在哪个位置
-            selectedonclick: false
+    function init(){
+        
+        var site = $('#inquirysite').val();
+        var symbol = $('#inquirysymbol').val();
+        var status = $('#inquirystatus').val();
+        var createdStart = $('#datetimeStart').val();
+        var createdEnd = $('#datetimeEnd').val();
+        var data={
+            "site": site,
+            "symbol": symbol,
+            "status": status,
+            "createdStart": createdStart,
+            "createdEnd": createdEnd
         };
         
-        $("#FlexiGrid_ContentTable").flexigrid(option);
-        // $("#FlexiGrid_ContentTable").flexOptions(option).flexReload();
-        var csrf = $('input[name="_csrf"]').val();
-        $("#FlexiGrid_ContentTable").setNewExtParam([{name: "_csrf",value: csrf }]);   
+        $.ajax({
+            type: "GET",
+            url: "/admin/report/list",
+            data: data,
+            dataType: 'json'
+        }).done(function (e) {
+            
+            if(typeof e.bargainAmountSum == 'string'){
+            _bargainAmountSum = JSON.parse(e.bargainAmountSum); 
+            showReports();
+            }
+            
+        }).fail(function (e) {
+            alert("系统错误，请稍后重试！");
+        });
     }
 
-    // onToggoleLeft = function () {
-    //     $('#FlexiGrid_ContentTable').fixGridWidth();
-    // };
+    
 
     //获取成交总数/平均价
     function showReports(){
-        //总成交量
-        var amount;
-        //利润
-        var profit = 0;
-        //多仓
-        var multipleWarehouse =0;
-        //空仓
-        var shortPosition = 0;
+        
+        var amount; //总成交量
+        var middle = 0; //总价
+        var multipleWarehouse = 0; //多仓
+        var shortPosition = 0; //空仓
+
         for(var i = 0,l =_bargainAmountSum.length; i< l ;i++){
 
             amount = (_bargainAmountSum[i]._id.side=="buy"?_bargainAmountSum[i].bargainAmount:-_bargainAmountSum[i].bargainAmount);
 
-            
-            profit = (_bargainAmountSum[i].total/_bargainAmountSum[i].sum);
+            middle = _bargainAmountSum[i].total;
 
             var symbolItem = getItem(_bargainAmountSum[i]._id.site,_bargainAmountSum[i]._id.symbol); 
             symbolItem.amount += amount;
-            symbolItem.profit += profit;
+            symbolItem.middle += middle;
 
             if(amount > 0 ){
                 symbolItem.multipleWarehouse += amount;
             } else{ 
-                symbolItem.shortPosition += amountt;
+                symbolItem.shortPosition += amount;
             }
             
         }
 
-        var arr= []; var result = {};var cc =[]; 
+        var arr= [];
+        var result = {}; 
+
         for (var i = 0; i < _symbolAmounts.length; i++) {
             if(arr.indexOf(_symbolAmounts[i].symbol)==-1){
                     arr.push(_symbolAmounts[i].symbol);
@@ -283,13 +219,14 @@
                     profit : 0,
                     data : []
             };
-            // cc.push( result[arr[i]]);
+            
             for (var j = 0; j < _symbolAmounts.length; j++) {
                 if(_symbolAmounts[j].symbol==arr[i]){
                     amount += _symbolAmounts[j].amount;
                     multipleWarehouse += _symbolAmounts[j].multipleWarehouse;
                     shortPosition +=  _symbolAmounts[j].shortPosition;
-                    profit +=  _symbolAmounts[j].profit;
+                    profit -=  _symbolAmounts[j].middle;
+
                     result[arr[i]].amount = amount;
                     result[arr[i]].multipleWarehouse = multipleWarehouse;
                     result[arr[i]].shortPosition = shortPosition;
@@ -300,37 +237,35 @@
             }
            
         }
-        console.log(result);
-
+        
+        $("#report").empty();
         for(var key in result ){
-            var html ="<div style='border:1px solid;width:50%;height:100%;float:left;'><table><thead style='border-bottom:1px dashed;'><tr><td>币种:<span style='color:red;'>"+key+ 
-            "</span>,</td><td>总建仓:<span style='color:red;'>"+result[key].amount+
-            "</span>,</td><td>总多仓:<span style='color:red;'>"+result[key].multipleWarehouse+
-            "</span>,</td><td>总空仓:<span style='color:red;'>"+result[key].shortPosition+
-            "</span>,</td><td>总利润:<span style='color:red;'>"+result[key].profit+
-            "</span></td></tr></thead><tbody><tr><td colspan='5'>&nbsp;&nbsp;其中:</td></tr>";
+            var html ="<div style='border:1px solid #A9A9A9;width:50%;float:left;'><table><thead style='border-bottom:1px dashed #A9A9A9;'><tr><td>币种:<span style='color:red;'>" + key + 
+                "</span></td><td>总建仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].amount || 0),2) +
+                "</span>,</td><td>总多仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].multipleWarehouse || 0),2) +
+                "</span>,</td><td>总空仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].shortPosition || 0),2) +
+                    //result[key].profit需要正数转负数
+                "</span>,</td><td>总利润:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].profit || 0),2) +
+                "</span></td></tr></thead><tbody><tr><td colspan='5'>其中:</td></tr>";
 
         
-        for(var i = 0; i<result[key].data.length;i++){
-            html+="<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网站:<span style='color:red;'>"+result[key].data[i].site+
-            "</span>,</td><td>建仓:<span style='color:red;'>"+result[key].data[i].amount+
-            "</span>,</td><td>多仓:<span style='color:red;'>"+result[key].data[i].multipleWarehouse+
-            "</span>,</td><td>空仓:<span style='color:red;'>"+result[key].data[i].shortPosition+
-            "</span>,</td><td>利润:<span style='color:red;'>"+result[key].data[i].profit+"</span></td></tr>"; 
-
-                
+            for(var i = 0; i<result[key].data.length;i++){
+                html+="<tr><td>网站:<span style='color:red;'>" +  result[key].data[i].site +
+                    "</span></td><td>建仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].data[i].amount || 0),2) +
+                    "</span>,</td><td>多仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].data[i].multipleWarehouse || 0),2) +
+                    "</span>,</td><td>空仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].data[i].shortPosition || 0),2) +
+                    "</span></td></tr>"; 
             }
 
             html+="</tbody></table></div>";
 
-            $("#show").append(html);
+            $("#report").append(html);
        
-    }  
-        //console.log(result[key]);
-        // console.log(result[key].data[i]);
-        // console.log(result[key].data[i].amount);
-
+        }  
     }
+    //<td>总利润:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].profit || 0),4) +"</span></td>
+    //<td>利润:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].data[i].profit || 0),4) + "</span></td>
+
 
     //下拉框二级联动
     function initSymbolItems($element,site){
@@ -362,7 +297,7 @@
         }
 
         if(!t){
-            t = { site:site, symbol:coinsPair, amount: 0, profit: 0, multipleWarehouse: 0, shortPosition: 0 } 
+            t = { site:site, symbol:coinsPair, amount: 0, middle: 0, multipleWarehouse: 0, shortPosition: 0 } //profit: 0,
             _symbolAmounts.push(t);
         }
       return t;  
@@ -370,4 +305,3 @@
 </script>
 {% endblock %}
  
-
