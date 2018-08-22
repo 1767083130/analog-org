@@ -1,9 +1,45 @@
 {% extends "layouts/admin-master.html" %} 
+{% block header%}
+
+<link href="/css/admin.css" rel="stylesheet">
+<style type="text/css">
+#report
+{
+  font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+  width:100%;
+  border-collapse:collapse;
+}
+
+#report td, #positions th 
+{
+  font-size:1em;
+  border:1px solid #98bf21;
+  padding:3px 7px 2px 7px;
+}
+
+#report th 
+{
+  font-size:1.1em;
+  text-align:left;
+  padding-top:5px;
+  padding-bottom:4px;
+  background-color:#A7C942;
+  color:#ffffff;
+}
+
+#report tr.alt td 
+{
+  color:#000000;
+  background-color:#EAF2D3;
+  min-width: 120px;
+}
+</style>
+{%endblock%}
 {% block body %}
 <div >
-    <h3>委托列表:</h3>
+    <h3>行情列表:</h3>
     <div>
-        <div style="width: 1044px; padding:2px;background-color: rgb(199, 217, 247); ">  
+        <div style="width: 952px; padding:2px;background-color: rgb(199, 217, 247); ">  
 
             site:
             <select id="inquirysite" name="sites" data-group="1" >
@@ -33,9 +69,8 @@
             <button onclick="document.location.reload()">重置</button>
         </div>
             
-            <div id="report" style="width: 1044px;"> 
-                
-            </div>
+        <table id="report">
+        </table>
     </div>
 </div>
 
@@ -59,13 +94,13 @@
 
     var _currentOperateLog;
 
-    var _symbolAmounts = []; // { site: "",symbol: "",amount: 234,profit: 123, multipleWarehouse: 456, shortPosition: 567}
+    
 
     
     $(function () {
         showReports();
         setInterval(function(){
-            showReports();
+            init();
         },3000)
 
         $("#datetimeStart").datetimepicker({
@@ -77,8 +112,6 @@
             minuteStep: 5,
             language:'zh-CN',
             autoclose:true
-        // }).on("click",function(){
-        //     $("#datetimeStart").datetimepicker("setEndDate",$("#datetimeEnd").val())
         });
         $("#datetimeEnd").datetimepicker({
             format:'yyyy-mm-dd hh:ii',
@@ -92,7 +125,6 @@
         }).on("click",function(){
         $("#datetimeEnd").datetimepicker("setStartDate",$("#datetimeStart").val())
         });
-
 
         $('select[name="sites"]').each(function(){
             $('<option/>').appendTo(this).val('').html('--请选择--');
@@ -130,9 +162,7 @@
         });
         
         $('#btnSearch').click(function(){
-            _symbolAmounts =[];
             $("#report").empty();
-
             init();
 
         });
@@ -180,14 +210,14 @@
         var middle = 0; //总价
         var multipleWarehouse = 0; //多仓
         var shortPosition = 0; //空仓
-
+        var _symbolAmounts = [];// { site: "",symbol: "",amount: 234,avavgPrice: 123, plusAmount: 1,minusAmount: -1 }
         for(var i = 0,l =_bargainAmountSum.length; i< l ;i++){
 
             amount = (_bargainAmountSum[i]._id.side=="buy"?_bargainAmountSum[i].bargainAmount:-_bargainAmountSum[i].bargainAmount);
 
             middle = _bargainAmountSum[i].total;
 
-            var symbolItem = getItem(_bargainAmountSum[i]._id.site,_bargainAmountSum[i]._id.symbol); 
+            var symbolItem = getItem(_bargainAmountSum[i]._id.site,_bargainAmountSum[i]._id.symbol,_symbolAmounts); 
             symbolItem.amount += amount;
             symbolItem.middle += middle;
 
@@ -201,10 +231,10 @@
 
         var arr= [];
         var result = {}; 
-
+        
         for (var i = 0; i < _symbolAmounts.length; i++) {
             if(arr.indexOf(_symbolAmounts[i].symbol)==-1){
-                    arr.push(_symbolAmounts[i].symbol);
+                arr.push(_symbolAmounts[i].symbol);
             }
         }
         for (var i = 0; i < arr.length; i++) {
@@ -238,33 +268,23 @@
            
         }
         
-        $("#report").empty();
+        var source = [];
+        source.push('<tr><th>币种</th><th>交易网站</th><th colspan="3">数量</th></tr>');
         for(var key in result ){
-            var html ="<div style='border:1px solid #A9A9A9;width:50%;float:left;'><table><thead style='border-bottom:1px dashed #A9A9A9;'><tr><td>币种:<span style='color:red;'>" + key + 
-                "</span></td><td>总建仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].amount || 0),2) +
-                "</span>,</td><td>总多仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].multipleWarehouse || 0),2) +
-                "</span>,</td><td>总空仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].shortPosition || 0),2) +
-                    //result[key].profit需要正数转负数
-                "</span>,</td><td>总利润:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].profit || 0),2) +
-                "</span></td></tr></thead><tbody><tr><td colspan='5'>其中:</td></tr>";
 
-        
+             //result[key].profit需要正数转负数
             for(var i = 0; i<result[key].data.length;i++){
-                html+="<tr><td>网站:<span style='color:red;'>" +  result[key].data[i].site +
-                    "</span></td><td>建仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].data[i].amount || 0),2) +
-                    "</span>,</td><td>多仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].data[i].multipleWarehouse || 0),2) +
-                    "</span>,</td><td>空仓:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].data[i].shortPosition || 0),2) +
-                    "</span></td></tr>"; 
+                source.push('<tr>');
+                if(i == 0){
+                    source.push(w.format('<td rowspan="{0}">{1}<br/>总利润：{2}</td>',result[key].data.length,key,w.toDecimal(Math.abs(result[key].profit || 0),2)));
+                } 
+                source.push(w.format('<td>{0}</td><td><span>建仓：</span>{1}</td><td><span>多仓：</span>{2}</td><td><span>空仓：</span>{3}</td>',
+                    result[key].data[i].site,w.toDecimal(Math.abs(result[key].data[i].amount || 0),2),w.toDecimal(Math.abs(result[key].data[i].multipleWarehouse || 0),2),w.toDecimal(Math.abs(result[key].data[i].shortPosition || 0),2)));
+                source.push('</tr>');
             }
-
-            html+="</tbody></table></div>";
-
-            $("#report").append(html);
-       
-        }  
+        }
+        $('#report').html(source.join('')); 
     }
-    //<td>总利润:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].profit || 0),4) +"</span></td>
-    //<td>利润:<span style='color:red;'>" + w.toDecimal(Math.abs(result[key].data[i].profit || 0),4) + "</span></td>
 
 
     //下拉框二级联动
@@ -286,7 +306,7 @@
 
     
     //处理行情价格，split分割btc_1w
-    function getItem(site,symbol){
+    function getItem(site,symbol,_symbolAmounts){
         var t,
             coinsPair = symbol.split('_')[0];
         for(var i = 0,l = _symbolAmounts.length; i< l ;i++){
