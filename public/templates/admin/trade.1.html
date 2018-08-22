@@ -1,45 +1,9 @@
 {% extends "layouts/admin-master.html" %} 
-{% block header%}
-
-<link href="/css/admin.css" rel="stylesheet">
-<style type="text/css">
-#report
-{
-  font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-  width:107%;
-  border-collapse:collapse;
-}
-
-#report td, #positions th 
-{
-  font-size:1em;
-  border:1px solid #98bf21;
-  padding:3px 7px 2px 7px;
-}
-
-#report th 
-{
-  font-size:1.1em;
-  text-align:left;
-  padding-top:5px;
-  padding-bottom:4px;
-  background-color:#A7C942;
-  color:#ffffff;
-}
-
-#report tr.alt td 
-{
-  color:#000000;
-  background-color:#EAF2D3;
-  min-width: 120px;
-}
-</style>
-{%endblock%}
 {% block body %}
 <div>
     <h3>委托列表</h3>
     <div>
-        <div style="width: 1020px; padding:2px; background-color: #C2DAFA;">  
+        <div style="width: 1044px; padding:2px; background-color: #C2DAFA;">  
             site:
             <select id="inquirysite" name="sites" data-group="1" >
             </select>&nbsp;&nbsp;
@@ -50,7 +14,7 @@
 
             status:
             <select id="inquirystatus" name="status" >
-                <option value="">--请选择--</option>
+                <option value=""></option>
                 <option value="wait">运行中</option>
                 <option value="consign">已委托未成交</option>
                 <option value="success">已完成</option>
@@ -66,17 +30,16 @@
             结束时间:<input size="16"  type="text" id="datetimeEnd" class="form_datetime"> 
            
             <input type="button" id="btnSearch" value="查询" />
-            <button onclick="document.location.reload()">重置</button>
-
+            <button onClick="document.location.reload()">重置</button>
+            <!-- <div class="checkbox "></div> -->
             <label><input type="checkbox" id="showAll">包含已撤销委托</label>
             <a href="javascript:void(0)" id="showExceptionOrders">异常委托单</a>
-
-            <input type="button" id="btnReport" value="隐藏" style="float:right">
         </div>
-            <table id="report">
-            </table>
-
-        <div id="FlexiGrid_ContentDiv" onload="goPage(1,10);">
+        <table style="width: 1044px; background-color: #C2DAFA;">
+            <tr id="show" style='text-align: center;'>
+            </tr>
+        </table> 
+        <div id="FlexiGrid_ContentDiv" onLoad="goPage(1,10);">
             <table id="FlexiGrid_ContentTable" style="display: none;">
             </table>
         </div>
@@ -100,8 +63,9 @@
 <script type="text/javascript">
 
     var _business = {{ business | safe }};
-    var _bargainAmountSum = {{ bargainAmountSum | safe }}; //e.g { }
+    var _bargainAmountSum = {{ bargainAmountSum | safe }}; //e.g //{"_id":{"site":"bitfinex","side":"buy","symbol":"eos#btc_1w"},"bargainAmount":400,"total":1600000,"sum":400}
     var _currentOperateLog;
+    var _symbolAmounts = []; // { site: "",symbol: "",amount: 234,avavgPrice: 123, plusAmount: 1,minusAmount: -1 }
     
     $(function () {
         showReports();
@@ -119,6 +83,8 @@
             minuteStep: 5,
             language:'zh-CN',
             autoclose:true
+        // }).on("click",function(){
+        //     $("#datetimeStart").datetimepicker("setEndDate",$("#datetimeEnd").val())
         });
         $("#datetimeEnd").datetimepicker({
             format:'yyyy-mm-dd hh:ii',
@@ -134,7 +100,7 @@
         });
 
         $('select[name="sites"]').each(function(){
-            $('<option/>').appendTo(this).val('').html('--请选择--');
+            $('<option/>').appendTo(this).val('').html('');
             for(var i = 0; i < _business.sites.length;i++){
                 var site = _business.sites[i];
                 $('<option/>').appendTo(this).val(site).html(site);
@@ -143,7 +109,7 @@
         });
 
         $('select[name="symbols"]').each(function(){
-            $('<option/>').appendTo(this).val('').html('--请选择--');
+            $('<option/>').appendTo(this).val('').html('');
             var group = $(this).attr('data-group');
             var site = $(this).val();
             var $element = $(w.format('select[name="symbols"][data-group="{0}"]',group));
@@ -154,7 +120,7 @@
         $('select[name="sites"]').change(function(){
             if($('select[name="sites"]').val()==''){
                 $('#hide').hide();
-                $('select[name="symbols"]').val('').html('--请选择--');
+                $('select[name="symbols"]').val('').html('');
                 
             }else{
                 $('#hide').show();
@@ -169,7 +135,7 @@
         });
         
         $('#btnSearch').click(function(){
-            $("#report").empty();
+            showReports();
 
             // console.log($("#datetime").val());
             var newParams = [
@@ -182,12 +148,6 @@
             $("#FlexiGrid_ContentTable").setNewExtParam(newParams);
             $("#FlexiGrid_ContentTable").flexReload();
         });
-
-
-        $("#btnReport").click(function(){
-            $("#report").toggle('slow');
-            $(this).val($(this).val()=="隐藏"?"展开":"隐藏");
-        })
 
         $('#showAll').change(function(){
             var newParams = [
@@ -214,7 +174,7 @@
         };
 
         var option = {
-            width: 1020,
+            width: 1044,
             height: 'auto',
             data: initData,
             autoPager: false,//分页菜单栏
@@ -224,17 +184,17 @@
             showLoading: false,
             showMessageOnRowClicked: true,
             url: '/admin/trade/list',
-            colModel: [ 
+            colModel: [
                 { display: "交易网站", name: "site",type: 0,visible: true, width: "80", sortable: true,align:"left"},
                 { display: "交易品种", name: "symbol",type: 0,visible: true, width: "80", sortable: true,align: "left" },
                 { display: "委托时间",name: "created", type: 0,visible: true,width: "140",sortable: true,align: "left" },
                 { display: "委托类型",name: "type", type: 0,visible: true,width: "80",sortable: true,align: "left" },
                 { display: "交易类型",name: "side", type: 0,visible: true,width: "80",sortable: true,align: "left" },
                 { display: "委托数量",name: "amount", type: 0,visible: true,width: "100",sortable: true,align: "left" },
-                { display: "委托价格",name: "price", type: 0,visible: true,width: "100",sortable: true,align: "left",process:formatMoney },
+                { display: "委托价格",name: "price", type: 0,visible: true,width: "100",sortable: true,align: "left" },
                 { display: "已成交",name: "bargainAmount", type: 0,visible: true,width: "80",sortable: true,align: "left" },
-                { display: "成交均价",name: "avgPrice", type: 0,visible: true,width: "100",sortable: true,align: "left",process:formatMoney },
-                { display: "委托状态",name: "status", type: 0,visible: true,width: "80",sortable: true,align: "left" }                
+                { display: "成交均价",name: "avgPrice", type: 0,visible: true,width: "100",sortable: true,align: "left" },
+                { display: "委托状态",name: "status", type: 0,visible: true,width: "80",sortable: true,align: "left" },
             ],
             //分页页码
             onInited: flexiGridInited,
@@ -247,12 +207,12 @@
             columnsFixed: true,
             checkCell: {
                 showCheckAll: true,
-                width: "100"
+                width: "25"
             },
             gridClass: "bbit-grid",
             bootStrapSupported: false,
             resizable: false,
-            showTableToggleBtn: true, 
+            showTableToggleBtn: false,
             usepager: true, //是否分页
             useRp: true,    //是否可动态设置分页显示的结果数
             rp: 10,  //每页默认的结果数
@@ -262,7 +222,6 @@
             rpOptions: [10,20,30],  //可选择设定的每页结果数
             newp: 1,    //自定义翻页事件,定义刷新后第一页停留在哪个位置
             selectedonclick: false
-            
         };
         
         $("#FlexiGrid_ContentTable").flexigrid(option);
@@ -276,57 +235,56 @@
     };
 
     function showReports(){
-        
+        return;
         var amount; //总成交量
-        var middle = 0; //总价
+        var profit = 0;  //利润
         var multipleWarehouse = 0; //多仓
         var shortPosition = 0; //空仓
-        var _symbolAmounts = [];// { site: "",symbol: "",amount: 234,avavgPrice: 123, plusAmount: 1,minusAmount: -1 }
+        
         for(var i = 0,l =_bargainAmountSum.length; i< l ;i++){
-
             amount = (_bargainAmountSum[i]._id.side=="buy"?_bargainAmountSum[i].bargainAmount:-_bargainAmountSum[i].bargainAmount);
+            profit = (_bargainAmountSum[i].total/_bargainAmountSum[i].sum);
 
-            middle = _bargainAmountSum[i].total;
-
-            var symbolItem = getItem(_bargainAmountSum[i]._id.site,_bargainAmountSum[i]._id.symbol,_symbolAmounts); 
+            var symbolItem = getItem(_bargainAmountSum[i]._id.site,_bargainAmountSum[i]._id.symbol); 
             symbolItem.amount += amount;
-            symbolItem.middle += middle;
+            symbolItem.profit += profit;
 
             if(amount > 0 ){
                 symbolItem.multipleWarehouse += amount;
             } else{ 
                 symbolItem.shortPosition += amount;
             }
-            
         }
 
-        var arr= [];
-        var result = {}; 
-        
+        var arr= []; // 
+        var result = {};//
+        var cc =[]; //
         for (var i = 0; i < _symbolAmounts.length; i++) {
-            if(arr.indexOf(_symbolAmounts[i].symbol)==-1){
+            if(arr.indexOf(_symbolAmounts[i].symbol) == -1){
                 arr.push(_symbolAmounts[i].symbol);
             }
         }
+
         for (var i = 0; i < arr.length; i++) {
             var amount = 0;
             var profit = 0;
             var multipleWarehouse = 0;
             var shortPosition =0;
+
             result[arr[i]] = {
-                    amount: 0,
-                    multipleWarehouse : 0,
-                    shortPosition : 0,
-                    profit : 0,
-                    data : []
+                amount: 0,
+                multipleWarehouse : 0,
+                shortPosition : 0,
+                profit : 0,
+                data : []
             };
-            
+
             for (var j = 0; j < _symbolAmounts.length; j++) {
-                if(_symbolAmounts[j].symbol==arr[i]){
+                if(_symbolAmounts[j].symbol == arr[i]) {
                     amount += _symbolAmounts[j].amount;
                     multipleWarehouse += _symbolAmounts[j].multipleWarehouse;
                     shortPosition +=  _symbolAmounts[j].shortPosition;
-                    profit -=  _symbolAmounts[j].middle;
+                    profit += _symbolAmounts[j].profit;
 
                     result[arr[i]].amount = amount;
                     result[arr[i]].multipleWarehouse = multipleWarehouse;
@@ -334,29 +292,29 @@
                     result[arr[i]].profit = profit;
                     result[arr[i]].data.push(_symbolAmounts[j]);
                 }
-                
             }
-           
         }
-        
-        var source = [];
-        source.push('<tr><th>币种</th><th>交易网站</th><th colspan="3">数量</th></tr>');
+
         for(var key in result ){
+            var html ="<div style='border:1px solid;width:50%;float:left;'><table><thead style='border-bottom:1px dashed;'><tr><td>币种:<span style='color:red;'>" + key + 
+                "</span>,</td><td>总建仓:<span style='color:red;'>" + result[key].amount +
+                "</span>,</td><td>总多仓:<span style='color:red;'>" + result[key].multipleWarehouse +
+                "</span>,</td><td>总空仓:<span style='color:red;'>" + result[key].shortPosition +
+                "</span>,</td><td>总利润:<span style='color:red;'>" + result[key].profit +
+                "</span></td></tr></thead><tbody><tr><td colspan='5'>&nbsp;&nbsp;&nbsp;其中:</td></tr>";
 
-             //result[key].profit需要正数转负数
-            for(var i = 0; i<result[key].data.length;i++){
-                source.push('<tr>');
-                if(i == 0){
-                    source.push(w.format('<td rowspan="{0}">{1}<br/>总利润：{2}</td>',result[key].data.length,key,w.toDecimal(Math.abs(result[key].profit || 0),2)));
-                } 
-                source.push(w.format('<td>{0}</td><td><span>建仓：</span>{1}</td><td><span>多仓：</span>{2}</td><td><span>空仓：</span>{3}</td>',
-                    result[key].data[i].site,w.toDecimal(Math.abs(result[key].data[i].amount || 0),2),w.toDecimal(Math.abs(result[key].data[i].multipleWarehouse || 0),2),w.toDecimal(Math.abs(result[key].data[i].shortPosition || 0),2)));
-                source.push('</tr>');
+            for(var i = 0; i < result[key].data.length;i++){
+                html+="<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网站:<span style='color:red;'>" + result[key].data[i].site +
+                    "</span>,</td><td>建仓:<span style='color:red;'>" + result[key].data[i].amount +
+                    "</span>,</td><td>多仓:<span style='color:red;'>" + result[key].data[i].multipleWarehouse +
+                    "</span>,</td><td>空仓:<span style='color:red;'>" + result[key].data[i].shortPosition +
+                    "</span>,</td><td>利润:<span style='color:red;'>" + result[key].data[i].profit + "</span></td></tr>"; 
             }
-        }
-        $('#report').html(source.join('')); 
-    }
 
+            html+="</tbody></table></div>";
+            $("#show").append(html);
+        }  
+    }
 
 
     //分页页码
@@ -376,7 +334,7 @@
         return options;
     }
 
-  
+    //这个很重要
     function flexiGridLoaded(options){
         $('a[name="manualOperate"]').click(function(){
             var orderId = $(this).attr("data-orderId");
@@ -395,15 +353,6 @@
         });
     }
 
-    //操作函数
-    function formatMoney(value, pid) {
-
-        return "￥" + parseFloat(value).toFixed(2);
-
-    }
-
-    
-    
     //加载表格数据
     function flexiGridPreLoad(options){
         if(typeof options.orders == 'string'){
@@ -412,8 +361,8 @@
 
         if(typeof options.bargainAmountSum == 'string'){
             _bargainAmountSum = JSON.parse(options.bargainAmountSum); 
-            showReports();
         }
+        showReports();
 
         var  data = {
             "page": options.page,
@@ -443,9 +392,9 @@
                     {"cellHtml": side},
                     {"cellHtml": w.toDecimal(Math.abs(order.amount || 0),4) },
                     {"cellHtml": order.price },
-                    {"cellHtml": w.toDecimal(Math.abs(order.bargainAmount || 0),4) },
-                    {"cellHtml": w.toDecimal(Math.abs(order.avgPrice || 0),3) },
-                    {"cellHtml": order.status }
+                    {"cellHtml": w.toDecimal(Math.abs(order.bargainAmount || 0),4)},
+                    {"cellHtml": w.toDecimal(Math.abs(order.avgPrice || 0),3)},
+                    {"cellHtml": order.status},
                 ]
             };
             data.rows.push(row);
@@ -464,7 +413,7 @@
     };
 
     function initSymbolItems($element,site){
-        $element.html('--请选择--');
+        $element.html('');
         var symbols = [];
         for(var i = 0; i < _business.symbols.length;i++){
             if(_business.symbols[i].site == site){
@@ -479,22 +428,24 @@
         }
     }
 
-    function getItem(site,symbol,_symbolAmounts){
+    function getItem(site,symbol){
         var t,
             coinsPair = symbol.split('_')[0];
         for(var i = 0,l = _symbolAmounts.length; i< l ;i++){
-            if(_symbolAmounts[i].site == site && _symbolAmounts[i].symbol == coinsPair){
+            if(_symbolAmounts[i].site == site && _symbolAmounts[i].symbol == coinsPair ){
                 t = _symbolAmounts[i];
                 break;
             }
         }
 
         if(!t){
-            t = { site:site, symbol:coinsPair, amount: 0, middle: 0, multipleWarehouse: 0, shortPosition: 0 } //profit: 0,
+            t = { site:site, symbol:coinsPair, amount: 0, profit: 0, multipleWarehouse: 0, shortPosition: 0 } 
             _symbolAmounts.push(t);
         }
+        
         return t;  
     }
+
 </script>
 {% endblock %}
  

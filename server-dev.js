@@ -1,5 +1,5 @@
 'use strict';
-const app = require('./index');
+const app = require('.');
 const http = require('http');
 const NODE_ENV = process.env.NODE_ENV || 'production'; //development
 

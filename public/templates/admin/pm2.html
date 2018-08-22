@@ -1,0 +1,208 @@
+{% extends "layouts/admin-master.html" %} 
+{% block body %}
+<div>
+    <h3>进程列表</h3>
+    <div>
+        <div id="FlexiGrid_ContentDiv">
+            <table id="FlexiGrid_ContentTable" style="display: none;">
+            </table>
+        </div>
+       <input type="hidden" name="_csrf" value="{{_csrf}}" />
+    </div>
+</div>
+
+{% endblock %} {% block scripts %}
+<script src="../js/jquery-1.8.2.js" type="text/javascript"></script>
+<script src="../js/lib/jquery.flexigrid.js" type="text/javascript"></script>
+<script src="../js/common.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function () {
+        setInterval(function(){
+            $("#FlexiGrid_ContentTable").flexReload();
+        },5000)
+
+        initFlexiGrid();    
+    });
+    
+    function initFlexiGrid() { 
+        var initData = {
+            "page": 1,  //当前页
+            "workers": {{ workers | safe }}
+        };
+
+        var option = {
+            width: 1044,
+            height: 'auto',
+            data: initData,
+            autoPager: false,//分页菜单栏
+            autoToolBar: true,
+            colResizable: true,
+            mutilRowMessage: true,
+            showLoading: false,
+            showMessageOnRowClicked: true,
+            url: '/admin/pm2/list',
+            colModel: [
+                { display: "name", name: "name",type: 0,visible: true, width: "80", sortable: true,align:"left"},
+                { display: "id", name: "id",type: 0,visible: true, width: "80", sortable: true,align: "left" },
+                { display: "pid",name: "pid", type: 0,visible: true,width: "140",sortable: true,align: "left" },
+                { display: "status",name: "status", type: 0,visible: true,width: "80",sortable: true,align: "left" },
+                { display: "restart",name: "restart", type: 0,visible: true,width: "80",sortable: true,align: "left" },
+                { display: "cpu",name: "cpu", type: 0,visible: true,width: "100",sortable: true,align: "left" },
+                { display: "memory",name: "memory", type: 0,visible: true,width: "100",sortable: true,align: "left" },
+                { display: "",name: "operates", type: 0,visible: true,width: "100",sortable: true,align: "left" }
+            ],
+            //分页页码
+            onInited: flexiGridInited,
+            //加载表格
+            onPreLoad: flexiGridPreLoad,
+            onLoaded: flexiGridLoaded,
+            onCommand: flexiGridCommand,
+            
+            autoload: false,    //自动加载,改自动加载就会报错
+            columnsFixed: true,
+            checkCell: {
+                showCheckAll: true,
+                width: "25"
+            },
+            gridClass: "bbit-grid",
+            bootStrapSupported: false,
+            resizable: false,
+            showTableToggleBtn: false,
+            usepager: false, //是否分页
+            useRp: true,    //是否可动态设置分页显示的结果数
+            rp: 10,  //每页默认的结果数
+            singleselected: false,
+            nowrap: true,   //是否不换行
+            showcheckbox: false,
+            rpOptions: [10,20,30],  //可选择设定的每页结果数
+            newp: 1,    //自定义翻页事件,定义刷新后第一页停留在哪个位置
+            selectedonclick: false
+        };
+        
+        $("#FlexiGrid_ContentTable").flexigrid(option);
+        // $("#FlexiGrid_ContentTable").flexOptions(option).flexReload();
+        var csrf = $('input[name="_csrf"]').val();
+        $("#FlexiGrid_ContentTable").setNewExtParam([{name: "_csrf",value: csrf }]);   
+    }
+
+    onToggoleLeft = function () {
+        $('#FlexiGrid_ContentTable').fixGridWidth();
+    };
+
+    //分页页码
+    function flexiGridInited(options) {
+        return options;
+    }
+
+    function flexiGridLoaded(options){
+        $('a[data-type="restart"]').click(function(){
+            var name = $(this).attr("data-name");
+            restart(name);
+        });
+        $('a[data-type="stop"]').click(function(){
+            var name = $(this).attr("data-name");
+            stop(name);
+        });
+    }
+
+    //加载表格数据
+    function flexiGridPreLoad(options){
+        if(typeof options.workers == 'string'){
+            options.workers = JSON.parse(options.workers);
+        }
+
+        var  data = {
+            "page": options.page,
+            "total": options.total,
+            "dataType": "json",
+            "rows": [],
+            "workers": {}
+        };
+
+        var workers = options.workers || [];
+        for(var i = 0; i < workers.length; i++){
+            var worker = workers[i];
+            var row = {
+                "id":worker.pm_id,
+                "itemMessage": "",
+                "cell":[
+                    {"cellHtml": worker.name },
+                    {"cellHtml": worker.id.toString() },
+                    {"cellHtml": worker.pid.toString() },
+                    {"cellHtml": worker.status },
+                    {"cellHtml": worker.restart.toString() },
+                    {"cellHtml": worker.cpu.toString() },
+                    {"cellHtml": w.toDecimal(worker.memory / 1024 / 1024,1) + 'MB'},
+                    {"cellHtml": w.format('<a href="javascript:void(0);" data-type="restart" data-name="{0}">restart</a>' 
+                             + '&nbsp;<a href="javascript:void(0);" data-type="stop" data-name="{0}">stop</a>',worker.name) }
+                ]
+            };
+            data.rows.push(row);
+        }
+        return data;
+    }
+
+    function restart(name){
+        if(!confirm(w.format('确定要重启进程{0}？',name))){
+            return;
+        }
+        $('#FlexiGrid_ContentTable').showLoading();
+
+        $.ajax({
+            type: "POST",
+            url: "/admin/pm2/restart",
+            data: { name: name,"_csrf": $('input[name="_csrf"]').val()  },
+            dataType: 'json'
+        }).done(function (e) {
+            $('#FlexiGrid_ContentTable').hideLoading();
+            if (e.isSuccess) {
+                $("#FlexiGrid_ContentTable").flexReload();
+                successFun && successFun(e.plan);
+            } else {
+                failFun ? failFun() : alert("重启失败，请稍后重试！");
+            }
+        }).fail(function (e) {
+            $('#FlexiGrid_ContentTable').hideLoading();
+            failFun ? failFun() : alert("重启失败，请稍后重试！");
+        });
+    }
+
+    function stop(name){
+        if(!confirm(w.format('确定要停止进程{0}？',name))){
+            return;
+        }
+        $('#FlexiGrid_ContentTable').showLoading();
+
+        $.ajax({
+            type: "POST",
+            url: "/admin/pm2/stop",
+            data: { name: name,"_csrf": $('input[name="_csrf"]').val()  },
+            dataType: 'json'
+        }).done(function (e) {
+            $('#FlexiGrid_ContentTable').hideLoading();
+            if (e.isSuccess) {
+                $("#FlexiGrid_ContentTable").flexReload();
+                successFun && successFun(e.plan);
+            } else {
+                failFun ? failFun() : alert("重启失败，请稍后重试！");
+            }
+        }).fail(function (e) {
+            $('#FlexiGrid_ContentTable').hideLoading();
+            failFun ? failFun() : alert("重启失败，请稍后重试！");
+        });
+    }
+
+    function flexiGridCommand(sender, e) {
+        var operateBtn = sender;
+        var btnValue = $(operateBtn).attr("dataValue");
+        var commandName = $(operateBtn).attr("commandName");
+    }
+
+    onToggoleLeft = function () {
+        $('#FlexiGrid_ContentTable').fixGridWidth();
+    };
+
+</script>
+{% endblock %}
+ 
