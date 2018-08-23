@@ -8,9 +8,9 @@
 
         </div>
         <div class="pull-left" style="padding: 20px;">
-            交易网站：<select id="order_site" data-group="1" name="sites" ></select>&nbsp;&nbsp;
-            货币：<select id="order_symbol" data-group="1" name="symbols">
-            </select>
+            交易网站：<select id="order_site" data-group="1" name="sitess" ></select>&nbsp;&nbsp;
+            <span id="hides" style="display:none;">货币：<select id="order_symbol" data-group="1" name="symbolss">
+            </select></span>
             <br/>
             价格：<input id="order_price" name="order_price" type="text" disabled="disabled">
             <br/>
@@ -43,13 +43,13 @@
     <div>
         <h3>委托列表</h3>
         <div>
-            <div style="width: 1044px; padding:2px; background-color: #C2DAFA;">  
+            <div style="width: 1015px; padding:2px; background-color: #C2DAFA;">  
                 site:
-                <select id="inquirysite" name="sites" data-group="2" >
+                <select id="inquirysite" name="sites" data-group="1" >
                 </select>&nbsp;&nbsp;
 
                 <span id="hide" style="display:none;">symbol: 
-                <select id="inquirysymbol" name="symbols" data-group="2" >
+                <select id="inquirysymbol" name="symbols" data-group="1" >
                 </select>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
                 status:
@@ -70,20 +70,14 @@
                 结束时间:<input size="16"  type="text" id="datetimeEnd" class="form_datetime"> 
             
                 <input type="button" id="btnSearch" value="查询" />
-                <button onClick="document.location.reload()">重置</button>
-                <!-- <div class="checkbox "></div> -->
+                <button onclick="document.location.reload()">重置</button>
+                
                 <label><input type="checkbox" id="showAll" checked>包含已撤销委托</label>
                 <a href="javascript:void(0)" id="showExceptionOrders">异常委托单</a>
             </div>
-        <!-- <div id="quotation" > --> <!--style="display:none;" -->
-            <!-- <span  id="bas" ></span><span id="sum"></span> -->
-            <table style="width: 1044px; background-color: #C2DAFA;">
-                <tr id="show" style='text-align: center;'>
-                </tr>
-            </table> 
-            <!-- </div> -->
+            
 
-            <div id="FlexiGrid_ContentDiv" onLoad="goPage(1,10);">
+            <div id="FlexiGrid_ContentDiv" onload="goPage(1,10);">
                 <table id="FlexiGrid_ContentTable" style="display: none;">
                 </table>
             </div>
@@ -104,110 +98,19 @@
 <script src="../js/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" language="utf-8"></script>
 
 <link rel="stylesheet" href="../js/plugins/bootstrap/3.3.5/css/bootstrap.min.css" />
-<link rel="stylesheet" href="../js/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" type="text/css" media="screen"/>
-
-<script type="text/javascript">  
-    /**
-     * 参考文档： http://www.runoob.com/html/html5-websocket.html
-     *           ../SocketApi.doc
-     * */
-    var ws = new WebSocket("ws://119.28.204.125:8080/ws");  
-    ws.onopen = function() {  
-        console.log("连接状态", ws);  
-        $("#show").html("连接状态:" + getReadyState(ws.readyState) + "</br>");  
-        console.log("open");  
-        //ws.open("start");  
-
-        let channels = ['market','order','position','wallet']; 
-        for(let site of ['okex','bitfinex']){
-            for(let channel of channels){
-                let options = {
-                    event: "addChannel",
-                    channel: channel,
-                    parameters: { site: site, symbol: '*' }
-                };
-                ws.send(JSON.stringify(options));
-            }
-        }
-    };  
-    ws.onmessage = function(evt) {  
-        // console.log(evt.data)  
-        // alert(evt.data); 
-        // var oldHtml = $("#show").html();
-        // var str = oldHtml + "</br>" + evt.data;
-        // $("#show").html(str); 
-        
-        // try{
-        //     let item = JSON.parse(evt.data);
-        //     if(item.channel != 'market'){
-        //         $("#show").append(evt.data + "</br>"); 
-        //         document.getElementById('show').scrollTop= 60000; 
-        //     }
-        // } catch (err){
-        //     //忽略错误
-        // }
-    };  
-
-    ws.onclose = function(evt) {  
-        $("#show").html("连接状态:" + getReadyState(ws.readyState) + "</br>");
-        console.log("WebSocketClosed!");  
-        console.log(evt);  
-    };  
-    ws.onerror = function(evt) { 
-        $("#show").html("连接状态:" + getReadyState(ws.readyState) + "</br>"); 
-        console.log("WebSocketError!");  
-    };  
-    
-    function send() {  
-        var msg = $("#message").val();  
-        var key = $("#token").val();  
-        var name = $("#name").val();  
-        var str = "{name:'" + name + "',msg:'" + msg + "',key:'" + key + "'}";  
-        console.log("发送", str);  
-        ws.send(str);  
-    };  
-    
-    function exit() {  
-        var r = ws.close();  
-        $("#show").html("连接状态:" + getReadyState(ws.readyState) + "</br>");
-        console.log("退出", r);  
-    }  
-
-    function getReadyState(state){
-        // 0 - 表示连接尚未建立。
-        // 1 - 表示连接已建立，可以进行通信。
-        // 2 - 表示连接正在进行关闭。
-        // 3 - 表示连接已经关闭或者连接不能打开。
-        var str;
-        switch(state){
-            case 0:
-            str = '尚未建立连接';
-            break;
-            case 1:
-            str = '连接已建立，可以进行通信';
-            break
-            case 2:
-            str = '连接正在进行关闭';
-            break;
-            case 3:
-            str = '连接已经关闭或者连接不能打开';
-            break;
-        }
-        return str;
-    }
-</script>  
+<link rel="stylesheet" href="../js/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" type="text/css" media="screen"/> 
 
 <script type="text/javascript">
     var _business = {{ business | safe }};
-    var _bargainAmountSum = [];
+    // var _bargainAmountSum = {{ bargainAmountSum | safe }};;
     var _currentOperateLog;
-    var _symbolAmounts = []; // { site: "",symbol: "",amount: 234,avavgPrice: 123, plusAmount: 1,minusAmount: -1 }
+    
     
     $(function () {
-        showReports();
-        setInterval(function(){
-            $("#FlexiGrid_ContentTable").flexReload();
-        },3000)
+        // showReports();
+        // setInterval(function(){
+        //     $("#FlexiGrid_ContentTable").flexReload();
+        // },3000)
 
         $('button[data-type="operate"]').click(function(){
             var operateType = $(this).attr('data-operateType');
@@ -224,8 +127,6 @@
             minuteStep: 5,
             language:'zh-CN',
             autoclose:true
-        // }).on("click",function(){
-        //     $("#datetimeStart").datetimepicker("setEndDate",$("#datetimeEnd").val())
         });
         $("#datetimeEnd").datetimepicker({
             format:'yyyy-mm-dd hh:ii',
@@ -240,8 +141,9 @@
         $("#datetimeEnd").datetimepicker("setStartDate",$("#datetimeStart").val())
         });
 
+        //条件选择
         $('select[name="sites"]').each(function(){
-            $('<option/>').appendTo(this).val('').html('');
+            $('<option/>').appendTo(this).val('').html('--请选择--');
             for(var i = 0; i < _business.sites.length;i++){
                 var site = _business.sites[i];
                 $('<option/>').appendTo(this).val(site).html(site);
@@ -249,7 +151,7 @@
         });
 
         $('select[name="symbols"]').each(function(){
-            $('<option/>').appendTo(this).val('').html('');
+            $('<option/>').appendTo(this).val('').html('--请选择--');
             var group = $(this).attr('data-group');
             var site = $(this).val();
             var $element = $(w.format('select[name="symbols"][data-group="{0}"]',group));
@@ -260,7 +162,7 @@
         $('select[name="sites"]').change(function(){
             if($('select[name="sites"]').val()==''){
                 $('#hide').hide();
-                $('select[name="symbols"]').val('').html('');
+                $('select[name="symbols"]').val('').html('--请选择--');
                 
             }else{
                 $('#hide').show();
@@ -274,8 +176,43 @@
             } 
         });
         
+        //下单选择
+        $('select[name="sitess"]').each(function(){
+            $('<option/>').appendTo(this).val('').html('--请选择--');
+            for(var i = 0; i < _business.sites.length;i++){
+                var site = _business.sites[i];
+                $('<option/>').appendTo(this).val(site).html(site);
+            }
+        });
+
+        $('select[name="symbolss"]').each(function(){
+            $('<option/>').appendTo(this).val('').html('--请选择--');
+            var group = $(this).attr('data-group');
+            var site = $(this).val();
+            var $element = $(w.format('select[name="symbolss"][data-group="{0}"]',group));
+            initSymbolItems($(this),site);
+            
+        });
+
+        $('select[name="sitess"]').change(function(){
+            if($('select[name="sitess"]').val()==''){
+                $('#hides').hide();
+                $('select[name="symbolss"]').val('').html('--请选择--');
+                
+            }else{
+                $('#hides').show();
+                var group = $(this).attr('data-group');
+                var site = $(this).val();
+                if(!site){
+                    return;
+                }
+                var $element = $(w.format('select[name="symbolss"][data-group="{0}"]',group));
+                initSymbolItems($element,site);
+            } 
+        });
+        
         $('#btnSearch').click(function(){
-            showReports();
+            // showReports();
 
             // console.log($("#datetime").val());
             var newParams = [
@@ -302,6 +239,7 @@
             $("#FlexiGrid_ContentTable").setNewExtParam(newParams);
             $("#FlexiGrid_ContentTable").flexReload();
         });
+ 
 
         initFlexiGrid();    
     });
@@ -326,7 +264,7 @@
         };
 
         var option = {
-            width: 1044,
+            width: 1015,
             height: 'auto',
             data: initData,
             autoPager: false,//分页菜单栏
@@ -347,6 +285,7 @@
                 { display: "已成交",name: "bargainAmount", type: 0,visible: true,width: "80",sortable: true,align: "left" },
                 { display: "成交均价",name: "avgPrice", type: 0,visible: true,width: "100",sortable: true,align: "left" },
                 { display: "委托状态",name: "status", type: 0,visible: true,width: "80",sortable: true,align: "left" },
+                { display: "操作",name: "cancel", type: 0,visible: true,width: "80",sortable: true,align: "left" }
             ],
             //分页页码
             onInited: flexiGridInited,
@@ -421,30 +360,6 @@
         $('#FlexiGrid_ContentTable').fixGridWidth();
     };
 
-    function showReports(){
-        var amount;
-        for(var i = 0,l =_bargainAmountSum.length; i< l ;i++){
-            amount = (_bargainAmountSum[i]._id.side=="buy"?_bargainAmountSum[i].bargainAmount:-_bargainAmountSum[i].bargainAmount);
-            var symbolItem = getItem(_bargainAmountSum[i]._id.site,_bargainAmountSum[i]._id.symbol); //,_bargainAmountSum[i]._id.avgPrice
-            symbolItem.amount += amount;
-            if(amount > 0){
-                symbolItem.plusAmount += _bargainAmountSum[i].bargainAmount;
-            } else {
-                symbolItem.minusAmount += _bargainAmountSum[i].bargainAmount;
-            }
-        }
-
-        var temp = [];
-        for(var j = 0; j <  _symbolAmounts.length; j++){
-            var item = _symbolAmounts[j];
-            temp.push(w.format('site: {0}, symbol: {1}, amount: {2} ',item.site,item.symbol,item.amount)); //avgPrice:{3},item.avgPrice
-        }
-
-        for(var i = 0; i<temp.length;i++){
-            $("#show").append("<td style='text-align:center;width:200px;'>"+temp[i]+ "</td>")
-        }
-    }
-
     function flexiGridInited(options) {
         var newParams = [
                 { name:"type", value: w.getQueryStringValue('type') },
@@ -462,6 +377,13 @@
     }
 
     function flexiGridLoaded(options){
+
+        //撤销
+        $('a[data-type="restart"]').click(function(){
+            var name = $(this).attr("data-name");
+            restart(name);
+        })
+
         $('a[name="manualOperate"]').click(function(){
             var orderId = $(this).attr("data-orderId");
             var operateLog;
@@ -477,6 +399,13 @@
                 $('#txtOperateAmount').val(operateLog.orgOperate.orderAmount)
             }
         });
+    }
+
+    //操作函数
+    function formatMoney(value, pid) {
+
+        return "￥" + parseFloat(value).toFixed(2);
+
     }
 
     function flexiGridPreLoad(options){
@@ -515,11 +444,41 @@
                     {"cellHtml": w.toDecimal(Math.abs(order.bargainAmount || 0),4)},
                     {"cellHtml": w.toDecimal(Math.abs(order.avgPrice || 0),3)},
                     {"cellHtml": order.status},
+                    {"cellHtml": w.format("<a href='javascript:void(0);' data-type='restart' data-name='{0}'>撤销</a>",order.outerId )}
                 ]
             };
             data.rows.push(row);
         }
         return data;
+    }
+
+    
+
+    //撤销
+    function restart(name){
+        if(!confirm(w.format('确定要撤销进程{0}？',name))){
+            return;
+        }
+        $("#FlexiGrid_ContentTable").showLoading();
+
+        $.ajax({
+            type:"POST",
+            url:"/admin/order/cancel",
+            data:{name:name,"_csrf": $('input[name="_csrf"]').val()},
+            dataType:"json"
+        }).done(function(e){
+            $("#FlexiGrid_ContentTable").hideLoading();
+            if(e.isSuccess){
+                $("#FlexiGrid_ContentTable").flexReload();
+                //回调函数
+                successFun && successFun(e.plan);
+            }else{
+                failFun ? failFun(): alert("撤销失败，请稍后重试！");
+            }
+        }).fail(function(e){
+            $("#FlexiGrid_ContentTable").hideLoading();
+            failFun ? failFun(): alert("撤销失败，请稍后重试！");
+        })
     }
 
     function flexiGridCommand(sender, e) {
@@ -533,7 +492,7 @@
     };
 
     function initSymbolItems($element,site){
-        $element.html('');
+        $element.html('--请选择--');
         var symbols = [];
         for(var i = 0; i < _business.symbols.length;i++){
             if(_business.symbols[i].site == site){
@@ -548,22 +507,7 @@
         }
     }
 
-    function getItem(site,symbol){
-        var t,
-            coinsPair = symbol.split('_')[0];
-        for(var i = 0,l = _symbolAmounts.length; i< l ;i++){
-            if(_symbolAmounts[i].site == site && _symbolAmounts[i].symbol == coinsPair){
-                t = _symbolAmounts[i];
-                break;
-            }
-        }
-
-        if(!t){
-            t = {site:site,symbol:coinsPair,amount:0} 
-            _symbolAmounts.push(t);
-        }
-      return t;  
-    }
+    
 
 </script>
 {% endblock %}

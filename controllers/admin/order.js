@@ -18,6 +18,8 @@ const configUtil = require('../../lib/utils/configUtil');
 const apiConfigUtil = require('../../lib/apiClient/apiConfigUtil');
 const transferController = require('../../lib/transferStrategys/transferController');
 
+const bothApiLib = require('../../lib/apiClient/bothApi');
+
 module.exports = function (router) {
     router.get('/',async(function * (req,res){
         try{
@@ -55,6 +57,19 @@ module.exports = function (router) {
             res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});
         } 
     }));
+
+    //撤销
+    router.post('/cancel', async(function* (req,res){
+        try{
+            cancel(req,res,function(result){
+                res.json(result);
+            });
+            
+        } catch(err){
+            console.error(err);
+            res.json({ isSuccess: false, code: 500, message: "500:服务器端发生错误"});
+        } 
+    }));
 }
 
 async function list(req,res,callback){
@@ -73,6 +88,35 @@ async function list(req,res,callback){
         reason: 'normal',
         isSysAuto: true
     };
+
+    let showType = req.query.type || req.body.type;
+    if(showType == 1){  //显示策略计划没用完成的委托
+        let modifiedStart = new Date(+new Date() - 30 * 60 * 1000); //30 minutes 之前的数据
+        let planLogId = req.query.planLogId || req.body.planLogId;
+        params = {
+            userName: userName,
+            isSysAuto: true,
+            strategyPlanLogId: mongoose.Types.ObjectId(planLogId), //策略计划id
+            modified: { $gt: modifiedStart},    //大于半小时之后
+            status: { $in: ['wait','consign','part_success','will_cancel','wait_retry'] }  //,'auto_retry'
+        };
+    } else if(showType == 2){//显示策略计划当前运行实例的所有委托单
+        let planLogId = req.query.planLogId || req.body.planLogId;
+        params = {
+            strategyPlanLogId:mongoose.Types.ObjectId(planLogId)    //策略计划id
+        };
+    } else if(showType == 3){ //显示异常委托单
+        let modifiedStart = new Date(+new Date() - 15 * 60 * 1000); //15 minutes 之前的数据
+        let planLogId = req.query.planLogId || req.body.planLogId;
+        params = {
+            modified: { $lt: modifiedStart}, 
+            status: { $nin: ['success','canceled'] }  //,'auto_retry'
+        };
+        if(planLogId){
+            params.strategyPlanLogId =  mongoose.Types.ObjectId(planLogId); //策略计划id
+        }
+        showAll = true;
+    }
     
     if(!showAll){
         // params.$not = { $or: [ 
@@ -89,26 +133,30 @@ async function list(req,res,callback){
     }
 
     //通过页面刷新fexligrid插件,setNewExtParam获取来的值
-    let symbol = req.query.symbol || req.body.symbol;
-    symbol && (params.symbol = symbol);
-
     let site = req.query.site || req.body.site;
     site && (params.site = site);
+
+    let symbol = req.query.symbol || req.body.symbol;
+    symbol && (params.symbol = symbol);
 
     let status = req.query.status || req.body.status;
     status && (params.status = status);
 
-    let threeMonthsAgo = new Date(+new Date() - 3 * 30 * 24 * 60 * 60 * 1000); //90天以内
-    let createdStart = req.query.createdStart || req.body.createdStart || threeMonthsAgo;
+    //let threeMonthsAgo = new Date(+new Date() - 3 * 30 * 24 * 60 * 60 * 1000); //90天以内
+    let createdStart = req.query.createdStart || req.body.createdStart;
     let createdEnd = req.query.createdEnd || req.body.createdEnd;
-    createdStart = Math.max(threeMonthsAgo,createdStart);
+    // createdStart = Math.max(threeMonthsAgo,createdStart);
+    var s = new Date(+new Date() - 3 * 30 * 24 * 60 * 60 * 1000); //至多只能查询15天之内的数据
+    if(!createdStart || s > createdStart){
+        createdStart = s;
+    }
     
     if(createdStart && createdEnd){
-        params.created = {"$gte" : createdStart, "$lt" : createdEnd};  //ISODate
+        params.created = {"$gte" : new Date(createdStart), "$lt" : new Date(createdEnd) };  //ISODate
     } else if(createdStart){
-        params.created = {"$gte" : createdStart };
+        params.created = {"$gte" : new Date(createdStart) };
     } else if(createdEnd){
-        params.created = {"$lt" : createdEnd };
+        params.created = {"$lt" : new Date(createdEnd) };
     }
 
     params.userName = userName;
@@ -233,4 +281,51 @@ async function createOrder(req,res,callback){
     let createOrderRes = await orderLib.createOrder(orderItem,identifier);
     callback && callback(createOrderRes);
     return createOrderRes;  
+}
+
+
+async function cancel(req,res,callback){
+    let cancelOuterId = req.query.name || req.body.name;
+    //wait:准备开始;consign:已委托,但未成交;success:已完成;
+    //part_success:部分成功;will_cancel:已标记为取消,但是尚未完成;canceled:已取消;
+    //auto_retry:委托超过一定时间未成交,已由系统自动以不同价格发起新的委托;failed,失败.
+    //part_success:部分成功\consign:已委托,但未成交,可以取消
+
+    let order = await Order.find({outerId:cancelOuterId});
+    
+        var order1;
+        for(var i = 0; i<order.length; i++){
+            order1 = order[i];
+            if(["buy","sell"].indexOf(order1.side) == -1){
+                return { isSuccess: false, errorCode: "100006",message: "参数错误。order1.side必须为buy或sell" };    
+            }
+            if(["part_success","consign"].indexOf(order1.status) == -1){
+                return { isSuccess: false, errorCode: "100006",message: "参数错误。order1.status必须是part_success或consign方可撤销" }
+            }
+        }
+
+        await Order.findOneAndUpdate({ 
+            _id: order1.id
+        },{
+            $set: { status: 'will_cancel' }
+        });
+        let identifier = await clientIdentifierLib.getUserClient(order1.userName,order1.site); 
+        
+        let api = bothApiLib.getInstance(identifier);
+        //先撤消原有委托
+        let cancelOrderRes = await api.cancel({
+            id: order1.outerId,
+            symbol: order1.symbol
+        });
+        if(cancelOrderRes.isSuccess){
+            await Order.findOneAndUpdate({ 
+                _id: order1.id
+            },{
+                $set: { status: 'canceled',modified:  Date.now() }
+            }, {
+                new: true
+            });
+        }
+        callback(cancelOrderRes);
+
 }

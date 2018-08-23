@@ -12,6 +12,8 @@ const only = require('only');
 const accountLib = require('../../lib/account');
 const transfer = require('../../lib/transfer');
 const order = require('../../lib/order');
+const realTimePrice = require('../../lib/realTimePrice');
+const clientIdentifierLib = require('../../lib/clientIdentifier');
 const configUtil = require('../../lib/utils/configUtil');
 const apiConfigUtil = require('../../lib/apiClient/apiConfigUtil');
 const transferController = require('../../lib/transferStrategys/transferController');
@@ -83,6 +85,10 @@ async function list(req,res,callback){
     let pageSize = Number(req.body.rp || '10') || 10;
 
     let userName = req.user.userName;
+    if(!userName){
+        return { isSuccess: false, code: 401, message: "用户未登录" }
+    }
+    
     let showAll = ((req.query.showAll || req.body.showAll) == 1 ? true : false);
     
     //设置查询条件变量

@@ -68,7 +68,7 @@
             <input type="button" id="btnSearch" value="查询" />
             <button onclick="document.location.reload()">重置</button>
 
-            <label><input type="checkbox" id="showAll">包含已撤销委托</label>
+            <label><input type="checkbox" id="showAll" >包含已撤销委托</label>
             <a href="javascript:void(0)" id="showExceptionOrders">异常委托单</a>
 
             <input type="button" id="btnReport" value="隐藏" style="float:right">
@@ -247,7 +247,7 @@
             columnsFixed: true,
             checkCell: {
                 showCheckAll: true,
-                width: "100"
+                width: "25"
             },
             gridClass: "bbit-grid",
             bootStrapSupported: false,
@@ -357,8 +357,6 @@
         $('#report').html(source.join('')); 
     }
 
-
-
     //分页页码
     function flexiGridInited(options) {
         var newParams = [
@@ -401,8 +399,6 @@
         return "￥" + parseFloat(value).toFixed(2);
 
     }
-
-    
     
     //加载表格数据
     function flexiGridPreLoad(options){
