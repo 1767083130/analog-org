@@ -122,7 +122,7 @@ async function list(req,res,callback){
         if(planLogId){
             params.strategyPlanLogId =  mongoose.Types.ObjectId(planLogId); //策略计划id
         }
-        showAll = true;
+        showAll = true; 
     }
 
 

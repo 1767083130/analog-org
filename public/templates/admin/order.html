@@ -43,7 +43,7 @@
     <div>
         <h3>委托列表</h3>
         <div>
-            <div style="width: 1015px; padding:2px; background-color: #C2DAFA;">  
+            <div style="width: 1025px; padding:2px; background-color: #C2DAFA;">  
                 site:
                 <select id="inquirysite" name="sites" data-group="1" >
                 </select>&nbsp;&nbsp;
@@ -247,10 +247,12 @@
 	function check(obj){
 		if(obj.id == 'market_price' && obj.checked == true){
 			document.getElementById('isPostOnly_price').checked = false;
-		  document.getElementById("order_price").value="";
-		  document.getElementById("order_price").disabled=true;
+		    document.getElementById("order_price").value="";
+		    document.getElementById("order_price").disabled=true;
 		}else if(obj.id == 'isPostOnly_price' && obj.checked == true){
-			document.getElementById('market_price').checked = false;
+            document.getElementById('market_price').checked = false;
+            document.getElementById("order_price").value="";
+            document.getElementById("order_price").disabled=true;
 		}else{
 		  document.getElementById("order_price").disabled=false;
 		}
@@ -264,7 +266,7 @@
         };
 
         var option = {
-            width: 1015,
+            width: 1025,
             height: 'auto',
             data: initData,
             autoPager: false,//分页菜单栏
