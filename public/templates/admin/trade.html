@@ -105,9 +105,9 @@
     
     $(function () {
         showReports();
-        setInterval(function(){
-            $("#FlexiGrid_ContentTable").flexReload();
-        },3000)
+        // setInterval(function(){
+        //     $("#FlexiGrid_ContentTable").flexReload();
+        // },3000)
 
         // setInterval(quotation(),5000);
         $("#datetimeStart").datetimepicker({
@@ -333,7 +333,7 @@
                     multipleWarehouse += _symbolAmounts[j].multipleWarehouse;
                     shortPosition +=  _symbolAmounts[j].shortPosition;
                     profit -=  _symbolAmounts[j].middle; 
-                    
+                    var a =(Math.min(Math.abs(multipleWarehouse),Math.abs(shortPosition)));
                     var min = (Math.min(Math.abs(multipleWarehouse),Math.abs(shortPosition))) * profit;
 
                     result[arr[i]].amount = amount;
@@ -349,17 +349,21 @@
         }
         
         var source = [];
+        var sum = 0;
         // source.push('<tr><th>币种</th><th>交易网站</th><th colspan="3">数量</th></tr>');
         for(var key in result ){
 
             
             for(var i = 0; i<result[key].data.length;i++){
+                
                 source.push('<tr>');
                 if(i == 0){
-                    source.push(w.format('<td rowspan="{0}">{1}<br/>总利润：{2}</td>',result[key].data.length,key,w.toDecimal((result[key].profit || 0),2)));
-                } 
-                source.push(w.format('<td>{0}</td><td><span>建仓：</span>{1}</td><td><span>多仓：</span>{2}</td><td><span>空仓：</span>{3}</td>',
-                    result[key].data[i].site,w.toDecimal((result[key].data[i].amount || 0),2),w.toDecimal((result[key].data[i].multipleWarehouse || 0),2),w.toDecimal((result[key].data[i].shortPosition || 0),2)));
+                    source.push(w.format('<td rowspan="{0}">{1}<br/>总利润：{2}，总建仓：{3}</td>',result[key].data.length,key,w.toDecimal((result[key].profit || 0),2),result[key].amount));
+                }
+            
+
+                source.push(w.format('<td>{0}</td><td><span>建仓：</span>{1}</td><td><span>多仓：</span>{2}</td><td><span>空仓：</span>{3}</td><td><span>均价：</span>{4}</td>',
+                    result[key].data[i].site,w.toDecimal((result[key].data[i].amount || 0),2),w.toDecimal((result[key].data[i].multipleWarehouse || 0),2),w.toDecimal((result[key].data[i].shortPosition || 0),2),w.toDecimal((result[key].data[i].middle || 0),2)));
                 source.push('</tr>');
             }
         }
