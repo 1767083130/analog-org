@@ -252,7 +252,7 @@
 		}else if(obj.id == 'isPostOnly_price' && obj.checked == true){
             document.getElementById('market_price').checked = false;
             document.getElementById("order_price").value="";
-            document.getElementById("order_price").disabled=true;
+		    document.getElementById("order_price").disabled=true;
 		}else{
 		  document.getElementById("order_price").disabled=false;
 		}
@@ -441,10 +441,10 @@
                     {"cellHtml": order.created ? w.dateformat(new Date(order.created),"yyyy-MM-dd hh:mm:ss") : ''},
                     {"cellHtml": order.type},
                     {"cellHtml": side},
-                    {"cellHtml": w.toDecimal(Math.abs(order.amount || 0),4) },
+                    {"cellHtml": w.toDecimal((order.amount || 0),4) },
                     {"cellHtml": order.price },
-                    {"cellHtml": w.toDecimal(Math.abs(order.bargainAmount || 0),4)},
-                    {"cellHtml": w.toDecimal(Math.abs(order.avgPrice || 0),3)},
+                    {"cellHtml": w.toDecimal((order.bargainAmount || 0),4)},
+                    {"cellHtml": w.toDecimal((order.avgPrice || 0),3)},
                     {"cellHtml": order.status},
                     {"cellHtml": w.format("<a href='javascript:void(0);' data-type='restart' data-name='{0}'>撤销</a>",order.outerId )}
                 ]

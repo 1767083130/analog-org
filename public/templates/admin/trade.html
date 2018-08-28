@@ -185,7 +185,7 @@
 
 
         $("#btnReport").click(function(){
-            $("#report").toggle('slow');
+            $("#report").toggle();  //'slow'动画效果缓慢退去
             $(this).val($(this).val()=="隐藏"?"展开":"隐藏");
         })
 
@@ -231,9 +231,9 @@
                 { display: "委托类型",name: "type", type: 0,visible: true,width: "80",sortable: true,align: "left" },
                 { display: "交易类型",name: "side", type: 0,visible: true,width: "80",sortable: true,align: "left" },
                 { display: "委托数量",name: "amount", type: 0,visible: true,width: "100",sortable: true,align: "left" },
-                { display: "委托价格",name: "price", type: 0,visible: true,width: "100",sortable: true,align: "left",process:formatMoney },
+                { display: "委托价格",name: "price", type: 0,visible: true,width: "100",sortable: true,align: "left"},
                 { display: "已成交",name: "bargainAmount", type: 0,visible: true,width: "80",sortable: true,align: "left" },
-                { display: "成交均价",name: "avgPrice", type: 0,visible: true,width: "100",sortable: true,align: "left",process:formatMoney },
+                { display: "成交均价",name: "avgPrice", type: 0,visible: true,width: "100",sortable: true,align: "left"},
                 { display: "委托状态",name: "status", type: 0,visible: true,width: "80",sortable: true,align: "left" }                
             ],
             //分页页码
@@ -282,21 +282,27 @@
         var multipleWarehouse = 0; //多仓
         var shortPosition = 0; //空仓
         var _symbolAmounts = [];// { site: "",symbol: "",amount: 234,avavgPrice: 123, plusAmount: 1,minusAmount: -1 }
+        
         for(var i = 0,l =_bargainAmountSum.length; i< l ;i++){
 
             amount = (_bargainAmountSum[i]._id.side=="buy"?_bargainAmountSum[i].bargainAmount:-_bargainAmountSum[i].bargainAmount);
 
-            middle = _bargainAmountSum[i].total;
+            middle = _bargainAmountSum[i].total/_bargainAmountSum[i].sum;
 
             var symbolItem = getItem(_bargainAmountSum[i]._id.site,_bargainAmountSum[i]._id.symbol,_symbolAmounts); 
             symbolItem.amount += amount;
+
+            middle = (_bargainAmountSum[i]._id.side=="buy"?middle:-middle);
+
             symbolItem.middle += middle;
+            
 
             if(amount > 0 ){
                 symbolItem.multipleWarehouse += amount;
             } else{ 
                 symbolItem.shortPosition += amount;
             }
+
             
         }
 
@@ -326,31 +332,34 @@
                     amount += _symbolAmounts[j].amount;
                     multipleWarehouse += _symbolAmounts[j].multipleWarehouse;
                     shortPosition +=  _symbolAmounts[j].shortPosition;
-                    profit -=  _symbolAmounts[j].middle;
+                    profit -=  _symbolAmounts[j].middle; 
+                    
+                    var min = (Math.min(Math.abs(multipleWarehouse),Math.abs(shortPosition))) * profit;
 
                     result[arr[i]].amount = amount;
                     result[arr[i]].multipleWarehouse = multipleWarehouse;
                     result[arr[i]].shortPosition = shortPosition;
-                    result[arr[i]].profit = profit;
+                    result[arr[i]].profit = min;
                     result[arr[i]].data.push(_symbolAmounts[j]);
                 }
+
                 
             }
            
         }
         
         var source = [];
-        source.push('<tr><th>币种</th><th>交易网站</th><th colspan="3">数量</th></tr>');
+        // source.push('<tr><th>币种</th><th>交易网站</th><th colspan="3">数量</th></tr>');
         for(var key in result ){
 
-             //result[key].profit需要正数转负数
+            
             for(var i = 0; i<result[key].data.length;i++){
                 source.push('<tr>');
                 if(i == 0){
-                    source.push(w.format('<td rowspan="{0}">{1}<br/>总利润：{2}</td>',result[key].data.length,key,w.toDecimal(Math.abs(result[key].profit || 0),2)));
+                    source.push(w.format('<td rowspan="{0}">{1}<br/>总利润：{2}</td>',result[key].data.length,key,w.toDecimal((result[key].profit || 0),2)));
                 } 
                 source.push(w.format('<td>{0}</td><td><span>建仓：</span>{1}</td><td><span>多仓：</span>{2}</td><td><span>空仓：</span>{3}</td>',
-                    result[key].data[i].site,w.toDecimal(Math.abs(result[key].data[i].amount || 0),2),w.toDecimal(Math.abs(result[key].data[i].multipleWarehouse || 0),2),w.toDecimal(Math.abs(result[key].data[i].shortPosition || 0),2)));
+                    result[key].data[i].site,w.toDecimal((result[key].data[i].amount || 0),2),w.toDecimal((result[key].data[i].multipleWarehouse || 0),2),w.toDecimal((result[key].data[i].shortPosition || 0),2)));
                 source.push('</tr>');
             }
         }
@@ -393,12 +402,7 @@
         });
     }
 
-    //操作函数
-    function formatMoney(value, pid) {
-
-        return "￥" + parseFloat(value).toFixed(2);
-
-    }
+    
     
     //加载表格数据
     function flexiGridPreLoad(options){
@@ -437,10 +441,10 @@
                     {"cellHtml": order.created ? w.dateformat(new Date(order.created),"yyyy-MM-dd hh:mm:ss") : ''},
                     {"cellHtml": order.type},
                     {"cellHtml": side},
-                    {"cellHtml": w.toDecimal(Math.abs(order.amount || 0),4) },
+                    {"cellHtml": w.toDecimal((order.amount || 0),4) },
                     {"cellHtml": order.price },
-                    {"cellHtml": w.toDecimal(Math.abs(order.bargainAmount || 0),4) },
-                    {"cellHtml": w.toDecimal(Math.abs(order.avgPrice || 0),3) },
+                    {"cellHtml": w.toDecimal((order.bargainAmount || 0),4) },
+                    {"cellHtml": w.toDecimal((order.avgPrice || 0),3) },
                     {"cellHtml": order.status }
                 ]
             };
