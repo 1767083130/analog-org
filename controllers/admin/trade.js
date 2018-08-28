@@ -166,19 +166,13 @@ async function list(req,res,callback){
         params.created = {"$lt" : new Date(createdEnd) };
     }
 
-    let bargainAmountSum = await Order.aggregate([
-        {
-            $match: params 
-        },
-        { 
-            $group: { 
-                _id: { site:"$site",side:"$side",symbol:"$symbol" }, 
-                bargainAmount: { "$sum": "$bargainAmount" },
-                total: { $sum:{ $multiply:["$bargainAmount","$avgPrice"] }},    //total总价
-                sum: { $sum: "$bargainAmount" }     //sum总量
-            }
+    let bargainAmountSum = await Order.aggregate([{
+        //$match: params,
+        $group:{ 
+            _id: {site:"$site", side:"$side", symbol:"$symbol"},
+            bargainAmount: {"$sum": "$bargainAmount"}
         }
-    ]);
+    }]);
 
     params.userName = userName;
     var options = {

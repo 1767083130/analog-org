@@ -435,13 +435,11 @@ function list(req,res,callback){
         business.symbols = apiConfigUtil.getSiteSymbols();
 
         StrategyPlan.paginate(filters, options).then(async function(getRes) {
-            let planIds = [],plans = getRes.docs;
-            plans.forEach(p => planIds.push(p._id));
-            let planLogs = await StrategyPlanLog.find({ planId: {$in: planIds } });
-
+            let plans = getRes.docs;
+    
             for(let plan of plans){
                 let strategyIds = [];
-                let planLog =  planLogs.find(p => p._id.toString() == plan.currentLog.toString());
+                let planLog = await StrategyPlanLog.findById(plan.currentLog);
                 if(!planLog){
                     continue;
                 }
