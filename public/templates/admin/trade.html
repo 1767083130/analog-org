@@ -378,7 +378,7 @@
                     
                         
                         source.push(w.format('<td>{0}</td><td><span>建仓：</span>{1}</td><td><span>多仓：</span>{2}<br/><span>均价：</span>{4}</td><td><span>空仓：</span>{3}<br/><span>均价：</span>{5}</td>',       
-                            result[key].data[i].site,w.toDecimal((result[key].data[i].amount || 0),2),w.toDecimal((result[key].data[i].multipleWarehouse || 0),2),w.toDecimal((result[key].data[i].shortPosition || 0),2),duojj,kongjj));//<td><span>均价：</span>{4}</td>   ,w.toDecimal((result[key].data[i].middle || 0),2)
+                            result[key].data[i].site,w.toDecimal((result[key].data[i].amount || 0),2),w.toDecimal((result[key].data[i].multipleWarehouse || 0),2),w.toDecimal((result[key].data[i].shortPosition || 0),2),w.toDecimal((duojj || 0),2),w.toDecimal((kongjj || 0),2)));//<td><span>均价：</span>{4}</td>   ,w.toDecimal((result[key].data[i].middle || 0),2)
                         source.push('</tr>');
                     
                 
