@@ -278,9 +278,9 @@
     function showReports(){
         
         var amount; //总成交量
-        var middle = 0; //总价
+        var middle = 0; //均价
 
-        //var avgPrice = 0;//均价
+        //var avgPrice = 0;//
 
         var multipleWarehouse = 0; //多仓
         var shortPosition = 0; //空仓
@@ -292,18 +292,16 @@
         for(var i = 0,l =_bargainAmountSum.length; i< l ;i++){
 
             amount = (_bargainAmountSum[i]._id.side=="buy"?_bargainAmountSum[i].bargainAmount:-_bargainAmountSum[i].bargainAmount);
-
-            middle = _bargainAmountSum[i].total/_bargainAmountSum[i].sum;
-
             
+            //total总价 / sum数量
+            middle = _bargainAmountSum[i].total/_bargainAmountSum[i].sum;
 
             var symbolItem = getItem(_bargainAmountSum[i]._id.site,_bargainAmountSum[i]._id.symbol,_symbolAmounts); 
             symbolItem.amount += amount;
 
-            //middle = _bargainAmountSum[i].total/_bargainAmountSum[i].sum;
 
-            middle = (_bargainAmountSum[i]._id.side=="buy"?middle:-middle);
-            symbolItem.middle += middle;
+            symbolItem.middle = (_bargainAmountSum[i]._id.side=="buy"?middle:-middle);
+            
 
 
             if(amount > 0 ){
@@ -345,27 +343,17 @@
                     amount += _symbolAmounts[j].amount;
                     multipleWarehouse += _symbolAmounts[j].multipleWarehouse;
                     shortPosition +=  _symbolAmounts[j].shortPosition;
-                    profit -=  _symbolAmounts[j].middle; 
-
-                    // duojj = _symbolAmounts[j].duojj;
-                    // kongjj = _symbolAmounts[j].kongjj;
-
-
+                    profit +=  _symbolAmounts[j].middle; 
 
                     var min = 0;
-                    if(multipleWarehouse == 0 || shortPosition == 0){
-                        min = profit;
-                    }else{
+                    
                         min = (Math.min(Math.abs(multipleWarehouse),Math.abs(shortPosition))) * profit;
-                    }
+                    
 
                     result[arr[i]].amount = amount;
                     result[arr[i]].multipleWarehouse = multipleWarehouse;
                     result[arr[i]].shortPosition = shortPosition;
                     result[arr[i]].profit = min;
-                    
-                    // result[arr[i]].duojj = duojj;
-                    // result[arr[i]].kongjj = kongjj;
 
                     result[arr[i]].data.push(_symbolAmounts[j]);
                 }
@@ -403,7 +391,7 @@
                     
                         
                         source.push(w.format('<td>{0}</td><td><span>建仓：</span>{1}</td><td><span>多仓：</span>{2}<br/><span>均价：</span>{4}</td><td><span>空仓：</span>{3}<br/><span>均价：</span>{5}</td>',       
-                            result[key].data[i].site,w.toDecimal((result[key].data[i].amount || 0),2),w.toDecimal((result[key].data[i].multipleWarehouse || 0),2),w.toDecimal((result[key].data[i].shortPosition || 0),2),w.toDecimal((result[key].data[i].duojj || 0),2),w.toDecimal((result[key].data[i].kongjj || 0),2)));//<td><span>均价：</span>{4}</td>   ,w.toDecimal((result[key].data[i].middle || 0),2)
+                            result[key].data[i].site,w.toDecimal((result[key].data[i].amount || 0),2),w.toDecimal((result[key].data[i].multipleWarehouse || 0),2),w.toDecimal((result[key].data[i].shortPosition || 0),2),w.toDecimal((result[key].data[i].duojj || 0),3),w.toDecimal((result[key].data[i].kongjj || 0),3)));//<td><span>均价：</span>{4}</td>   ,w.toDecimal((result[key].data[i].middle || 0),2)
                         source.push('</tr>');
                     
                 
