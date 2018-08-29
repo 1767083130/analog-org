@@ -284,9 +284,10 @@
 
         var multipleWarehouse = 0; //多仓
         var shortPosition = 0; //空仓
-        var _symbolAmounts = [];// { site: "",symbol: "",amount: 234, plusAmount: 1,minusAmount: -1 }
+        var _symbolAmounts = [];// { site:site, symbol:coinsPair, amount: 0, middle: 0,multipleWarehouse: 0, shortPosition: 0 ,duojj:0,kongjj:0}
 
-       
+        var duojj = 0;
+        var kongjj = 0; 
         
         for(var i = 0,l =_bargainAmountSum.length; i< l ;i++){
 
@@ -307,16 +308,14 @@
 
             if(amount > 0 ){
                 symbolItem.multipleWarehouse += amount;
-                // symbolItem.total/_bargainAmountSum[j].sum
-            } else{ 
+                symbolItem.duojj = middle;
+            } else { 
                 symbolItem.shortPosition += amount;
+                symbolItem.kongjj = middle;
             }
 
             
         }
-
-        console.log(symbolItem);
-        console.log(_symbolAmounts);
 
         var arr= [];
         var result = {}; 
@@ -332,6 +331,7 @@
 
             var multipleWarehouse = 0;
             var shortPosition =0;
+
             result[arr[i]] = {
                     amount: 0,
                     multipleWarehouse : 0,
@@ -347,16 +347,25 @@
                     shortPosition +=  _symbolAmounts[j].shortPosition;
                     profit -=  _symbolAmounts[j].middle; 
 
+                    // duojj = _symbolAmounts[j].duojj;
+                    // kongjj = _symbolAmounts[j].kongjj;
+
+
+
                     var min = 0;
                     if(multipleWarehouse == 0 || shortPosition == 0){
                         min = profit;
                     }else{
                         min = (Math.min(Math.abs(multipleWarehouse),Math.abs(shortPosition))) * profit;
                     }
+
                     result[arr[i]].amount = amount;
                     result[arr[i]].multipleWarehouse = multipleWarehouse;
                     result[arr[i]].shortPosition = shortPosition;
                     result[arr[i]].profit = min;
+                    
+                    // result[arr[i]].duojj = duojj;
+                    // result[arr[i]].kongjj = kongjj;
 
                     result[arr[i]].data.push(_symbolAmounts[j]);
                 }
@@ -368,9 +377,6 @@
         
         var source = [];
         var sum = 0;
-
-        var duojj = 0;
-        var kongjj =0;
         
         for(var key in result ){
 
@@ -379,11 +385,12 @@
                 // for(var j = 0; j< _bargainAmountSum.length;j++){
                 //     if(result[key].data[i].symbol == _bargainAmountSum[j]._id.symbol){
                 //         if(result[key].data[i].site == _bargainAmountSum[j]._id.site){
-                //             if(_bargainAmountSum[j]._id.side == "buy"){
-                //                 duojj = _bargainAmountSum[j].total/_bargainAmountSum[j].sum
-                //             }
-                //             if(_bargainAmountSum[j]._id.side == "sell"){
-                //                 kongjj = _bargainAmountSum[j].total/_bargainAmountSum[j].sum
+                //             if(result[key].multipleWarehouse !=0 && result[key].shortPosition !=0){
+                //                 if(_bargainAmountSum[j]._id.side == "buy"){
+                //                     duojj = _bargainAmountSum[j].total/_bargainAmountSum[j].sum
+                //                 }else{
+                //                     kongjj = _bargainAmountSum[j].total/_bargainAmountSum[j].sum
+                //                 }
                 //             }
                 //         }
                 //     }
@@ -396,7 +403,7 @@
                     
                         
                         source.push(w.format('<td>{0}</td><td><span>建仓：</span>{1}</td><td><span>多仓：</span>{2}<br/><span>均价：</span>{4}</td><td><span>空仓：</span>{3}<br/><span>均价：</span>{5}</td>',       
-                            result[key].data[i].site,w.toDecimal((result[key].data[i].amount || 0),2),w.toDecimal((result[key].data[i].multipleWarehouse || 0),2),w.toDecimal((result[key].data[i].shortPosition || 0),2),w.toDecimal((duojj || 0),2),w.toDecimal((kongjj || 0),2)));//<td><span>均价：</span>{4}</td>   ,w.toDecimal((result[key].data[i].middle || 0),2)
+                            result[key].data[i].site,w.toDecimal((result[key].data[i].amount || 0),2),w.toDecimal((result[key].data[i].multipleWarehouse || 0),2),w.toDecimal((result[key].data[i].shortPosition || 0),2),w.toDecimal((result[key].data[i].duojj || 0),2),w.toDecimal((result[key].data[i].kongjj || 0),2)));//<td><span>均价：</span>{4}</td>   ,w.toDecimal((result[key].data[i].middle || 0),2)
                         source.push('</tr>');
                     
                 
@@ -529,7 +536,7 @@
         }
 
         if(!t){
-            t = { site:site, symbol:coinsPair, amount: 0, middle: 0,multipleWarehouse: 0, shortPosition: 0 } //profit: 0,
+            t = { site:site, symbol:coinsPair, amount: 0, middle: 0,multipleWarehouse: 0, shortPosition: 0 ,duojj:0,kongjj:0} //profit: 0,
             _symbolAmounts.push(t);
         }
         return t;  
