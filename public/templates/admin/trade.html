@@ -294,13 +294,14 @@
 
             middle = _bargainAmountSum[i].total/_bargainAmountSum[i].sum;
 
-            middle = (_bargainAmountSum[i]._id.side=="buy"?middle:-middle);
+            
 
             var symbolItem = getItem(_bargainAmountSum[i]._id.site,_bargainAmountSum[i]._id.symbol,_symbolAmounts); 
             symbolItem.amount += amount;
 
             //middle = _bargainAmountSum[i].total/_bargainAmountSum[i].sum;
 
+            middle = (_bargainAmountSum[i]._id.side=="buy"?middle:-middle);
             symbolItem.middle += middle;
 
 
@@ -346,8 +347,12 @@
                     shortPosition +=  _symbolAmounts[j].shortPosition;
                     profit -=  _symbolAmounts[j].middle; 
 
-                    var min = (Math.min(Math.abs(multipleWarehouse),Math.abs(shortPosition))) * profit;
-
+                    var min = 0;
+                    if(multipleWarehouse == 0 || shortPosition == 0){
+                        min = profit;
+                    }else{
+                        min = (Math.min(Math.abs(multipleWarehouse),Math.abs(shortPosition))) * profit;
+                    }
                     result[arr[i]].amount = amount;
                     result[arr[i]].multipleWarehouse = multipleWarehouse;
                     result[arr[i]].shortPosition = shortPosition;
@@ -371,18 +376,18 @@
 
             
             for(var i = 0; i<result[key].data.length;i++){
-                for(var j = 0; j< _bargainAmountSum.length;j++){
-                    if(result[key].data[i].symbol == _bargainAmountSum[j]._id.symbol){
-                        if(result[key].data[i].site == _bargainAmountSum[j]._id.site){
-                            if(_bargainAmountSum[j]._id.side == "buy"){
-                                duojj = _bargainAmountSum[j].total/_bargainAmountSum[j].sum
-                            }
-                            if(_bargainAmountSum[j]._id.side == "sell"){
-                                kongjj = _bargainAmountSum[j].total/_bargainAmountSum[j].sum
-                            }
-                        }
-                    }
-                }
+                // for(var j = 0; j< _bargainAmountSum.length;j++){
+                //     if(result[key].data[i].symbol == _bargainAmountSum[j]._id.symbol){
+                //         if(result[key].data[i].site == _bargainAmountSum[j]._id.site){
+                //             if(_bargainAmountSum[j]._id.side == "buy"){
+                //                 duojj = _bargainAmountSum[j].total/_bargainAmountSum[j].sum
+                //             }
+                //             if(_bargainAmountSum[j]._id.side == "sell"){
+                //                 kongjj = _bargainAmountSum[j].total/_bargainAmountSum[j].sum
+                //             }
+                //         }
+                //     }
+                // }
                         source.push('<tr>');
                         if(i == 0){
                             
