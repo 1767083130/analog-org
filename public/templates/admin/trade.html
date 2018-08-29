@@ -386,12 +386,12 @@
                         source.push('<tr>');
                         if(i == 0){
                             
-                            source.push(w.format('<td rowspan="{0}">{1}<br/>总利润：{2}，总建仓：{3}</td>',result[key].data.length,key,w.toDecimal((result[key].profit || 0),2),w.toDecimal((result[key].amount || 0),2)));
+                            source.push(w.format('<td rowspan="{0}">{1}<br/>总利润：{2}，总建仓：{3}</td>',result[key].data.length,key,w.toDecimal((result[key].profit || 0),3),w.toDecimal((result[key].amount || 0),3)));
                         }
                     
                         
                         source.push(w.format('<td>{0}</td><td><span>建仓：</span>{1}</td><td><span>多仓：</span>{2}<br/><span>均价：</span>{4}</td><td><span>空仓：</span>{3}<br/><span>均价：</span>{5}</td>',       
-                            result[key].data[i].site,w.toDecimal((result[key].data[i].amount || 0),2),w.toDecimal((result[key].data[i].multipleWarehouse || 0),2),w.toDecimal((result[key].data[i].shortPosition || 0),2),w.toDecimal((result[key].data[i].duojj || 0),3),w.toDecimal((result[key].data[i].kongjj || 0),3)));//<td><span>均价：</span>{4}</td>   ,w.toDecimal((result[key].data[i].middle || 0),2)
+                            result[key].data[i].site,w.toDecimal((result[key].data[i].amount || 0),3),w.toDecimal((result[key].data[i].multipleWarehouse || 0),3),w.toDecimal((result[key].data[i].shortPosition || 0),3),w.toDecimal((result[key].data[i].duojj || 0),3),w.toDecimal((result[key].data[i].kongjj || 0),3)));//<td><span>均价：</span>{4}</td>   ,w.toDecimal((result[key].data[i].middle || 0),2)
                         source.push('</tr>');
                     
                 
