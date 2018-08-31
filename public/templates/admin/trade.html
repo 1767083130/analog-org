@@ -279,7 +279,7 @@
         
         var amount; //总成交量
         var avgPrice = 0; //均价
-        var avgPrice1 = 0;
+        // var avgPrice1 = 0;
 
         var multipleWarehouse = 0; //多仓
         var shortPosition = 0; //空仓
@@ -304,10 +304,10 @@
 
             if(amount > 0 ){
                 symbolItem.multipleWarehouse += amount;
-                symbolItem.multipleAvg += avgPrice;
+                symbolItem.multipleAvg = avgPrice;
             } else { 
                 symbolItem.shortPosition += amount;
-                symbolItem.shortAvg += avgPrice;
+                symbolItem.shortAvg = avgPrice;
             }
         }
 
@@ -326,7 +326,7 @@
             var multipleWarehouse = 0;
             var shortPosition =0;
 
-            var min = 0;
+            //var min = 0;
             var multipleAll = 0;
             var shortAll = 0;
 
@@ -377,10 +377,10 @@
                     //min = (Math.min(Math.abs(multipleWarehouse),Math.abs(shortPosition))) * profit;
 
                     result[arr[i]].amount = amount;
-                    result[arr[i]].multipleWarehouse = multipleWarehouse;
-                    result[arr[i]].shortPosition = shortPosition;
-                    result[arr[i]].multipleAvg = multipleAvg;
-                    result[arr[i]].shortAvg = shortAvg;
+                    // result[arr[i]].multipleWarehouse = multipleWarehouse;
+                    // result[arr[i]].shortPosition = shortPosition;
+                    // result[arr[i]].multipleAvg = multipleAvg;
+                    // result[arr[i]].shortAvg = shortAvg;
                     result[arr[i]].profit = profit;
 
                     result[arr[i]].data.push(_symbolAmounts[j]);
